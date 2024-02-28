@@ -11,7 +11,7 @@ This project is a practice project to make a game engine using Entity-Component 
 - [ ] Integrate SFML into the ECS
 
 ## Stretch Goal
-- [ ] Integrate the physics engine into this game engine
+- [ ] Integrate my physics engine into this game engine
 
 ## Requirement
 - SFML 2.6.1
