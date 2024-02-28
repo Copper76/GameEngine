@@ -10,7 +10,7 @@ This project is a practice project to make a game engine using Entity-Component 
 - [ ] Develop several components and entities, simple ones to start with such as simple data such as hp.
 - [ ] Integrate SFML into the ECS
 
-##Stretch Goal
+## Stretch Goal
 - [ ] Integrate the physics engine into this game engine
 
 ## Requirement
