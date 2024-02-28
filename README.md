@@ -12,6 +12,7 @@ This project is a practice project to make a game engine using Entity-Component 
 
 ## Stretch Goal
 - [ ] Integrate my physics engine into this game engine
+- [ ] Implement Ray Tracing with SFML
 
 ## Requirement
 - SFML 2.6.1
