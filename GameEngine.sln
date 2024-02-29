@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{20143DC5-E585-4204-B554-5988E72E0767}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngine", "GameEngine.vcxproj", "{C98B565C-F9A4-4EBB-AAF5-D80C6B965042}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Fengshui", "Fengshui.vcxproj", "{C98B565C-F9A4-4EBB-AAF5-D80C6B965042}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C98B565C-F9A4-4EBB-AAF5-D80C6B965042}.Debug|x64.ActiveCfg = Debug|x64
-		{C98B565C-F9A4-4EBB-AAF5-D80C6B965042}.Debug|x64.Build.0 = Debug|x64
-		{C98B565C-F9A4-4EBB-AAF5-D80C6B965042}.Release|x64.ActiveCfg = Release|x64
-		{C98B565C-F9A4-4EBB-AAF5-D80C6B965042}.Release|x64.Build.0 = Release|x64
 		{20143DC5-E585-4204-B554-5988E72E0767}.Debug|x64.ActiveCfg = Debug|x64
 		{20143DC5-E585-4204-B554-5988E72E0767}.Debug|x64.Build.0 = Debug|x64
 		{20143DC5-E585-4204-B554-5988E72E0767}.Release|x64.ActiveCfg = Release|x64
 		{20143DC5-E585-4204-B554-5988E72E0767}.Release|x64.Build.0 = Release|x64
+		{C98B565C-F9A4-4EBB-AAF5-D80C6B965042}.Debug|x64.ActiveCfg = Debug|x64
+		{C98B565C-F9A4-4EBB-AAF5-D80C6B965042}.Debug|x64.Build.0 = Debug|x64
+		{C98B565C-F9A4-4EBB-AAF5-D80C6B965042}.Release|x64.ActiveCfg = Release|x64
+		{C98B565C-F9A4-4EBB-AAF5-D80C6B965042}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
