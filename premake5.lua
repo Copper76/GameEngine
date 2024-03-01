@@ -55,6 +55,7 @@ project "Fengshui"
 
 		postbuildcommands
 		{
+			("if not exist \"../bin/" .. output_dir .. "/Sandbox/\" mkdir \"../bin/" .. output_dir .. "/Sandbox/\""),
 			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. output_dir .. "/Sandbox")
 		}
 
