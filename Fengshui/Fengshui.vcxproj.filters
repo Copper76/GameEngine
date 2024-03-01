@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fengshui">
+      <UniqueIdentifier>{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Fengshui.h" />
+    <ClInclude Include="src\Fengshui\Application.h">
+      <Filter>Fengshui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Core.h">
+      <Filter>Fengshui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\EntryPoint.h">
+      <Filter>Fengshui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Fengshui\Application.cpp">
+      <Filter>Fengshui</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

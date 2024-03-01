@@ -18,13 +18,14 @@ namespace Fengshui
 
     void Application::Run()
     {
+
     }
 
 	void Application::Snake()
 	{
         //Initialize parameters
         int boardSize = 11;
-        sf::RenderWindow window(sf::VideoMode(boardSize * 50.0f, boardSize * 50.0f), "SFML works!");
+        sf::RenderWindow window(sf::VideoMode(boardSize * 50.0f, boardSize * 50.0f), "SNAKE GAME");
 
         float step = 50.0f;
         sf::Vector2f snakeHeadPos = sf::Vector2f((boardSize / 2) * 50.0f, (boardSize / 2) * 50.0f);
