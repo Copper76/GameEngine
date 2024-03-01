@@ -18,7 +18,7 @@ namespace Fengshui
 
     void Application::Run()
     {
-
+        Snake();
     }
 
 	void Application::Snake()

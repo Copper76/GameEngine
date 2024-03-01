@@ -43,7 +43,7 @@ project "Fengshui"
 
 	filter "system:windows"
 		cppdialect "C++20"
-		staticruntime "On"
+		staticruntime "Off"
 		systemversion "latest"
 
 		defines
@@ -64,7 +64,6 @@ project "Fengshui"
 			defines
 			{
 				"FS_DEBUG",
-				"DEBUG",
 			}
 
 			links
@@ -79,7 +78,6 @@ project "Fengshui"
 
 			defines{
 				"FS_RELEASE",
-				"NDEBUG",
 			}
 
 			links
@@ -92,7 +90,6 @@ project "Fengshui"
 		filter "configurations:DIST"
 			defines{
 				"FS_DIST",
-				"NDEBUG",
 			}
 
 			optimize "On"
@@ -129,7 +126,7 @@ project "Sandbox"
 
 	filter "system:windows"
 		cppdialect "C++20"
-		staticruntime "On"
+		staticruntime "Off"
 		systemversion "latest"
 
 		defines
