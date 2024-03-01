@@ -37,6 +37,7 @@
     <ClInclude Include="src\Fengshui\Example\Snake.h">
       <Filter>Fengshui\Example</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\Logging\Log.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Fengshui\Application.cpp">
@@ -45,5 +46,6 @@
     <ClCompile Include="src\Fengshui\Example\Snake.cpp">
       <Filter>Fengshui\Example</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\Logging\Log.cpp" />
   </ItemGroup>
 </Project>

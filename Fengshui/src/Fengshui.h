@@ -2,6 +2,8 @@
 
 
 //For external applicaitons
-#include "Fengshui/Core.h"
 #include "Fengshui/Application.h"
+#include "Fengshui/Logging/Log.h"
+
+//Entry Point, place headers above this
 #include "Fengshui/EntryPoint.h"

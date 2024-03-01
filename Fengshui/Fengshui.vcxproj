@@ -155,6 +155,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I ..
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Fengshui\Logging\Log.h" />
     <ClInclude Include="src\Fengshui.h" />
     <ClInclude Include="src\Fengshui\Application.h" />
     <ClInclude Include="src\Fengshui\Core.h" />
@@ -166,6 +167,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I ..
     <ClInclude Include="src\Fengshui\Example\Snake.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Fengshui\Logging\Log.cpp" />
     <ClCompile Include="src\Fengshui\Application.cpp" />
     <ClCompile Include="src\Fengshui\Example\Snake.cpp" />
   </ItemGroup>

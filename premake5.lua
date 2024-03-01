@@ -119,7 +119,8 @@ project "Sandbox"
 
 	includedirs
 	{
-		"Fengshui/src"
+		"Fengshui/src",
+		"Fengshui/External/spdlog/include"
 	}
 
 	links

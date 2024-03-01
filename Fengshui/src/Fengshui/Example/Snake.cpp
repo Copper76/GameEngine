@@ -21,7 +21,6 @@ namespace Fengshui
 
         sf::Font font;
         font.loadFromFile("E:/GitStuff/GameEngine/Fengshui/Font/arial.ttf");
-        std::cout << font.getInfo().family << std::endl;
 
         sf::Text scoreText;
         scoreText.setFont(font);
