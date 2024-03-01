@@ -25,6 +25,8 @@ project "Fengshui"
 
 	includedirs
 	{
+		"%{prj.name}/src",
+		"%{prj.name}/External/spdlog/include",
 		"%{prj.name}/External/SFML/include"
 	}
 

@@ -1,0 +1,3 @@
+[submodule "Fengshui/External/spdlog"]
+	path = Fengshui/External/spdlog
+	url = https://github.com/gabime/spdlog.git

@@ -4,6 +4,12 @@
     <Filter Include="Fengshui">
       <UniqueIdentifier>{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fengshui\Events">
+      <UniqueIdentifier>{629C0AE8-CE27-78AC-D738-FBA04343D4AC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fengshui\Example">
+      <UniqueIdentifier>{F979BFED-E572-DE3F-0EA5-C3C4FAFCBD4B}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Fengshui.h" />
@@ -16,10 +22,28 @@
     <ClInclude Include="src\Fengshui\EntryPoint.h">
       <Filter>Fengshui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\Events\ApplicationEvent.h">
+      <Filter>Fengshui\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Events\Event.h">
+      <Filter>Fengshui\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Events\KeyEvent.h">
+      <Filter>Fengshui\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Events\MouseEvent.h">
+      <Filter>Fengshui\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Example\Snake.h">
+      <Filter>Fengshui\Example</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Fengshui\Application.cpp">
       <Filter>Fengshui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Example\Snake.cpp">
+      <Filter>Fengshui\Example</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
