@@ -48,7 +48,7 @@ namespace Fengshui
 		}
 
 	protected:
-		bool m_handled = false;
+		bool m_Handled = false;
 	};
 
 	class EventDispatcher
@@ -71,9 +71,10 @@ namespace Fengshui
 	private:
 		Event& m_Event;
 	};
-
+	/**
 	inline std::ostream& operator<<(std::ostream& os, const Event& e)
 	{
 		return os << e.ToString();
 	}
+	**/
 }
