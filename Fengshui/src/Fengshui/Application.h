@@ -11,6 +11,8 @@ namespace Fengshui
 		virtual ~Application();
 
 		void Run();
+
+		void Snake();
 	};
 
 	Application* CreateApplication();
