@@ -28,8 +28,24 @@ namespace Fengshui
 #define FS_ENGINE_TRACE(...) ::Fengshui::Log::GetEngineLogger()->trace(__VA_ARGS__)
 
 //Client logging
+/**
 #define FS_FATAL(...) ::Fengshui::Log::GetClientLogger()->fatal(__VA_ARGS__)
 #define FS_ERROR(...) ::Fengshui::Log::GetClientLogger()->error(__VA_ARGS__)
 #define FS_WARN(...) ::Fengshui::Log::GetClientLogger()->warn(__VA_ARGS__)
 #define FS_INFO(...) ::Fengshui::Log::GetClientLogger()->info(__VA_ARGS__)
 #define FS_TRACE(...) ::Fengshui::Log::GetClientLogger()->trace(__VA_ARGS__)
+**/
+
+#define FS_FATAL(...) std::cout<< __VA_ARGS__ << std::endl;
+#define FS_ERROR(...) std::cout<< __VA_ARGS__ << std::endl;
+#define FS_WARN(...) std::cout<< __VA_ARGS__ << std::endl;
+#define FS_INFO(...) std::cout<< __VA_ARGS__ << std::endl;
+#define FS_TRACE(...) std::cout<< __VA_ARGS__ << std::endl;
+
+/**
+#define FS_FATAL(...)
+#define FS_ERROR(...)
+#define FS_WARN(...)
+#define FS_INFO(...)
+#define FS_TRACE(...)
+**/
