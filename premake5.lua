@@ -10,6 +10,12 @@ workspace "GameEngine"
 
 output_dir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["SFML"] = "Fengshui/External/SFML/include"
+IncludeDir["GLFW"] = "Fengshui/External/GLFW/include"
+
+include "Fengshui/External/GLFW"
+
 project "Fengshui"
 	location "Fengshui"
 	kind "SharedLib"
@@ -17,6 +23,9 @@ project "Fengshui"
 	cppdialect "C++17"
 	targetdir ("bin/" .. output_dir .. "/%{prj.name}")
 	objdir ("bin-int/" .. output_dir .. "/%{prj.name}")
+
+	pchheader "fspch.h"
+	pchsource "Fengshui/src/fspch.cpp"
 
 	files
 	{
@@ -28,7 +37,8 @@ project "Fengshui"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/External/spdlog/include",
-		"%{prj.name}/External/SFML/include"
+		"%{IncludeDir.SFML}",
+		"%{IncludeDir.GLFW}"
 	}
 
 	libdirs
@@ -38,6 +48,7 @@ project "Fengshui"
 
 	links
 	{
+		"GLFW",
 		"opengl32",  
 		"freetype",
 		"winmm",
@@ -91,11 +102,11 @@ project "Fengshui"
 			}
 
 		filter "configurations:DIST"
+			optimize "On"
+
 			defines{
 				"FS_DIST",
 			}
-
-			optimize "On"
 
 			links
 			{

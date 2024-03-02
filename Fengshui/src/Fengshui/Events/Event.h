@@ -2,9 +2,6 @@
 
 #include "Fengshui/Core.h"
 
-#include <string>
-#include <functional>
-
 namespace Fengshui
 {
 	enum class EventType
@@ -71,10 +68,9 @@ namespace Fengshui
 	private:
 		Event& m_Event;
 	};
-	/**
+	
 	inline std::ostream& operator<<(std::ostream& os, const Event& e)
 	{
 		return os << e.ToString();
 	}
-	**/
 }

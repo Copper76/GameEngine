@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-
 #ifdef FS_PLATFORM_WINDOWS
 extern Fengshui::Application* Fengshui::CreateApplication();
 

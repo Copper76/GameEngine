@@ -1,7 +1,6 @@
+#include "fspch.h"
 #include "Snake.h"
 #include <SFML/Graphics.hpp>
-#include <iostream>
-#include <list>
 
 namespace Fengshui
 {

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Core.h"
+#include "Fengshui/Core.h"
+#include "Fengshui/Window.h"
 
 namespace Fengshui
 {
@@ -12,7 +13,9 @@ namespace Fengshui
 
 		void Run();
 
-		void Snake();
+	private:
+		std::unique_ptr<Window> m_Window;
+		bool m_Running = false;
 	};
 
 	Application* CreateApplication();

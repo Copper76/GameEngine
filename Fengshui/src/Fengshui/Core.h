@@ -10,4 +10,12 @@
 	#error Fengshui only supports Windows!
 #endif
 
+#ifdef FS_ENABLE_ASSERTS
+	#define FS_ASSERT(x, ...) { if (!(x)) {FS_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define FS_ENGINE_ASSERT(x, ...) { if (!(x)) {FS_ENGINE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+#else
+	#define FS_ASSERT(x, ...)
+	#define FS_ENGINE_ASSERT(x, ...)
+#endif
+
 #define BIT(x) (1<<x)
