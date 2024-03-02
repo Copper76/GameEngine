@@ -14,6 +14,7 @@ project "Fengshui"
 	location "Fengshui"
 	kind "SharedLib"
 	language "C++"
+	cppdialect "C++17"
 	targetdir ("bin/" .. output_dir .. "/%{prj.name}")
 	objdir ("bin-int/" .. output_dir .. "/%{prj.name}")
 
@@ -44,8 +45,7 @@ project "Fengshui"
 	}
 
 	filter "system:windows"
-		cppdialect "C++20"
-		staticruntime "Off"
+		staticruntime "On"
 		systemversion "latest"
 
 		defines
@@ -108,6 +108,7 @@ project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	cppdialect "C++17"
 	targetdir ("bin/" .. output_dir .. "/%{prj.name}")
 	objdir ("bin-int/" .. output_dir .. "/%{prj.name}")
 
@@ -129,7 +130,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++20"
 		staticruntime "Off"
 		systemversion "latest"
 

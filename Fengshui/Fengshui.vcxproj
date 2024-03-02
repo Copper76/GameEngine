@@ -82,8 +82,8 @@
       <AdditionalIncludeDirectories>src;External\spdlog\include;External\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
@@ -109,8 +109,8 @@ IF EXIST ..\bin\Debug-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I .
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
@@ -137,8 +137,8 @@ IF EXIST ..\bin\Release-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
@@ -155,7 +155,6 @@ IF EXIST ..\bin\Dist-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I ..
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Fengshui\Logging\Log.h" />
     <ClInclude Include="src\Fengshui.h" />
     <ClInclude Include="src\Fengshui\Application.h" />
     <ClInclude Include="src\Fengshui\Core.h" />
@@ -165,11 +164,12 @@ IF EXIST ..\bin\Dist-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I ..
     <ClInclude Include="src\Fengshui\Events\KeyEvent.h" />
     <ClInclude Include="src\Fengshui\Events\MouseEvent.h" />
     <ClInclude Include="src\Fengshui\Example\Snake.h" />
+    <ClInclude Include="src\Fengshui\Logging\Log.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Fengshui\Logging\Log.cpp" />
     <ClCompile Include="src\Fengshui\Application.cpp" />
     <ClCompile Include="src\Fengshui\Example\Snake.cpp" />
+    <ClCompile Include="src\Fengshui\Logging\Log.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

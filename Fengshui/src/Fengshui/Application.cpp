@@ -16,10 +16,6 @@ namespace Fengshui
 
     void Application::Run()
     {
-		while (true)
-		{
-
-		}
-        //SnakeGame::Snake();
+        SnakeGame::Snake();
     }
 }

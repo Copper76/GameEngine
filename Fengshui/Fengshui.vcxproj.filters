@@ -10,6 +10,9 @@
     <Filter Include="Fengshui\Example">
       <UniqueIdentifier>{F979BFED-E572-DE3F-0EA5-C3C4FAFCBD4B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fengshui\Logging">
+      <UniqueIdentifier>{D4E001F4-C0D9-2046-E90B-06CBD5630052}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Fengshui.h" />
@@ -37,7 +40,9 @@
     <ClInclude Include="src\Fengshui\Example\Snake.h">
       <Filter>Fengshui\Example</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Logging\Log.h" />
+    <ClInclude Include="src\Fengshui\Logging\Log.h">
+      <Filter>Fengshui\Logging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Fengshui\Application.cpp">
@@ -46,6 +51,8 @@
     <ClCompile Include="src\Fengshui\Example\Snake.cpp">
       <Filter>Fengshui\Example</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Logging\Log.cpp" />
+    <ClCompile Include="src\Fengshui\Logging\Log.cpp">
+      <Filter>Fengshui\Logging</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
