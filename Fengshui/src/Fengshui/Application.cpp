@@ -21,22 +21,38 @@ namespace Fengshui
 
 	void Application::Run()
 	{
-		m_Running = true;
 		while (m_Running)
 		{
-			m_Window->OnUpdate();
+			/**
+			for (Layer* layer : m_LayerStack)
+			{
+				layer->OnUpdate();
+			}
+			**/
+			if (m_Window)
+			{
+				m_Window->OnUpdate();
+			}
 		}
-		WindowResizeEvent e(1280, 720);
-		//FS_TRACE(e);
+		//spdlog::drop_all();
 		//SnakeGame::Snake();
 	}
 
 	void Application::OnEvent(Event& e)
 	{
-		std::cout << e.ToString() << std::endl;
+		//std::cout << e.ToString() << std::endl;
 
 		EventDispatcher eventDispatcher(e);
 		eventDispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
+		{
+			(*--it)->OnEvent(e);
+			if (e.Handled)
+			{
+				break;
+			}
+		}
 
 	}
 
@@ -44,5 +60,15 @@ namespace Fengshui
 	{
 		m_Running = false;
 		return true;
+	}
+
+	void Application::PushLayer(Layer* layer)
+	{
+		m_LayerStack.PushLayer(layer);
+	}
+
+	void Application::PushOverlay(Layer* overlay)
+	{
+		m_LayerStack.PushOverlay(overlay);
 	}
 }

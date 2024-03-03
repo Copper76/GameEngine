@@ -19,7 +19,13 @@ namespace Fengshui
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(WindowResize);
+		static EventType GetStaticType() {
+			return EventType::WindowResize;
+		} virtual EventType GetEventType() const override {
+			return GetStaticType();
+		} virtual const char* GetName() const override {
+			return "WindowResize";
+		};
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 
 	private:
@@ -31,7 +37,13 @@ namespace Fengshui
 	public:
 		WindowCloseEvent() = default;
 
-		EVENT_CLASS_TYPE(WindowClose);
+		static EventType GetStaticType() {
+			return EventType::WindowClose;
+		} virtual EventType GetEventType() const override {
+			return GetStaticType();
+		} virtual const char* GetName() const override {
+			return "WindowClose";
+		};
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
@@ -40,7 +52,13 @@ namespace Fengshui
 	public:
 		AppTickEvent() = default;
 
-		EVENT_CLASS_TYPE(AppTick);
+		static EventType GetStaticType() {
+			return EventType::AppTick;
+		} virtual EventType GetEventType() const override {
+			return GetStaticType();
+		} virtual const char* GetName() const override {
+			return "AppTick";
+		};
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
@@ -49,7 +67,13 @@ namespace Fengshui
 	public:
 		AppUpdateEvent() = default;
 
-		EVENT_CLASS_TYPE(AppUpdate);
+		static EventType GetStaticType() {
+			return EventType::AppUpdate;
+		} virtual EventType GetEventType() const override {
+			return GetStaticType();
+		} virtual const char* GetName() const override {
+			return "AppUpdate";
+		};
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
@@ -58,7 +82,13 @@ namespace Fengshui
 	public:
 		AppRenderEvent() = default;
 
-		EVENT_CLASS_TYPE(AppRender);
+		static EventType GetStaticType() {
+			return EventType::AppRender;
+		} virtual EventType GetEventType() const override {
+			return GetStaticType();
+		} virtual const char* GetName() const override {
+			return "AppRender";
+		};
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 }

@@ -31,7 +31,13 @@ namespace Fengshui
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(KeyPressed)
+		static EventType GetStaticType() {
+			return EventType::KeyPressed;
+		} virtual EventType GetEventType() const override {
+			return GetStaticType();
+		} virtual const char* GetName() const override {
+			return "KeyPressed";
+		}
 
 	private:
 		int m_RepeatCount;
@@ -49,6 +55,12 @@ namespace Fengshui
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(KeyReleased)
+		static EventType GetStaticType() {
+			return EventType::KeyReleased;
+		} virtual EventType GetEventType() const override {
+			return GetStaticType();
+		} virtual const char* GetName() const override {
+			return "KeyReleased";
+		}
 	};
 }

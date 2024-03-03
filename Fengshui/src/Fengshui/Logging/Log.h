@@ -1,8 +1,10 @@
 #pragma once
 
 #include "Fengshui/Core.h"
-#include "spdlog/spdlog.h"
-#include "spdlog/fmt/ostr.h"
+#pragma warning(push, 0)
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
+#pragma warning(pop)
 
 namespace Fengshui
 {
@@ -21,11 +23,11 @@ namespace Fengshui
 }
 
 //Engine logging
-#define FS_ENGINE_FATAL(...) ::Fengshui::Log::GetEngineLogger()->fatal(__VA_ARGS__)
-#define FS_ENGINE_ERROR(...) ::Fengshui::Log::GetEngineLogger()->error(__VA_ARGS__)
-#define FS_ENGINE_WARN(...) ::Fengshui::Log::GetEngineLogger()->warn(__VA_ARGS__)
-#define FS_ENGINE_INFO(...) ::Fengshui::Log::GetEngineLogger()->info(__VA_ARGS__)
-#define FS_ENGINE_TRACE(...) ::Fengshui::Log::GetEngineLogger()->trace(__VA_ARGS__)
+#define FS_ENGINE_CRITICAL(...) ::Fengshui::Log::GetEngineLogger()->critical(__VA_ARGS__)
+#define FS_ENGINE_ERROR(...)    ::Fengshui::Log::GetEngineLogger()->error(__VA_ARGS__)
+#define FS_ENGINE_WARN(...)     ::Fengshui::Log::GetEngineLogger()->warn(__VA_ARGS__)
+#define FS_ENGINE_INFO(...)     ::Fengshui::Log::GetEngineLogger()->info(__VA_ARGS__)
+#define FS_ENGINE_TRACE(...)    ::Fengshui::Log::GetEngineLogger()->trace(__VA_ARGS__)
 
 //Client logging
 /**

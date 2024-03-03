@@ -1,6 +1,7 @@
 #include "fspch.h"
 #include "Log.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
+
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace Fengshui
 {
@@ -9,12 +10,12 @@ namespace Fengshui
 
 	void Log::Init()
 	{
-		spdlog::set_pattern("%^[%T] %n: %v%$"); // "%^[%T] %g %# %n: %v%$"
+		spdlog::set_pattern("%^[%T] %n: %v%$");
 		
 		s_EngineLogger = spdlog::stdout_color_mt("FENGSHUI");
-		s_EngineLogger->set_level(spdlog::level::level_enum::trace);
+		s_EngineLogger->set_level(spdlog::level::trace);
 
 		s_ClientLogger = spdlog::stdout_color_mt("CLIENT");
-		s_ClientLogger->set_level(spdlog::level::level_enum::trace);
+		s_ClientLogger->set_level(spdlog::level::trace);
 	}
 }

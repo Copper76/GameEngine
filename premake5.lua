@@ -56,14 +56,15 @@ project "Fengshui"
 	}
 
 	filter "system:windows"
-		staticruntime "On"
+		staticruntime "Off"
 		systemversion "latest"
 
 		defines
 		{
 			"FS_BUILD_DLL",
 			"SFML_STATIC",
-			"FS_PLATFORM_WINDOWS"
+			"FS_PLATFORM_WINDOWS",
+			"_CRT_SECURE_NO_WARNINGS"
 		}
 
 		postbuildcommands

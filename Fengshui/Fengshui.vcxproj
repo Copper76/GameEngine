@@ -79,11 +79,11 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>FS_BUILD_DLL;SFML_STATIC;FS_PLATFORM_WINDOWS;FS_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FS_BUILD_DLL;SFML_STATIC;FS_PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;FS_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;External\spdlog\include;External\SFML\include;External\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -104,14 +104,14 @@ IF EXIST ..\bin\Debug-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I .
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>FS_BUILD_DLL;SFML_STATIC;FS_PLATFORM_WINDOWS;FS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FS_BUILD_DLL;SFML_STATIC;FS_PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;FS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;External\spdlog\include;External\SFML\include;External\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -133,14 +133,14 @@ IF EXIST ..\bin\Release-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>FS_BUILD_DLL;SFML_STATIC;FS_PLATFORM_WINDOWS;FS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FS_BUILD_DLL;SFML_STATIC;FS_PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;FS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;External\spdlog\include;External\SFML\include;External\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -167,6 +167,8 @@ IF EXIST ..\bin\Dist-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I ..
     <ClInclude Include="src\Fengshui\Events\KeyEvent.h" />
     <ClInclude Include="src\Fengshui\Events\MouseEvent.h" />
     <ClInclude Include="src\Fengshui\Example\Snake.h" />
+    <ClInclude Include="src\Fengshui\Layers\Layer.h" />
+    <ClInclude Include="src\Fengshui\Layers\LayerStack.h" />
     <ClInclude Include="src\Fengshui\Logging\Log.h" />
     <ClInclude Include="src\Fengshui\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Fengshui\Window.h" />
@@ -175,6 +177,8 @@ IF EXIST ..\bin\Dist-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I ..
   <ItemGroup>
     <ClCompile Include="src\Fengshui\Application.cpp" />
     <ClCompile Include="src\Fengshui\Example\Snake.cpp" />
+    <ClCompile Include="src\Fengshui\Layers\Layer.cpp" />
+    <ClCompile Include="src\Fengshui\Layers\LayerStack.cpp" />
     <ClCompile Include="src\Fengshui\Logging\Log.cpp" />
     <ClCompile Include="src\Fengshui\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\fspch.cpp">

@@ -41,6 +41,10 @@ namespace Fengshui
 			int success = glfwInit();
 
 			//FS_ENGINE_ASSERT(success, "Could not initialise GLFW")
+			if (!success)
+			{
+				__debugbreak;
+			}
 
 			glfwSetErrorCallback(GLFWErrorCallback);
 
@@ -48,6 +52,7 @@ namespace Fengshui
 		}
 
 		m_Window = glfwCreateWindow((int)info.Width, (int)info.Height, info.Title.c_str(), nullptr, nullptr);
+
 		glfwMakeContextCurrent(m_Window);
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
@@ -139,6 +144,7 @@ namespace Fengshui
 	void WindowsWindow::Shutdown()
 	{
 		glfwDestroyWindow(m_Window);
+		//glfwTerminate();
 	}
 
 	void WindowsWindow::OnUpdate()

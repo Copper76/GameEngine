@@ -19,7 +19,13 @@ namespace Fengshui
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(MouseMoved);
+		static EventType GetStaticType() {
+			return EventType::MouseMoved;
+		} virtual EventType GetEventType() const override {
+			return GetStaticType();
+		} virtual const char* GetName() const override {
+			return "MouseMoved";
+		};
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput);
 
 	private:
@@ -41,7 +47,13 @@ namespace Fengshui
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(MouseScrolled);
+		static EventType GetStaticType() {
+			return EventType::MouseScrolled;
+		} virtual EventType GetEventType() const override {
+			return GetStaticType();
+		} virtual const char* GetName() const override {
+			return "MouseScrolled";
+		};
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput);
 
 	private:
@@ -52,7 +64,7 @@ namespace Fengshui
 	{
 	public:
 
-		inline float GetMouseButton() const { return m_Button; }
+		inline int GetMouseButton() const { return m_Button; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput);
 
@@ -73,7 +85,13 @@ namespace Fengshui
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(MouseButtonPressed);
+		static EventType GetStaticType() {
+			return EventType::MouseButtonPressed;
+		} virtual EventType GetEventType() const override {
+			return GetStaticType();
+		} virtual const char* GetName() const override {
+			return "MouseButtonPressed";
+		};
 	};
 
 	class FENGSHUI_API MouseButtonReleasedEvent : public MouseButtonEvent
@@ -88,6 +106,12 @@ namespace Fengshui
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(MouseButtonReleased);
+		static EventType GetStaticType() {
+			return EventType::MouseButtonReleased;
+		} virtual EventType GetEventType() const override {
+			return GetStaticType();
+		} virtual const char* GetName() const override {
+			return "MouseButtonReleased";
+		};
 	};
 }
