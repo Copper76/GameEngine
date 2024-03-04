@@ -1,5 +1,6 @@
 workspace "GameEngine"
 	architecture "x64"
+	startproject "Sandbox"
 
 	configurations
 	{
@@ -13,14 +14,17 @@ output_dir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["SFML"] = "Fengshui/External/SFML/include"
 IncludeDir["GLFW"] = "Fengshui/External/GLFW/include"
+IncludeDir["GLAD"] = "Fengshui/External/GLAD/include"
+IncludeDir["imgui"] = "Fengshui/External/imgui"
 
 include "Fengshui/External/GLFW"
+include "Fengshui/External/GLAD"
+include "Fengshui/External/imgui"
 
 project "Fengshui"
 	location "Fengshui"
 	kind "SharedLib"
 	language "C++"
-	cppdialect "C++17"
 	targetdir ("bin/" .. output_dir .. "/%{prj.name}")
 	objdir ("bin-int/" .. output_dir .. "/%{prj.name}")
 
@@ -38,7 +42,9 @@ project "Fengshui"
 		"%{prj.name}/src",
 		"%{prj.name}/External/spdlog/include",
 		"%{IncludeDir.SFML}",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.GLAD}",
+		"%{IncludeDir.imgui}",
 	}
 
 	libdirs
@@ -49,14 +55,22 @@ project "Fengshui"
 	links
 	{
 		"GLFW",
+		"GLAD",
+		"imgui",
 		"opengl32",  
 		"freetype",
 		"winmm",
 		"gdi32"
 	}
 
+	defines
+	{
+		"GLFW_INCLUDE_NONE",
+	}
+
 	filter "system:windows"
 		staticruntime "Off"
+		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -64,7 +78,7 @@ project "Fengshui"
 			"FS_BUILD_DLL",
 			"SFML_STATIC",
 			"FS_PLATFORM_WINDOWS",
-			"_CRT_SECURE_NO_WARNINGS"
+			"_CRT_SECURE_NO_WARNINGS",
 		}
 
 		postbuildcommands
@@ -79,6 +93,7 @@ project "Fengshui"
 			defines
 			{
 				"FS_DEBUG",
+				"FS_ENABLE_ASSERTS",
 			}
 
 			links
@@ -132,8 +147,8 @@ project "Sandbox"
 
 	includedirs
 	{
+		"Fengshui/External/spdlog/include",
 		"Fengshui/src",
-		"Fengshui/External/spdlog/include"
 	}
 
 	links

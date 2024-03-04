@@ -21,30 +21,28 @@ namespace Fengshui
 
 	void Application::Run()
 	{
+		FS_ENGINE_WARN("Initialized Log!")
+		FS_INFO("Client works as well")
 		while (m_Running)
 		{
-			/**
 			for (Layer* layer : m_LayerStack)
 			{
 				layer->OnUpdate();
 			}
-			**/
-			if (m_Window)
-			{
-				m_Window->OnUpdate();
-			}
+
+			m_Window->OnUpdate();
 		}
-		//spdlog::drop_all();
 		//SnakeGame::Snake();
 	}
 
 	void Application::OnEvent(Event& e)
 	{
-		//std::cout << e.ToString() << std::endl;
+		//FS_TRACE(e)
 
 		EventDispatcher eventDispatcher(e);
 		eventDispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
 
+		
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
 			(*--it)->OnEvent(e);

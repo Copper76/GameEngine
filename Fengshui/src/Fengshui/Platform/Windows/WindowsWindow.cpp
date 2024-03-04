@@ -3,14 +3,14 @@
 #include "Fengshui/Events/ApplicationEvent.h"
 #include "Fengshui/Events/KeyEvent.h"
 #include "Fengshui/Events/MouseEvent.h"
+#include "glad/glad.h"
 
 namespace Fengshui
 {
 	static bool s_GLFWInitialised = false;
 	static void GLFWErrorCallback(int errorCode, const char* description)
 	{
-		//FS_ENGINE_ERROR("GLFW ERROR {0}: {1}", errorCode, description)
-		FS_ERROR(description)
+		FS_ENGINE_ERROR("GLFW ERROR {0}: {1}", errorCode, description)
 	}
 
 	Window* Window::Create(const WindowInfo& info)
@@ -34,17 +34,13 @@ namespace Fengshui
 		m_Data.Width = info.Width;
 		m_Data.Height = info.Height;
 
-		//FS_ENGINE_INFO("Createing WIndow {0} ({1}, {2})", info.Title, info.Width, info.Height);
+		FS_ENGINE_INFO("Createing WIndow {0} ({1}, {2})", info.Title, info.Width, info.Height);
 
 		if (!s_GLFWInitialised)
 		{
 			int success = glfwInit();
 
-			//FS_ENGINE_ASSERT(success, "Could not initialise GLFW")
-			if (!success)
-			{
-				__debugbreak;
-			}
+			FS_ENGINE_ASSERT(success, "Could not initialise GLFW")
 
 			glfwSetErrorCallback(GLFWErrorCallback);
 
@@ -54,6 +50,8 @@ namespace Fengshui
 		m_Window = glfwCreateWindow((int)info.Width, (int)info.Height, info.Title.c_str(), nullptr, nullptr);
 
 		glfwMakeContextCurrent(m_Window);
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		FS_ENGINE_ASSERT(status, "Failed to initialise GLAD")
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
@@ -144,7 +142,6 @@ namespace Fengshui
 	void WindowsWindow::Shutdown()
 	{
 		glfwDestroyWindow(m_Window);
-		//glfwTerminate();
 	}
 
 	void WindowsWindow::OnUpdate()
