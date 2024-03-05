@@ -12,7 +12,6 @@ workspace "GameEngine"
 output_dir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
-IncludeDir["SFML"] = "Fengshui/External/SFML/include"
 IncludeDir["GLFW"] = "Fengshui/External/GLFW/include"
 IncludeDir["GLAD"] = "Fengshui/External/GLAD/include"
 IncludeDir["imgui"] = "Fengshui/External/imgui"
@@ -41,15 +40,10 @@ project "Fengshui"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/External/spdlog/include",
-		"%{IncludeDir.SFML}",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLAD}",
 		"%{IncludeDir.imgui}",
-	}
-
-	libdirs
-	{
-		"%{prj.name}/External/SFML/lib"
+		"%{IncludeDir.imgui}/backends",
 	}
 
 	links
@@ -57,10 +51,7 @@ project "Fengshui"
 		"GLFW",
 		"GLAD",
 		"imgui",
-		"opengl32",  
-		"freetype",
-		"winmm",
-		"gdi32"
+		"opengl32",
 	}
 
 	defines
@@ -76,7 +67,6 @@ project "Fengshui"
 		defines
 		{
 			"FS_BUILD_DLL",
-			"SFML_STATIC",
 			"FS_PLATFORM_WINDOWS",
 			"_CRT_SECURE_NO_WARNINGS",
 		}
@@ -96,13 +86,6 @@ project "Fengshui"
 				"FS_ENABLE_ASSERTS",
 			}
 
-			links
-			{
-				"sfml-graphics-s-d",
-				"sfml-window-s-d",
-				"sfml-system-s-d",
-			}
-
 		filter "configurations:RELEASE"
 			optimize "On"
 
@@ -110,25 +93,11 @@ project "Fengshui"
 				"FS_RELEASE",
 			}
 
-			links
-			{
-				"sfml-graphics-s",
-				"sfml-window-s",
-				"sfml-system-s",
-			}
-
 		filter "configurations:DIST"
 			optimize "On"
 
 			defines{
 				"FS_DIST",
-			}
-
-			links
-			{
-				"sfml-graphics-s",
-				"sfml-window-s",
-				"sfml-system-s",
 			}
 
 project "Sandbox"

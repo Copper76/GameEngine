@@ -13,8 +13,8 @@
     <Filter Include="Fengshui\Events">
       <UniqueIdentifier>{629C0AE8-CE27-78AC-D738-FBA04343D4AC}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fengshui\Example">
-      <UniqueIdentifier>{F979BFED-E572-DE3F-0EA5-C3C4FAFCBD4B}</UniqueIdentifier>
+    <Filter Include="Fengshui\IMGUI">
+      <UniqueIdentifier>{88BD5064-748B-446A-5D1F-B590498C20CF}</UniqueIdentifier>
     </Filter>
     <Filter Include="Fengshui\Layers">
       <UniqueIdentifier>{3D87EDF6-A912-5BBB-B223-DEAF1E2EB7BB}</UniqueIdentifier>
@@ -24,6 +24,9 @@
     </Filter>
     <Filter Include="Fengshui\Platform">
       <UniqueIdentifier>{52444131-BE5A-3FC7-07D2-CAE87327104F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fengshui\Platform\OpenGL">
+      <UniqueIdentifier>{469D1F2A-32C2-6EAA-5B0D-543A47916DC8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Fengshui\Platform\Windows">
       <UniqueIdentifier>{8C202FC6-F8E2-6250-4193-F1DCAD943B2E}</UniqueIdentifier>
@@ -58,8 +61,8 @@
     <ClInclude Include="src\Fengshui\Events\MouseEvent.h">
       <Filter>Fengshui\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Example\Snake.h">
-      <Filter>Fengshui\Example</Filter>
+    <ClInclude Include="src\Fengshui\IMGUI\ImGuiLayer.h">
+      <Filter>Fengshui\IMGUI</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\Layers\Layer.h">
       <Filter>Fengshui\Layers</Filter>
@@ -69,6 +72,9 @@
     </ClInclude>
     <ClInclude Include="src\Fengshui\Logging\Log.h">
       <Filter>Fengshui\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\ImGuiOpenGLRenderer.h">
+      <Filter>Fengshui\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\Platform\Windows\WindowsWindow.h">
       <Filter>Fengshui\Platform\Windows</Filter>
@@ -91,8 +97,8 @@
     <ClCompile Include="src\Fengshui\ECS\GameEntity.cpp">
       <Filter>Fengshui\ECS</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Example\Snake.cpp">
-      <Filter>Fengshui\Example</Filter>
+    <ClCompile Include="src\Fengshui\IMGUI\ImGuiLayer.cpp">
+      <Filter>Fengshui\IMGUI</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Layers\Layer.cpp">
       <Filter>Fengshui\Layers</Filter>
@@ -102,6 +108,9 @@
     </ClCompile>
     <ClCompile Include="src\Fengshui\Logging\Log.cpp">
       <Filter>Fengshui\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
+      <Filter>Fengshui\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Platform\Windows\WindowsWindow.cpp">
       <Filter>Fengshui\Platform\Windows</Filter>

@@ -79,8 +79,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;FS_BUILD_DLL;SFML_STATIC;FS_PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;FS_DEBUG;FS_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;External\spdlog\include;External\SFML\include;External\GLFW\include;External\GLAD\include;External\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;FS_DEBUG;FS_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\imgui;External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -90,8 +90,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>External\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Debug-windows-x86_64\Fengshui\Fengshui.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -104,8 +103,8 @@ IF EXIST ..\bin\Debug-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I .
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;FS_BUILD_DLL;SFML_STATIC;FS_PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;FS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;External\spdlog\include;External\SFML\include;External\GLFW\include;External\GLAD\include;External\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;FS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\imgui;External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -119,8 +118,7 @@ IF EXIST ..\bin\Debug-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I .
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>External\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Release-windows-x86_64\Fengshui\Fengshui.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -133,8 +131,8 @@ IF EXIST ..\bin\Release-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;FS_BUILD_DLL;SFML_STATIC;FS_PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;FS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;External\spdlog\include;External\SFML\include;External\GLFW\include;External\GLAD\include;External\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;FS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\imgui;External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -148,8 +146,7 @@ IF EXIST ..\bin\Release-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>External\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Dist-windows-x86_64\Fengshui\Fengshui.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -168,10 +165,11 @@ IF EXIST ..\bin\Dist-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I ..
     <ClInclude Include="src\Fengshui\Events\Event.h" />
     <ClInclude Include="src\Fengshui\Events\KeyEvent.h" />
     <ClInclude Include="src\Fengshui\Events\MouseEvent.h" />
-    <ClInclude Include="src\Fengshui\Example\Snake.h" />
+    <ClInclude Include="src\Fengshui\IMGUI\ImGuiLayer.h" />
     <ClInclude Include="src\Fengshui\Layers\Layer.h" />
     <ClInclude Include="src\Fengshui\Layers\LayerStack.h" />
     <ClInclude Include="src\Fengshui\Logging\Log.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="src\Fengshui\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Fengshui\Scene.h" />
     <ClInclude Include="src\Fengshui\Window.h" />
@@ -181,10 +179,11 @@ IF EXIST ..\bin\Dist-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I ..
     <ClCompile Include="src\Fengshui\Application.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Components\BaseComponent.cpp" />
     <ClCompile Include="src\Fengshui\ECS\GameEntity.cpp" />
-    <ClCompile Include="src\Fengshui\Example\Snake.cpp" />
+    <ClCompile Include="src\Fengshui\IMGUI\ImGuiLayer.cpp" />
     <ClCompile Include="src\Fengshui\Layers\Layer.cpp" />
     <ClCompile Include="src\Fengshui\Layers\LayerStack.cpp" />
     <ClCompile Include="src\Fengshui\Logging\Log.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
     <ClCompile Include="src\Fengshui\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Fengshui\Scene.cpp" />
     <ClCompile Include="src\fspch.cpp">

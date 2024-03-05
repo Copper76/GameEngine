@@ -3,7 +3,7 @@
 
 namespace Fengshui
 {
-	Layer::Layer(const std::string& debugName, bool isActive) : m_DebugName(debugName), m_IsActive(isActive) {}
+	Layer::Layer(const std::string& debugName) : m_DebugName(debugName) {}
 
 	Layer::~Layer()
 	{

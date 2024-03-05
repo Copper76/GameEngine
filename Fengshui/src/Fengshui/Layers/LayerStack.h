@@ -23,7 +23,7 @@ namespace Fengshui
 
 	private:
 		std::vector<Layer*> m_Layers;
-		std::vector<Layer*>::iterator m_LayerInsert;//What is this?
+		std::vector<Layer*>::iterator m_LayerInsert;//Position of insertion
 	};
 }
 

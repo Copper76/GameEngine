@@ -8,7 +8,7 @@ namespace Fengshui
 	class FENGSHUI_API Layer
 	{
 	public:
-		Layer(const std::string& name = "Layer", bool isActive = true);
+		Layer(const std::string& name = "Layer");
 		virtual ~Layer();
 
 		//Need implementation
@@ -21,7 +21,7 @@ namespace Fengshui
 
 	protected:
 		std::string m_DebugName;
-		bool m_IsActive;
+		bool m_IsActive = true;
 	};
 
 }
