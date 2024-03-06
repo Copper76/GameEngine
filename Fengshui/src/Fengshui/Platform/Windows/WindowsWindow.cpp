@@ -34,8 +34,6 @@ namespace Fengshui
 		m_Data.Width = info.Width;
 		m_Data.Height = info.Height;
 
-		FS_ENGINE_INFO("Createing WIndow {0} ({1}, {2})", info.Title, info.Width, info.Height);
-
 		if (!s_GLFWInitialised)
 		{
 			int success = glfwInit();
@@ -46,6 +44,8 @@ namespace Fengshui
 
 			s_GLFWInitialised = true;
 		}
+
+		FS_ENGINE_INFO("Createing WIndow {0} ({1}, {2})", info.Title, info.Width, info.Height);
 
 		m_Window = glfwCreateWindow((int)info.Width, (int)info.Height, info.Title.c_str(), nullptr, nullptr);
 

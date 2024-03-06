@@ -3,6 +3,7 @@
 #include "ImGuiLayer.h"
 #include "Fengshui/Application.h"
 
+#include "imgui.h"
 #include "Fengshui/Platform/OpenGL/ImGuiOpenGLRenderer.h"
 
 #include "glad/glad.h"
@@ -11,7 +12,7 @@
 
 namespace Fengshui
 {
-	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer")
+	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer", true)
 	{
 
 	}
@@ -31,9 +32,10 @@ namespace Fengshui
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
 		ImGui_ImplOpenGL3_Init("#version 410");
+		//ImGui_ImplOpenGL3_Init();
 	}
 
-	void ImGuiLayer::OnDettach()
+	void ImGuiLayer::OnDetach()
 	{
 
 	}
@@ -53,6 +55,8 @@ namespace Fengshui
 
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
+
+		glClear(GL_COLOR_BUFFER_BIT);//Clear last render
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

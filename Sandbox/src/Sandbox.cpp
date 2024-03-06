@@ -23,7 +23,7 @@ public:
 
 	}
 
-	void OnDettach() override
+	void OnDetach() override
 	{
 
 	}
@@ -34,7 +34,6 @@ class Sandbox : public Fengshui::Application
 public:
 	Sandbox() : Application()
 	{
-		//PushOverlay(new Fengshui::ImGuiLayer());
 		//PushLayer(new ExampleLayer());
 	}
 

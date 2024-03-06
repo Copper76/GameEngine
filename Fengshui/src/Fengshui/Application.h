@@ -35,6 +35,7 @@ namespace Fengshui
 
 	private:
 		static Application* s_Instance;
+		ImGuiLayer* m_ImGuiLayer;
 	};
 
 	Application* CreateApplication();

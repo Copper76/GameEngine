@@ -5,6 +5,7 @@ namespace Fengshui
 {
 	LayerStack::LayerStack()
 	{
+		m_Layers.reserve(5);
 		m_LayerInsert = m_Layers.begin();
 	}
 
@@ -12,13 +13,14 @@ namespace Fengshui
 	{
 		for (Layer* layer : m_Layers)
 		{
+			layer->OnDetach();
 			delete layer;
 		}
 	}
 
 	void LayerStack::PushLayer(Layer* layer)
 	{
-		m_LayerInsert = m_Layers.emplace(m_LayerInsert, layer);
+		m_LayerInsert = m_Layers.emplace(m_Layers.begin(), layer);
 	}
 
 	void LayerStack::PushOverlay(Layer* overlay)
@@ -28,9 +30,10 @@ namespace Fengshui
 
 	void LayerStack::PopLayer(Layer* layer)
 	{
-		auto it = std::find(m_Layers.begin(), m_Layers.end(), layer);
+		auto it = std::find(m_Layers.begin(), m_LayerInsert, layer);
 		if (it != m_Layers.end())
 		{
+			layer->OnDetach();
 			m_Layers.erase(it);
 			m_LayerInsert--;
 		}
@@ -38,9 +41,10 @@ namespace Fengshui
 
 	void LayerStack::PopOverlay(Layer* overlay)
 	{
-		auto it = std::find(m_Layers.begin(), m_Layers.end(), overlay);
+		auto it = std::find(m_LayerInsert, m_Layers.end(), overlay);
 		if (it != m_Layers.end())
 		{
+			overlay->OnDetach();
 			m_Layers.erase(it);
 		}
 	}

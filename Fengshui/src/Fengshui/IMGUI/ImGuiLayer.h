@@ -16,7 +16,7 @@ namespace Fengshui
 		~ImGuiLayer();
 
 		void OnAttach();
-		void OnDettach();
+		void OnDetach();
 		void OnUpdate();
 		void OnEvent(Event& event);
 
