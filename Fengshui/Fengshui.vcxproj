@@ -166,6 +166,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I ..
     <ClInclude Include="src\Fengshui\Events\KeyEvent.h" />
     <ClInclude Include="src\Fengshui\Events\MouseEvent.h" />
     <ClInclude Include="src\Fengshui\IMGUI\ImGuiLayer.h" />
+    <ClInclude Include="src\Fengshui\Input.h" />
     <ClInclude Include="src\Fengshui\Layers\Layer.h" />
     <ClInclude Include="src\Fengshui\Layers\LayerStack.h" />
     <ClInclude Include="src\Fengshui\Logging\Log.h" />
@@ -174,6 +175,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I ..
     <ClInclude Include="src\Fengshui\Scene.h" />
     <ClInclude Include="src\Fengshui\Window.h" />
     <ClInclude Include="src\fspch.h" />
+    <ClInclude Include="src\Fengshui\Platform\Windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Fengshui\Application.cpp" />
@@ -189,6 +191,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I ..
     <ClCompile Include="src\fspch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\GLFW\GLFW.vcxproj">

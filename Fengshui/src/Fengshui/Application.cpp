@@ -1,6 +1,7 @@
 #include "fspch.h"
 #include "Application.h"
 #include "Fengshui/Logging/Log.h"
+#include "Fengshui/Input.h"
 
 namespace Fengshui
 {
@@ -37,6 +38,9 @@ namespace Fengshui
 					layer->OnUpdate();
 				}
 			}
+
+			auto [x, y] = Input::GetMousePos();
+			FS_TRACE("({0}, {1})", x, y);
 
 			m_Window->OnUpdate();
 		}
