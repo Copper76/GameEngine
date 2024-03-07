@@ -3,6 +3,8 @@
 #include "Fengshui/Logging/Log.h"
 #include "Fengshui/Input.h"
 
+#include "glad/glad.h"
+
 namespace Fengshui
 {
 
@@ -38,9 +40,6 @@ namespace Fengshui
 					layer->OnUpdate();
 				}
 			}
-
-			auto [x, y] = Input::GetMousePos();
-			FS_TRACE("({0}, {1})", x, y);
 
 			m_Window->OnUpdate();
 		}

@@ -4,6 +4,7 @@
 #include "Fengshui/Application.h"
 
 #include "imgui.h"
+#include "Fengshui/KeyCode.h"
 #include "Fengshui/Platform/OpenGL/ImGuiOpenGLRenderer.h"
 
 #include "glad/glad.h"
@@ -30,6 +31,29 @@ namespace Fengshui
 		ImGuiIO& io = ImGui::GetIO();
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
+
+		//Mapping from imgui_impl_glfw.cpp
+		io.KeyMap[ImGuiKey_Tab] = FS_KEY_TAB;
+		io.KeyMap[ImGuiKey_LeftArrow] = FS_KEY_LEFT;
+		io.KeyMap[ImGuiKey_RightArrow] = FS_KEY_RIGHT;
+		io.KeyMap[ImGuiKey_UpArrow] = FS_KEY_UP;
+		io.KeyMap[ImGuiKey_DownArrow] = FS_KEY_DOWN;
+		io.KeyMap[ImGuiKey_PageUp] = FS_KEY_PAGE_UP;
+		io.KeyMap[ImGuiKey_PageDown] = FS_KEY_PAGE_DOWN;
+		io.KeyMap[ImGuiKey_Home] = FS_KEY_HOME;
+		io.KeyMap[ImGuiKey_End] = FS_KEY_END;
+		io.KeyMap[ImGuiKey_Insert] = FS_KEY_INSERT;
+		io.KeyMap[ImGuiKey_Delete] = FS_KEY_DELETE;
+		io.KeyMap[ImGuiKey_Backspace] = FS_KEY_BACKSPACE;
+		io.KeyMap[ImGuiKey_Space] = FS_KEY_SPACE;
+		io.KeyMap[ImGuiKey_Enter] = FS_KEY_ENTER;
+		io.KeyMap[ImGuiKey_Escape] = FS_KEY_ESCAPE;
+		io.KeyMap[ImGuiKey_A] = FS_KEY_A;
+		io.KeyMap[ImGuiKey_C] = FS_KEY_C;
+		io.KeyMap[ImGuiKey_V] = FS_KEY_V;
+		io.KeyMap[ImGuiKey_X] = FS_KEY_X;
+		io.KeyMap[ImGuiKey_Y] = FS_KEY_Y;
+		io.KeyMap[ImGuiKey_Z] = FS_KEY_Z;
 
 		ImGui_ImplOpenGL3_Init("#version 410");
 		//ImGui_ImplOpenGL3_Init();
@@ -109,10 +133,10 @@ namespace Fengshui
 		ImGuiIO& io = ImGui::GetIO();
 		io.KeysDown[e.GetKeyCode()] = true;
 
-		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
-		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
-		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
-		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+		io.KeyCtrl = io.KeysDown[FS_KEY_LEFT_CONTROL] || io.KeysDown[FS_KEY_RIGHT_CONTROL];
+		io.KeyShift = io.KeysDown[FS_KEY_LEFT_SHIFT] || io.KeysDown[FS_KEY_RIGHT_SHIFT];
+		io.KeyAlt = io.KeysDown[FS_KEY_LEFT_ALT] || io.KeysDown[FS_KEY_RIGHT_ALT];
+		io.KeySuper = io.KeysDown[FS_KEY_LEFT_SUPER] || io.KeysDown[FS_KEY_RIGHT_SUPER];
 
 		return false;
 	}

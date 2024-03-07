@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>GLFW_INCLUDE_NONE;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;FS_DEBUG;FS_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\imgui;External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\imgui;External\imgui\backends;External\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -104,7 +104,7 @@ IF EXIST ..\bin\Debug-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I .
       <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>GLFW_INCLUDE_NONE;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;FS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\imgui;External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\imgui;External\imgui\backends;External\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -132,7 +132,7 @@ IF EXIST ..\bin\Release-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I
       <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>GLFW_INCLUDE_NONE;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;_CRT_SECURE_NO_WARNINGS;FS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\imgui;External\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\imgui;External\imgui\backends;External\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -167,15 +167,17 @@ IF EXIST ..\bin\Dist-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I ..
     <ClInclude Include="src\Fengshui\Events\MouseEvent.h" />
     <ClInclude Include="src\Fengshui\IMGUI\ImGuiLayer.h" />
     <ClInclude Include="src\Fengshui\Input.h" />
+    <ClInclude Include="src\Fengshui\KeyCode.h" />
     <ClInclude Include="src\Fengshui\Layers\Layer.h" />
     <ClInclude Include="src\Fengshui\Layers\LayerStack.h" />
     <ClInclude Include="src\Fengshui\Logging\Log.h" />
+    <ClInclude Include="src\Fengshui\MouseButtonCode.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
+    <ClInclude Include="src\Fengshui\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Fengshui\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Fengshui\Scene.h" />
     <ClInclude Include="src\Fengshui\Window.h" />
     <ClInclude Include="src\fspch.h" />
-    <ClInclude Include="src\Fengshui\Platform\Windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Fengshui\Application.cpp" />
@@ -186,12 +188,12 @@ IF EXIST ..\bin\Dist-windows-x86_64\Fengshui\Fengshui.dll\ (xcopy /Q /E /Y /I ..
     <ClCompile Include="src\Fengshui\Layers\LayerStack.cpp" />
     <ClCompile Include="src\Fengshui\Logging\Log.cpp" />
     <ClCompile Include="src\Fengshui\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Fengshui\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Fengshui\Scene.cpp" />
     <ClCompile Include="src\fspch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\GLFW\GLFW.vcxproj">

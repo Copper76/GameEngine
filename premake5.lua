@@ -15,6 +15,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "Fengshui/External/GLFW/include"
 IncludeDir["GLAD"] = "Fengshui/External/GLAD/include"
 IncludeDir["imgui"] = "Fengshui/External/imgui"
+IncludeDir["GLM"] = "Fengshui/External/GLM"
 
 include "Fengshui/External/GLFW"
 include "Fengshui/External/GLAD"
@@ -44,6 +45,7 @@ project "Fengshui"
 		"%{IncludeDir.GLAD}",
 		"%{IncludeDir.imgui}",
 		"%{IncludeDir.imgui}/backends",
+		"%{IncludeDir.GLM}",
 	}
 
 	links
@@ -118,6 +120,7 @@ project "Sandbox"
 	{
 		"Fengshui/External/spdlog/include",
 		"Fengshui/src",
+		"%{IncludeDir.GLM}",
 	}
 
 	links

@@ -64,6 +64,12 @@
     <ClInclude Include="src\Fengshui\IMGUI\ImGuiLayer.h">
       <Filter>Fengshui\IMGUI</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\Input.h">
+      <Filter>Fengshui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\KeyCode.h">
+      <Filter>Fengshui</Filter>
+    </ClInclude>
     <ClInclude Include="src\Fengshui\Layers\Layer.h">
       <Filter>Fengshui\Layers</Filter>
     </ClInclude>
@@ -73,8 +79,14 @@
     <ClInclude Include="src\Fengshui\Logging\Log.h">
       <Filter>Fengshui\Logging</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\MouseButtonCode.h">
+      <Filter>Fengshui</Filter>
+    </ClInclude>
     <ClInclude Include="src\Fengshui\Platform\OpenGL\ImGuiOpenGLRenderer.h">
       <Filter>Fengshui\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\Windows\WindowsInput.h">
+      <Filter>Fengshui\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\Platform\Windows\WindowsWindow.h">
       <Filter>Fengshui\Platform\Windows</Filter>
@@ -86,8 +98,6 @@
       <Filter>Fengshui</Filter>
     </ClInclude>
     <ClInclude Include="src\fspch.h" />
-    <ClInclude Include="src\Fengshui\Input.h" />
-    <ClInclude Include="src\Fengshui\Platform\Windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Fengshui\Application.cpp">
@@ -114,6 +124,9 @@
     <ClCompile Include="src\Fengshui\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
       <Filter>Fengshui\Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\Windows\WindowsInput.cpp">
+      <Filter>Fengshui\Platform\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Fengshui\Platform\Windows\WindowsWindow.cpp">
       <Filter>Fengshui\Platform\Windows</Filter>
     </ClCompile>
@@ -121,6 +134,5 @@
       <Filter>Fengshui</Filter>
     </ClCompile>
     <ClCompile Include="src\fspch.cpp" />
-    <ClCompile Include="src\Fengshui\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
 </Project>
