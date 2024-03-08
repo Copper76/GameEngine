@@ -143,6 +143,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RenderContext.h" />
     <ClInclude Include="src\Fengshui.h" />
     <ClInclude Include="src\Fengshui\Application.h" />
     <ClInclude Include="src\Fengshui\Core.h" />
@@ -162,11 +164,13 @@
     <ClInclude Include="src\Fengshui\MouseButtonCode.h" />
     <ClInclude Include="src\Fengshui\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Fengshui\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Fengshui\Renderer\Shader.h" />
     <ClInclude Include="src\Fengshui\Scene.h" />
     <ClInclude Include="src\Fengshui\Window.h" />
     <ClInclude Include="src\fspch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Fengshui\Application.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Components\BaseComponent.cpp" />
     <ClCompile Include="src\Fengshui\ECS\GameEntity.cpp" />
@@ -177,6 +181,7 @@
     <ClCompile Include="src\Fengshui\Logging\Log.cpp" />
     <ClCompile Include="src\Fengshui\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Fengshui\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\Shader.cpp" />
     <ClCompile Include="src\Fengshui\Scene.cpp" />
     <ClCompile Include="src\fspch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

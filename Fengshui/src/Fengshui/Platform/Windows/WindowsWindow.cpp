@@ -3,7 +3,8 @@
 #include "Fengshui/Events/ApplicationEvent.h"
 #include "Fengshui/Events/KeyEvent.h"
 #include "Fengshui/Events/MouseEvent.h"
-#include "glad/glad.h"
+
+#include "Fengshui/Platform/OpenGL/OpenGLContext.h"
 
 namespace Fengshui
 {
@@ -49,9 +50,9 @@ namespace Fengshui
 
 		m_Window = glfwCreateWindow((int)info.Width, (int)info.Height, info.Title.c_str(), nullptr, nullptr);
 
-		glfwMakeContextCurrent(m_Window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		FS_ENGINE_ASSERT(status, "Failed to initialise GLAD")
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
@@ -156,7 +157,7 @@ namespace Fengshui
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)

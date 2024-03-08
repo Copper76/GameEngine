@@ -92,6 +92,9 @@
       <Filter>Fengshui</Filter>
     </ClInclude>
     <ClInclude Include="src\fspch.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RenderContext.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Fengshui\Renderer\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Fengshui\Application.cpp">
@@ -128,5 +131,7 @@
       <Filter>Fengshui</Filter>
     </ClCompile>
     <ClCompile Include="src\fspch.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\Shader.cpp" />
   </ItemGroup>
 </Project>

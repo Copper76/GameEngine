@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Fengshui/Window.h"
+#include "Fengshui/Renderer/RenderContext.h"
 
 #include <GLFW/glfw3.h>
 
@@ -29,6 +30,7 @@ namespace Fengshui
 
 	private:
 		GLFWwindow* m_Window; //May need to change to Window in the future
+		RenderContext* m_Context;
 
 		struct WindowData
 		{
