@@ -95,6 +95,9 @@
     <ClInclude Include="src\Fengshui\Renderer\RenderContext.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Fengshui\Renderer\Shader.h" />
+    <ClInclude Include="src\Fengshui\Renderer\Buffer.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="src\Fengshui\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Fengshui\Application.cpp">
@@ -133,5 +136,8 @@
     <ClCompile Include="src\fspch.cpp" />
     <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\Renderer.cpp" />
   </ItemGroup>
 </Project>
