@@ -1,6 +1,5 @@
 #pragma once
 
-
 //For external applicaitons
 #include "Fengshui/Layers/Layer.h"
 #include "Fengshui/Logging/Log.h"

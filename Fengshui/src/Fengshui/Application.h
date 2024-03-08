@@ -6,11 +6,13 @@
 #include "Fengshui/Layers/LayerStack.h"
 #include "Fengshui/Events/ApplicationEvent.h"
 
+#include "Fengshui/IMGUI/ImGuiLayer.h"
+
 #include "Fengshui/Window.h"
 
 namespace Fengshui
 {
-	class FENGSHUI_API Application
+	class Application
 	{
 	public:
 		Application();
@@ -30,12 +32,12 @@ namespace Fengshui
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
 	private:
 		static Application* s_Instance;
-		ImGuiLayer* m_ImGuiLayer;
 	};
 
 	Application* CreateApplication();

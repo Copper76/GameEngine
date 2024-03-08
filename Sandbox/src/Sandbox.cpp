@@ -1,5 +1,8 @@
 #include <Fengshui.h>
 
+//External includes
+#include <imgui.h>
+
 class ExampleLayer : public Fengshui::Layer
 {
 public:
@@ -27,6 +30,13 @@ public:
 	{
 
 	}
+
+	void OnImGuiRender() override
+	{
+		//ImGui::Begin("TEST");
+		//ImGui::Text("Hello World");
+		//ImGui::End();
+	}
 };
 
 class Sandbox : public Fengshui::Application
@@ -34,7 +44,8 @@ class Sandbox : public Fengshui::Application
 public:
 	Sandbox() : Application()
 	{
-		//PushLayer(new ExampleLayer());
+		//ExampleLayer* layer = new ExampleLayer();
+		//PushLayer(layer);
 	}
 
 	~Sandbox()

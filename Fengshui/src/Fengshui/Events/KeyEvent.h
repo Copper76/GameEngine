@@ -4,7 +4,7 @@
 
 namespace Fengshui
 {
-	class FENGSHUI_API KeyEvent : public Event
+	class KeyEvent : public Event
 	{
 	public:
 		inline int GetKeyCode() const { return m_KeyCode; }
@@ -17,7 +17,7 @@ namespace Fengshui
 		int m_KeyCode;
 	};
 
-	class FENGSHUI_API KeyPressedEvent : public KeyEvent
+	class KeyPressedEvent : public KeyEvent
 	{
 	public:
 		KeyPressedEvent(int keycode, int repeatCount) : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
@@ -43,7 +43,7 @@ namespace Fengshui
 		int m_RepeatCount;
 	};
 
-	class FENGSHUI_API KeyReleasedEvent : public KeyEvent
+	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
 		KeyReleasedEvent(int keycode) : KeyEvent(keycode) {}
@@ -64,7 +64,7 @@ namespace Fengshui
 		}
 	};
 
-	class FENGSHUI_API KeyTypedEvent : public KeyEvent
+	class KeyTypedEvent : public KeyEvent
 	{
 	public:
 		KeyTypedEvent(int keycode) : KeyEvent(keycode) {}

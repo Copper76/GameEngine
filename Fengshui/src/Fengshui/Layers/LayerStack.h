@@ -7,7 +7,7 @@
 
 namespace Fengshui
 {
-	class FENGSHUI_API LayerStack
+	class LayerStack
 	{
 	public:
 		LayerStack();
@@ -23,7 +23,7 @@ namespace Fengshui
 
 	private:
 		std::vector<Layer*> m_Layers;
-		std::vector<Layer*>::iterator m_LayerInsert;//Position of insertion
+		unsigned int m_LayerInsertIndex = 0;//Position of insertion
 	};
 }
 

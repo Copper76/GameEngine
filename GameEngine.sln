@@ -9,7 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLAD", "Fengshui\External\G
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLFW", "Fengshui\External\GLFW\GLFW.vcxproj", "{154B857C-0182-860D-AA6E-6C109684020F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imgui", "Fengshui\External\imgui\imgui.vcxproj", "{0098A80F-6CAC-D0C0-352E-7420A101CDF1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMGUI", "Fengshui\External\IMGUI\IMGUI.vcxproj", "{606F530D-CC83-7BBE-9505-1F1E01D977EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,12 +42,12 @@ Global
 		{154B857C-0182-860D-AA6E-6C109684020F}.Dist|x64.Build.0 = Dist|x64
 		{154B857C-0182-860D-AA6E-6C109684020F}.Release|x64.ActiveCfg = Release|x64
 		{154B857C-0182-860D-AA6E-6C109684020F}.Release|x64.Build.0 = Release|x64
-		{0098A80F-6CAC-D0C0-352E-7420A101CDF1}.Debug|x64.ActiveCfg = Debug|x64
-		{0098A80F-6CAC-D0C0-352E-7420A101CDF1}.Debug|x64.Build.0 = Debug|x64
-		{0098A80F-6CAC-D0C0-352E-7420A101CDF1}.Dist|x64.ActiveCfg = Dist|x64
-		{0098A80F-6CAC-D0C0-352E-7420A101CDF1}.Dist|x64.Build.0 = Dist|x64
-		{0098A80F-6CAC-D0C0-352E-7420A101CDF1}.Release|x64.ActiveCfg = Release|x64
-		{0098A80F-6CAC-D0C0-352E-7420A101CDF1}.Release|x64.Build.0 = Release|x64
+		{606F530D-CC83-7BBE-9505-1F1E01D977EF}.Debug|x64.ActiveCfg = Debug|x64
+		{606F530D-CC83-7BBE-9505-1F1E01D977EF}.Debug|x64.Build.0 = Debug|x64
+		{606F530D-CC83-7BBE-9505-1F1E01D977EF}.Dist|x64.ActiveCfg = Dist|x64
+		{606F530D-CC83-7BBE-9505-1F1E01D977EF}.Dist|x64.Build.0 = Dist|x64
+		{606F530D-CC83-7BBE-9505-1F1E01D977EF}.Release|x64.ActiveCfg = Release|x64
+		{606F530D-CC83-7BBE-9505-1F1E01D977EF}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

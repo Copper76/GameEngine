@@ -9,15 +9,21 @@
 
 namespace Fengshui
 {
-	class FENGSHUI_API ImGuiLayer : public Layer
+	class ImGuiLayer : public Layer
 	{
 	public:
 		ImGuiLayer();
 		~ImGuiLayer();
 
-		void OnAttach();
-		void OnDetach();
-		void OnUpdate();
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
+		//virtual void OnUpdate();
+		virtual void OnImGuiRender() override;
+
+		void Begin();
+		void End();
+
+		/**
 		void OnEvent(Event& event);
 
 	private:
@@ -31,6 +37,7 @@ namespace Fengshui
 		bool OnKeyTypedEvent(KeyTypedEvent& e);
 
 		bool OnWindowResizeEvent(WindowResizeEvent& e);
+		**/
 
 	private:
 		float m_Time = 0.0f;

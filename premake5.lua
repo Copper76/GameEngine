@@ -14,17 +14,20 @@ output_dir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "Fengshui/External/GLFW/include"
 IncludeDir["GLAD"] = "Fengshui/External/GLAD/include"
-IncludeDir["imgui"] = "Fengshui/External/imgui"
+IncludeDir["IMGUI"] = "Fengshui/External/IMGUI"
 IncludeDir["GLM"] = "Fengshui/External/GLM"
 
 include "Fengshui/External/GLFW"
 include "Fengshui/External/GLAD"
-include "Fengshui/External/imgui"
+include "Fengshui/External/IMGUI"
 
 project "Fengshui"
 	location "Fengshui"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+
 	targetdir ("bin/" .. output_dir .. "/%{prj.name}")
 	objdir ("bin-int/" .. output_dir .. "/%{prj.name}")
 
@@ -43,8 +46,8 @@ project "Fengshui"
 		"%{prj.name}/External/spdlog/include",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLAD}",
-		"%{IncludeDir.imgui}",
-		"%{IncludeDir.imgui}/backends",
+		"%{IncludeDir.IMGUI}",
+		"%{IncludeDir.IMGUI}/backends",
 		"%{IncludeDir.GLM}",
 	}
 
@@ -52,35 +55,28 @@ project "Fengshui"
 	{
 		"GLFW",
 		"GLAD",
-		"imgui",
+		"IMGUI",
 		"opengl32",
 	}
 
 	defines
 	{
 		"GLFW_INCLUDE_NONE",
+		"_CRT_SECURE_NO_WARNINGS",
 	}
 
 	filter "system:windows"
-		staticruntime "Off"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
 		{
 			"FS_BUILD_DLL",
 			"FS_PLATFORM_WINDOWS",
-			"_CRT_SECURE_NO_WARNINGS",
-		}
-
-		postbuildcommands
-		{
-			("if not exist \"../bin/" .. output_dir .. "/Sandbox/\" mkdir \"../bin/" .. output_dir .. "/Sandbox/\""),
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. output_dir .. "/Sandbox")
 		}
 
 		filter "configurations:Debug"
-			symbols "On"
+			symbols "on"
+			runtime "Debug"
 
 			defines
 			{
@@ -88,15 +84,17 @@ project "Fengshui"
 				"FS_ENABLE_ASSERTS",
 			}
 
-		filter "configurations:RELEASE"
-			optimize "On"
+		filter "configurations:Release"
+			optimize "on"
+			runtime "Release"
 
 			defines{
 				"FS_RELEASE",
 			}
 
-		filter "configurations:DIST"
-			optimize "On"
+		filter "configurations:Dist"
+			optimize "on"
+			runtime "Release"
 
 			defines{
 				"FS_DIST",
@@ -107,6 +105,8 @@ project "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"
+	staticruntime "on"
+
 	targetdir ("bin/" .. output_dir .. "/%{prj.name}")
 	objdir ("bin-int/" .. output_dir .. "/%{prj.name}")
 
@@ -121,6 +121,7 @@ project "Sandbox"
 		"Fengshui/External/spdlog/include",
 		"Fengshui/src",
 		"%{IncludeDir.GLM}",
+		"Fengshui/External/IMGUI",
 	}
 
 	links
@@ -129,7 +130,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		staticruntime "Off"
 		systemversion "latest"
 
 		defines
@@ -139,12 +139,15 @@ project "Sandbox"
 
 		filter "configurations:Debug"
 			defines "FS_DEBUG"
-			optimize "On"
+			runtime "Debug"
+			symbols "on"
 
-		filter "configurations:RELEASE"
+		filter "configurations:Release"
 			defines "FS_RELEASE"
-			symbols "On"
+			runtime "Release"
+			optimize "on"
 
-		filter "configurations:DIST"
+		filter "configurations:Dist"
 			defines "FS_DIST"
-			optimize "On"
+			runtime "Release"
+			optimize "on"

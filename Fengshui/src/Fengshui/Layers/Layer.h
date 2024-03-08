@@ -5,7 +5,7 @@
 
 namespace Fengshui
 {
-	class FENGSHUI_API Layer
+	class Layer
 	{
 	public:
 		Layer(const std::string& name = "Layer", bool isActive = true);
@@ -14,7 +14,8 @@ namespace Fengshui
 		//Need implementation
 		virtual void OnAttach() = 0;
 		virtual void OnDetach() = 0;
-		virtual void OnUpdate() = 0;
+		virtual void OnUpdate() {}
+		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event) {}
 		void SetActive(bool isActive);
 

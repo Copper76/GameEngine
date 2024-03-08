@@ -19,7 +19,7 @@ namespace Fengshui
 			: Title(title), Width(width), Height(height) {}
 	};
 
-	class FENGSHUI_API Window
+	class Window
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;

@@ -7,7 +7,6 @@
 
 namespace Fengshui
 {
-
 	Application* Application::s_Instance = nullptr;
 
 	Application::Application()
@@ -19,6 +18,7 @@ namespace Fengshui
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
+		//PushLayer(new ExampleLayer());
 	}
 
 	Application::~Application()
@@ -33,6 +33,7 @@ namespace Fengshui
 
 		while (m_Running)
 		{
+			glClear(GL_COLOR_BUFFER_BIT);
 			for (Layer* layer : m_LayerStack)
 			{
 				if (layer->IsActive())
@@ -40,6 +41,16 @@ namespace Fengshui
 					layer->OnUpdate();
 				}
 			}
+
+			m_ImGuiLayer->Begin();
+			for (Layer* layer : m_LayerStack)
+			{
+				if (layer->IsActive())
+				{
+					layer->OnImGuiRender();
+				}
+			}
+			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
 		}

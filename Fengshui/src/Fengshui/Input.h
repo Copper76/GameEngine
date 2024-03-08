@@ -4,7 +4,7 @@
 
 namespace Fengshui
 {
-	class FENGSHUI_API Input
+	class Input
 	{
 	public:
 		inline static bool IsKeyPressed(int keyCode) { return s_Instance->IsKeyPressedImpl(keyCode); }

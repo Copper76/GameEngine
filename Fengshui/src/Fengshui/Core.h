@@ -1,10 +1,14 @@
 #pragma once
 
 #ifdef FS_PLATFORM_WINDOWS
-	#ifdef FS_BUILD_DLL
-		#define FENGSHUI_API __declspec(dllexport)
+	#ifdef FS_DYNAMIC_LINK
+		#ifdef FS_BUILD_DLL
+			#define FENGSHUI_API __declspec(dllexport)
+		#else
+			#define FENGSHUI_API __declspec(dllimport)
+		#endif
 	#else
-		#define FENGSHUI_API __declspec(dllimport)
+		#define FENGSHUI_API
 	#endif
 #else
 	#error Fengshui only supports Windows!

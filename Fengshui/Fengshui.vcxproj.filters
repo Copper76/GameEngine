@@ -25,9 +25,6 @@
     <Filter Include="Fengshui\Platform">
       <UniqueIdentifier>{52444131-BE5A-3FC7-07D2-CAE87327104F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fengshui\Platform\OpenGL">
-      <UniqueIdentifier>{469D1F2A-32C2-6EAA-5B0D-543A47916DC8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Fengshui\Platform\Windows">
       <UniqueIdentifier>{8C202FC6-F8E2-6250-4193-F1DCAD943B2E}</UniqueIdentifier>
     </Filter>
@@ -82,9 +79,6 @@
     <ClInclude Include="src\Fengshui\MouseButtonCode.h">
       <Filter>Fengshui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Platform\OpenGL\ImGuiOpenGLRenderer.h">
-      <Filter>Fengshui\Platform\OpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="src\Fengshui\Platform\Windows\WindowsInput.h">
       <Filter>Fengshui\Platform\Windows</Filter>
     </ClInclude>
@@ -109,6 +103,9 @@
     <ClCompile Include="src\Fengshui\ECS\GameEntity.cpp">
       <Filter>Fengshui\ECS</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\IMGUI\ImGuiBuild.cpp">
+      <Filter>Fengshui\IMGUI</Filter>
+    </ClCompile>
     <ClCompile Include="src\Fengshui\IMGUI\ImGuiLayer.cpp">
       <Filter>Fengshui\IMGUI</Filter>
     </ClCompile>
@@ -120,9 +117,6 @@
     </ClCompile>
     <ClCompile Include="src\Fengshui\Logging\Log.cpp">
       <Filter>Fengshui\Logging</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Fengshui\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
-      <Filter>Fengshui\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Platform\Windows\WindowsInput.cpp">
       <Filter>Fengshui\Platform\Windows</Filter>
