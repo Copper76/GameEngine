@@ -14,6 +14,8 @@
 #include "Fengshui/Renderer/Buffer.h"
 #include "Fengshui/Renderer/VertexArray.h"
 
+#include "Fengshui/Renderer/Camera.h"
+
 namespace Fengshui
 {
 	class Application
@@ -34,6 +36,7 @@ namespace Fengshui
 
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
+		bool OnKeyPressed(KeyPressedEvent& e);
 
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
@@ -44,6 +47,8 @@ namespace Fengshui
 		std::shared_ptr<VertexArray>  m_VertexArray;
 
 		std::shared_ptr<VertexArray> m_SquareVA;
+
+		OrthographicCamera m_Camera;
 
 	private:
 		static Application* s_Instance;

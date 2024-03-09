@@ -1,15 +1,15 @@
 #include "fspch.h"
 #include "Application.h"
 #include "Fengshui/Logging/Log.h"
-#include "Fengshui/Input.h"
-#include "Fengshui/Platform/OpenGL/OpenGLRendererAPI.h"
 #include "Fengshui/Renderer/Renderer.h"
+
+#include "Fengshui/KeyCode.h"
 
 namespace Fengshui
 {
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application()
+	Application::Application() : m_Camera(-1.0f, 1.0f, -1.0f, 1.0f)
 	{
 		FS_ENGINE_ASSERT(!s_Instance, "Applicaiton already running!");
 		s_Instance = this;
@@ -87,6 +87,8 @@ namespace Fengshui
 			layout(location = 0) in vec3 a_Position;
 			layout(location = 1) in vec4 a_Color;
 
+			uniform mat4 u_ViewProjectionMatrix;
+
 			out vec3 v_Position;
 			out vec4 v_Color;
 
@@ -94,7 +96,7 @@ namespace Fengshui
 			{
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjectionMatrix * vec4(a_Position, 1.0);
 				
 			}
 		)";
@@ -116,6 +118,9 @@ namespace Fengshui
 
 		m_Shader = std::make_unique<Shader>(vertexSource, fragmentSource);
 		RenderCommand::SetClearColour({ 0.2f, 0.2f, 0.2f, 1 });
+
+		m_Camera.SetPosition({ 0.3f,0.0f,0.0f });
+		//m_Camera.SetRotation(90.0f);
 	}
 
 	Application::~Application()
@@ -134,13 +139,11 @@ namespace Fengshui
 			RenderCommand::Clear();
 
 			//Render cycle
-			Renderer::BeginScene();
+			Renderer::BeginScene(m_Camera);
 
-			m_Shader->Bind();
+			Renderer::Submit(m_Shader, "u_ViewProjectionMatrix", m_SquareVA);
 
-			Renderer::Submit(m_SquareVA);
-
-			Renderer::Submit(m_VertexArray);
+			Renderer::Submit(m_Shader, "u_ViewProjectionMatrix", m_VertexArray);
 
 			Renderer::EndScene();
 
@@ -175,6 +178,7 @@ namespace Fengshui
 
 		EventDispatcher eventDispatcher(e);
 		eventDispatcher.Dispatch<WindowCloseEvent>(FS_BIND_EVENT_FN(Application::OnWindowClose));
+		eventDispatcher.Dispatch<KeyPressedEvent>(FS_BIND_EVENT_FN(Application::OnKeyPressed));
 
 		
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
@@ -192,6 +196,49 @@ namespace Fengshui
 	{
 		m_Running = false;
 		return true;
+	}
+
+	bool Application::OnKeyPressed(KeyPressedEvent& e)
+	{
+		if (e.GetKeyCode() == FS_KEY_W)
+		{
+			glm::vec3 offset = { 0.0f, 0.1f, 0.0f };
+			m_Camera.SetPosition(m_Camera.GetPosition() + offset);
+			return true;
+		}
+
+		if (e.GetKeyCode() == FS_KEY_S)
+		{
+			glm::vec3 offset = { 0.0f, -0.1f, 0.0f };
+			m_Camera.SetPosition(m_Camera.GetPosition() + offset);
+			return true;
+		}
+
+		if (e.GetKeyCode() == FS_KEY_A)
+		{
+			glm::vec3 offset = { -0.1f, 0.0f, 0.0f };
+			m_Camera.SetPosition(m_Camera.GetPosition() + offset);
+			return true;
+		}
+
+		if (e.GetKeyCode() == FS_KEY_D)
+		{
+			glm::vec3 offset = { 0.1f, 0.0f, 0.0f };
+			m_Camera.SetPosition(m_Camera.GetPosition() + offset);
+			return true;
+		}
+		if (e.GetKeyCode() == FS_KEY_Q)
+		{
+			m_Camera.SetRotation(m_Camera.GetRotation() - 1.0f);
+			return true;
+		}
+
+		if (e.GetKeyCode() == FS_KEY_E)
+		{
+			m_Camera.SetRotation(m_Camera.GetRotation() + 1.0f);
+			return true;
+		}
+
 	}
 
 	void Application::PushLayer(Layer* layer)

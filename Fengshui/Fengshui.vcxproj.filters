@@ -103,6 +103,7 @@
     <ClInclude Include="src\Fengshui\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Fengshui\Renderer\Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Fengshui\Application.cpp">
@@ -149,5 +150,6 @@
     <ClCompile Include="src\Fengshui\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\Camera.cpp" />
   </ItemGroup>
 </Project>
