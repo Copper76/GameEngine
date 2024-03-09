@@ -19,12 +19,12 @@ namespace Fengshui
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RenderAPI::None:
+		case RendererAPI::API::None:
 		{
 			FS_ENGINE_ASSERT(false, "RenderAPI::None is not supported");
 			return nullptr;
 		}
-		case RenderAPI::OpenGL:
+		case RendererAPI::API::OpenGL:
 		{
 			return new OpenGLVertexBuffer(size, vertices);
 		}
@@ -50,12 +50,12 @@ namespace Fengshui
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RenderAPI::None:
+		case RendererAPI::API::None:
 		{
 			FS_ENGINE_ASSERT(false, "RenderAPI::None is not supported");
 			return nullptr;
 		}
-		case RenderAPI::OpenGL:
+		case RendererAPI::API::OpenGL:
 		{
 			return new OpenGLIndexBuffer(size, indices);
 		}

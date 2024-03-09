@@ -98,6 +98,11 @@
     <ClInclude Include="src\Fengshui\Renderer\Buffer.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Fengshui\Renderer\Renderer.h" />
+    <ClInclude Include="src\Fengshui\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RenderCommand.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLRendererAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Fengshui\Application.cpp">
@@ -139,5 +144,10 @@
     <ClCompile Include="src\Fengshui\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\RenderCommand.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLRendererAPI.cpp" />
   </ItemGroup>
 </Project>

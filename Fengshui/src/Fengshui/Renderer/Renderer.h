@@ -1,19 +1,19 @@
 #pragma once
 
+#include "Fengshui/Renderer/RendererAPI.h"
+#include "Fengshui/Renderer/RenderCommand.h"
+
 namespace Fengshui
 {
-	enum class RenderAPI
-	{
-		None = 0, OpenGL = 1,
-	};
 
 	class Renderer
 	{
 	public:
-		inline static RenderAPI GetAPI() { return s_RenderAPI; }
-		inline static void SetAPI(RenderAPI api) { s_RenderAPI = api; }
+		static void BeginScene();
+		static void EndScene();
+		
+		static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
 
-	private:
-		static RenderAPI s_RenderAPI;
+		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	};
 }
