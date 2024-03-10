@@ -1,7 +1,7 @@
 #include "fspch.h"
-#include "WindowsInput.h"
+#include "Fengshui/Platform//Windows/WindowsInput.h"
 
-#include "Fengshui/Application.h"
+#include "Fengshui/Core/Application.h"
 
 #include "GLFW/glfw3.h"
 

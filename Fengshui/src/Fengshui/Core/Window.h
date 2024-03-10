@@ -2,7 +2,7 @@
 
 #include "fspch.h"
 
-#include "Fengshui/Core.h"
+#include "Fengshui/Core/Core.h"
 #include "Fengshui/Events/Event.h"
 
 namespace Fengshui

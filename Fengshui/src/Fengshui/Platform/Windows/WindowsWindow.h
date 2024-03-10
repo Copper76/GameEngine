@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Fengshui/Window.h"
+#include "Fengshui/Core/Window.h"
 #include "Fengshui/Renderer/RenderContext.h"
 
 #include <GLFW/glfw3.h>

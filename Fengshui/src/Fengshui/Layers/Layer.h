@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Fengshui/Core.h"
+#include "Fengshui/Core/Core.h"
 #include "Fengshui/Events/Event.h"
 
 namespace Fengshui
@@ -14,7 +14,7 @@ namespace Fengshui
 		//Need implementation
 		virtual void OnAttach() = 0;
 		virtual void OnDetach() = 0;
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(float dt) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event) {}
 		void SetActive(bool isActive);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Fengshui/Input.h"
+#include "Fengshui/Core/Input.h"
 
 namespace Fengshui
 {

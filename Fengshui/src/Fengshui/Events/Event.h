@@ -2,7 +2,7 @@
 
 #include <sstream>
 #include <functional>
-#include "Fengshui/Core.h"
+#include "Fengshui/Core/Core.h"
 
 namespace Fengshui
 {
