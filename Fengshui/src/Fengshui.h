@@ -33,5 +33,8 @@
 //Scene
 #include "Fengshui/Core/Scene.h"
 
+//Components
+#include "Fengshui/ECS/Components/TransformComponent.h"
+
 //Entry Point, place headers above this
 #include "Fengshui/Core/EntryPoint.h"

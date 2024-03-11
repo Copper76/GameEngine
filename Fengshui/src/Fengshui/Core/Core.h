@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #ifdef FS_PLATFORM_WINDOWS
 	#ifdef FS_DYNAMIC_LINK
 		#ifdef FS_BUILD_DLL
@@ -25,3 +27,12 @@
 #define BIT(x) (1<<x)
 
 #define FS_BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+
+namespace Fengshui
+{
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+}

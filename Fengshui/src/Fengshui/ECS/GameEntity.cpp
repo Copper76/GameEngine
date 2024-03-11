@@ -3,12 +3,13 @@
 
 namespace Fengshui
 {
-	void GameEntity::AddComponent(Component* component)
+	/**
+	void GameEntity::AddComponent(T* component)
 	{
 		m_Components.emplace_back(component);
 	}
 
-	void GameEntity::RemoveComponent(Component* component)
+	void GameEntity::RemoveComponent(T* component)
 	{
 		auto it = std::find(m_Components.begin(), m_Components.end(), component);
 		if (it != m_Components.end())
@@ -17,4 +18,5 @@ namespace Fengshui
 			m_Components.erase(it);
 		}
 	}
+	**/
 }

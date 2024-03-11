@@ -18,7 +18,8 @@ namespace Fengshui
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		FS_ENGINE_ASSERT(status, "Failed to initialise GLAD");
 
-		//FS_ENGINE_INFO("OpenGL Renderer: {0}", glGetString(GL_RENDERER));
+		FS_ENGINE_INFO("Device: {0}", reinterpret_cast<const char*>(glGetString(GL_VENDOR)));
+		FS_ENGINE_INFO("OpenGL Renderer: {0}", reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
 	}
 
 	void OpenGLContext::SwapBuffers()

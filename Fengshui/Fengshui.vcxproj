@@ -143,6 +143,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Fengshui\ECS\Components\CameraComponent.h" />
     <ClInclude Include="src\Fengshui\ECS\Components\RenderComponent.h" />
     <ClInclude Include="src\Fengshui.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="src\Fengshui\ECS\Components\TransformComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Components\CameraComponent.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Components\RenderComponent.cpp" />
     <ClCompile Include="src\Fengshui\Core\Application.cpp" />

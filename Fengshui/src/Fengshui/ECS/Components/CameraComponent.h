@@ -18,6 +18,8 @@ namespace Fengshui
 
 		}
 
+		COMPONENT_CLASS_TYPE(ComponentCamera);
+
 		void SetPosition(const glm::vec3& position) { m_Camera.SetPosition(position); }
 		void SetRotation(float rotation) { m_Camera.SetRotation(rotation); }
 

@@ -27,8 +27,8 @@ namespace Fengshui
 
 	void Application::Run()
 	{
-		FS_ENGINE_WARN("Initialized Log!")
-		FS_INFO("Client works as well")
+		//FS_ENGINE_WARN("Initialized Log!")
+		//FS_INFO("Client works as well")
 
 		while (m_Running)
 		{

@@ -38,7 +38,7 @@ namespace Fengshui
 		if (!s_GLFWInitialised)
 		{
 			int success = glfwInit();
-
+			
 			FS_ENGINE_ASSERT(success, "Could not initialise GLFW")
 
 			glfwSetErrorCallback(GLFWErrorCallback);

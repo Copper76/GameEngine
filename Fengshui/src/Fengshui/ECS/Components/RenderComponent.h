@@ -6,7 +6,7 @@ namespace Fengshui
 {
 	class RenderComponent : public Component
 	{
-		
+		COMPONENT_CLASS_TYPE(ComponentRender);
 	};
 }
 
