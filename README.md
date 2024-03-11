@@ -21,7 +21,7 @@ This project is a practice project to make a game engine using Entity-Component 
 ## Requirement
 - [sfml 2.6.1](https://github.com/SFML/SFML) (for snake game, deprecated)
 - [glfw 3](https://glfw.org)
-- [spdlog]((https://github.com/gabime/spdlog.git))
+- [spdlog](https://github.com/gabime/spdlog.git)
 - [glad](https://glad.dav1d.de/)
 - [imgui](https://github.com/ocornut/imgui.git)
 - [glm](https://github.com/g-truc/glm.git)
