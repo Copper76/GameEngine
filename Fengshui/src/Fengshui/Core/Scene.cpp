@@ -3,20 +3,36 @@
 
 namespace Fengshui
 {
-	void Scene::Init()
+	Scene::Scene()
 	{
-
+		m_CameraComponent = std::make_shared<CameraComponent>();
 	}
 
-	uint32_t Scene::CreateEntity()
+	Ref<Scene> Scene::Init()
 	{
-		GameEntity* entity = new GameEntity(m_NextEntityID);
-		TransformComponent* transform = new TransformComponent(m_NextEntityID);
-		transform->SetEntityID(m_NextEntityID);
-		entity->AddComponent(transform);
-		m_TransformComponents.emplace_back(transform);
-		m_GameEntities.emplace_back(entity);
+		return std::make_shared<Scene>();
+	}
+
+	uint32_t Scene::RegisterEntity(GameEntity* entity)
+	{
+		m_GameEntities[m_NextEntityID] = entity;
 		return m_NextEntityID++;
+	}
+
+	bool Scene::RegisterComponent(Ref<Component> component, uint32_t entityID)
+	{
+		if (m_Components[component->GetComponentType()][entityID] != nullptr)
+		{
+			return false;
+		}
+		component->SetEntityID(entityID);
+		m_Components[component->GetComponentType()][entityID] = component;
+		return true;
+	}
+
+	void Scene::RemoveComponent(Ref<Component> component, uint32_t entityID)
+	{
+		m_Components[component->GetComponentType()].erase(entityID);
 	}
 
 	void Scene::OnUpdate(float dt)

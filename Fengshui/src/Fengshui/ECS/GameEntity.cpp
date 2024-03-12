@@ -3,20 +3,11 @@
 
 namespace Fengshui
 {
-	/**
-	void GameEntity::AddComponent(T* component)
+	GameEntity::GameEntity(Ref<Scene> scene, Ref<HierarchyComponent> parent)
 	{
-		m_Components.emplace_back(component);
+		m_Scene = scene;
+		m_EntityID = m_Scene->RegisterEntity(this);
+		auto hierarchy = AddComponent<HierarchyComponent>();//Every entity should have a hierarchy
+		hierarchy->SetParent(parent);
 	}
-
-	void GameEntity::RemoveComponent(T* component)
-	{
-		auto it = std::find(m_Components.begin(), m_Components.end(), component);
-		if (it != m_Components.end())
-		{
-			//component->Detach();
-			m_Components.erase(it);
-		}
-	}
-	**/
 }

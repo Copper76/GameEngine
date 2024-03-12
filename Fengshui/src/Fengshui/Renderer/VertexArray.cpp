@@ -6,7 +6,7 @@
 
 namespace Fengshui
 {
-	VertexArray* VertexArray::Create()
+	Ref<VertexArray> VertexArray::Create()
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -17,7 +17,7 @@ namespace Fengshui
 		}
 		case RendererAPI::API::OpenGL:
 		{
-			return new OpenGLVertexArray();
+			return std::make_shared<OpenGLVertexArray>();
 		}
 		default:
 		{
@@ -26,4 +26,27 @@ namespace Fengshui
 		}
 		}
 	}
+
+	/**
+	void VertexArrayLibrary::Add(const Ref<VertexArray> vertexArray, const std::string& name)
+	{
+		FS_ENGINE_ASSERT(!Exist(name), "Shader already exists");
+		m_VertexArrays[name] = vertexArray;
+	}
+
+	Ref<VertexArray> VertexArrayLibrary::Get(const std::string& name)
+	{
+		FS_ENGINE_ASSERT(Exist(name), "Vertex Array not found");
+		if (!Exist(name))
+		{
+			return nullptr;
+		}
+		return m_VertexArrays[name];
+	}
+
+	bool VertexArrayLibrary::Exist(const std::string& name)
+	{
+		return m_VertexArrays.find(name) != m_VertexArrays.end();
+	}
+	**/
 }

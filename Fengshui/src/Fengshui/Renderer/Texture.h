@@ -3,6 +3,7 @@
 #include <string>
 
 #include "Fengshui/Core/Core.h"
+#include "Fengshui/Renderer/Shader.h"
 
 namespace Fengshui
 {
@@ -21,6 +22,6 @@ namespace Fengshui
 	{
 	public:
 		virtual ~Texture2D() = default;
-		static Ref<Texture2D> Create(const std::string& filePath);
+		static Ref<Texture2D> Create(const std::string& filePath, Ref<Shader> shader);
 	};
 }

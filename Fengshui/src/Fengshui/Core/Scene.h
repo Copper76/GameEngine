@@ -7,27 +7,30 @@
 
 namespace Fengshui
 {
+	class GameEntity;
+
 	class Scene
 	{
 	public:
-		Scene() : m_CameraComponent(0)
-		{
-			Init();
-		}
+		Scene();
 
-		void Init();
+		uint32_t RegisterEntity(GameEntity* entity);
 
-		uint32_t CreateEntity();
+		bool RegisterComponent(Ref<Component> component, uint32_t entityID);
+
+		void RemoveComponent(Ref<Component> component, uint32_t entityID);
 
 		void OnUpdate(float dt);
 
-		CameraComponent GetCameraComponent() { return m_CameraComponent; }
+		static Ref<Scene> Init();
+
+		Ref<CameraComponent> GetCameraComponent() { return m_CameraComponent; }
 
 	private:
 		uint32_t m_NextEntityID = 1;
-		std::vector<GameEntity*> m_GameEntities;
-		std::vector<TransformComponent*> m_TransformComponents;
-		std::vector<RenderComponent*> m_RenderComponents;
-		CameraComponent m_CameraComponent;
+		std::unordered_map<uint32_t, GameEntity*> m_GameEntities;
+		std::unordered_map<ComponentType,std::unordered_map<uint32_t, Ref<Component>>> m_Components;
+
+		Ref<CameraComponent> m_CameraComponent;
 	};
 }

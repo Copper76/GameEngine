@@ -8,6 +8,11 @@ namespace Fengshui
 	{
 	public:
 
+		inline static void Init()
+		{
+			s_RendererAPI->Init();
+		}
+
 		inline static void SetClearColour(const glm::vec4& colour)
 		{
 			s_RendererAPI->SetClearColour(colour);

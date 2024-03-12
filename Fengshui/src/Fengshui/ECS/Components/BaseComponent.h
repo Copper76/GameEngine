@@ -5,7 +5,7 @@ namespace Fengshui
 	enum class ComponentType
 	{
 		None = 0,
-		ComponentTransform, ComponentRender, ComponentCamera,
+		ComponentHierarchy, ComponentTransform, ComponentRender, ComponentCamera,
 	};
 
 	#define COMPONENT_CLASS_TYPE(type) static ComponentType GetStaticType() { return ComponentType::type; }\
@@ -14,15 +14,7 @@ namespace Fengshui
 	class Component
 	{
 	public:
-		Component() : m_EntityID(0)
-		{
-
-		}
-
-		Component(uint32_t entityID) : m_EntityID(entityID)
-		{
-
-		}
+		Component();
 
 		virtual ComponentType GetComponentType() const = 0;
 		virtual const char* GetName() const = 0;
@@ -33,5 +25,6 @@ namespace Fengshui
 
 	protected:
 		uint32_t m_EntityID;
+		//Ref<Entity> m_Entity//Should it reference the entity?
 	};
 }

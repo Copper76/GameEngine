@@ -16,6 +16,7 @@ IncludeDir["GLFW"] = "Fengshui/External/GLFW/include"
 IncludeDir["GLAD"] = "Fengshui/External/GLAD/include"
 IncludeDir["IMGUI"] = "Fengshui/External/IMGUI"
 IncludeDir["GLM"] = "Fengshui/External/GLM"
+IncludeDir["STB"] = "Fengshui/External/stb_image"
 
 include "Fengshui/External/GLFW"
 include "Fengshui/External/GLAD"
@@ -37,7 +38,9 @@ project "Fengshui"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/External/stb_image/**.h",
+		"%{prj.name}/External/stb_image/**.cpp",
 	}
 
 	includedirs
@@ -49,6 +52,7 @@ project "Fengshui"
 		"%{IncludeDir.IMGUI}",
 		"%{IncludeDir.IMGUI}/backends",
 		"%{IncludeDir.GLM}",
+		"%{IncludeDir.STB}",
 	}
 
 	links

@@ -15,7 +15,7 @@ namespace Fengshui
 
 	}
 
-	VertexBuffer* VertexBuffer::Create(uint32_t size, float* vertices)
+	Ref<VertexBuffer> VertexBuffer::Create(uint32_t size, float* vertices)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -26,7 +26,7 @@ namespace Fengshui
 		}
 		case RendererAPI::API::OpenGL:
 		{
-			return new OpenGLVertexBuffer(size, vertices);
+			return std::make_shared<OpenGLVertexBuffer>(size, vertices);
 		}
 		default:
 		{
@@ -46,7 +46,7 @@ namespace Fengshui
 
 	}
 
-	IndexBuffer* IndexBuffer::Create(uint32_t size, uint32_t* indices)
+	Ref<IndexBuffer> IndexBuffer::Create(uint32_t size, uint32_t* indices)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -57,7 +57,7 @@ namespace Fengshui
 		}
 		case RendererAPI::API::OpenGL:
 		{
-			return new OpenGLIndexBuffer(size, indices);
+			return std::make_shared<OpenGLIndexBuffer>(size, indices);
 		}
 		default:
 		{
