@@ -8,9 +8,19 @@ namespace Fengshui
 		m_CameraComponent = std::make_shared<CameraComponent>();
 	}
 
+	Scene::~Scene()
+	{
+		m_GameEntities.clear();
+	}
+
 	Ref<Scene> Scene::Init()
 	{
 		return std::make_shared<Scene>();
+	}
+
+	GameEntity* Scene::GetGameEntity(uint32_t id)
+	{
+		return m_GameEntities[id];
 	}
 
 	uint32_t Scene::RegisterEntity(GameEntity* entity)

@@ -13,10 +13,12 @@ namespace Fengshui
 	public:
 		GameEntity() 
 		{
-			m_EntityID = 0;
+			FS_ENGINE_ASSERT(false, "No scene specified");
 		}
 
 		GameEntity(Ref<Scene> scene, Ref<HierarchyComponent> parent = nullptr);
+
+		~GameEntity();
 
 		const uint32_t GetID() const { return m_EntityID; }
 		std::vector<Ref<Component>> GetComponents() { return m_Components; }

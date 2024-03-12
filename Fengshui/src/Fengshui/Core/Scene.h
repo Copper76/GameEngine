@@ -14,6 +14,8 @@ namespace Fengshui
 	public:
 		Scene();
 
+		~Scene();
+
 		uint32_t RegisterEntity(GameEntity* entity);
 
 		bool RegisterComponent(Ref<Component> component, uint32_t entityID);
@@ -23,6 +25,8 @@ namespace Fengshui
 		void OnUpdate(float dt);
 
 		static Ref<Scene> Init();
+
+		GameEntity* GetGameEntity(uint32_t id);
 
 		Ref<CameraComponent> GetCameraComponent() { return m_CameraComponent; }
 

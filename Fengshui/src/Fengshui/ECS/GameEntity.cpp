@@ -10,4 +10,13 @@ namespace Fengshui
 		auto hierarchy = AddComponent<HierarchyComponent>();//Every entity should have a hierarchy
 		hierarchy->SetParent(parent);
 	}
+
+	GameEntity::~GameEntity()
+	{
+		for (Ref<Component> comp : m_Components)
+		{
+			m_Scene->RemoveComponent(comp, m_EntityID);
+		}
+		m_Components.clear();
+	}
 }
