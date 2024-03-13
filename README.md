@@ -5,12 +5,14 @@ This project is a practice project to make a game engine using Entity-Component 
 ## Functions implemented
 - [X] Create a simple snake game using pure SFML to learn the basics of input handling and rendering. It is implemented in the [Snake Branch](https://github.com/Copper76/GameEngine/tree/Snake)
 - [X] Get Logging working with spdlog
+- [X] Integrate GLFW into the ECS. The GLFW now works under render component, which stores all the information required for rendering.
+- [X] Create a entity component system structure, a simple ECS is created in the ECS folder.
+- [X] Develop several components and entities, simple ones to start with such as simple data such as transform. The system now supports a hierarchy component that stores the position of entity in hierarchy, and transform to represent the location and orientation of the component in the world as the basics, with more to come.
 
 ## TODO
-- [ ] Integrate GLFW into the ECS
-- [ ] Create a entity component system structure
-- [ ] Develop several components and entities, simple ones to start with such as simple data such as transform.
 - [ ] Create the snake game with the game engine after its completion
+- [ ] Continue with the Cherno series on Hazel to further develop the renderer
+- [ ] Review the physics engine and the rest to determine whether it's more viable to reduce the physics engine to 2d or create a 3d renderer.
 
 ## Deprecated Objectives
 - [ ] Integrate SFML into the ECS
