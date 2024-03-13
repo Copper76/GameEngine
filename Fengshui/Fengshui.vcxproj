@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Dist|x64">
+      <Configuration>Dist</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Fengshui</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>..\bin\Debug-windows-x86_64\Fengshui\</OutDir>
+    <IntDir>..\bin-int\Debug-windows-x86_64\Fengshui\</IntDir>
+    <TargetName>Fengshui</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>..\bin\Release-windows-x86_64\Fengshui\</OutDir>
+    <IntDir>..\bin-int\Release-windows-x86_64\Fengshui\</IntDir>
+    <TargetName>Fengshui</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+    <OutDir>..\bin\Dist-windows-x86_64\Fengshui\</OutDir>
+    <IntDir>..\bin-int\Dist-windows-x86_64\Fengshui\</IntDir>
+    <TargetName>Fengshui</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;FS_DEBUG;FS_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\IMGUI;External\IMGUI\backends;External\GLM;External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;FS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\IMGUI;External\IMGUI\backends;External\GLM;External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;FS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\IMGUI;External\IMGUI\backends;External\GLM;External\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="External\stb_image\stb_image.h" />
+    <ClInclude Include="src\Fengshui\ECS\Components\Components.h" />
+    <ClInclude Include="src\Fengshui\ECS\Components\HierarchyComponent.h" />
+    <ClInclude Include="src\Fengshui.h" />
+    <ClInclude Include="src\Fengshui\Core\Application.h" />
+    <ClInclude Include="src\Fengshui\Core\Core.h" />
+    <ClInclude Include="src\Fengshui\Core\EntryPoint.h" />
+    <ClInclude Include="src\Fengshui\Core\Input.h" />
+    <ClInclude Include="src\Fengshui\Core\KeyCode.h" />
+    <ClInclude Include="src\Fengshui\Core\MouseButtonCode.h" />
+    <ClInclude Include="src\Fengshui\Core\Scene.h" />
+    <ClInclude Include="src\Fengshui\Core\Time.h" />
+    <ClInclude Include="src\Fengshui\Core\Window.h" />
+    <ClInclude Include="src\Fengshui\ECS\Components\BaseComponent.h" />
+    <ClInclude Include="src\Fengshui\ECS\Components\CameraComponent.h" />
+    <ClInclude Include="src\Fengshui\ECS\Components\RenderComponent.h" />
+    <ClInclude Include="src\Fengshui\ECS\Components\TransformComponent.h" />
+    <ClInclude Include="src\Fengshui\ECS\GameEntity.h" />
+    <ClInclude Include="src\Fengshui\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\Fengshui\Events\Event.h" />
+    <ClInclude Include="src\Fengshui\Events\KeyEvent.h" />
+    <ClInclude Include="src\Fengshui\Events\MouseEvent.h" />
+    <ClInclude Include="src\Fengshui\IMGUI\ImGuiLayer.h" />
+    <ClInclude Include="src\Fengshui\Layers\Layer.h" />
+    <ClInclude Include="src\Fengshui\Layers\LayerStack.h" />
+    <ClInclude Include="src\Fengshui\Logging\Log.h" />
+    <ClInclude Include="src\Fengshui\Physics\Math\Bounds.h" />
+    <ClInclude Include="src\Fengshui\Physics\Math\LCP.h" />
+    <ClInclude Include="src\Fengshui\Physics\Math\Matrix.h" />
+    <ClInclude Include="src\Fengshui\Physics\Math\Quat.h" />
+    <ClInclude Include="src\Fengshui\Physics\Math\Vector.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Body.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Broadphase.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintBase.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintConstantVelocity.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintDistance.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintHinge.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintMotor.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintMover.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintOrientation.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintPenetration.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Contact.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\GJK.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Intersections.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Manifold.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeBase.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeBox.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeConvex.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeSphere.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLTexture.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Fengshui\Platform\Windows\WindowsInput.h" />
+    <ClInclude Include="src\Fengshui\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Fengshui\Renderer\Buffer.h" />
+    <ClInclude Include="src\Fengshui\Renderer\Camera.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RenderCommand.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RenderContext.h" />
+    <ClInclude Include="src\Fengshui\Renderer\Renderer.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Fengshui\Renderer\Shader.h" />
+    <ClInclude Include="src\Fengshui\Renderer\Texture.h" />
+    <ClInclude Include="src\Fengshui\Renderer\VertexArray.h" />
+    <ClInclude Include="src\fspch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="External\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Components\HierarchyComponent.cpp" />
+    <ClCompile Include="src\Fengshui\Core\Application.cpp" />
+    <ClCompile Include="src\Fengshui\Core\Scene.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Components\BaseComponent.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Components\CameraComponent.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Components\RenderComponent.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Components\TransformComponent.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\GameEntity.cpp" />
+    <ClCompile Include="src\Fengshui\IMGUI\ImGuiBuild.cpp" />
+    <ClCompile Include="src\Fengshui\IMGUI\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Fengshui\Layers\Layer.cpp" />
+    <ClCompile Include="src\Fengshui\Layers\LayerStack.cpp" />
+    <ClCompile Include="src\Fengshui\Logging\Log.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Math\Bounds.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Math\LCP.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Body.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Broadphase.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintConstantVelocity.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintDistance.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintHinge.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintMotor.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintMover.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintOrientation.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintPenetration.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Contact.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\GJK.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Intersections.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Manifold.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\ShapeBox.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\ShapeConvex.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\ShapeSphere.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLTexture.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\Camera.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\RenderCommand.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\fspch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="External\GLFW\GLFW.vcxproj">
+      <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="External\GLAD\GLAD.vcxproj">
+      <Project>{5D4A857C-4981-860D-F26D-6C10DE83020F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="External\IMGUI\IMGUI.vcxproj">
+      <Project>{606F530D-CC83-7BBE-9505-1F1E01D977EF}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

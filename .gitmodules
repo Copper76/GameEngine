@@ -1,0 +1,10 @@
+[submodule "Fengshui/External/spdlog"]
+	path = Fengshui/External/spdlog
+	url = https://github.com/gabime/spdlog.git
+[submodule "Fengshui/External/imgui"]
+	path = Fengshui/External/imgui
+	url = https://github.com/ocornut/imgui.git
+	branch = docking
+[submodule "Fengshui/External/GLM"]
+	path = Fengshui/External/GLM
+	url = https://github.com/g-truc/glm.git

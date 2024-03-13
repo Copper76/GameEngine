@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="External">
+      <UniqueIdentifier>{089DB854-F469-1360-1D83-010809AF48EE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\stb_image">
+      <UniqueIdentifier>{A237811D-8E1B-4273-F77B-3CC6E37E2CF5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui">
+      <UniqueIdentifier>{35A507AD-2108-9751-CA8D-CF07B6CF62D4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\Core">
+      <UniqueIdentifier>{AD52B14B-1969-AFE1-62E0-3A03CE358069}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\ECS">
+      <UniqueIdentifier>{FF2B2C86-EB24-4BD8-1457-305D00AF2AE4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\ECS\Components">
+      <UniqueIdentifier>{B433F2D2-2041-20B9-A927-1CA41534EC6F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\Events">
+      <UniqueIdentifier>{79C37202-E524-5010-6E92-96C2DAF286CF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\IMGUI">
+      <UniqueIdentifier>{BFDD34C2-ABC1-F517-1422-F06A0025E099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\Layers">
+      <UniqueIdentifier>{54AE5511-C00F-331F-497D-79D1B5DD69DE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\Logging">
+      <UniqueIdentifier>{CBEA6E5B-B779-F824-6098-0C204C0609CB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\Physics">
+      <UniqueIdentifier>{A70D5080-939C-D949-3CBB-ED442829EAEF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\Physics\Math">
+      <UniqueIdentifier>{E0126C0E-4CD5-9F98-9585-2E2501877876}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\Physics\Physics">
+      <UniqueIdentifier>{19C8EA88-0583-DA34-AE3A-537F9AD424C5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\Physics\Physics\Constraints">
+      <UniqueIdentifier>{60C696FD-4C43-8A40-75C0-8A54619C26D4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\Physics\Physics\Shapes">
+      <UniqueIdentifier>{ACF48589-18AE-F033-A10D-0B0E0DC6A6A3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\Platform">
+      <UniqueIdentifier>{298D4F86-95F9-0A81-5EED-A2DECA182DE9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\Platform\OpenGL">
+      <UniqueIdentifier>{3DAE9672-2969-861E-D220-FF68BEBAD0AE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\Platform\Windows">
+      <UniqueIdentifier>{6350881D-CF68-6F47-9815-FFE004ED03E1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Fengshui\Renderer">
+      <UniqueIdentifier>{7B942C61-E700-E85B-B0F4-7FB91C200AC4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="External\stb_image\stb_image.h">
+      <Filter>External\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Core\Application.h">
+      <Filter>src\Fengshui\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Core\Core.h">
+      <Filter>src\Fengshui\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Core\EntryPoint.h">
+      <Filter>src\Fengshui\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Core\Input.h">
+      <Filter>src\Fengshui\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Core\KeyCode.h">
+      <Filter>src\Fengshui\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Core\MouseButtonCode.h">
+      <Filter>src\Fengshui\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Core\Scene.h">
+      <Filter>src\Fengshui\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Core\Time.h">
+      <Filter>src\Fengshui\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Core\Window.h">
+      <Filter>src\Fengshui\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\Components\BaseComponent.h">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\Components\CameraComponent.h">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\Components\RenderComponent.h">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\Components\TransformComponent.h">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\GameEntity.h">
+      <Filter>src\Fengshui\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Events\ApplicationEvent.h">
+      <Filter>src\Fengshui\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Events\Event.h">
+      <Filter>src\Fengshui\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Events\KeyEvent.h">
+      <Filter>src\Fengshui\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Events\MouseEvent.h">
+      <Filter>src\Fengshui\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\IMGUI\ImGuiLayer.h">
+      <Filter>src\Fengshui\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Layers\Layer.h">
+      <Filter>src\Fengshui\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Layers\LayerStack.h">
+      <Filter>src\Fengshui\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Logging\Log.h">
+      <Filter>src\Fengshui\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Math\Bounds.h">
+      <Filter>src\Fengshui\Physics\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Math\LCP.h">
+      <Filter>src\Fengshui\Physics\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Math\Matrix.h">
+      <Filter>src\Fengshui\Physics\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Math\Quat.h">
+      <Filter>src\Fengshui\Physics\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Math\Vector.h">
+      <Filter>src\Fengshui\Physics\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Body.h">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Broadphase.h">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints.h">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintBase.h">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintConstantVelocity.h">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintDistance.h">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintHinge.h">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintMotor.h">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintMover.h">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintOrientation.h">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintPenetration.h">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Contact.h">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\GJK.h">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Intersections.h">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Manifold.h">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes.h">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeBase.h">
+      <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeBox.h">
+      <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeConvex.h">
+      <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeSphere.h">
+      <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.h">
+      <Filter>src\Fengshui\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Fengshui\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLRendererAPI.h">
+      <Filter>src\Fengshui\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLShader.h">
+      <Filter>src\Fengshui\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>src\Fengshui\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLVertexArray.h">
+      <Filter>src\Fengshui\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\Windows\WindowsInput.h">
+      <Filter>src\Fengshui\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\Windows\WindowsWindow.h">
+      <Filter>src\Fengshui\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Renderer\Buffer.h">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Renderer\Camera.h">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Renderer\RenderCommand.h">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Renderer\RenderContext.h">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Renderer\Renderer.h">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Renderer\RendererAPI.h">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Renderer\Shader.h">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Renderer\Texture.h">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Renderer\VertexArray.h">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fspch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\Components\HierarchyComponent.h" />
+    <ClInclude Include="src\Fengshui\ECS\Components\Components.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="External\stb_image\stb_image.cpp">
+      <Filter>External\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Core\Application.cpp">
+      <Filter>src\Fengshui\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Core\Scene.cpp">
+      <Filter>src\Fengshui\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Components\BaseComponent.cpp">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Components\CameraComponent.cpp">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Components\RenderComponent.cpp">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Components\TransformComponent.cpp">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\GameEntity.cpp">
+      <Filter>src\Fengshui\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\IMGUI\ImGuiBuild.cpp">
+      <Filter>src\Fengshui\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\IMGUI\ImGuiLayer.cpp">
+      <Filter>src\Fengshui\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Layers\Layer.cpp">
+      <Filter>src\Fengshui\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Layers\LayerStack.cpp">
+      <Filter>src\Fengshui\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Logging\Log.cpp">
+      <Filter>src\Fengshui\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Math\Bounds.cpp">
+      <Filter>src\Fengshui\Physics\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Math\LCP.cpp">
+      <Filter>src\Fengshui\Physics\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Body.cpp">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Broadphase.cpp">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints.cpp">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintConstantVelocity.cpp">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintDistance.cpp">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintHinge.cpp">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintMotor.cpp">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintMover.cpp">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintOrientation.cpp">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintPenetration.cpp">
+      <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Contact.cpp">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\GJK.cpp">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Intersections.cpp">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Manifold.cpp">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes.cpp">
+      <Filter>src\Fengshui\Physics\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\ShapeBox.cpp">
+      <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\ShapeConvex.cpp">
+      <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\ShapeSphere.cpp">
+      <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.cpp">
+      <Filter>src\Fengshui\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Fengshui\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>src\Fengshui\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Fengshui\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLTexture.cpp">
+      <Filter>src\Fengshui\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>src\Fengshui\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\Windows\WindowsInput.cpp">
+      <Filter>src\Fengshui\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\Windows\WindowsWindow.cpp">
+      <Filter>src\Fengshui\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Renderer\Buffer.cpp">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Renderer\Camera.cpp">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Renderer\RenderCommand.cpp">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Renderer\Renderer.cpp">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Renderer\RendererAPI.cpp">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Renderer\Shader.cpp">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Renderer\Texture.cpp">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Renderer\VertexArray.cpp">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fspch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Components\HierarchyComponent.cpp" />
+  </ItemGroup>
+</Project>
