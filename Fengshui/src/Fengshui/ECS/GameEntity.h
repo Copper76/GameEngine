@@ -27,12 +27,12 @@ namespace Fengshui
 		Ref<ReturnType> AddComponent()
 		{
 			Ref<ReturnType> newComp = std::make_shared<ReturnType>();
-			if (m_Scene->RegisterComponent(newComp, m_EntityID))
+			if (m_Scene->RegisterComponent(m_EntityID, newComp))
 			{
 				m_Components.emplace_back(newComp);
 				return newComp;
 			}
-			FS_INFO("ADD COMPONENT FAILED");
+			FS_WARN("ADD COMPONENT FAILED");
 			return nullptr;
 		}
 
@@ -58,7 +58,7 @@ namespace Fengshui
 				if (typeid(*comp) == typeid(T))
 				{
 					m_Components.erase(comp);
-					m_Scene->RemoveComponent(comp, m_EntityID);
+					m_Scene->RemoveComponent(m_EntityID, comp);
 					return;
 				}
 			}

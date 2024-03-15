@@ -15,7 +15,7 @@ namespace Fengshui
 	{
 		for (Ref<Component> comp : m_Components)
 		{
-			m_Scene->RemoveComponent(comp, m_EntityID);
+			m_Scene->RemoveComponent(m_EntityID, comp);
 		}
 		m_Components.clear();
 	}
