@@ -16,23 +16,27 @@ namespace Fengshui
 
 		~Scene();
 
-		uint32_t RegisterEntity(GameEntity* entity);
+		uint32_t RegisterEntity(Ref<GameEntity> entity);
 
-		bool RegisterComponent(Ref<Component> component, uint32_t entityID);
+		bool RegisterComponent(uint32_t entityID, Ref<Component> component);
 
-		void RemoveComponent(Ref<Component> component, uint32_t entityID);
+		void RemoveEntity(uint32_t entityID);
+
+		void RemoveEntity(Ref<GameEntity> entity);
+
+		void RemoveComponent(uint32_t entityID, Ref<Component> component);
 
 		void OnUpdate(float dt);
 
 		static Ref<Scene> Init();
 
-		GameEntity* GetGameEntity(uint32_t id);
+		Ref<GameEntity> GetGameEntity(uint32_t id);
 
 		Ref<CameraComponent> GetCameraComponent() { return m_CameraComponent; }
 
 	private:
-		uint32_t m_NextEntityID = 1;
-		std::unordered_map<uint32_t, GameEntity*> m_GameEntities;
+		uint32_t m_NextEntityID = 0;
+		std::unordered_map<uint32_t, Ref<GameEntity>> m_GameEntities;
 		std::unordered_map<ComponentType,std::unordered_map<uint32_t, Ref<Component>>> m_Components;
 
 		Ref<CameraComponent> m_CameraComponent;

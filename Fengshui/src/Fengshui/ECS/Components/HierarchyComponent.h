@@ -4,7 +4,7 @@
 
 namespace Fengshui
 {
-	class HierarchyComponent : public Component
+	class HierarchyComponent : public Component, public std::enable_shared_from_this<HierarchyComponent>
 	{
 	public:
 		HierarchyComponent();
@@ -18,13 +18,14 @@ namespace Fengshui
 
 		std::vector<Ref<HierarchyComponent>> GetChildren();
 		Ref<HierarchyComponent> GetChild(Ref<HierarchyComponent> child);
+
+	private:
 		void AddChild(Ref<HierarchyComponent> child);
 		void RemoveChild(Ref<HierarchyComponent> child);
 
 	private:
-		Ref<HierarchyComponent> m_Parent;
+		WeakRef<HierarchyComponent> m_Parent;
 		std::vector<Ref<HierarchyComponent>> m_Children;
-		Ref<HierarchyComponent> self;
 	};
 }
 

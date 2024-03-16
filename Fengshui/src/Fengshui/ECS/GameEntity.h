@@ -18,6 +18,8 @@ namespace Fengshui
 
 		GameEntity(Ref<Scene> scene, Ref<HierarchyComponent> parent = nullptr);
 
+		static Ref<GameEntity> Create(Ref<Scene> scene, Ref<HierarchyComponent> parent = nullptr);
+
 		~GameEntity();
 
 		const uint32_t GetID() const { return m_EntityID; }
@@ -25,14 +27,16 @@ namespace Fengshui
 
 		template <typename ReturnType>
 		Ref<ReturnType> AddComponent()
+		//ReturnType* AddComponent()
 		{
 			Ref<ReturnType> newComp = std::make_shared<ReturnType>();
-			if (m_Scene->RegisterComponent(newComp, m_EntityID))
+			//ReturnType* newComp = new ReturnType();
+			if (m_Scene->RegisterComponent(m_EntityID, newComp))
 			{
 				m_Components.emplace_back(newComp);
 				return newComp;
 			}
-			FS_INFO("ADD COMPONENT FAILED");
+			FS_WARN("ADD COMPONENT FAILED");
 			return nullptr;
 		}
 
@@ -53,15 +57,17 @@ namespace Fengshui
 		template <typename T>
 		void RemoveComponent()
 		{
-			for (Ref<Component> comp : m_Components)
+			for (auto it = m_Components.begin(); it != m_Components.end(); ++it)
 			{
-				if (typeid(*comp) == typeid(T))
+				Ref<T> element = std::dynamic_pointer_cast<T>(*it);
+				if (element != nullptr)
 				{
-					m_Components.erase(comp);
-					m_Scene->RemoveComponent(comp, m_EntityID);
+					m_Components.erase(it);
+					m_Scene->RemoveComponent(m_EntityID, element);
 					return;
 				}
 			}
+			FS_WARN("Component not found");
 		}
 
 	private:
