@@ -5,24 +5,23 @@ namespace Fengshui
 {
 	Fengshui::HierarchyComponent::HierarchyComponent()
 	{
-		self.reset(this);
 	}
 
 	Ref<HierarchyComponent> Fengshui::HierarchyComponent::GetParent()
 	{
-		return m_Parent;
+		return m_Parent.lock();
 	}
 
 	void HierarchyComponent::SetParent(Ref<HierarchyComponent> parent)
 	{
-		if (parent != m_Parent)
+		if (parent != m_Parent.lock())
 		{
 			if (parent)
 			{
-				parent->RemoveChild(self);
+				parent->RemoveChild(shared_from_this());
 			}
 			m_Parent = parent;
-			m_Parent->AddChild(self);
+			m_Parent.lock()->AddChild(shared_from_this());
 		}
 	}
 

@@ -20,37 +20,60 @@ namespace Fengshui
 		return std::make_shared<Scene>();
 	}
 
-	GameEntity* Scene::GetGameEntity(uint32_t id)
+	Ref<GameEntity> Scene::GetGameEntity(uint32_t id)
 	{
 		return m_GameEntities[id];
 	}
 
-	uint32_t Scene::RegisterEntity(GameEntity* entity)
+	uint32_t Scene::RegisterEntity(Ref<GameEntity> entity)
 	{
 		m_GameEntities[m_NextEntityID] = entity;
 		return m_NextEntityID++;
 	}
 
 	bool Scene::RegisterComponent(uint32_t entityID, Ref<Component> component)
+	//bool Scene::RegisterComponent(uint32_t entityID, Component* component)
 	{
-		if (m_EntityComponents[component->GetComponentType()][entityID] != nullptr)
+		if (m_Components[component->GetComponentType()][entityID] != nullptr)
 		{
 			return false;
 		}
 		component->SetEntityID(entityID);
-		m_EntityComponents[component->GetComponentType()][entityID] = component;
+		m_Components[component->GetComponentType()][entityID] = component;
 		return true;
 	}
 
-	void Scene::RemoveComponent(uint32_t entityID, Ref<Component> component)
+	void Scene::RemoveEntity(uint32_t entityID)
 	{
-		m_EntityComponents[component->GetComponentType()].erase(entityID);
+		for (Ref<Component> comp : GetGameEntity(entityID)->GetComponents())
+		{
+			RemoveComponent(entityID, comp);
+		}
+
+		m_GameEntities.erase(entityID);
+	}
+
+	void Scene::RemoveEntity(Ref<GameEntity> entity)
+	{
+		uint32_t entityID = entity->GetID();
+		for (Ref<Component> comp : GetGameEntity(entityID)->GetComponents())
+		{
+			RemoveComponent(entityID, comp);
+		}
+
+		m_GameEntities.erase(entityID);
+	}
+
+	void Scene::RemoveComponent(uint32_t entityID, Ref<Component> component)
+	//void Scene::RemoveComponent(uint32_t entityID, Component* component)
+	{
+		m_Components[component->GetComponentType()].erase(entityID);
 	}
 
 	void Scene::OnUpdate(float dt)
 	{
-		auto transformComponents = m_EntityComponents[ComponentType::ComponentTransform];
-		auto renderComponents = m_EntityComponents[ComponentType::ComponentRender];
+		auto transformComponents = m_Components[ComponentType::ComponentTransform];
+		auto renderComponents = m_Components[ComponentType::ComponentRender];
 
 		//Render cycle
 		Fengshui::Renderer::BeginScene(*GetCameraComponent());
@@ -60,6 +83,7 @@ namespace Fengshui
 		for (auto kv : renderComponents)
 		{
 			std::dynamic_pointer_cast<RenderComponent2D>(kv.second)->OnUpdate(std::dynamic_pointer_cast<TransformComponent>(transformComponents[kv.first]));
+			//std::dynamic_pointer_cast<RenderComponent2D>(kv.second)->OnUpdate(std::dynamic_pointer_cast<TransformComponent>(transformComponents[kv.first]));
 		}
 
 		Fengshui::Renderer::EndScene();

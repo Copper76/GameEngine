@@ -13,11 +13,12 @@ public:
 	{
 		m_Scene = Fengshui::Scene::Init();
 
-		m_BigSquare = Fengshui::GameEntity(m_Scene);
+		m_BigSquare = Fengshui::GameEntity::Create(m_Scene);
 		//m_VertexArray = Fengshui::RenderComponent();
-		Fengshui::Ref<Fengshui::RenderComponent2D> renderComp = m_BigSquare.AddComponent<Fengshui::RenderComponent2D>();
+		Fengshui::Ref<Fengshui::RenderComponent2D> renderComp = m_BigSquare->AddComponent<Fengshui::RenderComponent2D>();
+		//Fengshui::RenderComponent2D* renderComp = m_BigSquare->AddComponent<Fengshui::RenderComponent2D>();
 
-		m_BigSquare.AddComponent<Fengshui::TransformComponent>();
+		m_BigSquare->AddComponent<Fengshui::TransformComponent>();
 
 		float vertices[5 * 4] =
 		{
@@ -80,13 +81,13 @@ public:
 		{
 			for (int j = -2; j < 3; j++)
 			{
-				square = Fengshui::GameEntity(m_Scene);
+				Fengshui::Ref<Fengshui::GameEntity> square = Fengshui::GameEntity::Create(m_Scene);
 
-				squareTrans = square.AddComponent<Fengshui::TransformComponent>();
+				Fengshui::Ref<Fengshui::TransformComponent> squareTrans = square->AddComponent<Fengshui::TransformComponent>();
 				squareTrans->Position += glm::vec3(i * 0.3f, j * 0.3f, 0.0f);
 				squareTrans->Scale = { 0.1f, 0.1f, 0.1f };
 
-				m_SquareVA = square.AddComponent<Fengshui::RenderComponent2D>();
+				Fengshui::Ref<Fengshui::RenderComponent2D> m_SquareVA = square->AddComponent<Fengshui::RenderComponent2D>();
 
 				FS_ENGINE_ASSERT(m_SquareVA == square.GetComponent<Fengshui::RenderComponent2D>(), "Not added");
 
@@ -135,14 +136,18 @@ public:
 
 		renderComp->SetTexture(m_Texture);
 
+		m_BigSquare->RemoveComponent<Fengshui::TransformComponent>();
+		m_BigSquare->AddComponent<Fengshui::TransformComponent>();
+
 		//m_TexShader->Bind();
 		textureShader->Bind();
 		//m_TexShader->SetInt("u_Texture", 0);
 		textureShader->SetInt("u_Texture", 0);
 
+		m_Scene->RemoveEntity(1);
+
 		Fengshui::RenderCommand::SetClearColour({ 0.2f, 0.2f, 0.2f, 1 });
 
-		m_SquareTransform.Scale = { 0.1f, 0.1f, 0.1f };
 		//m_Scene = std::make_unique<Fengshui::Scene>();
 	}
 
@@ -196,6 +201,7 @@ public:
 
 		Fengshui::Renderer::EndScene();
 		**/
+
 		//Input handling
 		if (Fengshui::Input::IsKeyPressed(FS_KEY_W))
 		{
@@ -227,24 +233,24 @@ public:
 		if (Fengshui::Input::IsKeyPressed(FS_KEY_I))
 		{
 			m_SquareTransform.Position.y += cameraMoveSpeed * dt;
-			m_BigSquare.GetComponent<Fengshui::TransformComponent>()->Position.y += cameraMoveSpeed * dt;
+			m_BigSquare->GetComponent<Fengshui::TransformComponent>()->Position.y += cameraMoveSpeed * dt;
 			//m_SquareTransform.Rotation.z += cameraMoveSpeed * dt;
 		}
 		if (Fengshui::Input::IsKeyPressed(FS_KEY_K))
 		{
 			m_SquareTransform.Position.y -= cameraMoveSpeed * dt;
-			m_BigSquare.GetComponent<Fengshui::TransformComponent>()->Position.y -= cameraMoveSpeed * dt;
+			m_BigSquare->GetComponent<Fengshui::TransformComponent>()->Position.y -= cameraMoveSpeed * dt;
 			//m_SquareTransform.Rotation.z -= cameraMoveSpeed * dt;
 		}
 		if (Fengshui::Input::IsKeyPressed(FS_KEY_J))
 		{
 			m_SquareTransform.Position.x -= cameraMoveSpeed * dt;
-			m_BigSquare.GetComponent<Fengshui::TransformComponent>()->Position.x -= cameraMoveSpeed * dt;
+			m_BigSquare->GetComponent<Fengshui::TransformComponent>()->Position.x -= cameraMoveSpeed * dt;
 		}
 		if (Fengshui::Input::IsKeyPressed(FS_KEY_L))
 		{
 			m_SquareTransform.Position.x += cameraMoveSpeed * dt;
-			m_BigSquare.GetComponent<Fengshui::TransformComponent>()->Position.x += cameraMoveSpeed * dt;
+			m_BigSquare->GetComponent<Fengshui::TransformComponent>()->Position.x += cameraMoveSpeed * dt;
 		}
 	}
 
@@ -273,10 +279,10 @@ public:
 private:
 	//Fengshui::Ref<Fengshui::Texture2D> m_Texture;
 
-	Fengshui::GameEntity m_BigSquare;
+	Fengshui::Ref < Fengshui::GameEntity> m_BigSquare;
 
 	//Fengshui::RenderComponent m_VertexArray, m_SquareVA;
-	std::vector<Fengshui::GameEntity> m_Squares;
+	std::vector<Fengshui::Ref<Fengshui::GameEntity>> m_Squares;
 
 	Fengshui::TransformComponent m_CameraPos;
 	//glm::vec3 m_CameraPos;
@@ -286,10 +292,6 @@ private:
 
 	Fengshui::Ref<Fengshui::Scene> m_Scene;
 	//Fengshui::CameraComponent m_Camera;
-
-	Fengshui::GameEntity square;
-	Fengshui::Ref<Fengshui::TransformComponent> squareTrans;
-	Fengshui::Ref<Fengshui::RenderComponent2D> m_SquareVA;
 
 	glm::vec4 m_SquareColour = { 0.2f, 0.3f, 0.7f, 1.0f };
 };
