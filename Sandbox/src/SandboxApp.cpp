@@ -82,6 +82,7 @@ public:
 			for (int j = -2; j < 3; j++)
 			{
 				Fengshui::Ref<Fengshui::GameEntity> square = Fengshui::GameEntity::Create(m_Scene);
+				square->GetComponent<Fengshui::HierarchyComponent>()->SetParent(m_BigSquare->GetComponent<Fengshui::HierarchyComponent>());
 
 				Fengshui::Ref<Fengshui::TransformComponent> squareTrans = square->AddComponent<Fengshui::TransformComponent>();
 				squareTrans->Position += glm::vec3(i * 0.3f, j * 0.3f, 0.0f);
@@ -144,7 +145,7 @@ public:
 		//m_TexShader->SetInt("u_Texture", 0);
 		textureShader->SetInt("u_Texture", 0);
 
-		m_Scene->RemoveEntity(1);
+		//m_Scene->RemoveEntity(1);
 
 		Fengshui::RenderCommand::SetClearColour({ 0.2f, 0.2f, 0.2f, 1 });
 
@@ -165,42 +166,6 @@ public:
 		m_Scene->GetCameraComponent()->SetPosition(m_CameraPos.Position);
 		//m_Camera.SetPosition(m_CameraPos.Position);
 		m_Scene->OnUpdate(dt);
-
-		/**
-		//Render cycle
-		Fengshui::Renderer::BeginScene(*m_Scene->GetCameraComponent());
-		//Fengshui::Renderer::BeginScene(m_Camera);
-
-		
-		//m_TexShader->Bind();
-		auto textureShader = Fengshui::Renderer::GetShaderLib()->Get("TextureShader");
-		textureShader->Bind();
-
-		m_Texture->Bind();
-		//Fengshui::Renderer::Submit(m_TexShader, m_VertexArray);
-		//Fengshui::Renderer::Submit(textureShader, m_VertexArray->Get());
-		Fengshui::Renderer::Submit(textureShader, m_BigSquare.GetComponent<Fengshui::RenderComponent2D>()->Get(), m_BigSquare.GetComponent<Fengshui::TransformComponent>()->GetTransform());
-		
-		//m_Shader->Bind();
-		auto shader = Fengshui::Renderer::GetShaderLib()->Get("Shader");
-		shader->Bind();
-		//m_Shader->SetVec4("u_Colour", m_SquareColour);
-		shader->SetVec4("u_Colour", m_SquareColour);
-
-		for (int i = -2; i < 3; i++)
-		{
-			for (int j = -2; j < 3; j++)
-			{
-				glm::vec3 pos(i * 0.3f, j * 0.3f, 0.0f);
-				pos += m_SquareTransform.Position;
-				glm::mat4 transform = glm::scale(glm::rotate(glm::translate(glm::mat4(1.0f), pos), glm::length(m_SquareTransform.Rotation), glm::length(m_SquareTransform.Rotation) == 0 ? glm::vec3(1.0) : glm::normalize(m_SquareTransform.Rotation)), m_SquareTransform.Scale);
-				//Fengshui::Renderer::Submit(m_Shader, m_SquareVA, transform);
-				Fengshui::Renderer::Submit(shader, m_SquareVA.Get(), transform);
-			}
-		}
-
-		Fengshui::Renderer::EndScene();
-		**/
 
 		//Input handling
 		if (Fengshui::Input::IsKeyPressed(FS_KEY_W))

@@ -14,14 +14,15 @@ namespace Fengshui
 
 	void HierarchyComponent::SetParent(Ref<HierarchyComponent> parent)
 	{
+		auto self = shared_from_this();
 		if (parent != m_Parent.lock())
 		{
 			if (parent)
 			{
-				parent->RemoveChild(shared_from_this());
+				parent->RemoveChild(self);
 			}
 			m_Parent = parent;
-			m_Parent.lock()->AddChild(shared_from_this());
+			m_Parent.lock()->AddChild(self);
 		}
 	}
 

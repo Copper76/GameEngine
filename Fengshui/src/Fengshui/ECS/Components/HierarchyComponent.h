@@ -4,7 +4,7 @@
 
 namespace Fengshui
 {
-	class HierarchyComponent : public Component, std::enable_shared_from_this<HierarchyComponent>
+	class HierarchyComponent : public Component, public std::enable_shared_from_this<HierarchyComponent>
 	{
 	public:
 		HierarchyComponent();

@@ -7,7 +7,6 @@ namespace Fengshui
 {
 	Scene::Scene()
 	{
-		m_CameraComponent = std::make_shared<CameraComponent>();
 	}
 
 	Scene::~Scene()
@@ -17,7 +16,11 @@ namespace Fengshui
 
 	Ref<Scene> Scene::Init()
 	{
-		return std::make_shared<Scene>();
+		auto scene = std::make_shared<Scene>();
+		auto cameraEntity = GameEntity::Create(scene);
+		auto cameraComp = cameraEntity->AddComponent<CameraComponent>();
+		scene->m_CameraComponent = cameraComp;
+		return scene;
 	}
 
 	Ref<GameEntity> Scene::GetGameEntity(uint32_t id)
@@ -32,7 +35,6 @@ namespace Fengshui
 	}
 
 	bool Scene::RegisterComponent(uint32_t entityID, Ref<Component> component)
-	//bool Scene::RegisterComponent(uint32_t entityID, Component* component)
 	{
 		if (m_Components[component->GetComponentType()][entityID] != nullptr)
 		{
@@ -65,7 +67,6 @@ namespace Fengshui
 	}
 
 	void Scene::RemoveComponent(uint32_t entityID, Ref<Component> component)
-	//void Scene::RemoveComponent(uint32_t entityID, Component* component)
 	{
 		m_Components[component->GetComponentType()].erase(entityID);
 	}
@@ -76,14 +77,12 @@ namespace Fengshui
 		auto renderComponents = m_Components[ComponentType::ComponentRender];
 
 		//Render cycle
-		Fengshui::Renderer::BeginScene(*GetCameraComponent());
+		Fengshui::Renderer::BeginScene(GetCameraComponent());
 		//Fengshui::Renderer::BeginScene(m_Camera);
 
-		//m_TexShader->Bind();
 		for (auto kv : renderComponents)
 		{
 			std::dynamic_pointer_cast<RenderComponent2D>(kv.second)->OnUpdate(std::dynamic_pointer_cast<TransformComponent>(transformComponents[kv.first]));
-			//std::dynamic_pointer_cast<RenderComponent2D>(kv.second)->OnUpdate(std::dynamic_pointer_cast<TransformComponent>(transformComponents[kv.first]));
 		}
 
 		Fengshui::Renderer::EndScene();

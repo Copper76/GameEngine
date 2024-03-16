@@ -35,7 +35,7 @@ namespace Fengshui
 		Ref<CameraComponent> GetCameraComponent() { return m_CameraComponent; }
 
 	private:
-		uint32_t m_NextEntityID = 1;
+		uint32_t m_NextEntityID = 0;
 		std::unordered_map<uint32_t, Ref<GameEntity>> m_GameEntities;
 		std::unordered_map<ComponentType,std::unordered_map<uint32_t, Ref<Component>>> m_Components;
 
