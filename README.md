@@ -2,6 +2,11 @@
 
 This project is a practice project to make a game engine using Entity-Component System, the graphics utilises GLFW library for rendering. The engine is called Fengshui at at the moment.
 
+## Features
+- 2D Renderer, supporting custom textures and shaders.
+- Event system which would reflectively call functions according to their dynamic type
+- Entity-Component System for rendering, transform, position and camera.
+
 ## Functions implemented
 - [X] Create a simple snake game using pure SFML to learn the basics of input handling and rendering. It is implemented in the [Snake Branch](https://github.com/Copper76/GameEngine/tree/Snake)
 - [X] Get Logging working with spdlog
@@ -11,7 +16,7 @@ This project is a practice project to make a game engine using Entity-Component 
 
 ## TODO
 - [ ] Create the snake game with the game engine after its completion
-- [ ] Continue with the Cherno series on Hazel to further develop the renderer
+- [ ] Continue with the Cherno series on Hazel to further develop the renderer, as well as the gui and editor
 - [ ] Review the physics engine and the rest to determine whether it's more viable to reduce the physics engine to 2d or create a 3d renderer.
 
 ## Deprecated Objectives
