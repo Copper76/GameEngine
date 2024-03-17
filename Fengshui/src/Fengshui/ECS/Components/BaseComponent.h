@@ -1,4 +1,5 @@
 #pragma once
+#include "Fengshui/Events/Event.h"
 
 namespace Fengshui
 {
@@ -20,6 +21,8 @@ namespace Fengshui
 		virtual const char* GetName() const = 0;
 
 		virtual void OnUpdate(float dt) {};
+
+		virtual void OnEvent(Event& e) {};
 
 		const uint32_t GetEntityID() const { return m_EntityID; }
 		//const uint32_t GetComponentID() const { return m_ComponentID; }

@@ -38,14 +38,15 @@ namespace Fengshui
 			m_Time.UpdateTime(time);
 			float dt = m_Time.GetDeltaTime();
 
-			//Update entities in scene
-
-			//Update layers
-			for (Layer* layer : m_LayerStack)
+			if (!m_Minimised)
 			{
-				if (layer->IsActive())
+				//Update layers
+				for (Layer* layer : m_LayerStack)
 				{
-					layer->OnUpdate(dt);
+					if (layer->IsActive())
+					{
+						layer->OnUpdate(dt);
+					}
 				}
 			}
 
@@ -71,6 +72,7 @@ namespace Fengshui
 
 		EventDispatcher eventDispatcher(e);
 		eventDispatcher.Dispatch<WindowCloseEvent>(FS_BIND_EVENT_FN(Application::OnWindowClose));
+		eventDispatcher.Dispatch<WindowResizeEvent>(FS_BIND_EVENT_FN(Application::OnWindowResize));
 		
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
@@ -87,6 +89,19 @@ namespace Fengshui
 	{
 		m_Running = false;
 		return true;
+	}
+
+	bool Application::OnWindowResize(WindowResizeEvent& e)
+	{
+		if (e.GetWidth() == 0 || e.GetHeight() == 0)
+		{
+			m_Minimised = true;
+			return false;
+		}
+
+		Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+		m_Minimised = false;
+		return false;
 	}
 
 	void Application::PushLayer(Layer* layer)

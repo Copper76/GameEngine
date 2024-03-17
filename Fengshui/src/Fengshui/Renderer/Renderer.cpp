@@ -15,9 +15,14 @@ namespace Fengshui
 		RenderCommand::Init();
 	}
 
-	void Renderer::BeginScene(Ref<CameraComponent> camera)
+	void Renderer::OnWindowResize(uint32_t width, uint32_t height)
 	{
-		m_SceneData->ViewProjectionMatrix = camera->GetViewProjectionMatrix();
+		RenderCommand::SetViewport(0, 0, width, height);
+	}
+
+	void Renderer::BeginScene(Ref<Scene> scene)
+	{
+		m_SceneData->ViewProjectionMatrix = scene->GetCameraComponent()->GetViewProjectionMatrix();
 	}
 
 	void Renderer::EndScene()

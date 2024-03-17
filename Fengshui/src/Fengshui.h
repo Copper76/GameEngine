@@ -27,8 +27,6 @@
 
 //Inputs with mouse button and key codes
 #include "Fengshui/Core/Input.h"
-#include "Fengshui/Core/KeyCode.h"
-#include "Fengshui/Core/MouseButtonCode.h"
 
 //Scene
 #include "Fengshui/Core/Scene.h"
@@ -37,9 +35,7 @@
 #include "Fengshui/ECS/GameEntity.h"
 
 //Components
-#include "Fengshui/ECS/Components/TransformComponent.h"
-#include "Fengshui/ECS/Components/RenderComponent.h"
-#include "Fengshui/ECS/Components/CameraComponent.h"
+#include "Fengshui/ECS/Components/Components.h"
 
 //Entry Point, place headers above this
 #include "Fengshui/Core/EntryPoint.h"

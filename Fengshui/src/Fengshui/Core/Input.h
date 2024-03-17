@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Fengshui/Core/Core.h"
+#include "Fengshui/Core/MouseButtonCode.h"
+#include "Fengshui/Core/KeyCode.h"
 
 namespace Fengshui
 {

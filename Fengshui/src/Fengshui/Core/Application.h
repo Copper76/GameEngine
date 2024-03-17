@@ -40,10 +40,15 @@ namespace Fengshui
 
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
+		bool OnWindowResize(WindowResizeEvent& e);
+
+	private:
+		bool m_Running = true;
+		bool m_Minimised = false;
 
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
-		bool m_Running = true;
+
 		LayerStack m_LayerStack;
 		Time m_Time;
 

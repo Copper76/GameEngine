@@ -16,6 +16,9 @@ namespace Fengshui
 
 	Ref<Scene> Scene::Init()
 	{
+		//set up the clear colour for the scene
+		Fengshui::RenderCommand::SetClearColour({ 0.2f, 0.2f, 0.2f, 1 });
+
 		auto scene = std::make_shared<Scene>();
 		auto cameraEntity = GameEntity::Create(scene);
 		auto cameraComp = cameraEntity->AddComponent<CameraComponent>();
@@ -73,11 +76,15 @@ namespace Fengshui
 
 	void Scene::OnUpdate(float dt)
 	{
+		m_CameraComponent->OnUpdate(dt);
 		auto transformComponents = m_Components[ComponentType::ComponentTransform];
 		auto renderComponents = m_Components[ComponentType::ComponentRender];
 
+		//Clear the screen
+		Fengshui::RenderCommand::Clear();
+
 		//Render cycle
-		Fengshui::Renderer::BeginScene(GetCameraComponent());
+		Fengshui::Renderer::BeginScene(shared_from_this());
 		//Fengshui::Renderer::BeginScene(m_Camera);
 
 		for (auto kv : renderComponents)
@@ -86,5 +93,10 @@ namespace Fengshui
 		}
 
 		Fengshui::Renderer::EndScene();
+	}
+
+	void Scene::OnEvent(Event& e)
+	{
+		m_CameraComponent->OnEvent(e);
 	}
 }
