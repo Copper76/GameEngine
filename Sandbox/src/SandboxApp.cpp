@@ -82,8 +82,7 @@ public:
 		{
 			for (int j = -2; j < 3; j++)
 			{
-				Fengshui::Ref<Fengshui::GameEntity> square = Fengshui::GameEntity::Create(m_Scene);
-				square->GetComponent<Fengshui::HierarchyComponent>()->SetParent(m_BigSquare->GetComponent<Fengshui::HierarchyComponent>());
+				Fengshui::Ref<Fengshui::GameEntity> square = Fengshui::GameEntity::Create(m_Scene, m_BigSquare->GetComponent<Fengshui::HierarchyComponent>());
 
 				Fengshui::Ref<Fengshui::TransformComponent> squareTrans = square->AddComponent<Fengshui::TransformComponent>();
 				squareTrans->Position += glm::vec3(i * 0.3f, j * 0.3f, 0.0f);
