@@ -1,9 +1,7 @@
 #pragma once
 
 #include "Fengshui/ECS/GameEntity.h"
-#include "Fengshui/ECS/Components/TransformComponent.h"
-#include "Fengshui/ECS/Components/RenderComponent.h"
-#include "Fengshui/ECS/Components/CameraComponent.h"
+#include "Fengshui/ECS/Components/Components.h"
 
 namespace Fengshui
 {

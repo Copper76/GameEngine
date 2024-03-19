@@ -6,7 +6,7 @@ namespace Fengshui
 	enum class ComponentType : int
 	{
 		None = 0,
-		ComponentHierarchy, ComponentTransform, ComponentRender, ComponentCamera,
+		ComponentHierarchy, ComponentTransform, ComponentTransform2D, ComponentRender, ComponentRender2D, ComponentCamera,
 	};
 
 	#define COMPONENT_CLASS_TYPE(type) static ComponentType GetStaticType() { return ComponentType::type; }\

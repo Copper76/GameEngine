@@ -15,6 +15,7 @@ namespace Fengshui
 	public:
 
 		static void Init();
+		static void Shutdown();
 		static void OnWindowResize(uint32_t width, uint32_t height);
 
 		static void BeginScene(Ref<Scene> scene);
@@ -37,6 +38,5 @@ namespace Fengshui
 		static SceneData* m_SceneData;
 
 		static ShaderLibrary* m_ShaderLib;
-		//static VertexArrayLibrary* m_VertexArrLib;
 	};
 }

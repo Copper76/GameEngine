@@ -19,6 +19,7 @@
 
 //Renderer
 #include "Fengshui/Renderer/Renderer.h"
+#include "Fengshui/Renderer/Renderer2D.h"
 #include "Fengshui/Renderer/RenderCommand.h"
 #include "Fengshui/Renderer/Shader.h"
 #include "Fengshui/Renderer/Buffer.h"
@@ -36,6 +37,3 @@
 
 //Components
 #include "Fengshui/ECS/Components/Components.h"
-
-//Entry Point, place headers above this
-#include "Fengshui/Core/EntryPoint.h"

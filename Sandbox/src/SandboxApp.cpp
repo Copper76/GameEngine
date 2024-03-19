@@ -1,8 +1,10 @@
 #include <Fengshui.h>
+#include "Sandbox2D.h"
+
+#include <Fengshui/Core/EntryPoint.h>
 
 //External includes
 #include <imgui.h>
-#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 class ExampleLayer : public Fengshui::Layer
@@ -10,6 +12,44 @@ class ExampleLayer : public Fengshui::Layer
 public:
 	//ExampleLayer() : Layer("Example"), m_Camera(0, -1.0f, 1.0f, -1.0f, 1.0f), m_CameraPos(1), m_SquareTransform(2)
 	ExampleLayer() : Layer("Example")
+	{
+		
+	}
+
+	void OnUpdate(float dt) override
+	{
+
+		auto shader = m_Squares[0]->GetComponent<Fengshui::RenderComponent>()->GetShader();
+		shader->SetVec4("u_Colour", m_SquareColour);
+
+		auto sceneCam = m_Scene->GetCameraComponent();
+
+		auto sceneCamPos = sceneCam->GetPosition();
+		auto sceneCamRot = sceneCam->GetRotation();
+
+		if (Fengshui::Input::IsKeyPressed(FS_KEY_I))
+		{
+			m_BigSquare->GetComponent<Fengshui::TransformComponent>()->Position.y += cameraMoveSpeed * dt;
+			//m_SquareTransform.Rotation.z += cameraMoveSpeed * dt;
+		}
+		if (Fengshui::Input::IsKeyPressed(FS_KEY_K))
+		{
+			m_BigSquare->GetComponent<Fengshui::TransformComponent>()->Position.y -= cameraMoveSpeed * dt;
+			//m_SquareTransform.Rotation.z -= cameraMoveSpeed * dt;
+		}
+		if (Fengshui::Input::IsKeyPressed(FS_KEY_J))
+		{
+			m_BigSquare->GetComponent<Fengshui::TransformComponent>()->Position.x -= cameraMoveSpeed * dt;
+		}
+		if (Fengshui::Input::IsKeyPressed(FS_KEY_L))
+		{
+			m_BigSquare->GetComponent<Fengshui::TransformComponent>()->Position.x += cameraMoveSpeed * dt;
+		}
+
+		m_Scene->OnUpdate(dt);
+	}
+
+	void OnAttach() override
 	{
 		//Setup and loading
 
@@ -37,7 +77,7 @@ public:
 
 		auto textureShader = Fengshui::Renderer::GetShaderLib()->Load("Assets/Shaders/TextureShader.glsl");
 
-		Fengshui::Ref<Fengshui::Texture2D> m_Texture = Fengshui::Texture2D::Create("Assets/Textures/Checkerboard.png", textureShader);
+		Fengshui::Ref<Fengshui::Texture> m_Texture = Fengshui::Texture::Create("Assets/Textures/Checkerboard.png", textureShader);
 
 		textureShader->Bind();
 		textureShader->SetInt("u_Texture", 0);
@@ -74,7 +114,7 @@ public:
 
 		m_BigSquare->AddComponent<Fengshui::TransformComponent>();
 
-		m_BigSquare->AddComponent<Fengshui::RenderComponent2D>(vertexBuffer, indexBuffer, textureShader, m_Texture);
+		m_BigSquare->AddComponent<Fengshui::RenderComponent>(vertexBuffer, indexBuffer, textureShader, m_Texture);
 
 		//Small Squares
 
@@ -88,7 +128,7 @@ public:
 				squareTrans->Position += glm::vec3(i * 0.3f, j * 0.3f, 0.0f);
 				squareTrans->Scale = { 0.1f, 0.1f, 0.1f };
 
-				square->AddComponent<Fengshui::RenderComponent2D>(squareVB, squareIB, shader);
+				square->AddComponent<Fengshui::RenderComponent>(squareVB, squareIB, shader);
 				m_Squares.emplace_back(square);
 			}
 		}
@@ -98,44 +138,6 @@ public:
 
 		m_BigSquare->RemoveComponent<Fengshui::TransformComponent>();
 		m_BigSquare->AddComponent<Fengshui::TransformComponent>();
-	}
-
-	void OnUpdate(float dt) override
-	{
-
-		auto shader = m_Squares[0]->GetComponent<Fengshui::RenderComponent2D>()->GetShader();
-		shader->SetVec4("u_Colour", m_SquareColour);
-
-		auto sceneCam = m_Scene->GetCameraComponent();
-
-		auto sceneCamPos = sceneCam->GetPosition();
-		auto sceneCamRot = sceneCam->GetRotation();
-
-		if (Fengshui::Input::IsKeyPressed(FS_KEY_I))
-		{
-			m_BigSquare->GetComponent<Fengshui::TransformComponent>()->Position.y += cameraMoveSpeed * dt;
-			//m_SquareTransform.Rotation.z += cameraMoveSpeed * dt;
-		}
-		if (Fengshui::Input::IsKeyPressed(FS_KEY_K))
-		{
-			m_BigSquare->GetComponent<Fengshui::TransformComponent>()->Position.y -= cameraMoveSpeed * dt;
-			//m_SquareTransform.Rotation.z -= cameraMoveSpeed * dt;
-		}
-		if (Fengshui::Input::IsKeyPressed(FS_KEY_J))
-		{
-			m_BigSquare->GetComponent<Fengshui::TransformComponent>()->Position.x -= cameraMoveSpeed * dt;
-		}
-		if (Fengshui::Input::IsKeyPressed(FS_KEY_L))
-		{
-			m_BigSquare->GetComponent<Fengshui::TransformComponent>()->Position.x += cameraMoveSpeed * dt;
-		}
-
-		m_Scene->OnUpdate(dt);
-	}
-
-	void OnAttach() override
-	{
-
 	}
 
 	void OnDetach() override
@@ -156,8 +158,6 @@ public:
 	}
 
 private:
-	//Fengshui::Ref<Fengshui::Texture2D> m_Texture;
-
 	Fengshui::Ref < Fengshui::GameEntity> m_BigSquare;
 
 	//Fengshui::RenderComponent m_VertexArray, m_SquareVA;
@@ -176,8 +176,8 @@ class SandboxApp : public Fengshui::Application
 public:
 	SandboxApp() : Application()
 	{
-		ExampleLayer* layer = new ExampleLayer();
-		PushLayer(layer);
+		//PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
 	}
 
 	~SandboxApp()

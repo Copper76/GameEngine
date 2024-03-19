@@ -1,5 +1,7 @@
 #include "fspch.h"
 #include "Fengshui/Renderer/Renderer.h"
+#include "Fengshui/Renderer/Renderer2D.h"
+
 #include "Fengshui/Platform/OpenGL/OpenGLShader.h"
 
 namespace Fengshui
@@ -13,6 +15,12 @@ namespace Fengshui
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
+		Renderer2D::Init();
+	}
+
+	void Renderer::Shutdown()
+	{
+		Renderer2D::Shutdown();
 	}
 
 	void Renderer::OnWindowResize(uint32_t width, uint32_t height)
