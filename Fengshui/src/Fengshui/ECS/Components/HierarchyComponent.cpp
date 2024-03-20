@@ -5,6 +5,7 @@ namespace Fengshui
 {
 	Fengshui::HierarchyComponent::HierarchyComponent()
 	{
+
 	}
 
 	Ref<HierarchyComponent> Fengshui::HierarchyComponent::GetParent()

@@ -4,6 +4,27 @@
 
 namespace Fengshui
 {
+
+	class OpenGLTexture : public Texture
+	{
+	public:
+		OpenGLTexture(const std::string& filePath, Ref<Shader> shader);
+		virtual ~OpenGLTexture();
+
+		virtual uint32_t GetWidth() const { return m_Width; };
+		virtual uint32_t GetHeight() const { return m_Height; };
+
+		virtual void Bind() const override;
+
+	private:
+
+		std::string m_FilePath;
+		uint32_t m_Width;
+		uint32_t m_Height;
+		uint32_t m_RendererID;
+		uint32_t m_Slot;
+	};
+
 	class OpenGLTexture2D : public Texture2D
 	{
 	public:

@@ -1,5 +1,7 @@
 #include "fspch.h"
 #include "Fengshui/Renderer/Renderer.h"
+#include "Fengshui/Renderer/Renderer2D.h"
+
 #include "Fengshui/Platform/OpenGL/OpenGLShader.h"
 
 namespace Fengshui
@@ -13,11 +15,22 @@ namespace Fengshui
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
+		Renderer2D::Init();
 	}
 
-	void Renderer::BeginScene(Ref<CameraComponent> camera)
+	void Renderer::Shutdown()
 	{
-		m_SceneData->ViewProjectionMatrix = camera->GetViewProjectionMatrix();
+		Renderer2D::Shutdown();
+	}
+
+	void Renderer::OnWindowResize(uint32_t width, uint32_t height)
+	{
+		RenderCommand::SetViewport(0, 0, width, height);
+	}
+
+	void Renderer::BeginScene(Ref<Scene> scene)
+	{
+		m_SceneData->ViewProjectionMatrix = scene->GetCameraComponent()->GetViewProjectionMatrix();
 	}
 
 	void Renderer::EndScene()

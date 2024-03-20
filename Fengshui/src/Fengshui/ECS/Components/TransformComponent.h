@@ -1,9 +1,9 @@
 #pragma once
 
+#include "Fengshui/ECS/Components/BaseComponent.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-#include "Fengshui/ECS/Components/BaseComponent.h"
 
 namespace Fengshui
 {

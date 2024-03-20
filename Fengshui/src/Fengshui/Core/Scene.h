@@ -1,15 +1,13 @@
 #pragma once
 
 #include "Fengshui/ECS/GameEntity.h"
-#include "Fengshui/ECS/Components/TransformComponent.h"
-#include "Fengshui/ECS/Components/RenderComponent.h"
-#include "Fengshui/ECS/Components/CameraComponent.h"
+#include "Fengshui/ECS/Components/Components.h"
 
 namespace Fengshui
 {
 	class GameEntity;
 
-	class Scene
+	class Scene: public std::enable_shared_from_this<Scene>
 	{
 	public:
 		Scene();
@@ -27,6 +25,8 @@ namespace Fengshui
 		void RemoveComponent(uint32_t entityID, Ref<Component> component);
 
 		void OnUpdate(float dt);
+
+		void OnEvent(Event& e);
 
 		static Ref<Scene> Init();
 

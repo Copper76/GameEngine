@@ -25,12 +25,10 @@ namespace Fengshui
 		const uint32_t GetID() const { return m_EntityID; }
 		std::vector<Ref<Component>> GetComponents() { return m_Components; }
 
-		template <typename ReturnType>
-		Ref<ReturnType> AddComponent()
-		//ReturnType* AddComponent()
+		template <typename ReturnType, typename... Args>
+		Ref<ReturnType> AddComponent(Args... args)
 		{
-			Ref<ReturnType> newComp = std::make_shared<ReturnType>();
-			//ReturnType* newComp = new ReturnType();
+			Ref<ReturnType> newComp = std::make_shared<ReturnType>(args...);
 			if (m_Scene->RegisterComponent(m_EntityID, newComp))
 			{
 				m_Components.emplace_back(newComp);

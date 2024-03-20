@@ -144,6 +144,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="External\stb_image\stb_image.h" />
+    <ClInclude Include="src\Fengshui\ECS\Components\RenderComponent2D.h" />
+    <ClInclude Include="src\Fengshui\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Fengshui\ECS\Components\Components.h" />
     <ClInclude Include="src\Fengshui\ECS\Components\HierarchyComponent.h" />
     <ClInclude Include="src\Fengshui.h" />
@@ -212,9 +214,12 @@
     <ClInclude Include="src\Fengshui\Renderer\Texture.h" />
     <ClInclude Include="src\Fengshui\Renderer\VertexArray.h" />
     <ClInclude Include="src\fspch.h" />
+    <ClInclude Include="src\Fengshui\ECS\Components\TransformComponent2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Components\RenderComponent2D.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Components\HierarchyComponent.cpp" />
     <ClCompile Include="src\Fengshui\Core\Application.cpp" />
     <ClCompile Include="src\Fengshui\Core\Scene.cpp" />
@@ -267,6 +272,7 @@
     <ClCompile Include="src\fspch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Components\TransformComponent2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\GLFW\GLFW.vcxproj">

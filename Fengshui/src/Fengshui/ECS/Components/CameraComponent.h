@@ -3,14 +3,22 @@
 #include "Fengshui/ECS/Components/BaseComponent.h"
 #include "Fengshui/Renderer/Camera.h"
 
+#include "Fengshui/Events/ApplicationEvent.h"
+#include "Fengshui/Events/MouseEvent.h"
+#include "Fengshui/Core/Input.h"
+
 namespace Fengshui
 {
 	class CameraComponent : public Component
 	{
 	public:
-		CameraComponent();
+		CameraComponent(float aspectRatio = (1280.0f / 720.0f));
 
 		virtual ~CameraComponent() = default;
+
+		void OnUpdate(float dt) override;
+
+		void OnEvent(Event& e) override;
 
 		COMPONENT_CLASS_TYPE(ComponentCamera);
 
@@ -25,6 +33,15 @@ namespace Fengshui
 		inline const glm::mat4& GetViewProjectionMatrix() const { return m_Camera->GetViewProjectionMatrix(); }
 
 	private:
+		bool OnMouseScrolled(MouseScrolledEvent& e);
+		bool OnWindowResize(WindowResizeEvent& e);
+
+	private:
+		float m_ZoomLevel = 1.0f;
+		float m_CameraMoveSpeed;
+		glm::vec3 m_CameraPos;
+
+		float m_AspectRatio;
 		Ref<OrthographicCamera> m_Camera;
 	};
 
