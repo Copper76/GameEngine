@@ -4,6 +4,8 @@
 #include "Fengshui/Renderer/VertexArray.h"
 #include "Fengshui/Renderer/Texture.h"
 
+#include "glm/glm.hpp"
+
 namespace Fengshui
 {
 	class RenderComponent2D : public Component
@@ -19,9 +21,12 @@ namespace Fengshui
 
 		inline void SetTexture(Ref<Texture2D> texture) { m_Texture = texture; }
 
+		inline void SetColour(glm::vec4 colour) { m_Colour = colour; }
+
 		inline const Ref<Texture2D> GetTexture() const { return m_Texture; }
 
 	private:
 		Ref<Texture2D> m_Texture;
+		glm::vec4 m_Colour = { 1.0f, 1.0f, 1.0f, 1.0f };
 	};
 }

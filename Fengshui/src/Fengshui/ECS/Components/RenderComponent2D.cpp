@@ -20,7 +20,7 @@ namespace Fengshui
 		}
 		else
 		{
-			Renderer2D::DrawQuad(transform);
+			Renderer2D::DrawQuad(transform, m_Colour);
 		}
 	}
 }

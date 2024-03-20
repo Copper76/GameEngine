@@ -1,7 +1,6 @@
 #include "fspch.h"
 #include "Renderer2D.h"
 #include "Fengshui/Renderer/RenderCommand.h"
-//#include "Fengshui/Platform/OpenGL/OpenGLShader.h"
 
 namespace Fengshui
 {
@@ -65,16 +64,17 @@ namespace Fengshui
 
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& colour)
+	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const float rotation, const glm::vec4& colour)
 	{
-		DrawQuad({ position.x, position.y, 0.0f }, size, colour);
+		DrawQuad({ position.x, position.y, 0.0f }, size, rotation, colour);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& colour)
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const float rotation, const glm::vec4& colour)
 	{
 		s_Data->flatColourShader->Bind();
 		s_Data->flatColourShader->SetVec4("u_Colour", colour);
-		s_Data->flatColourShader->SetMat4("u_Transform",glm::mat4(1.0f));
+		glm::mat4 transform = glm::scale(glm::rotate(glm::translate(glm::mat4(1.0f), position), glm::radians(rotation), { 0.0f, 0.0f, 1.0f }), { size.x, size.y, 1.0f });
+		s_Data->flatColourShader->SetMat4("u_Transform",transform);
 
 		s_Data->quadVertexArray->Bind();
 		RenderCommand::DrawIndexed(s_Data->quadVertexArray);

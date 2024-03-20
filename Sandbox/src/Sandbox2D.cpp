@@ -16,7 +16,10 @@ void Sandbox2D::OnAttach()
 
 	m_BigSquare = Fengshui::GameEntity::Create(m_Scene);
 
-	m_BigSquare->AddComponent<Fengshui::TransformComponent2D>();
+	Fengshui::Ref<Fengshui::TransformComponent2D> trans = m_BigSquare->AddComponent<Fengshui::TransformComponent2D>();
+	//trans->Position = { 0.5f, 0.0f };
+	//trans->Rotation = 45.0f;
+	//trans->Scale = { 0.5f, 1.5f };
 
 	m_BigSquare->AddComponent<Fengshui::RenderComponent2D>();
 }

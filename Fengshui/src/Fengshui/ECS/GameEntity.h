@@ -27,7 +27,6 @@ namespace Fengshui
 
 		template <typename ReturnType, typename... Args>
 		Ref<ReturnType> AddComponent(Args... args)
-		//ReturnType* AddComponent()
 		{
 			Ref<ReturnType> newComp = std::make_shared<ReturnType>(args...);
 			if (m_Scene->RegisterComponent(m_EntityID, newComp))
