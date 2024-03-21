@@ -47,7 +47,7 @@ namespace Fengshui
 
 		s_Data->quadVertexArray->SetIndexBuffer(indexBuffer);
 
-		s_Data->standardShader = Shader::Create("Assets/Shaders/TextureShader.glsl");
+		s_Data->standardShader = Shader::Create("Assets/Shaders/StandardShader2D.glsl");
 		s_Data->standardShader->Bind();
 		s_Data->standardShader->SetInt("u_Texture", 0);
 
