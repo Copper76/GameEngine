@@ -29,7 +29,7 @@ public:
 
 private:
 	Fengshui::Ref<Fengshui::Scene> m_Scene;
-	glm::vec4 m_SquareColour = { 0.2f, 0.3f, 0.7f, 1.0f };
+	glm::vec4 m_SquareColour = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	Fengshui::Ref < Fengshui::GameEntity> m_BigSquare;
 };

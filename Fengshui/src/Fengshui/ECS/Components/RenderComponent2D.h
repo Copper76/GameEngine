@@ -8,10 +8,14 @@
 
 namespace Fengshui
 {
+	enum class RenderShape
+	{
+		Custom, Quad,
+	};
 	class RenderComponent2D : public Component
 	{
 	public:
-		RenderComponent2D(Ref<Texture2D> texture = nullptr);
+		RenderComponent2D(Ref<Texture2D> texture = nullptr, RenderShape shape = RenderShape::Quad);
 
 		virtual ~RenderComponent2D() = default;
 
@@ -28,5 +32,6 @@ namespace Fengshui
 	private:
 		Ref<Texture2D> m_Texture;
 		glm::vec4 m_Colour = { 1.0f, 1.0f, 1.0f, 1.0f };
+		RenderShape m_Shape;
 	};
 }

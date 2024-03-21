@@ -39,7 +39,7 @@ namespace Fengshui
 
 		if (m_Texture)
 		{
-			m_Texture->Bind();
+			m_Texture->Bind(0);
 		}
 		Renderer::Submit(m_Shader, m_VertexArray, transform->GetTransform());
 	}

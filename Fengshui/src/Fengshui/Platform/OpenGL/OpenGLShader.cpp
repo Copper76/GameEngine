@@ -55,11 +55,6 @@ namespace Fengshui
 		glUseProgram(0);
 	}
 
-	uint32_t OpenGLShader::GetNextSlot()
-	{
-		return m_NextSlot++;
-	}
-
 	void OpenGLShader::SetInt(const std::string name, int value)
 	{
 		UploadUniformInt(name, value);

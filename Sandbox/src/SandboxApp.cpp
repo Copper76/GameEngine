@@ -77,7 +77,7 @@ public:
 
 		auto textureShader = Fengshui::Renderer::GetShaderLib()->Load("Assets/Shaders/TextureShader.glsl");
 
-		Fengshui::Ref<Fengshui::Texture> m_Texture = Fengshui::Texture::Create("Assets/Textures/Checkerboard.png", textureShader);
+		Fengshui::Ref<Fengshui::Texture> m_Texture = Fengshui::Texture::Create("Assets/Textures/Checkerboard.png");
 
 		textureShader->Bind();
 		textureShader->SetInt("u_Texture", 0);

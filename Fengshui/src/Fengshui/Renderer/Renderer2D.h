@@ -17,9 +17,10 @@ namespace Fengshui
 		static void EndScene();
 
 		//Primitives
-		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const float rotation = 0.0f, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
-		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const float rotation = 0.0f, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
 
-		static void Renderer2D::DrawQuad(Ref<TransformComponent2D> transform, const glm::vec4& colour = {1.0f, 1.0f, 1.0f, 1.0f});
+		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const float rotation = 0.0f, const Ref<Texture2D>& texture = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
+		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const float rotation = 0.0f, const Ref<Texture2D>& texture = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
+
+		static void Renderer2D::DrawQuad(Ref<TransformComponent2D> transform, const Ref<Texture2D>& texture = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
 	};
 }

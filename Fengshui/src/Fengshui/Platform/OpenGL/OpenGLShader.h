@@ -19,8 +19,6 @@ namespace Fengshui
 
 		virtual const std::string GetName() const override { return m_Name; }
 
-		virtual uint32_t GetNextSlot() override;
-
 		virtual void SetInt(const std::string name, int value) override;
 		virtual void SetFloat(const std::string name, float value) override;
 		virtual void SetVec2(const std::string name, const glm::vec2& value) override;
@@ -43,7 +41,6 @@ namespace Fengshui
 		void Compile(const std::unordered_map<GLenum, std::string> shaderSources);
 	private:
 		uint32_t m_RendererID;
-		uint32_t m_NextSlot = 0;
 		std::string m_Name;
 	};
 }

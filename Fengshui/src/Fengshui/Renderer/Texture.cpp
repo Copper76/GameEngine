@@ -6,7 +6,12 @@
 
 namespace Fengshui
 {
-	Ref<Texture> Texture::Create(const std::string& filePath, Ref<Shader> shader)
+	Ref<Texture> Texture::Create(uint32_t width, uint32_t height)
+	{
+		return Ref<Texture>();
+	}
+
+	Ref<Texture> Texture::Create(const std::string& filePath)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -17,7 +22,7 @@ namespace Fengshui
 		}
 		case RendererAPI::API::OpenGL:
 		{
-			return std::make_shared<OpenGLTexture>(filePath, shader);
+			return std::make_shared<OpenGLTexture>(filePath);
 		}
 		default:
 		{
@@ -27,7 +32,7 @@ namespace Fengshui
 		}
 	}
 
-	Ref<Texture2D> Texture2D::Create(const std::string& filePath, Ref<Shader> shader)
+	Ref<Texture2D> Texture2D::Create(uint32_t width, uint32_t height)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -38,7 +43,28 @@ namespace Fengshui
 		}
 		case RendererAPI::API::OpenGL:
 		{
-			return std::make_shared<OpenGLTexture2D>(filePath, shader);
+			return std::make_shared<OpenGLTexture2D>(width, height);
+		}
+		default:
+		{
+			FS_ENGINE_ASSERT(false, "Unknown render API");
+			return nullptr;
+		}
+		}
+	}
+
+	Ref<Texture2D> Texture2D::Create(const std::string& filePath)
+	{
+		switch (Renderer::GetAPI())
+		{
+		case RendererAPI::API::None:
+		{
+			FS_ENGINE_ASSERT(false, "RenderAPI::None is not supported");
+			return nullptr;
+		}
+		case RendererAPI::API::OpenGL:
+		{
+			return std::make_shared<OpenGLTexture2D>(filePath);
 		}
 		default:
 		{

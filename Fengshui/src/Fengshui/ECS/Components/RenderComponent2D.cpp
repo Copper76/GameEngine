@@ -5,22 +5,21 @@
 
 namespace Fengshui
 {
-	RenderComponent2D::RenderComponent2D(Ref<Texture2D> texture)
-		:m_Texture(texture)
+	RenderComponent2D::RenderComponent2D(Ref<Texture2D> texture, RenderShape shape)
+		:m_Texture(texture), m_Shape(shape)
 	{
 
 	}
 
 	void RenderComponent2D::OnUpdate(Ref<TransformComponent2D> transform)
 	{
-		if (m_Texture)
+		switch (m_Shape)
 		{
-			m_Texture->Bind();
-			//Renderer2D::DrawTextureQuad(transform);
-		}
-		else
-		{
-			Renderer2D::DrawQuad(transform, m_Colour);
+		case RenderShape::Quad:
+			Renderer2D::DrawQuad(transform, m_Texture, m_Colour);
+			return;
+		default:
+			FS_ENGINE_ASSERT(false, "NO SUPPORT FOR CUSTOM 2D RENDERING")
 		}
 	}
 }

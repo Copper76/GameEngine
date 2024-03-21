@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Fengshui/Renderer/Texture.h"
+
 #include <string>
 #include <glm/glm.hpp>
 
@@ -14,8 +16,6 @@ namespace Fengshui
 		virtual void Unbind() const = 0;//for debugging mostly
 
 		virtual const std::string GetName() const = 0;
-
-		virtual uint32_t GetNextSlot() = 0;
 
 		virtual void SetInt(const std::string name, int value) = 0;
 		virtual void SetFloat(const std::string name, float value) = 0;
