@@ -100,7 +100,14 @@ namespace Fengshui
 
 		//2D Render cycle
 		Renderer2D::BeginScene(shared_from_this());
-		Renderer2D::DrawQuad({ 0.5f, 0.0f, 0.1f }, { 1.0f, 1.0f }, 0.0f, Fengshui::Texture2D::Create("Assets/Textures/ChernoLogo.png"), { 0.8f, 0.2f, 0.3f, 1.0f });
+		for (int i = -5.0f; i < 5.0f; i+= 1.0f)
+		{
+			for (int j = -5.0f; j < 5.0f; j += 1.0f)
+			{
+
+				Renderer2D::DrawQuad({ i, j }, { 0.5f, 0.5f }, 0.0f, 1.0f, nullptr, { (i+0.5f)/10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f });
+			}
+		}
 
 		for (auto kv : render2DComponents)
 		{

@@ -119,6 +119,9 @@ namespace Fengshui
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 		virtual const BufferLayout& GetLayout() const = 0;
 
+		virtual void SetData(const void* data, uint32_t size) = 0;
+
+		static Ref<VertexBuffer> Create(uint32_t size);
 		static Ref<VertexBuffer> Create(uint32_t size, float* vertices);
 	};
 
@@ -131,6 +134,6 @@ namespace Fengshui
 
 		virtual uint32_t GetCount() const = 0;
 
-		static Ref <IndexBuffer> Create(uint32_t size, uint32_t* indices);
+		static Ref <IndexBuffer> Create(uint32_t count, uint32_t* indices);
 	};
 }

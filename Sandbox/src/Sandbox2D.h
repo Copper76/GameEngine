@@ -19,6 +19,7 @@ public:
 	{
 		ImGui::Begin("Colour Picker");
 		ImGui::ColorEdit4("Square Colour", glm::value_ptr(m_SquareColour));
+		ImGui::DragFloat("Tiling Factor", &m_TilingFactor);
 		ImGui::End();
 	}
 
@@ -30,6 +31,7 @@ public:
 private:
 	Fengshui::Ref<Fengshui::Scene> m_Scene;
 	glm::vec4 m_SquareColour = { 1.0f, 1.0f, 1.0f, 1.0f };
+	float m_TilingFactor = 1.0f;
 
 	Fengshui::Ref < Fengshui::GameEntity> m_BigSquare;
 };

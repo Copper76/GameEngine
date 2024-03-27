@@ -124,7 +124,7 @@ namespace Fengshui
 
 	void ImGuiLayer::OnImGuiRender()
 	{
-		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
+		//tatic bool show = true;
+		//ImGui::ShowDemoWindow(&show);
 	}
 }

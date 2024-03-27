@@ -27,11 +27,14 @@ namespace Fengshui
 
 		inline void SetColour(glm::vec4 colour) { m_Colour = colour; }
 
+		inline void SetTilingFactor(float factor) { m_TilingFactor = factor; }
+
 		inline const Ref<Texture2D> GetTexture() const { return m_Texture; }
 
 	private:
 		Ref<Texture2D> m_Texture;
 		glm::vec4 m_Colour = { 1.0f, 1.0f, 1.0f, 1.0f };
+		float m_TilingFactor = 1.0f;
 		RenderShape m_Shape;
 	};
 }

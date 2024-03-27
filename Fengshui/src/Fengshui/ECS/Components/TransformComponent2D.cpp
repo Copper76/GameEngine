@@ -11,6 +11,13 @@ namespace Fengshui
 
 	glm::mat4 TransformComponent2D::GetTransform()
 	{
-		return  glm::scale(glm::rotate(glm::translate(glm::mat4(1.0f), {Position.x, Position.y, Depth}), glm::radians(Rotation), { 0.0f, 0.0f, 1.0f }), { Scale.x, Scale.y, 1.0f });
+		if (Rotation == 0.0f)
+		{
+			return  glm::scale(glm::translate(glm::mat4(1.0f), { Position.x, Position.y, Depth }), { Scale.x, Scale.y, 1.0f });
+		}
+		else
+		{
+			return  glm::scale(glm::rotate(glm::translate(glm::mat4(1.0f), { Position.x, Position.y, Depth }), glm::radians(Rotation), { 0.0f, 0.0f, 1.0f }), { Scale.x, Scale.y, 1.0f });
+		}
 	}
 }

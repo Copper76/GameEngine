@@ -16,7 +16,7 @@ namespace Fengshui
 		switch (m_Shape)
 		{
 		case RenderShape::Quad:
-			Renderer2D::DrawQuad(transform, m_Texture, m_Colour);
+			Renderer2D::DrawQuad(transform, m_TilingFactor, m_Texture, m_Colour);
 			return;
 		default:
 			FS_ENGINE_ASSERT(false, "NO SUPPORT FOR CUSTOM 2D RENDERING")
