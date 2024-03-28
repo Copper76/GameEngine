@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Fengshui/Renderer/Texture.h"
-
 #include <string>
 #include <glm/glm.hpp>
 

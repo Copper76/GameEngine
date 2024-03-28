@@ -66,6 +66,11 @@ namespace Fengshui
 		}
 	}
 
+	void Application::Close()
+	{
+		m_Running = false;
+	}
+
 	void Application::OnEvent(Event& e)
 	{
 		//FS_TRACE(e)
@@ -87,7 +92,7 @@ namespace Fengshui
 
 	bool Application::OnWindowClose(WindowCloseEvent& e)
 	{
-		m_Running = false;
+		Close();
 		return true;
 	}
 

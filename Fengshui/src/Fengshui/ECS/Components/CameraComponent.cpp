@@ -47,19 +47,24 @@ namespace Fengshui
 		eventDispatcher.Dispatch<WindowResizeEvent>(FS_BIND_EVENT_FN(CameraComponent::OnWindowResize));
 	}
 
+	void CameraComponent::CalculateView()
+	{
+		m_Camera->SetProjection(-1.0f * m_AspectRatio * m_ZoomLevel, 1.0f * m_AspectRatio * m_ZoomLevel, -1.0f * m_ZoomLevel, 1.0f * m_ZoomLevel);
+	}
+
 	bool CameraComponent::OnMouseScrolled(MouseScrolledEvent& e)
 	{
 		m_ZoomLevel -= e.GetYOffset()* 0.1f;
 		m_ZoomLevel = std::max(m_ZoomLevel, 0.5f);
 		m_CameraMoveSpeed = m_ZoomLevel * 2.0f;
-		m_Camera->SetProjection(-1.0f * m_AspectRatio * m_ZoomLevel, 1.0f * m_AspectRatio * m_ZoomLevel, -1.0f * m_ZoomLevel, 1.0f * m_ZoomLevel);
+		CalculateView();
 		return false;
 	}
 
 	bool CameraComponent::OnWindowResize(WindowResizeEvent& e)
 	{
 		m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
-		m_Camera->SetProjection(-1.0f * m_AspectRatio * m_ZoomLevel, 1.0f * m_AspectRatio * m_ZoomLevel, -1.0f * m_ZoomLevel, 1.0f * m_ZoomLevel);
+		CalculateView();
 		return false;
 	}
 }

@@ -6,10 +6,6 @@
 
 namespace Fengshui
 {
-	Scene::Scene()
-	{
-	}
-
 	Scene::~Scene()
 	{
 		m_GameEntities.clear();
@@ -24,6 +20,8 @@ namespace Fengshui
 		auto cameraEntity = GameEntity::Create(scene);
 		auto cameraComp = cameraEntity->AddComponent<CameraComponent>();
 		scene->m_CameraComponent = cameraComp;
+
+		scene->subTexture = SubTexture2D::Create(Texture2D::Create("Assets/Textures/ChernoLogo.png"), { 1, 0 }, { 512, 512 }, {1, 2});
 
 		return scene;
 	}
@@ -78,6 +76,7 @@ namespace Fengshui
 
 	void Scene::OnUpdate(float dt)
 	{
+		//Get Components
 		m_CameraComponent->OnUpdate(dt);
 		auto transformComponents = m_Components[ComponentType::ComponentTransform];
 		auto transform2DComponents = m_Components[ComponentType::ComponentTransform2D];
@@ -89,7 +88,6 @@ namespace Fengshui
 
 		//Render cycle
 		Renderer::BeginScene(shared_from_this());
-		//Fengshui::Renderer::BeginScene(m_Camera);
 
 		for (auto kv : renderComponents)
 		{
@@ -100,14 +98,16 @@ namespace Fengshui
 
 		//2D Render cycle
 		Renderer2D::BeginScene(shared_from_this());
-		for (int i = -5.0f; i < 5.0f; i+= 1.0f)
+		for (float i = -15.0f; i < 15.0f; i+= 1.0f)
 		{
-			for (int j = -5.0f; j < 5.0f; j += 1.0f)
+			for (float j = -15.0f; j < 15.0f; j += 1.0f)
 			{
 
-				Renderer2D::DrawQuad({ i, j }, { 0.5f, 0.5f }, 0.0f, 1.0f, nullptr, { (i+0.5f)/10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f });
+				//Renderer2D::DrawQuad({ i, j }, { 0.5f, 0.5f }, 45.0f, 1.0f, nullptr, { (i+0.5f)/10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f });
+				//Renderer2D::DrawSubQuad({ i, j }, { 0.5f, 0.5f }, 0.0f, 1.0f, subTexture, { (i+0.5f)/10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f });
 			}
 		}
+		//Renderer2D::DrawSubQuad({ 0, 0 }, { 0.5f, 1.0f }, 0.0f, 1.0f, subTexture, { 1.0f, 1.0f, 1.0f, 1.0f });
 
 		for (auto kv : render2DComponents)
 		{

@@ -6,7 +6,13 @@
 namespace Fengshui
 {
 	RenderComponent2D::RenderComponent2D(Ref<Texture2D> texture, RenderShape shape)
-		:m_Texture(texture), m_Shape(shape)
+		: m_Texture(texture), m_TexCoords(nullptr), m_Shape(shape)
+	{
+
+	}
+
+	RenderComponent2D::RenderComponent2D(Ref<SubTexture2D> texture, RenderShape shape)
+		: m_Texture(texture->GetTexture()), m_TexCoords(texture->GetTexCoords()), m_Shape(shape)
 	{
 
 	}
@@ -16,7 +22,7 @@ namespace Fengshui
 		switch (m_Shape)
 		{
 		case RenderShape::Quad:
-			Renderer2D::DrawQuad(transform, m_TilingFactor, m_Texture, m_Colour);
+			Renderer2D::DrawQuad(transform, m_TilingFactor, m_Texture, m_TexCoords, m_Colour);
 			return;
 		default:
 			FS_ENGINE_ASSERT(false, "NO SUPPORT FOR CUSTOM 2D RENDERING")

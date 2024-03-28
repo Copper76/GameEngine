@@ -10,7 +10,7 @@ namespace Fengshui
 	class Scene: public std::enable_shared_from_this<Scene>
 	{
 	public:
-		Scene();
+		Scene() = default;
 
 		~Scene();
 
@@ -40,5 +40,7 @@ namespace Fengshui
 		std::unordered_map<ComponentType,std::unordered_map<uint32_t, Ref<Component>>> m_Components;
 
 		Ref<CameraComponent> m_CameraComponent;
+
+		Ref<SubTexture2D> subTexture;
 	};
 }

@@ -144,6 +144,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="External\stb_image\stb_image.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLFramebuffer.h" />
+    <ClInclude Include="src\Fengshui\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Fengshui\ECS\Components\RenderComponent2D.h" />
     <ClInclude Include="src\Fengshui\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Fengshui\ECS\Components\Components.h" />
@@ -211,6 +213,7 @@
     <ClInclude Include="src\Fengshui\Renderer\Renderer.h" />
     <ClInclude Include="src\Fengshui\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Fengshui\Renderer\Shader.h" />
+    <ClInclude Include="src\Fengshui\Renderer\SubTexture2D.h" />
     <ClInclude Include="src\Fengshui\Renderer\Texture.h" />
     <ClInclude Include="src\Fengshui\Renderer\VertexArray.h" />
     <ClInclude Include="src\fspch.h" />
@@ -218,6 +221,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLFramebuffer.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Components\RenderComponent2D.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Components\HierarchyComponent.cpp" />
@@ -267,6 +272,7 @@
     <ClCompile Include="src\Fengshui\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\SubTexture2D.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\Texture.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\fspch.cpp">

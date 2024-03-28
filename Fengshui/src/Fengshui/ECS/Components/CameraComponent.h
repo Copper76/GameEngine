@@ -22,6 +22,8 @@ namespace Fengshui
 
 		COMPONENT_CLASS_TYPE(ComponentCamera);
 
+		inline void SetZoomLevel(float zoomLevel) { m_ZoomLevel = zoomLevel; CalculateView(); };
+
 		inline void SetPosition(const glm::vec3& position) { m_Camera->SetPosition(position); }
 		inline void SetRotation(float rotation) { m_Camera->SetRotation(rotation); }
 
@@ -33,6 +35,7 @@ namespace Fengshui
 		inline const glm::mat4& GetViewProjectionMatrix() const { return m_Camera->GetViewProjectionMatrix(); }
 
 	private:
+		void CalculateView();
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 

@@ -269,6 +269,9 @@
     <ClInclude Include="src\Fengshui\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Fengshui\ECS\Components\RenderComponent2D.h" />
     <ClInclude Include="src\Fengshui\ECS\Components\TransformComponent2D.h" />
+    <ClInclude Include="src\Fengshui\Renderer\SubTexture2D.h" />
+    <ClInclude Include="src\Fengshui\Renderer\Framebuffer.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLFramebuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp">
@@ -425,5 +428,8 @@
     <ClCompile Include="src\Fengshui\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Components\RenderComponent2D.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Components\TransformComponent2D.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\SubTexture2D.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\Framebuffer.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLFramebuffer.cpp" />
   </ItemGroup>
 </Project>

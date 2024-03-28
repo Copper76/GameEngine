@@ -23,7 +23,11 @@ namespace Fengshui
 		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const float rotation = 0.0f, const float tilingFactor = 1.0f, const Ref<Texture2D>& texture = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const float rotation = 0.0f, const float tilingFactor = 1.0f, const Ref<Texture2D>& texture = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
 
-		static void Renderer2D::DrawQuad(Ref<TransformComponent2D> transform, const float tilingFactor = 1.0f, const Ref<Texture2D>& texture = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
+		static void DrawSubQuad(const glm::vec2& position, const glm::vec2& size, const float rotation, const float tilingFactor, const Ref<SubTexture2D>& subTexture, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
+		static void DrawSubQuad(const glm::vec3& position, const glm::vec2& size, const float rotation, const float tilingFactor, const Ref<SubTexture2D>& subTexture, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
+
+		static void Renderer2D::DrawQuad(Ref<TransformComponent2D> transform, const float tilingFactor = 1.0f, const Ref<Texture2D>& texture = nullptr, glm::vec2* texCoords = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
+		static void Renderer2D::DrawSubQuad(Ref<TransformComponent2D> transform, const float tilingFactor, const Ref<SubTexture2D>& subTexture, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
 
 	private:
 		static void PrepareNextBatch();

@@ -23,6 +23,7 @@
 #include "Fengshui/Renderer/RenderCommand.h"
 #include "Fengshui/Renderer/Shader.h"
 #include "Fengshui/Renderer/Buffer.h"
+#include "Fengshui/Renderer/FrameBuffer.h"
 #include "Fengshui/Renderer/VertexArray.h"
 #include "Fengshui/Renderer/Texture.h"
 
