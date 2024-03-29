@@ -25,7 +25,7 @@ namespace Fengshui
 	class Application
 	{
 	public:
-		Application();
+		Application(const std::string& name = "Fengshui Engine");
 		virtual ~Application();
 
 		void Run();

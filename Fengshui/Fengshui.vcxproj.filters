@@ -102,10 +102,22 @@
     <ClInclude Include="src\Fengshui\ECS\Components\CameraComponent.h">
       <Filter>src\Fengshui\ECS\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\Components\Components.h">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\Components\HierarchyComponent.h">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Fengshui\ECS\Components\RenderComponent.h">
       <Filter>src\Fengshui\ECS\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\Components\RenderComponent2D.h">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Fengshui\ECS\Components\TransformComponent.h">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\Components\TransformComponent2D.h">
       <Filter>src\Fengshui\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\ECS\GameEntity.h">
@@ -216,6 +228,9 @@
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLContext.h">
       <Filter>src\Fengshui\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLFramebuffer.h">
+      <Filter>src\Fengshui\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLRendererAPI.h">
       <Filter>src\Fengshui\Platform\OpenGL</Filter>
     </ClInclude>
@@ -240,6 +255,9 @@
     <ClInclude Include="src\Fengshui\Renderer\Camera.h">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\Renderer\Framebuffer.h">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Fengshui\Renderer\RenderCommand.h">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClInclude>
@@ -249,10 +267,16 @@
     <ClInclude Include="src\Fengshui\Renderer\Renderer.h">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\Renderer\Renderer2D.h">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Fengshui\Renderer\RendererAPI.h">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\Renderer\Shader.h">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Renderer\SubTexture2D.h">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\Renderer\Texture.h">
@@ -264,14 +288,6 @@
     <ClInclude Include="src\fspch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\ECS\Components\HierarchyComponent.h" />
-    <ClInclude Include="src\Fengshui\ECS\Components\Components.h" />
-    <ClInclude Include="src\Fengshui\Renderer\Renderer2D.h" />
-    <ClInclude Include="src\Fengshui\ECS\Components\RenderComponent2D.h" />
-    <ClInclude Include="src\Fengshui\ECS\Components\TransformComponent2D.h" />
-    <ClInclude Include="src\Fengshui\Renderer\SubTexture2D.h" />
-    <ClInclude Include="src\Fengshui\Renderer\Framebuffer.h" />
-    <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLFramebuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp">
@@ -289,10 +305,19 @@
     <ClCompile Include="src\Fengshui\ECS\Components\CameraComponent.cpp">
       <Filter>src\Fengshui\ECS\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Components\HierarchyComponent.cpp">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClCompile>
     <ClCompile Include="src\Fengshui\ECS\Components\RenderComponent.cpp">
       <Filter>src\Fengshui\ECS\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Components\RenderComponent2D.cpp">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClCompile>
     <ClCompile Include="src\Fengshui\ECS\Components\TransformComponent.cpp">
+      <Filter>src\Fengshui\ECS\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Components\TransformComponent2D.cpp">
       <Filter>src\Fengshui\ECS\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\ECS\GameEntity.cpp">
@@ -379,6 +404,9 @@
     <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLContext.cpp">
       <Filter>src\Fengshui\Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLFramebuffer.cpp">
+      <Filter>src\Fengshui\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLRendererAPI.cpp">
       <Filter>src\Fengshui\Platform\OpenGL</Filter>
     </ClCompile>
@@ -403,16 +431,25 @@
     <ClCompile Include="src\Fengshui\Renderer\Camera.cpp">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\Renderer\Framebuffer.cpp">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Fengshui\Renderer\RenderCommand.cpp">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Renderer\Renderer.cpp">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\Renderer\Renderer2D.cpp">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Fengshui\Renderer\RendererAPI.cpp">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Renderer\Shader.cpp">
+      <Filter>src\Fengshui\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Renderer\SubTexture2D.cpp">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Renderer\Texture.cpp">
@@ -424,12 +461,5 @@
     <ClCompile Include="src\fspch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\ECS\Components\HierarchyComponent.cpp" />
-    <ClCompile Include="src\Fengshui\Renderer\Renderer2D.cpp" />
-    <ClCompile Include="src\Fengshui\ECS\Components\RenderComponent2D.cpp" />
-    <ClCompile Include="src\Fengshui\ECS\Components\TransformComponent2D.cpp" />
-    <ClCompile Include="src\Fengshui\Renderer\SubTexture2D.cpp" />
-    <ClCompile Include="src\Fengshui\Renderer\Framebuffer.cpp" />
-    <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLFramebuffer.cpp" />
   </ItemGroup>
 </Project>
