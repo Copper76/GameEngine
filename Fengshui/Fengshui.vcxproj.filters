@@ -243,9 +243,6 @@
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>src\Fengshui\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Platform\Windows\WindowsInput.h">
-      <Filter>src\Fengshui\Platform\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="src\Fengshui\Platform\Windows\WindowsWindow.h">
       <Filter>src\Fengshui\Platform\Windows</Filter>
     </ClInclude>

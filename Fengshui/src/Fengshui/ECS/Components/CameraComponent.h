@@ -22,6 +22,8 @@ namespace Fengshui
 
 		COMPONENT_CLASS_TYPE(ComponentCamera);
 
+		void ResizeBounds(float width, float height);
+
 		inline void SetZoomLevel(float zoomLevel) { m_ZoomLevel = zoomLevel; CalculateView(); };
 
 		inline void SetPosition(const glm::vec3& position) { m_Camera->SetPosition(position); }

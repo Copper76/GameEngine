@@ -1,5 +1,5 @@
 #include "fspch.h"
-#include "Fengshui/Platform//Windows/WindowsInput.h"
+#include "Fengshui/Core/Input.h"
 
 #include "Fengshui/Core/Application.h"
 
@@ -8,9 +8,7 @@
 namespace Fengshui
 {
 
-	Input* Input::s_Instance = new WindowsInput();
-
-	bool WindowsInput::IsKeyPressedImpl(int keyCode)
+	bool Input::IsKeyPressed(int keyCode)
 	{
 		auto window = static_cast<GLFWwindow*>(Application::GetInstance().GetWindow().GetNativeWindow());
 		auto state = glfwGetKey(window, keyCode);
@@ -18,7 +16,7 @@ namespace Fengshui
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
 	}
 
-	bool WindowsInput::IsMouseButtonPressedImpl(int button)
+	bool Input::IsMouseButtonPressed(int button)
 	{
 		auto window = static_cast<GLFWwindow*>(Application::GetInstance().GetWindow().GetNativeWindow());
 		auto state = glfwGetMouseButton(window, button);
@@ -27,7 +25,7 @@ namespace Fengshui
 	}
 
 
-	std::pair<float, float> WindowsInput::GetMousePosImpl()
+	std::pair<float, float> Input::GetMousePos()
 	{
 		auto window = static_cast<GLFWwindow*>(Application::GetInstance().GetWindow().GetNativeWindow());
 		double xpos, ypos;
@@ -36,16 +34,16 @@ namespace Fengshui
 		return { (float)xpos, (float)ypos };
 	}
 
-	float WindowsInput::GetMouseXImpl()
+	float Input::GetMouseX()
 	{
-		auto[xPos, yPos] = GetMousePosImpl();
+		auto[xPos, yPos] = GetMousePos();
 
 		return xPos;
 	}
 
-	float WindowsInput::GetMouseYImpl()
+	float Input::GetMouseY()
 	{
-		auto [xPos, yPos] = GetMousePosImpl();
+		auto [xPos, yPos] = GetMousePos();
 
 		return yPos;
 	}

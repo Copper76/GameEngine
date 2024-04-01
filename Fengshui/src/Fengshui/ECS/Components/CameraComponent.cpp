@@ -47,6 +47,12 @@ namespace Fengshui
 		eventDispatcher.Dispatch<WindowResizeEvent>(FS_BIND_EVENT_FN(CameraComponent::OnWindowResize));
 	}
 
+	void CameraComponent::ResizeBounds(float width, float height)
+	{
+		m_AspectRatio = width / height;
+		CalculateView();
+	}
+
 	void CameraComponent::CalculateView()
 	{
 		m_Camera->SetProjection(-1.0f * m_AspectRatio * m_ZoomLevel, 1.0f * m_AspectRatio * m_ZoomLevel, -1.0f * m_ZoomLevel, 1.0f * m_ZoomLevel);
@@ -63,8 +69,7 @@ namespace Fengshui
 
 	bool CameraComponent::OnWindowResize(WindowResizeEvent& e)
 	{
-		m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
-		CalculateView();
+		ResizeBounds((float)e.GetWidth(), (float)e.GetHeight());
 		return false;
 	}
 }

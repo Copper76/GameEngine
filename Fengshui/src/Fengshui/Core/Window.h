@@ -37,6 +37,6 @@ namespace Fengshui
 
 		virtual void* GetNativeWindow() const = 0;
 
-		static Window* Create(const WindowInfo& info = WindowInfo());
+		static Scope<Window> Create(const WindowInfo& info = WindowInfo());
 	};
 }

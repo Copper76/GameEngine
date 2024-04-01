@@ -77,7 +77,11 @@ namespace Fengshui
 	void Scene::OnUpdate(float dt)
 	{
 		//Get Components
-		m_CameraComponent->OnUpdate(dt);
+		if (m_ViewportFocused)
+		{
+			m_CameraComponent->OnUpdate(dt);
+		}
+
 		auto transformComponents = m_Components[ComponentType::ComponentTransform];
 		auto transform2DComponents = m_Components[ComponentType::ComponentTransform2D];
 		auto renderComponents = m_Components[ComponentType::ComponentRender];
@@ -103,7 +107,7 @@ namespace Fengshui
 			for (float j = -15.0f; j < 15.0f; j += 1.0f)
 			{
 
-				//Renderer2D::DrawQuad({ i, j }, { 0.5f, 0.5f }, 45.0f, 1.0f, nullptr, { (i+0.5f)/10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f });
+				Renderer2D::DrawQuad({ i, j, -0.5f }, { 0.5f, 0.5f }, 45.0f, 1.0f, nullptr, { (i+0.5f)/10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f });
 				//Renderer2D::DrawSubQuad({ i, j }, { 0.5f, 0.5f }, 0.0f, 1.0f, subTexture, { (i+0.5f)/10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f });
 			}
 		}

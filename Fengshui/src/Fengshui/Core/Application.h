@@ -37,6 +37,8 @@ namespace Fengshui
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* overlay);
 
+		ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
+
 		inline static Application& GetInstance() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_Window; }
 
@@ -48,7 +50,7 @@ namespace Fengshui
 		bool m_Running = true;
 		bool m_Minimised = false;
 
-		std::unique_ptr<Window> m_Window;
+		Scope<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 
 		LayerStack m_LayerStack;

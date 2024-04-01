@@ -30,6 +30,8 @@ namespace Fengshui
 
 		static Ref<Scene> Init();
 
+		void SetViewportFocused(bool focused) { m_ViewportFocused = focused; }
+
 		Ref<GameEntity> GetGameEntity(uint32_t id);
 
 		Ref<CameraComponent> GetCameraComponent() { return m_CameraComponent; }
@@ -42,5 +44,7 @@ namespace Fengshui
 		Ref<CameraComponent> m_CameraComponent;
 
 		Ref<SubTexture2D> subTexture;
+
+		bool m_ViewportFocused = false;
 	};
 }

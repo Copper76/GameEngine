@@ -203,7 +203,6 @@
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="src\Fengshui\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Fengshui\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Fengshui\Renderer\Buffer.h" />
     <ClInclude Include="src\Fengshui\Renderer\Camera.h" />

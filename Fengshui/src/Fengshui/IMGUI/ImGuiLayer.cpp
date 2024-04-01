@@ -95,6 +95,16 @@ namespace Fengshui
 		ImGui::DestroyContext();
 	}
 
+	void ImGuiLayer::OnEvent(Event& e)
+	{
+		if (m_BlockEvent)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			e.Handled |= e.IsInCategory(EventCategoryMouse);
+			e.Handled |= e.IsInCategory(EventCategoryKeyboard);
+		}
+	}
+
 	void ImGuiLayer::Begin()
 	{
 

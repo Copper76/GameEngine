@@ -17,14 +17,19 @@ namespace Fengshui
 
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
+
+		virtual void OnEvent(Event& e) override;
 		//virtual void OnUpdate();
 		virtual void OnImGuiRender() override;
+
+		void SetBlockEvent(bool block) { m_BlockEvent = block; }
 
 		void Begin();
 		void End();
 
 	private:
 		float m_Time = 0.0f;
+		bool m_BlockEvent = true;
 	};
 
 }
