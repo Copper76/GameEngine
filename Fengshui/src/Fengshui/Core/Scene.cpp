@@ -1,7 +1,6 @@
 #include "fspch.h"
 #include "Scene.h"
 
-#include "Fengshui/Renderer/Renderer.h"
 #include "Fengshui/Renderer/Renderer2D.h"
 
 
@@ -43,65 +42,7 @@ namespace Fengshui
 			std::make_shared<OrthographicCamera>(-1.0f * 1280.0f / 720.0f * 1.0f, 1.0f * 1280.0f / 720.0f * 1.0f, -1.0f * 1.0f, 1.0f * 1.0f) });
 
 		return scene;
-		/**
-		auto cameraEntity = GameEntity::Create(scene);
-		auto cameraComp = cameraEntity->AddComponent<CameraComponent>();
-		scene->m_CameraComponent = cameraComp;
-
-		scene->subTexture = SubTexture2D::Create(Texture2D::Create("Assets/Textures/ChernoLogo.png"), { 1, 0 }, { 512, 512 }, {1, 2});
-
-		return scene;
-		**/
 	}
-	/**
-	Ref<GameEntity> Scene::GetGameEntity(uint32_t id)
-	{
-		return m_GameEntities[id];
-	}
-
-	uint32_t Scene::RegisterEntity(Ref<GameEntity> entity)
-	{
-		m_GameEntities[m_NextEntityID] = entity;
-		return m_NextEntityID++;
-	}
-
-	bool Scene::RegisterComponent(uint32_t entityID, Ref<Component> component)
-	{
-		if (m_Components[component->GetComponentType()][entityID] != nullptr)
-		{
-			return false;
-		}
-		component->SetEntityID(entityID);
-		m_Components[component->GetComponentType()][entityID] = component;
-		return true;
-	}
-
-	void Scene::RemoveEntity(uint32_t entityID)
-	{
-		for (Ref<Component> comp : GetGameEntity(entityID)->GetComponents())
-		{
-			RemoveComponent(entityID, comp);
-		}
-
-		m_GameEntities.erase(entityID);
-	}
-
-	void Scene::RemoveEntity(Ref<GameEntity> entity)
-	{
-		uint32_t entityID = entity->GetID();
-		for (Ref<Component> comp : GetGameEntity(entityID)->GetComponents())
-		{
-			RemoveComponent(entityID, comp);
-		}
-
-		m_GameEntities.erase(entityID);
-	}
-
-	void Scene::RemoveComponent(uint32_t entityID, Ref<Component> component)
-	{
-		m_Components[component->GetComponentType()].erase(entityID);
-	}
-	**/
 
 	void Scene::OnUpdate(float dt)
 	{
@@ -139,24 +80,9 @@ namespace Fengshui
 			}
 		}
 
-		//auto transformComponents = m_Components[ComponentType::ComponentTransform];
-		//auto transform2DComponents = m_Components[ComponentType::ComponentTransform2D];
-		//auto renderComponents = m_Components[ComponentType::ComponentRender];
-		//auto render2DComponents = m_Components[ComponentType::ComponentRender2D];
-
 		//Clear the screen
 		RenderCommand::Clear();
 
-		//Render cycle
-		/**
-		Renderer::BeginScene(shared_from_this());
-		for (auto kv : renderComponents)
-		{
-			//std::dynamic_pointer_cast<RenderComponent>(kv.second)->OnUpdate(std::dynamic_pointer_cast<TransformComponent>(transformComponents[kv.first]));
-		}
-
-		Renderer::EndScene();
-		**/
 		//2D Render cycle
 		Renderer2D::BeginScene(shared_from_this());
 		for (float i = -15.0f; i < 15.0f; i+= 1.0f)
@@ -169,13 +95,6 @@ namespace Fengshui
 			}
 		}
 		//Renderer2D::DrawSubQuad({ 0, 0 }, { 0.5f, 1.0f }, 0.0f, 1.0f, subTexture, { 1.0f, 1.0f, 1.0f, 1.0f });
-
-		/**
-		for (auto kv : render2DComponents)
-		{
-			std::dynamic_pointer_cast<RenderComponent2D>(kv.second)->OnUpdate(std::dynamic_pointer_cast<TransformComponent2D>(transform2DComponents[kv.first]));
-		}
-		**/
 
 		renderSystem2D->OnUpdate();
 
