@@ -115,7 +115,7 @@ namespace Fengshui
 			return id;
 		}
 
-		Entity Destroy(Entity entity)
+		void Destroy(Entity entity)
 		{
 			FS_ENGINE_ASSERT(entity < MAX_ENTITIES && entity > -1, "Entity out of range");
 

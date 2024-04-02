@@ -19,12 +19,6 @@
     <Filter Include="src\Fengshui\ECS">
       <UniqueIdentifier>{FF2B2C86-EB24-4BD8-1457-305D00AF2AE4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Fengshui\ECS\Old">
-      <UniqueIdentifier>{AD376BD8-99C6-F4A1-42E5-089D2E530548}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Fengshui\ECS\Old\Components">
-      <UniqueIdentifier>{A2D63D9A-0EBA-4CDA-17BD-7A16831F132B}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Fengshui\ECS\Systems">
       <UniqueIdentifier>{0611F658-F235-45D9-1B81-2A69070544F7}</UniqueIdentifier>
     </Filter>
@@ -111,7 +105,7 @@
     <ClInclude Include="src\Fengshui\ECS\Systems.h">
       <Filter>src\Fengshui\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\ECS\Systems\CameraSystem.h">
+    <ClInclude Include="src\Fengshui\ECS\Systems\HierarchySystem.h">
       <Filter>src\Fengshui\ECS\Systems</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\ECS\Systems\RenderSystem.h">
@@ -293,7 +287,10 @@
     <ClCompile Include="src\Fengshui\Core\Scene.cpp">
       <Filter>src\Fengshui\Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\ECS\Systems\CameraSystem.cpp">
+    <ClCompile Include="src\Fengshui\ECS\ECS.cpp">
+      <Filter>src\Fengshui\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Systems\HierarchySystem.cpp">
       <Filter>src\Fengshui\ECS\Systems</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\ECS\Systems\RenderSystem.cpp">
@@ -440,6 +437,5 @@
     <ClCompile Include="src\fspch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\ECS\ECS.cpp" />
   </ItemGroup>
 </Project>
