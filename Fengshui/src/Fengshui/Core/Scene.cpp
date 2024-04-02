@@ -177,7 +177,7 @@ namespace Fengshui
 		}
 		**/
 
-		renderSystem2D->OnUpdate(dt);
+		renderSystem2D->OnUpdate();
 
 		Renderer2D::EndScene();
 	}

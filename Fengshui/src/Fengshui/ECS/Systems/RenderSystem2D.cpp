@@ -5,7 +5,7 @@
 
 namespace Fengshui
 {
-	void RenderSystem2D::OnUpdate(float dt)
+	void RenderSystem2D::OnUpdate()
 	{
 		for (auto const& entity : m_Entities)
 		{
