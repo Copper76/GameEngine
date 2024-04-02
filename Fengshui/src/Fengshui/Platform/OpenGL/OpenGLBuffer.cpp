@@ -5,12 +5,20 @@
 
 namespace Fengshui
 {
+	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)
+	{
+		glCreateBuffers(1, &m_RendererID);
+		//glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+		Bind();
+		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+	}
+
 	Fengshui::OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size, float* vertices)
 	{
 		glCreateBuffers(1, &m_RendererID);
 		//glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 		Bind();
-		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);//need changing
+		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
 	}
 
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()
@@ -26,6 +34,12 @@ namespace Fengshui
 	void Fengshui::OpenGLVertexBuffer::Unbind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void OpenGLVertexBuffer::SetData(const void* data, uint32_t size)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
 	}
 
 	Fengshui::OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t count, uint32_t* indices) : m_Count(count)

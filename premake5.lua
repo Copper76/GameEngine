@@ -1,6 +1,7 @@
 workspace "GameEngine"
 	architecture "x64"
-	startproject "Sandbox"
+	startproject "Fengshui-Editor"
+	-- startproject "Sandbox"
 
 	configurations
 	{
@@ -18,9 +19,11 @@ IncludeDir["IMGUI"] = "Fengshui/External/IMGUI"
 IncludeDir["GLM"] = "Fengshui/External/GLM"
 IncludeDir["STB"] = "Fengshui/External/stb_image"
 
-include "Fengshui/External/GLFW"
-include "Fengshui/External/GLAD"
-include "Fengshui/External/IMGUI"
+group "Dependencies"
+	include "Fengshui/External/GLFW"
+	include "Fengshui/External/GLAD"
+	include "Fengshui/External/IMGUI"
+group ""
 
 project "Fengshui"
 	location "Fengshui"
@@ -106,6 +109,58 @@ project "Fengshui"
 
 project "Sandbox"
 	location "Sandbox"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+
+	targetdir ("bin/" .. output_dir .. "/%{prj.name}")
+	objdir ("bin-int/" .. output_dir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"Fengshui/External/spdlog/include",
+		"Fengshui/src",
+		"%{IncludeDir.GLM}",
+		"Fengshui/External/IMGUI",
+	}
+
+	links
+	{
+		"Fengshui"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+
+		defines
+		{
+			"FS_PLATFORM_WINDOWS"
+		}
+
+		filter "configurations:Debug"
+			defines "FS_DEBUG"
+			runtime "Debug"
+			symbols "on"
+
+		filter "configurations:Release"
+			defines "FS_RELEASE"
+			runtime "Release"
+			optimize "on"
+
+		filter "configurations:Dist"
+			defines "FS_DIST"
+			runtime "Release"
+			optimize "on"
+
+project "Fengshui-Editor"
+	location "Fengshui-Editor"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"

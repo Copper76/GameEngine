@@ -15,8 +15,8 @@ namespace Fengshui
 
 		void OnUpdate() override;
 
-		inline unsigned int GetWidth() const override { return m_Data.Width; }
-		inline unsigned int GetHeight() const override { return m_Data.Height;  }
+		inline uint32_t GetWidth() const override { return m_Data.Width; }
+		inline uint32_t GetHeight() const override { return m_Data.Height;  }
 
 		inline virtual void* GetNativeWindow() const { return m_Window; }
 
@@ -35,7 +35,7 @@ namespace Fengshui
 		struct WindowData
 		{
 			std::string title;
-			unsigned int Width, Height;
+			uint32_t Width, Height;
 			bool VSync;
 
 			EventCallbackFn EventCallback;

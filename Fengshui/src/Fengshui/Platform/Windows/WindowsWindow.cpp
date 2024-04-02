@@ -14,9 +14,9 @@ namespace Fengshui
 		FS_ENGINE_ERROR("GLFW ERROR {0}: {1}", errorCode, description)
 	}
 
-	Window* Window::Create(const WindowInfo& info)
+	Scope<Window> Window::Create(const WindowInfo& info)
 	{
-		return new WindowsWindow(info);
+		return std::make_unique<WindowsWindow>(info);
 	}
 
 	WindowsWindow::WindowsWindow(const WindowInfo& info)

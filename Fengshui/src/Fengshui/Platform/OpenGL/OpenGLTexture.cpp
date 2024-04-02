@@ -3,11 +3,22 @@
 
 #include "stb_image.h"
 
-#include <glad/glad.h>
-
 namespace Fengshui
 {
-	OpenGLTexture::OpenGLTexture(const std::string& filePath, Ref<Shader> shader)
+	//3D Texture
+	OpenGLTexture::OpenGLTexture(uint32_t width, uint32_t height): m_Width(width), m_Height(height), m_InternalFormat(GL_RGBA8), m_Format(GL_RGBA)
+	{
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
+		glTextureStorage2D(m_RendererID, 1, m_InternalFormat, m_Width, m_Height);
+
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	}
+
+	OpenGLTexture::OpenGLTexture(const std::string& filePath)
 	{
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);//stb loads top down but opengl reads bottom up
@@ -30,6 +41,9 @@ namespace Fengshui
 			dataFormat = GL_RGB;
 		}
 
+		m_InternalFormat = internalFormat;
+		m_Format = dataFormat;
+
 		FS_ENGINE_ASSERT(internalFormat & dataFormat, "The format is not supported");
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
@@ -37,6 +51,9 @@ namespace Fengshui
 
 		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
 
@@ -48,12 +65,31 @@ namespace Fengshui
 		glDeleteTextures(1, &m_RendererID);
 	}
 
-	void OpenGLTexture::Bind() const
+	void OpenGLTexture::SetData(void* data, uint32_t size)
 	{
-		glBindTextureUnit(m_Slot, m_RendererID);
+		FS_ENGINE_ASSERT(size == m_Width * m_Height * (m_Format == GL_RGBA ? 4 : 3), "No Support for partial texture");
+		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_Format, GL_UNSIGNED_BYTE, data);
 	}
 
-	OpenGLTexture2D::OpenGLTexture2D(const std::string& filePath, Ref<Shader> shader) : m_FilePath(filePath), m_Slot(shader->GetNextSlot())
+	void OpenGLTexture::Bind(int slot) const
+	{
+		glBindTextureUnit(slot, m_RendererID);
+	}
+
+	//2D Texture
+	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height) : m_Width(width), m_Height(height), m_InternalFormat(GL_RGBA8), m_Format(GL_RGBA)
+	{
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
+		glTextureStorage2D(m_RendererID, 1, m_InternalFormat, m_Width, m_Height);
+
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	}
+
+	OpenGLTexture2D::OpenGLTexture2D(const std::string& filePath) : m_FilePath(filePath)
 	{
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);//stb loads top down but opengl reads bottom up
@@ -75,6 +111,9 @@ namespace Fengshui
 			internalFormat = GL_RGB8;
 			dataFormat = GL_RGB;
 		}
+
+		m_InternalFormat = internalFormat;
+		m_Format = dataFormat;
 
 		FS_ENGINE_ASSERT(internalFormat & dataFormat, "The format is not supported");
 
@@ -94,8 +133,14 @@ namespace Fengshui
 		glDeleteTextures(1, &m_RendererID);
 	}
 
-	void OpenGLTexture2D::Bind() const
+	void OpenGLTexture2D::SetData(void* data, uint32_t size)
 	{
-		glBindTextureUnit(m_Slot, m_RendererID);
+		FS_ENGINE_ASSERT(size == m_Width * m_Height * (m_Format == GL_RGBA ? 4 : 3), "No Support for partial texture");
+		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_Format, GL_UNSIGNED_BYTE, data);
+	}
+
+	void OpenGLTexture2D::Bind(int slot) const
+	{
+		glBindTextureUnit(slot, m_RendererID);
 	}
 }

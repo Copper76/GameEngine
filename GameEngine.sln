@@ -1,17 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.7.34018.315
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Fengshui-Editor", "Fengshui-Editor\Fengshui-Editor.vcxproj", "{32B4D24C-9E3F-4011-A750-C305135B9C11}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Fengshui", "Fengshui\Fengshui.vcxproj", "{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{53E47842-3FC8-3998-A828-34EB942B241A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLAD", "Fengshui\External\GLAD\GLAD.vcxproj", "{5D4A857C-4981-860D-F26D-6C10DE83020F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLFW", "Fengshui\External\GLFW\GLFW.vcxproj", "{154B857C-0182-860D-AA6E-6C109684020F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMGUI", "Fengshui\External\IMGUI\IMGUI.vcxproj", "{606F530D-CC83-7BBE-9505-1F1E01D977EF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Fengshui", "Fengshui\Fengshui.vcxproj", "{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,18 +22,12 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Debug|x64.ActiveCfg = Debug|x64
-		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Debug|x64.Build.0 = Debug|x64
-		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Dist|x64.ActiveCfg = Dist|x64
-		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Dist|x64.Build.0 = Dist|x64
-		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Release|x64.ActiveCfg = Release|x64
-		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Release|x64.Build.0 = Release|x64
-		{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}.Debug|x64.ActiveCfg = Debug|x64
-		{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}.Debug|x64.Build.0 = Debug|x64
-		{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}.Dist|x64.ActiveCfg = Dist|x64
-		{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}.Dist|x64.Build.0 = Dist|x64
-		{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}.Release|x64.ActiveCfg = Release|x64
-		{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}.Release|x64.Build.0 = Release|x64
+		{32B4D24C-9E3F-4011-A750-C305135B9C11}.Debug|x64.ActiveCfg = Debug|x64
+		{32B4D24C-9E3F-4011-A750-C305135B9C11}.Debug|x64.Build.0 = Debug|x64
+		{32B4D24C-9E3F-4011-A750-C305135B9C11}.Dist|x64.ActiveCfg = Dist|x64
+		{32B4D24C-9E3F-4011-A750-C305135B9C11}.Dist|x64.Build.0 = Dist|x64
+		{32B4D24C-9E3F-4011-A750-C305135B9C11}.Release|x64.ActiveCfg = Release|x64
+		{32B4D24C-9E3F-4011-A750-C305135B9C11}.Release|x64.Build.0 = Release|x64
 		{5D4A857C-4981-860D-F26D-6C10DE83020F}.Debug|x64.ActiveCfg = Debug|x64
 		{5D4A857C-4981-860D-F26D-6C10DE83020F}.Debug|x64.Build.0 = Debug|x64
 		{5D4A857C-4981-860D-F26D-6C10DE83020F}.Dist|x64.ActiveCfg = Dist|x64
@@ -50,11 +46,25 @@ Global
 		{606F530D-CC83-7BBE-9505-1F1E01D977EF}.Dist|x64.Build.0 = Dist|x64
 		{606F530D-CC83-7BBE-9505-1F1E01D977EF}.Release|x64.ActiveCfg = Release|x64
 		{606F530D-CC83-7BBE-9505-1F1E01D977EF}.Release|x64.Build.0 = Release|x64
+		{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}.Debug|x64.ActiveCfg = Debug|x64
+		{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}.Debug|x64.Build.0 = Debug|x64
+		{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}.Dist|x64.ActiveCfg = Dist|x64
+		{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}.Dist|x64.Build.0 = Dist|x64
+		{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}.Release|x64.ActiveCfg = Release|x64
+		{3EA28D7C-2A6F-E887-5388-D62F3FB41D16}.Release|x64.Build.0 = Release|x64
+		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Debug|x64.ActiveCfg = Debug|x64
+		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Debug|x64.Build.0 = Debug|x64
+		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Dist|x64.ActiveCfg = Dist|x64
+		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Dist|x64.Build.0 = Dist|x64
+		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Release|x64.ActiveCfg = Release|x64
+		{F4C124E3-60A1-A37E-69B9-2E55D5170AE0}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {5F52C0DD-84FB-4F97-9808-F0DEF268C6A0}
+	GlobalSection(NestedProjects) = preSolution
+		{5D4A857C-4981-860D-F26D-6C10DE83020F} = {53E47842-3FC8-3998-A828-34EB942B241A}
+		{154B857C-0182-860D-AA6E-6C109684020F} = {53E47842-3FC8-3998-A828-34EB942B241A}
+		{606F530D-CC83-7BBE-9505-1F1E01D977EF} = {53E47842-3FC8-3998-A828-34EB942B241A}
 	EndGlobalSection
 EndGlobal

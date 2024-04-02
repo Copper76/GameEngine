@@ -9,14 +9,15 @@ namespace Fengshui
 {
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application()
+	Application::Application(const std::string& name)
 	{
 		FS_ENGINE_ASSERT(!s_Instance, "Applicaiton already running!");
 		s_Instance = this;
-		m_Window = std::unique_ptr<Window>(Window::Create());
+		m_Window = std::unique_ptr<Window>(Window::Create(WindowInfo(name)));
 		m_Window->SetEventCallback(FS_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
+		//GeneralManager::Init();//initialising the ECS manager
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -66,6 +67,11 @@ namespace Fengshui
 		}
 	}
 
+	void Application::Close()
+	{
+		m_Running = false;
+	}
+
 	void Application::OnEvent(Event& e)
 	{
 		//FS_TRACE(e)
@@ -87,7 +93,7 @@ namespace Fengshui
 
 	bool Application::OnWindowClose(WindowCloseEvent& e)
 	{
-		m_Running = false;
+		Close();
 		return true;
 	}
 
