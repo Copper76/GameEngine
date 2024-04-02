@@ -1,5 +1,5 @@
 #pragma once
-#include "Fengshui.h"
+#include <Fengshui.h>
 
 //External includes
 #include <imgui.h>
@@ -70,6 +70,7 @@ namespace Fengshui
 			ImGui::Begin("Settings");
 			ImGui::ColorEdit4("Square Colour", glm::value_ptr(m_SquareColour));
 			ImGui::DragFloat("Tiling Factor", &m_TilingFactor);
+			ImGui::Text("Camera Pos: (%f, %f)", m_Scene->GetCameraComponent().m_CameraPos.x , m_Scene->GetCameraComponent().m_CameraPos.y);
 			ImGui::End();
 
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
@@ -82,7 +83,7 @@ namespace Fengshui
 				m_Framebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
 				m_ViewportSize = { viewportSize.x, viewportSize.y };
 
-				m_Scene->GetCameraComponent()->ResizeBounds(viewportSize.x, viewportSize.y);
+				m_Scene->ResizeBounds(viewportSize.x, viewportSize.y);
 			}
 			uint32_t textureID = m_Framebuffer->GetColourAttachmentRendererID();
 			ImGui::Image((void*)textureID, viewportSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
@@ -102,7 +103,8 @@ namespace Fengshui
 		glm::vec4 m_SquareColour = { 1.0f, 1.0f, 1.0f, 1.0f };
 		float m_TilingFactor = 1.0f;
 
-		Ref<GameEntity> m_BigSquare;
+		//Ref<GameEntity> m_BigSquare;
+		Entity m_BigSquare;
 
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize;

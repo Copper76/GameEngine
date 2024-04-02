@@ -30,11 +30,8 @@
 //Inputs with mouse button and key codes
 #include "Fengshui/Core/Input.h"
 
+//ECS
+#include "Fengshui/ECS/ECS.h"
+
 //Scene
 #include "Fengshui/Core/Scene.h"
-
-//Entity
-#include "Fengshui/ECS/GameEntity.h"
-
-//Components
-#include "Fengshui/ECS/Components/Components.h"

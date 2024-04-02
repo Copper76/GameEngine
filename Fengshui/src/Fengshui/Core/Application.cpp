@@ -17,6 +17,7 @@ namespace Fengshui
 		m_Window->SetEventCallback(FS_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
+		//GeneralManager::Init();//initialising the ECS manager
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
