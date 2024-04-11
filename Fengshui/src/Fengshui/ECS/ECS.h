@@ -11,9 +11,9 @@ namespace Fengshui
 {
 #pragma region Settings
 	//Entity Settings
-	using Entity = uint32_t;
+	using EntityID = uint32_t;
 
-	const Entity MAX_ENTITIES = 5000;
+	const EntityID MAX_ENTITIES = 5000;
 
 	//Component Settings
 	using ComponentType = uint8_t;
@@ -28,14 +28,14 @@ namespace Fengshui
 	{
 	public:
 		virtual ~IComponentArray() = default;
-		virtual void OnEntityDestroyed(Entity entity) = 0;
+		virtual void OnEntityDestroyed(EntityID entity) = 0;
 	};
 
 	template<typename T>
 	class ComponentArray : public IComponentArray
 	{
 	public:
-		void InsertData(Entity entity, T component)
+		void InsertData(EntityID entity, T component)
 		{
 			if (m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end()) return;//don't add component more than once
 
@@ -46,7 +46,7 @@ namespace Fengshui
 			++m_Size;
 		}
 
-		void RemoveData(Entity entity)
+		void RemoveData(EntityID entity)
 		{
 			if (m_EntityToIndexMap.find(entity) == m_EntityToIndexMap.end()) return;//the component doesn't exist
 
@@ -54,7 +54,7 @@ namespace Fengshui
 			size_t lastIndex = m_Size - 1;
 			m_ComponentArray[removeIndex] = m_ComponentArray[lastIndex];
 
-			Entity lastEntity = m_IndexToEntityMap[lastIndex];
+			EntityID lastEntity = m_IndexToEntityMap[lastIndex];
 			m_EntityToIndexMap[lastEntity] = removeIndex;
 			m_IndexToEntityMap[removeIndex] = lastEntity;
 
@@ -64,22 +64,22 @@ namespace Fengshui
 			--m_Size;
 		}
 
-		T& GetData(Entity entity)
+		T& GetData(EntityID entity)
 		{
 			FS_ENGINE_ASSERT(m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end(), "Component doesn't exist");//the component doesn't exist
 
 			return m_ComponentArray[m_EntityToIndexMap[entity]];
 		}
 
-		void OnEntityDestroyed(Entity entity) override
+		void OnEntityDestroyed(EntityID entity) override
 		{
 			RemoveData(entity);//delegate the checking to later RemoveData
 		}
 
 	private:
 		std::array<T, MAX_ENTITIES> m_ComponentArray;
-		std::unordered_map<Entity, size_t> m_EntityToIndexMap;
-		std::unordered_map<size_t, Entity> m_IndexToEntityMap;
+		std::unordered_map<EntityID, size_t> m_EntityToIndexMap;
+		std::unordered_map<size_t, EntityID> m_IndexToEntityMap;
 
 		size_t m_Size;
 	};
@@ -87,55 +87,55 @@ namespace Fengshui
 	class System
 	{
 	public:
-		std::set<Entity> m_Entities;
+		std::set<EntityID> m_Entities;
 	};
 
 #pragma endregion
 
-#pragma region Managers
+#pragma region Individual Managers
 	class EntityManager
 	{
 	public:
 		EntityManager()
 		{
-			for (Entity entity = 0; entity < MAX_ENTITIES; ++entity)
+			for (EntityID entity = 0; entity < MAX_ENTITIES; ++entity)
 			{
 				m_AvailableEntities.push(entity);
 			}
 		}
 
-		Entity Create()
+		EntityID Create()
 		{
 			FS_ENGINE_ASSERT(m_UsedEntityCount < MAX_ENTITIES, "Entity exceeded limit");
 
-			Entity id = m_AvailableEntities.front();
+			EntityID id = m_AvailableEntities.front();
 			m_AvailableEntities.pop();
 			++m_UsedEntityCount;
 
 			return id;
 		}
 
-		void Destroy(Entity entity)
+		void Destroy(EntityID entity)
 		{
-			FS_ENGINE_ASSERT(entity < MAX_ENTITIES && entity > -1, "Entity out of range");
+			FS_ENGINE_ASSERT(entity < MAX_ENTITIES && entity >= 0, "Entity out of range");
 
 			m_Signatures[entity].reset();
 		}
 
-		void SetSignature(Entity entity, Signature signature)
+		void SetSignature(EntityID entity, Signature signature)
 		{
-			FS_ENGINE_ASSERT(entity < MAX_ENTITIES && entity > -1, "Entity out of range");
+			FS_ENGINE_ASSERT(entity < MAX_ENTITIES && entity >= 0, "Entity out of range");
 			m_Signatures[entity] = signature;
 		}
 
-		Signature GetSignature(Entity entity)
+		Signature GetSignature(EntityID entity)
 		{
-			FS_ENGINE_ASSERT(entity < MAX_ENTITIES && entity > -1, "Entity out of range");
+			FS_ENGINE_ASSERT(entity < MAX_ENTITIES && entity >= 0, "Entity out of range");
 			return m_Signatures[entity];
 		}
 
 	private:
-		std::queue<Entity> m_AvailableEntities;
+		std::queue<EntityID> m_AvailableEntities;
 
 		std::array<Signature, MAX_ENTITIES> m_Signatures;
 
@@ -170,24 +170,24 @@ namespace Fengshui
 		}
 
 		template<typename T>
-		void AddComponent(Entity entity, T component)
+		void AddComponent(EntityID entity, T component)
 		{
 			GetComponentArray<T>()->InsertData(entity, component);
 		}
 
 		template<typename T>
-		void RemoveComponent(Entity entity)
+		void RemoveComponent(EntityID entity)
 		{
 			GetComponentArray<T>()->RemoveData(entity);
 		}
 
 		template<typename T>
-		T& GetComponent(Entity entity)
+		T& GetComponent(EntityID entity)
 		{
 			return GetComponentArray<T>()->GetData(entity);
 		}
 
-		void OnEntityDestroyed(Entity entity)
+		void OnEntityDestroyed(EntityID entity)
 		{
 			for (auto const& pair : m_ComponentArrays)
 			{
@@ -229,6 +229,14 @@ namespace Fengshui
 		}
 
 		template<typename T>
+		Ref<T> GetSystem()
+		{
+			const char* typeName = typeid(T).name();
+			FS_ENGINE_ASSERT(m_Systems.find(typeName) != m_Systems.end(), "System was never registered");//Dangerous function
+			return m_System[typeName];
+		}
+
+		template<typename T>
 		void SetSignature(Signature signature)
 		{
 			const char* typeName = typeid(T).name();
@@ -237,7 +245,7 @@ namespace Fengshui
 			m_Signatures.insert({ typeName, signature });
 		}
 
-		void OnEntityDestroyed(Entity entity)
+		void OnEntityDestroyed(EntityID entity)
 		{
 			for (auto& pair : m_Systems)
 			{
@@ -246,7 +254,7 @@ namespace Fengshui
 			}
 		}
 
-		void OnEntitySignatureChanged(Entity entity, Signature entitySignature) {
+		void OnEntitySignatureChanged(EntityID entity, Signature entitySignature) {
 			for (auto const& pair : m_Systems)
 			{
 				auto const& type = pair.first;
@@ -268,20 +276,29 @@ namespace Fengshui
 		std::unordered_map<const char*, Signature> m_Signatures;
 		std::unordered_map<const char*, Ref<System>> m_Systems;
 	};
+#pragma endregion
+
+#pragma region GeneralManager
 
 	class GeneralManager
 	{
 	public:
 		static void Init()
 		{
+			//Register Components
+			RegisterComponent<Tag>();
+			RegisterComponent<Hierarchy>();
+			RegisterComponent<CameraComponent>();
+			RegisterComponent<Render2D>();
+			RegisterComponent<Transform2D>();
 		}
 
-		static Entity CreateEntity()
+		static EntityID CreateEntity()
 		{
 			return m_EntityManager->Create();
 		}
 
-		static void DestroyEntity(Entity entity)
+		static void DestroyEntity(EntityID entity)
 		{
 			m_EntityManager->Destroy(entity);
 			m_ComponentManager->OnEntityDestroyed(entity);
@@ -295,7 +312,7 @@ namespace Fengshui
 		}
 
 		template<typename T>
-		static void AddComponent(Entity entity, T component)
+		static void AddComponent(EntityID entity, T component)
 		{
 			m_ComponentManager->AddComponent<T>(entity, component);
 
@@ -307,7 +324,7 @@ namespace Fengshui
 		}
 
 		template<typename T>
-		static void RemoveComponent(Entity entity)
+		static void RemoveComponent(EntityID entity)
 		{
 			m_ComponentManager->RemoveComponent<T>(entity);
 
@@ -319,7 +336,7 @@ namespace Fengshui
 		}
 
 		template<typename T>
-		static T& GetComponent(Entity entity)
+		static T& GetComponent(EntityID entity)
 		{
 			return m_ComponentManager->GetComponent<T>(entity);
 		}
@@ -334,6 +351,12 @@ namespace Fengshui
 		static Ref<T> RegisterSystem()
 		{
 			return m_SystemManager->RegisterSystem<T>();
+		}
+
+		template<typename T>
+		static Ref<T> GetSystem()
+		{
+			return m_SystemManager->GetSystem<T>();
 		}
 
 		template<typename T>

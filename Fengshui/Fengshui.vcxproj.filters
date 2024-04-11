@@ -276,6 +276,8 @@
     <ClInclude Include="src\fspch.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\Systems\CameraSystem.h" />
+    <ClInclude Include="src\Fengshui\ECS\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp">
@@ -437,5 +439,7 @@
     <ClCompile Include="src\fspch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Systems\CameraSystem.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Entity.cpp" />
   </ItemGroup>
 </Project>

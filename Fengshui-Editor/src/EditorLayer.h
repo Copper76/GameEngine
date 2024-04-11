@@ -70,7 +70,13 @@ namespace Fengshui
 			ImGui::Begin("Settings");
 			ImGui::ColorEdit4("Square Colour", glm::value_ptr(m_SquareColour));
 			ImGui::DragFloat("Tiling Factor", &m_TilingFactor);
-			ImGui::Text("Camera Pos: (%f, %f)", m_Scene->GetCameraComponent().m_CameraPos.x , m_Scene->GetCameraComponent().m_CameraPos.y);
+			ImGui::Text("Camera Pos: (%f, %f)", m_Scene->GetCameraComponent().CameraPos.x , m_Scene->GetCameraComponent().CameraPos.y);
+			ImGui::Text("Square Name: %s", m_BigSquare.Name().c_str());
+			if(ImGui::Checkbox("Scene Camera", &m_UsingSceneCamera))
+			{
+				m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_UsingSceneCamera;
+				m_Scene->GetCameraComponent().Primary = m_UsingSceneCamera;
+			}
 			ImGui::End();
 
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
@@ -104,7 +110,11 @@ namespace Fengshui
 		float m_TilingFactor = 1.0f;
 
 		//Ref<GameEntity> m_BigSquare;
+		//Entity m_BigSquare;
 		Entity m_BigSquare;
+		Entity m_SecondCamera;
+		bool m_UsingSceneCamera = true;
+		std::vector<Entity> m_BackgroundSquares;
 
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize;

@@ -3,10 +3,10 @@
 
 namespace Fengshui
 {
-	void HierarchySystem::Destroy(Entity entity)
+	void HierarchySystem::Destroy(EntityID entity)
 	{
 		auto& related = GeneralManager::GetComponent<Hierarchy>(entity);
-		for (Entity e : related.Children)
+		for (EntityID e : related.Children)
 		{
 			DestroyInternal(e);
 		}
@@ -15,10 +15,10 @@ namespace Fengshui
 		GeneralManager::DestroyEntity(entity);
 	}
 
-	void HierarchySystem::DestroyInternal(Entity entity)
+	void HierarchySystem::DestroyInternal(EntityID entity)
 	{
 		auto& related = GeneralManager::GetComponent<Hierarchy>(entity);
-		for (Entity e : related.Children)
+		for (EntityID e : related.Children)
 		{
 			DestroyInternal(e);
 		}

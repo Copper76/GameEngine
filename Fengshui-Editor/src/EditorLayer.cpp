@@ -1,5 +1,7 @@
 #include "EditorLayer.h"
 
+#include <cmath>
+
 namespace Fengshui
 {
 	EditorLayer::EditorLayer() : Layer("Sandbox2D")
@@ -9,19 +11,17 @@ namespace Fengshui
 
 	void EditorLayer::OnUpdate(float dt)
 	{
-		/**
-		Ref<RenderComponent2D> renderComp = m_BigSquare->GetComponent<RenderComponent2D>();
-		renderComp->SetColour(m_SquareColour);
-		renderComp->SetTilingFactor(m_TilingFactor);
-		Ref<TransformComponent2D> trans = m_BigSquare->GetComponent<TransformComponent2D>();
-		trans->Rotation += dt * 10.0f;
-		**/
-
-		Render2D& renderComp = GeneralManager::GetComponent<Render2D>(m_BigSquare);
+		Render2D& renderComp = m_BigSquare.GetComponent<Render2D>();
 		renderComp.Colour = m_SquareColour;
 		renderComp.TilingFactor = m_TilingFactor;
-		Transform2D& trans = GeneralManager::GetComponent<Transform2D>(m_BigSquare);
-		trans.Rotation += dt * 10.0f;
+		Transform2D& trans = m_BigSquare.GetComponent<Transform2D>();
+		trans.Rotation = std::fmod(trans.Rotation + dt * 10.0f, 360.0f);
+
+		for (Entity square : m_BackgroundSquares)
+		{
+			Transform2D& squareTrans = square.GetComponent<Transform2D>();
+			squareTrans.Rotation = std::fmod(squareTrans.Rotation + dt * 10.0f, 360.0f);
+		}
 
 		m_Framebuffer->Bind();
 		m_Scene->OnUpdate(dt);
@@ -34,31 +34,31 @@ namespace Fengshui
 
 		m_Scene->SetZoomLevel(5.0f);
 
-		//m_BigSquare = GameEntity::Create(m_Scene);
-		m_BigSquare = GeneralManager::CreateEntity();
+		m_BigSquare = Entity("Big Square");
 
-		GeneralManager::AddComponent(m_BigSquare, Transform2D{ glm::vec3(0.0f), 0.0f, 45.0f, glm::vec2(5.0f)});
+		m_BigSquare.AddComponent<Transform2D>(Transform2D{ {0.0, 0.0} });
 
-		glm::vec2 coords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f} };
+		glm::vec2 coords[] = { {0.0f, 0.0f}, {2.0f, 0.0f}, {2.0f, 1.0f}, {0.0f, 1.0f} };
 
-		GeneralManager::AddComponent(m_BigSquare, Render2D{ Texture2D::Create("Assets/Textures/Checkerboard.png"),
-			coords,
-			{ 1.0f, 1.0f, 1.0f, 1.0f },
-			1.0f,
-			RenderShape::Quad
+		m_BigSquare.AddComponent(Render2D{ Texture2D::Create("Assets/Textures/Checkerboard.png"),
+			coords
 			});
 
-		GeneralManager::AddComponent(m_BigSquare, Hierarchy{});
-		//Ref<TransformComponent2D> trans = m_BigSquare->AddComponent<TransformComponent2D>();
-		//trans->Position = { 0.5f, 0.0f };
-		//trans->Rotation = 45.0f;
-		//trans->Scale = { 5.0f, 5.0f };
+		for (float i = -20.0f; i < 20.0f; i += 1.0f)
+		{
+			for (float j = -20.0f; j < 20.0f; j += 1.0f)
+			{
+				Entity square = Entity();
+				square.AddComponent<Transform2D>(Transform2D{ { i, j}, -0.5f, 45.0f, { 0.5f, 0.5f } });
+				square.AddComponent(Render2D{ {(i + 0.5f) / 10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f } });
+				m_BackgroundSquares.emplace_back(square);
+				//Renderer2D::DrawQuad({ i, j, -0.5f }, { 0.5f, 0.5f }, 45.0f, 1.0f, nullptr, defaultCoords, { (i + 0.5f) / 10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f });
+			}
+		}
 
-		//Ref<RenderComponent2D> renderComp = m_BigSquare->AddComponent<RenderComponent2D>(Texture2D::Create("Assets/Textures/Checkerboard.png"));
-		//Ref<RenderComponent2D> renderComp = m_BigSquare->AddComponent<RenderComponent2D>();
+		m_SecondCamera = Entity();
+		m_SecondCamera.AddComponent<CameraComponent>();
 
-		//Ref<RenderComponent2D> renderComp = m_BigSquare->AddComponent<RenderComponent2D>();
-		//renderComp->SetTexture(Texture2D::Create("Assets/Textures/ChernoLogo.png"));
 
 		FramebufferSpec spec;
 		spec.Width = 1280;

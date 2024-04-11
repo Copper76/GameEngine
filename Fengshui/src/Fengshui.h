@@ -32,6 +32,7 @@
 
 //ECS
 #include "Fengshui/ECS/ECS.h"
+#include "Fengshui/ECS/Entity.h"
 
 //Scene
 #include "Fengshui/Core/Scene.h"

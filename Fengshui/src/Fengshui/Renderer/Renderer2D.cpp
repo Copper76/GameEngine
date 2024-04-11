@@ -120,11 +120,11 @@ namespace Fengshui
 		delete[] s_Data.QuadVertexBufferBase;
 	}
 
-	void Renderer2D::BeginScene(Ref<Scene> scene)
+	void Renderer2D::BeginScene(CameraComponent* scene)
 	{
 		s_Data.standardShader->Bind();
 		//s_Data.standardShader->SetMat4("u_ViewProjectionMatrix", scene->GetCameraComponent()->GetViewProjectionMatrix());
-		s_Data.standardShader->SetMat4("u_ViewProjectionMatrix", scene->GetCameraComponent().Camera->GetViewProjectionMatrix());
+		s_Data.standardShader->SetMat4("u_ViewProjectionMatrix", scene->Camera->GetViewProjectionMatrix());
 
 		PrepareNextBatch();
 	}
@@ -153,12 +153,12 @@ namespace Fengshui
 		s_Data.textureSlotIndex = 1;
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const float rotation, const float tilingFactor, const Ref<Texture2D>& texture, const glm::vec4& colour)
+	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const float rotation, const float tilingFactor, const Ref<Texture2D>& texture, const glm::vec2* texCoords, const glm::vec4& colour)
 	{
-		DrawQuad({ position.x, position.y, 0.0f }, size, rotation, tilingFactor, texture, colour);
+		DrawQuad({ position.x, position.y, 0.0f }, size, rotation, tilingFactor, texture, texCoords, colour);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const float rotation, const float tilingFactor, const Ref<Texture2D>& texture, const glm::vec4& colour)
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const float rotation, const float tilingFactor, const Ref<Texture2D>& texture, const glm::vec2* texCoords, const glm::vec4& colour)
 	{
 
 		if (s_Data.quadIndexCount >= Renderer2DConfig::maxIndices)
@@ -190,69 +190,6 @@ namespace Fengshui
 				s_Data.textureSlots[s_Data.textureSlotIndex] = texture;
 				s_Data.textureSlotIndex++;
 			}
-		}
-
-		glm::mat4 transform;
-		if (rotation == 0)
-		{
-			transform = glm::scale(glm::translate(glm::mat4(1.0f), position), { size.x, size.y, 1.0f });
-		}
-		else
-		{
-			transform = glm::scale(glm::rotate(glm::translate(glm::mat4(1.0f), position), glm::radians(rotation), { 0.0f, 0.0f, 1.0f }), { size.x, size.y, 1.0f });
-		}
-
-		glm::vec2 texCoords[] = {{0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}};
-
-		for (uint32_t i = 0; i < 4; i++)
-		{
-			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.quadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Colour = colour;
-			s_Data.QuadVertexBufferPtr->TexCoord = texCoords[i];
-			s_Data.QuadVertexBufferPtr->textureIndex = textureIndex;
-			s_Data.QuadVertexBufferPtr->tilingFactor = tilingFactor;
-			s_Data.QuadVertexBufferPtr++;
-		}
-
-		s_Data.quadIndexCount += 6;
-	}
-
-	void Renderer2D::DrawSubQuad(const glm::vec2& position, const glm::vec2& size, const float rotation, const float tilingFactor, const Ref<SubTexture2D>& subTexture, const glm::vec4& colour)
-	{
-		DrawSubQuad({ position.x, position.y, 0.0f }, size, rotation, tilingFactor, subTexture, colour);
-	}
-
-	void Renderer2D::DrawSubQuad(const glm::vec3& position, const glm::vec2& size, const float rotation, const float tilingFactor, const Ref<SubTexture2D>& subTexture, const glm::vec4& colour)
-	{
-		const glm::vec2* texCoords = subTexture->GetTexCoords();
-		const Ref<Texture2D> texture = subTexture->GetTexture();
-
-		if (s_Data.quadIndexCount >= Renderer2DConfig::maxIndices)
-		{
-			Flush();
-			PrepareNextBatch();
-		}
-
-		float textureIndex = 0.0f;
-
-		for (uint32_t i = 1; i < s_Data.textureSlotIndex; i++)
-		{
-			if (*s_Data.textureSlots[i] == *texture)
-			{
-				textureIndex = (float)i;
-				break;
-			}
-		}
-		if (textureIndex == 0.0f)
-		{
-			if (s_Data.textureSlotIndex >= Renderer2DConfig::maxTextureSlots)
-			{
-				Flush();
-				PrepareNextBatch();
-			}
-			textureIndex = (float)s_Data.textureSlotIndex;
-			s_Data.textureSlots[s_Data.textureSlotIndex] = texture;
-			s_Data.textureSlotIndex++;
 		}
 
 		glm::mat4 transform;
