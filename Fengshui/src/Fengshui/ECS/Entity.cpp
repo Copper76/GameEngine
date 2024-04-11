@@ -10,4 +10,9 @@ namespace Fengshui
 		AddComponent<Tag>(name);
 		AddComponent<Hierarchy>();
 	}
+
+	Entity::~Entity()
+	{
+		GeneralManager::DestroyEntity(entityID);
+	}
 }

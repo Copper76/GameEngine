@@ -8,7 +8,7 @@ namespace Fengshui
 	public:
 		Entity(const std::string& name = "GameEntity");
 
-		~Entity() = default;
+		~Entity();
 
 		template<typename T>
 		T& AddComponent()
