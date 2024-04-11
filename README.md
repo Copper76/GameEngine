@@ -2,6 +2,11 @@
 
 This project is a practice project to make a game engine using Entity-Component System, the graphics utilises GLFW library for rendering. The engine is called Fengshui at at the moment. The work is done in the [Engine](https://github.com/Copper76/GameEngine/tree/Engine) Branch, main will only display the latest stable build.
 
+## Features
+- 2D Renderer, supporting custom textures and shaders.
+- Event system which would reflectively call functions according to their dynamic type
+- Entity-Component System for rendering, transform, position and camera.
+
 ## Functions implemented
 - [X] Create a simple snake game using pure SFML to learn the basics of input handling and rendering. It is implemented in the [Snake Branch](https://github.com/Copper76/GameEngine/tree/Snake)
 - [X] Get Logging working with spdlog
