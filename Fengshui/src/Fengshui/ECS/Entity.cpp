@@ -6,13 +6,14 @@ namespace Fengshui
 
 	Entity::Entity(const std::string& name)
 	{
-		entityID = GeneralManager::CreateEntity();
+		m_Scene = GeneralManager::GetActiveScene();
+		m_EntityID = GeneralManager::CreateEntity();
 		AddComponent<Tag>(name);
 		AddComponent<Hierarchy>();
 	}
 
 	Entity::~Entity()
 	{
-		GeneralManager::DestroyEntity(entityID);
+		GeneralManager::DestroyEntity(m_EntityID);
 	}
 }

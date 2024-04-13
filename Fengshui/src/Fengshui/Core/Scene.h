@@ -1,12 +1,8 @@
 #pragma once
 
-//#include "Fengshui/ECS/Old/GameEntity.h"
-//#include "Fengshui/ECS/Old/Components/Components.h"
-
 #include "Fengshui/Events/Event.h"
-#include "Fengshui/ECS/ECS.h"
-#include "Fengshui/ECS/Systems.h"
 #include "Fengshui/ECS/Entity.h"
+#include "Fengshui/ECS/Systems.h"
 
 #include "Fengshui/Events/ApplicationEvent.h"
 #include "Fengshui/Events/MouseEvent.h"
@@ -14,12 +10,10 @@
 
 namespace Fengshui
 {
-	class GameEntity;
-
 	class Scene: public std::enable_shared_from_this<Scene>
 	{
 	public:
-		Scene() = default;
+		Scene() {};
 
 		~Scene();
 
@@ -31,7 +25,9 @@ namespace Fengshui
 
 		void SetViewportFocused(bool focused) { m_ViewportFocused = focused; }
 
-		CameraComponent& GetCameraComponent() { return m_SceneManager.GetComponent<CameraComponent>(); }
+		inline CameraComponent& GetCameraComponent() { return m_SceneManager->GetComponent<CameraComponent>(); }
+
+		inline std::vector<std::string> GetAllEntityNames() { return displaySystem->GetEntityTags(); }
 
 		void ResizeBounds(float width, float height);
 		void SetZoomLevel(float zoomLevel);
@@ -41,7 +37,7 @@ namespace Fengshui
 		bool OnWindowResize(WindowResizeEvent& e);
 
 	private:
-		Entity m_SceneManager;
+		Scope<Entity> m_SceneManager;
 
 		float m_CameraMoveSpeed = 2.0f;
 
@@ -49,5 +45,6 @@ namespace Fengshui
 
 		Ref<RenderSystem2D> renderSystem2D;
 		Ref<CameraSystem> cameraSystem;
+		Ref<HierarchyDisplaySystem> displaySystem;
 	};
 }

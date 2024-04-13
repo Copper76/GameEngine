@@ -159,6 +159,7 @@
     <ClInclude Include="src\Fengshui\ECS\Entity.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems\CameraSystem.h" />
+    <ClInclude Include="src\Fengshui\ECS\Systems\HierarchyDisplaySystem.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems\HierarchySystem.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems\RenderSystem.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems\RenderSystem2D.h" />
@@ -224,6 +225,7 @@
     <ClCompile Include="src\Fengshui\ECS\ECS.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Entity.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\CameraSystem.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Systems\HierarchyDisplaySystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\HierarchySystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\RenderSystem2D.cpp" />

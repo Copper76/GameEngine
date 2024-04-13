@@ -1,5 +1,6 @@
 #pragma once
 #include <Fengshui.h>
+#include "Panels/SceneHierarchyPanel.h"
 
 //External includes
 #include <imgui.h>
@@ -70,18 +71,34 @@ namespace Fengshui
 			ImGui::Begin("Settings");
 			ImGui::ColorEdit4("Square Colour", glm::value_ptr(m_SquareColour));
 			ImGui::DragFloat("Tiling Factor", &m_TilingFactor);
-			ImGui::Text("Camera Pos: (%f, %f)", m_Scene->GetCameraComponent().CameraPos.x , m_Scene->GetCameraComponent().CameraPos.y);
-			ImGui::Text("Square Name: %s", m_BigSquare.Name().c_str());
+			ImGui::Text("Camera Pos: (%f, %f)", m_ActiveScene->GetCameraComponent().CameraPos.x , m_ActiveScene->GetCameraComponent().CameraPos.y);
+			ImGui::Text("Square Name: %s", m_BigSquare->Name().c_str());
 			if(ImGui::Checkbox("Scene Camera", &m_UsingSceneCamera))
 			{
-				m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_UsingSceneCamera;
-				m_Scene->GetCameraComponent().Primary = m_UsingSceneCamera;
+				m_SecondCamera->GetComponent<CameraComponent>().Primary = !m_UsingSceneCamera;
+				m_ActiveScene->GetCameraComponent().Primary = m_UsingSceneCamera;
+			}
+
+			if (ImGui::Checkbox("Active Scene", &m_UsingSceneOne))
+			{
+				if (m_UsingSceneOne)
+				{
+					m_ActiveScene = m_Scene;
+				}
+				else
+				{
+					m_ActiveScene = m_OtherScene;
+				}
+				GeneralManager::SetActiveScene(m_ActiveScene);
+				m_SceneHierarchyPanel->SetContext(m_ActiveScene);
 			}
 			ImGui::End();
 
+			m_SceneHierarchyPanel->OnImGuiRender();
+
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
 			ImGui::Begin("ViewPort");
-			m_Scene->SetViewportFocused(ImGui::IsWindowFocused());
+			m_ActiveScene->SetViewportFocused(ImGui::IsWindowFocused());
 			Application::GetInstance().GetImGuiLayer()->SetBlockEvent(!ImGui::IsWindowHovered() || !ImGui::IsWindowFocused());
 			ImVec2 viewportSize = ImGui::GetContentRegionAvail();
 			if (m_ViewportSize != *(glm::vec2*)&viewportSize)
@@ -89,7 +106,7 @@ namespace Fengshui
 				m_Framebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
 				m_ViewportSize = { viewportSize.x, viewportSize.y };
 
-				m_Scene->ResizeBounds(viewportSize.x, viewportSize.y);
+				m_ActiveScene->ResizeBounds(viewportSize.x, viewportSize.y);
 			}
 			uint32_t textureID = m_Framebuffer->GetColourAttachmentRendererID();
 			ImGui::Image((void*)textureID, viewportSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
@@ -105,16 +122,22 @@ namespace Fengshui
 		}
 
 	private:
+		Ref<Scene> m_ActiveScene;
+
 		Ref<Scene> m_Scene;
+		Ref<Scene> m_OtherScene;
+
 		glm::vec4 m_SquareColour = { 1.0f, 1.0f, 1.0f, 1.0f };
 		float m_TilingFactor = 1.0f;
 
-		//Ref<GameEntity> m_BigSquare;
-		//Entity m_BigSquare;
-		Entity m_BigSquare;
-		Entity m_SecondCamera;
+		Ref<Entity> m_BigSquare;
+		Ref<Entity> m_SecondCamera;
+		std::vector< Ref<Entity>> m_BackgroundSquares;
+
+		Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;
+
 		bool m_UsingSceneCamera = true;
-		std::vector<Entity> m_BackgroundSquares;
+		bool m_UsingSceneOne = true;
 
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize;

@@ -2,6 +2,7 @@
 #include "Scene.h"
 
 #include "Fengshui/Renderer/Renderer2D.h"
+#include "Fengshui/ECS/ECS.h"
 
 
 namespace Fengshui
@@ -16,11 +17,15 @@ namespace Fengshui
 		//set up the clear colour for the scene
 		RenderCommand::SetClearColour({ 0.2f, 0.2f, 0.2f, 1 });
 
+		//Create Scene
 		auto scene = std::make_shared<Scene>();
+
+		GeneralManager::SetActiveScene(scene);
 
 		//Register Systems
 		scene->renderSystem2D = GeneralManager::RegisterSystem<RenderSystem2D>();
 		scene->cameraSystem = GeneralManager::RegisterSystem<CameraSystem>();
+		scene->displaySystem = GeneralManager::RegisterSystem<HierarchyDisplaySystem>();
 
 		Signature signature;
 		signature.set(GeneralManager::GetComponentType<Render2D>());
@@ -32,13 +37,17 @@ namespace Fengshui
 		signature.set(GeneralManager::GetComponentType<CameraComponent>());
 		GeneralManager::SetSystemSignature<CameraSystem>(signature);
 
-		scene->m_SceneManager = Entity("Scene Manager");
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<Tag>());
+		GeneralManager::SetSystemSignature<HierarchyDisplaySystem>(signature);
 
-		scene->m_SceneManager.AddComponent(CameraComponent{
+		scene->m_SceneManager = std::make_unique<Entity>("Scene Manager");
+
+		scene->m_SceneManager->AddComponent(CameraComponent{
 			true,
 			1.0f,
 			glm::vec3(0.0f),
-			1280.0f/720.0f,
+			1280.0f / 720.0f,
 			std::make_shared<OrthographicCamera>(-1.0f * 1280.0f / 720.0f * 1.0f, 1.0f * 1280.0f / 720.0f * 1.0f, -1.0f * 1.0f, 1.0f * 1.0f) });
 
 		return scene;
@@ -50,7 +59,6 @@ namespace Fengshui
 		
 		if (cameraComp)
 		{
-			FS_ENGINE_INFO("WILL RENDER");
 			if (m_ViewportFocused)
 			{
 				//Input handling
@@ -107,24 +115,24 @@ namespace Fengshui
 
 	bool Scene::OnMouseScrolled(MouseScrolledEvent& e)
 	{
-		cameraSystem->OnMouseScrolled(m_SceneManager.GetID(), e);
-		m_CameraMoveSpeed = m_SceneManager.GetComponent<CameraComponent>().ZoomLevel * 2.0f;
+		cameraSystem->OnMouseScrolled(m_SceneManager->GetID(), e);
+		m_CameraMoveSpeed = m_SceneManager->GetComponent<CameraComponent>().ZoomLevel * 2.0f;
 		return false;
 	}
 
 	bool Scene::OnWindowResize(WindowResizeEvent& e)
 	{
-		cameraSystem->OnWindowResize(m_SceneManager.GetID(), e);
+		cameraSystem->OnWindowResize(m_SceneManager->GetID(), e);
 		return false;
 	}
-
+	
 	void Scene::ResizeBounds(float width, float height)
 	{
-		cameraSystem->ResizeBounds(m_SceneManager.GetID(), width, height);
+		cameraSystem->ResizeBounds(m_SceneManager->GetID(), width, height);
 	}
 
 	void Scene::SetZoomLevel(float zoomLevel)
 	{
-		cameraSystem->SetZoomLevel(m_SceneManager.GetID(), zoomLevel);
+		cameraSystem->SetZoomLevel(m_SceneManager->GetID(), zoomLevel);
 	}
 }
