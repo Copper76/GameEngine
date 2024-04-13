@@ -8,13 +8,12 @@ namespace Fengshui
 	public:
 		SceneHierarchyPanel() {};
 
-		SceneHierarchyPanel(const Ref<Scene>& context);
-
-		void SetContext(const Ref<Scene>& context);
-
 		void OnImGuiRender();
+
+		void SceneHierarchyPanel::DrawEntityNode(EntityID name);
 
 	private:
 		Ref<Scene> m_Context;
+		EntityID m_SelectedEntity;
 	};
 }

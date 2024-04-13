@@ -28,6 +28,7 @@ namespace Fengshui
 		inline CameraComponent& GetCameraComponent() { return m_SceneManager->GetComponent<CameraComponent>(); }
 
 		inline std::vector<std::string> GetAllEntityNames() { return displaySystem->GetEntityTags(); }
+		inline std::set<EntityID> GetAllEntities() { return displaySystem->GetEntityIDs(); }
 
 		void ResizeBounds(float width, float height);
 		void SetZoomLevel(float zoomLevel);

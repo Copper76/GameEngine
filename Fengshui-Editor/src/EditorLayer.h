@@ -90,7 +90,6 @@ namespace Fengshui
 					m_ActiveScene = m_OtherScene;
 				}
 				GeneralManager::SetActiveScene(m_ActiveScene);
-				m_SceneHierarchyPanel->SetContext(m_ActiveScene);
 			}
 			ImGui::End();
 

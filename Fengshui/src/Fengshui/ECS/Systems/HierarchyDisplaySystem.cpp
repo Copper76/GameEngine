@@ -13,4 +13,9 @@ namespace Fengshui
 		}
 		return entityTags;
 	}
+
+	std::set<EntityID> HierarchyDisplaySystem::GetEntityIDs()
+	{
+		return m_Entities;
+	}
 }

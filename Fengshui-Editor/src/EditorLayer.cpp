@@ -75,7 +75,6 @@ namespace Fengshui
 		m_Framebuffer = Framebuffer::Create(spec);
 
 		m_SceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
-		m_SceneHierarchyPanel->SetContext(m_ActiveScene);
 		GeneralManager::SetActiveScene(m_ActiveScene);
 	}
 

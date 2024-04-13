@@ -7,5 +7,6 @@ namespace Fengshui
 	{
 	public:
 		std::vector<std::string> GetEntityTags();
+		std::set<EntityID> GetEntityIDs();
 	};
 }
