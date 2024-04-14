@@ -124,7 +124,7 @@ namespace Fengshui
 	{
 		s_Data.standardShader->Bind();
 		//s_Data.standardShader->SetMat4("u_ViewProjectionMatrix", scene->GetCameraComponent()->GetViewProjectionMatrix());
-		s_Data.standardShader->SetMat4("u_ViewProjectionMatrix", scene->Camera->GetViewProjectionMatrix());
+		s_Data.standardShader->SetMat4("u_ViewProjectionMatrix", scene->ViewProjectionMatrix);
 
 		PrepareNextBatch();
 	}

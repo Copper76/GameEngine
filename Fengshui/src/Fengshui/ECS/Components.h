@@ -5,6 +5,8 @@
 #include "Fengshui/Renderer/SubTexture2D.h"
 #include "Fengshui/Renderer/Camera.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 #include <set>
 
 namespace Fengshui
@@ -29,8 +31,7 @@ namespace Fengshui
 
 	struct Transform2D
 	{
-		glm::vec2 Position = glm::vec2(0.0f);
-		float Depth = 0.0f;
+		glm::vec3 Position = glm::vec3(0.0f);
 		float Rotation = 0.0f;
 		glm::vec2 Scale = glm::vec2(1.0f);
 
@@ -41,11 +42,22 @@ namespace Fengshui
 
 		Transform2D(glm::vec2 pos)
 		{
-			Position = pos;
+			Position = glm::vec3(pos.x, pos.y, 0.0f);
+		}
+
+		Transform2D(glm::vec3 pos) : Position(pos)
+		{
+
 		}
 
 		Transform2D(glm::vec2 pos, float depth, float rotation, glm::vec2 scale)
-			: Position(pos), Depth(depth), Rotation(rotation), Scale(scale)
+			: Rotation(rotation), Scale(scale)
+		{
+			Position = glm::vec3(pos.x, pos.y, 0.0f);
+		}
+
+		Transform2D(glm::vec3 pos, float depth, float rotation, glm::vec2 scale)
+			: Position(pos), Rotation(rotation), Scale(scale)
 		{
 
 		}
@@ -113,7 +125,7 @@ namespace Fengshui
 
 	struct Hierarchy
 	{
-		uint32_t Parent = -1;
+		uint32_t Parent = 0;
 		std::set<uint32_t> Children = {};
 
 		Hierarchy()
@@ -131,21 +143,25 @@ namespace Fengshui
 	{
 		bool Primary;
 		float ZoomLevel = 1.0f;
-		glm::vec3 CameraPos = glm::vec3(0.0f);
 
 		float AspectRatio = 1280.0f / 720.0f;
-		Ref<OrthographicCamera> Camera;
+
+		glm::mat4 ProjectionMatrix;
+		glm::mat4 ViewMatrix;
+		glm::mat4 ViewProjectionMatrix;
 
 		CameraComponent()
 		{
-			Camera = std::make_shared<OrthographicCamera>(-1.0f * 1280.0f / 720.0f * 1.0f, 1.0f * 1280.0f / 720.0f * 1.0f, -1.0f * 1.0f, 1.0f * 1.0f);
+			ProjectionMatrix = glm::ortho(-1.0f * 1280.0f / 720.0f * 1.0f, 1.0f * 1280.0f / 720.0f * 1.0f, -1.0f * 1.0f, 1.0f * 1.0f, -1.0f, 1.0f);
+			ViewMatrix = 1.0f;
+			ViewProjectionMatrix = ProjectionMatrix * ViewMatrix;
 			Primary = false;
 		}
 
-		CameraComponent(bool primary, float zoomLevel, glm::vec3 cameraPos, float aspectRatio, Ref<OrthographicCamera> camera) 
-			: Primary(primary), ZoomLevel(zoomLevel), CameraPos(cameraPos), AspectRatio(aspectRatio), Camera(camera)
+		CameraComponent(bool primary, float zoomLevel, float aspectRatio, float left, float right, float bottom, float top)
+			: Primary(primary), ZoomLevel(zoomLevel), AspectRatio(aspectRatio), ProjectionMatrix(glm::ortho(left, right, bottom, top, -1.0f, 1.0f)), ViewMatrix(1.0f)
 		{
-
+			ViewProjectionMatrix = ProjectionMatrix * ViewMatrix;
 		}
 	};
 }

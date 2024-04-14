@@ -4,6 +4,7 @@
 
 namespace Fengshui
 {
+	//Deprecated class, refer to camera system and camera component for functionalities
 	class OrthographicCamera
 	{
 	public:

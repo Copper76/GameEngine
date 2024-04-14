@@ -30,7 +30,7 @@ namespace Fengshui
 
 	void Renderer::BeginScene(CameraComponent* scene)
 	{
-		m_SceneData->ViewProjectionMatrix = scene->Camera->GetViewProjectionMatrix();
+		m_SceneData->ViewProjectionMatrix = scene->ViewProjectionMatrix;
 	}
 
 	void Renderer::EndScene()

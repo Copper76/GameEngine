@@ -32,21 +32,52 @@ namespace Fengshui
 		return false;
 	}
 
-	CameraComponent* CameraSystem::GetPrimary()
+	void CameraSystem::AdjustCamera(EntityID entity, glm::vec3 moveDelta, float rotateDelta)
+	{
+		auto& transform = GeneralManager::GetComponent<Transform2D>(entity);
+		auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(entity);
+
+		transform.Position += moveDelta;
+		transform.Rotation += rotateDelta;
+
+		RecalculateViewMatrix(entity);
+	}
+
+	EntityID CameraSystem::GetPrimary()
 	{
 		for (EntityID cameraID : m_Entities)
 		{
 			auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(cameraID);
 			if (cameraComp.Primary)
 			{
-				return &cameraComp;
+				return cameraID;
 			}
 		}
-		return nullptr;
+		return 0;
 	}
 
-	void CameraSystem::CalculateView(CameraComponent cameraComp)
+	void CameraSystem::CalculateView(CameraComponent& cameraComp)
 	{
-		cameraComp.Camera->SetProjection(-1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, 1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, -1.0f * cameraComp.ZoomLevel, 1.0f * cameraComp.ZoomLevel);
+		cameraComp.ProjectionMatrix = glm::ortho(-1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, 1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, -1.0f * cameraComp.ZoomLevel, 1.0f * cameraComp.ZoomLevel, -1.0f, 1.0f);
+		cameraComp.ViewProjectionMatrix = cameraComp.ProjectionMatrix * cameraComp.ViewMatrix;
+	}
+
+	void CameraSystem::CalculateView(EntityID entity)
+	{
+		auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(entity);
+
+		cameraComp.ProjectionMatrix = glm::ortho(-1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, 1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, -1.0f * cameraComp.ZoomLevel, 1.0f * cameraComp.ZoomLevel, -1.0f, 1.0f);
+		cameraComp.ViewProjectionMatrix = cameraComp.ProjectionMatrix * cameraComp.ViewMatrix;
+	}
+
+	void CameraSystem::RecalculateViewMatrix(EntityID entity)
+	{
+		auto& transform = GeneralManager::GetComponent<Transform2D>(entity);
+		auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(entity);
+
+		glm::mat4 camTransform = glm::translate(glm::mat4(1.0f), transform.Position) * glm::rotate(glm::mat4(1.0f), glm::radians(transform.Rotation), glm::vec3(0, 0, 1));
+
+		cameraComp.ViewMatrix = glm::inverse(camTransform);
+		cameraComp.ViewProjectionMatrix = cameraComp.ProjectionMatrix * cameraComp.ViewMatrix; //order based on opengl
 	}
 }

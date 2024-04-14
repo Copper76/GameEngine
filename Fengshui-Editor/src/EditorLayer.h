@@ -1,6 +1,6 @@
 #pragma once
 #include <Fengshui.h>
-#include "Panels/SceneHierarchyPanel.h"
+#include "Panels.h"
 
 //External includes
 #include <imgui.h>
@@ -46,7 +46,7 @@ namespace Fengshui
 			// all active windows docked into it will lose their parent and become undocked.
 			// We cannot preserve the docking relationship between an active window and an inactive docking, otherwise
 			// any change of dockspace/settings would lead to windows being stuck in limbo and never being visible.
-			ImGui::Begin("DockSpace Demo", &dockspaceOpen, window_flags);
+			ImGui::Begin("Fengshui Editor", &dockspaceOpen, window_flags);
 
 			ImGui::PopStyleVar(2);
 
@@ -71,16 +71,17 @@ namespace Fengshui
 			ImGui::Begin("Settings");
 			ImGui::ColorEdit4("Square Colour", glm::value_ptr(m_SquareColour));
 			ImGui::DragFloat("Tiling Factor", &m_TilingFactor);
-			ImGui::Text("Camera Pos: (%f, %f)", m_ActiveScene->GetCameraComponent().CameraPos.x , m_ActiveScene->GetCameraComponent().CameraPos.y);
+			ImGui::Text("Camera Pos: (%f, %f)", m_ActiveScene->GetSceneManager()->GetComponent<Transform2D>().Position.x, m_ActiveScene->GetSceneManager()->GetComponent<Transform2D>().Position.y);
 			ImGui::Text("Square Name: %s", m_BigSquare->Name().c_str());
 			if(ImGui::Checkbox("Scene Camera", &m_UsingSceneCamera))
 			{
 				m_SecondCamera->GetComponent<CameraComponent>().Primary = !m_UsingSceneCamera;
-				m_ActiveScene->GetCameraComponent().Primary = m_UsingSceneCamera;
+				m_ActiveScene->GetSceneManager()->GetComponent<CameraComponent>().Primary = m_UsingSceneCamera;
 			}
 
 			if (ImGui::Checkbox("Active Scene", &m_UsingSceneOne))
 			{
+				m_SceneHierarchyPanel->ResetSelection();
 				if (m_UsingSceneOne)
 				{
 					m_ActiveScene = m_Scene;

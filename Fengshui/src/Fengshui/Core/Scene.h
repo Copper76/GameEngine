@@ -25,27 +25,32 @@ namespace Fengshui
 
 		void SetViewportFocused(bool focused) { m_ViewportFocused = focused; }
 
-		inline CameraComponent& GetCameraComponent() { return m_SceneManager->GetComponent<CameraComponent>(); }
+		inline Ref<Entity> GetSceneManager() { return m_SceneManager; }
 
-		inline std::vector<std::string> GetAllEntityNames() { return displaySystem->GetEntityTags(); }
-		inline std::set<EntityID> GetAllEntities() { return displaySystem->GetEntityIDs(); }
+		inline Ref<HierarchySystem> GetHierarchySystem() { return hierarchySystem; }
 
 		void ResizeBounds(float width, float height);
 		void SetZoomLevel(float zoomLevel);
+
+		void UpdateView();
+		void UpdateViewMatrix();
 
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
 	private:
-		Scope<Entity> m_SceneManager;
+		Ref<Entity> m_RootNode;
+		Ref<Entity> m_SceneManager;
 
 		float m_CameraMoveSpeed = 2.0f;
 
 		bool m_ViewportFocused = false;
 
+		//Systems
 		Ref<RenderSystem2D> renderSystem2D;
 		Ref<CameraSystem> cameraSystem;
 		Ref<HierarchyDisplaySystem> displaySystem;
+		Ref<HierarchySystem> hierarchySystem;
 	};
 }

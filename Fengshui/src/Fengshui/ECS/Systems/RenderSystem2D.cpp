@@ -23,7 +23,7 @@ namespace Fengshui
 			switch (renderData.Shape)
 			{
 			case RenderShape::Quad:
-				Renderer2D::DrawQuad({ transformData.Position.x, transformData.Position.y, transformData.Depth }, transformData.Scale, transformData.Rotation, renderData.TilingFactor, renderData.Texture, texCoords, renderData.Colour);
+				Renderer2D::DrawQuad(transformData.Position, transformData.Scale, transformData.Rotation, renderData.TilingFactor, renderData.Texture, texCoords, renderData.Colour);
 				break;
 			default:
 				FS_ENGINE_ASSERT(false, "NO SUPPORT FOR CUSTOM 2D RENDERING")

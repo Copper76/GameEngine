@@ -43,8 +43,15 @@ namespace Fengshui
 
 		m_SecondCamera = std::make_shared<Entity>("Second Camera");
 		m_SecondCamera->AddComponent<CameraComponent>();
+		m_SecondCamera->AddComponent<Transform2D>();
 
 		m_BigSquare = std::make_shared<Entity>("Big Square");
+
+		auto& comp = GeneralManager::GetComponent<Hierarchy>(0);
+
+		m_BigSquare->AddChild(m_SecondCamera);
+
+		comp = GeneralManager::GetComponent<Hierarchy>(0);
 
 		m_BigSquare->AddComponent<Transform2D>(Transform2D{ {0.0, 0.0} });
 

@@ -8,7 +8,7 @@ namespace Fengshui
 	class Entity
 	{
 	public:
-		Entity(const std::string& name = "GameEntity");
+		Entity(const std::string& name = "GameEntity", Ref<Entity> parent = nullptr);
 
 		~Entity();
 
@@ -27,6 +27,12 @@ namespace Fengshui
 		}
 
 		template<typename T>
+		bool HasComponent()
+		{
+			return GeneralManager::HasComponent<T>(m_EntityID);
+		}
+
+		template<typename T>
 		T& GetComponent()
 		{
 			return GeneralManager::GetComponent<T>(m_EntityID);
@@ -38,9 +44,16 @@ namespace Fengshui
 			GeneralManager::RemoveComponent<T>(m_EntityID);
 		}
 
+		void SetParent(Ref<Entity> parent);
+
+		void AddChild(Ref<Entity> child);
+
 		inline EntityID GetID() { return m_EntityID; }
 
 		inline std::string& Name() { return GetComponent<Tag>().Name; }
+
+	private:
+		void SetParent(EntityID parentID);
 
 	private:
 		EntityID m_EntityID;

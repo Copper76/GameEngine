@@ -68,6 +68,11 @@ namespace Fengshui
 			--m_Size;
 		}
 
+		bool HasData(EntityID entity)
+		{
+			return m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end();
+		}
+
 		T& GetData(EntityID entity)
 		{
 			FS_ENGINE_ASSERT(m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end(), "Component doesn't exist");//the component doesn't exist
@@ -183,6 +188,12 @@ namespace Fengshui
 		void RemoveComponent(EntityID entity)
 		{
 			GetComponentArray<T>()->RemoveData(entity);
+		}
+
+		template<typename T>
+		bool HasComponent(EntityID entity)
+		{
+			return GetComponentArray<T>()->HasData(entity);
 		}
 
 		template<typename T>
@@ -363,6 +374,13 @@ namespace Fengshui
 			m_Instance->m_EntityManagers[m_Instance->m_ActiveScene]->SetSignature(entity, signature);
 
 			m_Instance->m_SystemManagers[m_Instance->m_ActiveScene]->OnEntitySignatureChanged(entity, signature);
+		}
+
+		template<typename T>
+		static bool HasComponent(EntityID entity)
+		{
+			FS_ENGINE_ASSERT(m_Instance->m_ActiveScene != nullptr, "There is no active scene");
+			return m_Instance->m_ComponentManagers[m_Instance->m_ActiveScene]->HasComponent<T>(entity);
 		}
 
 		template<typename T>
