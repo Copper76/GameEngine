@@ -12,7 +12,8 @@ This project is a practice project to make a game engine using Entity-Component 
 - [X] Get Logging working with spdlog
 - [X] Integrate GLFW into the ECS. The GLFW now works under render component, which stores all the information required for rendering.
 - [X] Create a entity component system structure, a simple ECS is created in the ECS folder.
-- [X] Continue with the Cherno series on Hazel to further develop the renderer. The 2D renderer now supports batch rendering, subtexture 
+- [X] Continue with the Cherno series on Hazel to further develop the renderer. The 2D renderer now supports batch rendering, subtexture
+- [X] Added a preliminary editor, which can display entities in the scene in hierarchy, as well as modifying components
 
 ## TODO
 - [ ] Create the snake game with the game engine after its completion
