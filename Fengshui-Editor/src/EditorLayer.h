@@ -72,11 +72,10 @@ namespace Fengshui
 			ImGui::ColorEdit4("Square Colour", glm::value_ptr(m_SquareColour));
 			ImGui::DragFloat("Tiling Factor", &m_TilingFactor);
 			ImGui::Text("Camera Pos: (%f, %f)", m_ActiveScene->GetSceneManager()->GetComponent<Transform2D>().Position.x, m_ActiveScene->GetSceneManager()->GetComponent<Transform2D>().Position.y);
-			ImGui::Text("Square Name: %s", m_BigSquare->Name().c_str());
 			if(ImGui::Checkbox("Scene Camera", &m_UsingSceneCamera))
 			{
-				m_SecondCamera->GetComponent<CameraComponent>().Primary = !m_UsingSceneCamera;
-				m_ActiveScene->GetSceneManager()->GetComponent<CameraComponent>().Primary = m_UsingSceneCamera;
+				//m_SecondCamera->GetComponent<CameraComponent>().Primary = !m_UsingSceneCamera;
+				//m_ActiveScene->GetSceneManager()->GetComponent<CameraComponent>().Primary = m_UsingSceneCamera;
 			}
 
 			if (ImGui::Checkbox("Active Scene", &m_UsingSceneOne))
@@ -130,9 +129,9 @@ namespace Fengshui
 		glm::vec4 m_SquareColour = { 1.0f, 1.0f, 1.0f, 1.0f };
 		float m_TilingFactor = 1.0f;
 
-		Ref<Entity> m_BigSquare;
-		Ref<Entity> m_SecondCamera;
-		std::vector< Ref<Entity>> m_BackgroundSquares;
+		//Ref<Entity> m_BigSquare;
+		//Ref<Entity> m_SecondCamera;
+		//std::vector< Ref<Entity>> m_BackgroundSquares;
 
 		Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;
 
@@ -141,5 +140,27 @@ namespace Fengshui
 
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize;
+
+		//Snake variables
+		const int m_BoardSize = 11;
+		const glm::vec4 m_SnakeColour = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+		const glm::vec4 m_FruitColour = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+
+		Ref<Entity> m_BoardBackground;
+		Ref<Entity> m_Fruit;
+		glm::vec2 m_FruitPos;
+
+		Ref<Entity> m_SnakeContainer;
+
+		int m_Score = 0;
+		bool m_GameOver = false;
+		int m_SnakeDir = 0;
+		int m_PrevDir = m_SnakeDir;
+		glm::vec2 m_SnakeHeadPos = glm::vec2(0.0f, 0.0f);
+		std::list<Ref<Entity>> m_SnakeBody;
+		std::list<glm::vec2> m_SnakeBodyPos;
+
+		float m_UpdateInterval = 0.5f;
+		float m_RemainingUpdateTime = 0.5f;
 	};
 }

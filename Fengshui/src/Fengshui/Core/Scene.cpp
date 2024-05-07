@@ -79,7 +79,8 @@ namespace Fengshui
 				glm::vec3 moveDelta = glm::vec3(0.0f);
 				float rotateDelta = 0.0f;
 
-				//Input handling
+				/**
+				//Camera Moving
 				if (Input::IsKeyPressed(FS_KEY_W))
 				{
 					moveDelta.y += m_CameraMoveSpeed * dt;
@@ -106,12 +107,13 @@ namespace Fengshui
 					rotateDelta -= m_CameraMoveSpeed * dt;
 				}
 				cameraSystem->AdjustCamera(cameraComp, moveDelta, rotateDelta);
+				**/
 			}
 
 			//Clear the screen
 			RenderCommand::Clear();
 
-			glm::vec2 defaultCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f} };
+			//glm::vec2 defaultCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f} };
 
 			//2D Render cycle
 			Renderer2D::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));

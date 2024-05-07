@@ -56,7 +56,7 @@ namespace Fengshui
 			Position = glm::vec3(pos.x, pos.y, 0.0f);
 		}
 
-		Transform2D(glm::vec3 pos, float depth, float rotation, glm::vec2 scale)
+		Transform2D(glm::vec3 pos, float rotation, glm::vec2 scale)
 			: Position(pos), Rotation(rotation), Scale(scale)
 		{
 
