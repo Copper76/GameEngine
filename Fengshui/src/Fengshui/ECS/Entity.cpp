@@ -24,7 +24,7 @@ namespace Fengshui
 		}
 	}
 
-	Entity::~Entity()
+	void Entity::Destroy()
 	{
 		GeneralManager::DestroyEntity(m_EntityID);
 	}

@@ -10,6 +10,9 @@ namespace Fengshui
 	Scene::~Scene()
 	{
 		//m_GameEntities.clear();
+		m_RootNode.reset();
+		m_SceneManager.reset();
+
 	}
 
 	Ref<Scene> Scene::Init()

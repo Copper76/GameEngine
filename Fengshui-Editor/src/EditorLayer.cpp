@@ -11,20 +11,27 @@ namespace Fengshui
 
 	void EditorLayer::OnUpdate(float dt)
 	{
+		float deltaTime = dt;
+
+		if (!m_IsPlaying || m_Paused)
+		{
+			deltaTime = 0.0f;
+		}
+
 		if (m_ActiveScene == m_Scene)
 		{
 			Render2D& renderComp = m_BigSquare->GetComponent<Render2D>();
 			renderComp.Colour = m_SquareColour;
 			renderComp.TilingFactor = m_TilingFactor;
 			Transform2D& trans = m_BigSquare->GetComponent<Transform2D>();
-			trans.Rotation = std::fmod(trans.Rotation + dt * 10.0f, 360.0f);
+			trans.Rotation = std::fmod(trans.Rotation + deltaTime * 10.0f, 360.0f);
 		}
 		else
 		{
 			for (Ref<Entity> square : m_BackgroundSquares)
 			{
 				Transform2D& squareTrans = square->GetComponent<Transform2D>();
-				squareTrans.Rotation = std::fmod(squareTrans.Rotation + dt * 10.0f, 360.0f);
+				squareTrans.Rotation = std::fmod(squareTrans.Rotation + deltaTime * 10.0f, 360.0f);
 			}
 		}
 
@@ -35,6 +42,20 @@ namespace Fengshui
 
 	void EditorLayer::OnAttach()
 	{
+		FramebufferSpec spec;
+		spec.Width = 1280;
+		spec.Height = 720;
+		m_Framebuffer = Framebuffer::Create(spec);
+
+		m_SceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
+
+		Start();
+	}
+
+	void EditorLayer::Start()
+	{
+		GeneralManager::Reset();
+
 		m_Scene = Scene::Init();
 
 		m_Scene->SetZoomLevel(5.0f);
@@ -47,11 +68,7 @@ namespace Fengshui
 
 		m_BigSquare = std::make_shared<Entity>("Big Square");
 
-		auto& comp = GeneralManager::GetComponent<Hierarchy>(0);
-
-		m_BigSquare->AddChild(m_SecondCamera);
-
-		comp = GeneralManager::GetComponent<Hierarchy>(0);
+		//m_BigSquare->AddChild(m_SecondCamera);
 
 		m_BigSquare->AddComponent<Transform2D>(Transform2D{ {0.0, 0.0} });
 
@@ -62,13 +79,13 @@ namespace Fengshui
 			});
 
 		m_OtherScene = Scene::Init();
-
+		
 		Ref<Entity> square;
 		for (float i = -5.0f; i < 5.0f; i += 1.0f)
 		{
 			for (float j = -5.0f; j < 5.0f; j += 1.0f)
 			{
-				square = std::make_shared<Entity>("("+std::to_string(i) + "," + std::to_string(j)+")");
+				square = std::make_shared<Entity>("(" + std::to_string(i) + "," + std::to_string(j) + ")");
 				square->AddComponent<Transform2D>(Transform2D{ { i, j}, -0.5f, 45.0f, { 0.5f, 0.5f } });
 				square->AddComponent(Render2D{ {(i + 5.0f) / 10.0f, (j + 5.0f) / 10.0f, 1.0f, 1.0f } });
 				m_BackgroundSquares.emplace_back(square);
@@ -76,12 +93,6 @@ namespace Fengshui
 			}
 		}
 
-		FramebufferSpec spec;
-		spec.Width = 1280;
-		spec.Height = 720;
-		m_Framebuffer = Framebuffer::Create(spec);
-
-		m_SceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
 		GeneralManager::SetActiveScene(m_ActiveScene);
 	}
 

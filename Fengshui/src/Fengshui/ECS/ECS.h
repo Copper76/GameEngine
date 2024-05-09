@@ -418,6 +418,12 @@ namespace Fengshui
 			m_Instance->m_SystemManagers[m_Instance->m_ActiveScene]->SetSignature<T>(signature);
 		}
 
+		static void Reset()
+		{
+			m_Instance.reset();
+			m_Instance = std::make_unique<GeneralManager>();
+		}
+
 	private:
 		static Scope<GeneralManager> m_Instance;
 

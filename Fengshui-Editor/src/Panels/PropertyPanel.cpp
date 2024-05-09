@@ -31,8 +31,9 @@ namespace Fengshui
 			{
 				auto& transform = GeneralManager::GetComponent<Transform2D>(entity);
 
-				ImGui::DragFloat2("Position", glm::value_ptr(transform.Position), 0.5f);
+				ImGui::DragFloat3("Position", glm::value_ptr(transform.Position), 0.5f);
 				ImGui::DragFloat("Rotation", &transform.Rotation, 0.1f);
+				ImGui::DragFloat2("Scale", glm::value_ptr(transform.Scale), 0.5f);
 
 				if (GeneralManager::HasComponent<CameraComponent>(entity))
 				{

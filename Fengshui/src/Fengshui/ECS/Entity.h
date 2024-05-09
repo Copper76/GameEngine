@@ -10,7 +10,9 @@ namespace Fengshui
 	public:
 		Entity(const std::string& name = "GameEntity", Ref<Entity> parent = nullptr);
 
-		~Entity();
+		~Entity() = default;
+
+		void Destroy();
 
 		template<typename T>
 		T& AddComponent()

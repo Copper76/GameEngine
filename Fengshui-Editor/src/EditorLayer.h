@@ -65,6 +65,25 @@ namespace Fengshui
 					ImGui::EndMenu();
 				}
 
+				if (ImGui::Button("Start/End"))
+				{
+					if (m_IsPlaying)
+					{
+						m_IsPlaying = false;
+						m_Paused = false;
+					}
+					else
+					{
+						Start();
+						m_IsPlaying = true;
+					}
+				}
+
+				if (ImGui::Button("Pause/Resume"))
+				{
+					m_Paused = !m_Paused;
+				}
+
 				ImGui::EndMenuBar();
 			}
 
@@ -122,6 +141,9 @@ namespace Fengshui
 		}
 
 	private:
+		void Start();
+
+	private:
 		Ref<Scene> m_ActiveScene;
 
 		Ref<Scene> m_Scene;
@@ -141,5 +163,8 @@ namespace Fengshui
 
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize;
+
+		bool m_IsPlaying = false;
+		bool m_Paused = false;
 	};
 }
