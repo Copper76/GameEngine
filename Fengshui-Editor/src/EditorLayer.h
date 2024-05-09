@@ -65,21 +65,7 @@ namespace Fengshui
 					ImGui::EndMenu();
 				}
 
-				if (ImGui::Button("Start/End"))
-				{
-					if (m_IsPlaying)
-					{
-						m_IsPlaying = false;
-						m_Paused = false;
-					}
-					else
-					{
-						Start();
-						m_IsPlaying = true;
-					}
-				}
-
-				if (ImGui::Button("Pause/Resume"))
+				if (ImGui::Button("Play/Pause"))
 				{
 					m_Paused = !m_Paused;
 				}
@@ -91,7 +77,7 @@ namespace Fengshui
 			ImGui::ColorEdit4("Square Colour", glm::value_ptr(m_SquareColour));
 			ImGui::DragFloat("Tiling Factor", &m_TilingFactor);
 			ImGui::Text("Camera Pos: (%f, %f)", m_ActiveScene->GetSceneManager()->GetComponent<Transform2D>().Position.x, m_ActiveScene->GetSceneManager()->GetComponent<Transform2D>().Position.y);
-			ImGui::Text("Square Name: %s", m_BigSquare->Name().c_str());
+			//ImGui::Text("Square Name: %s", m_BigSquare->Name().c_str());
 			if(ImGui::Checkbox("Scene Camera", &m_UsingSceneCamera))
 			{
 				m_SecondCamera->GetComponent<CameraComponent>().Primary = !m_UsingSceneCamera;
@@ -154,7 +140,7 @@ namespace Fengshui
 
 		Ref<Entity> m_BigSquare;
 		Ref<Entity> m_SecondCamera;
-		std::vector< Ref<Entity>> m_BackgroundSquares;
+		std::vector<Ref<Entity>> m_BackgroundSquares;
 
 		Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;
 
@@ -164,7 +150,6 @@ namespace Fengshui
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize;
 
-		bool m_IsPlaying = false;
 		bool m_Paused = false;
 	};
 }

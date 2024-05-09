@@ -26,7 +26,6 @@ namespace Fengshui
 		Ref<VertexArray> quadVertexArray;
 		Ref<VertexBuffer> quadVertexBuffer;
 		Ref<Shader> standardShader;
-		//Ref<Texture2D> defaultTexture;
 
 		QuadVertex* QuadVertexBufferBase = 0;
 		QuadVertex* QuadVertexBufferPtr = 0;
@@ -41,8 +40,6 @@ namespace Fengshui
 
 	void Renderer2D::Init()
 	{
-		//s_Data.reset(new Renderer2DConfig);
-		//s_Data = Renderer2DConfig();
 
 		s_Data.quadVertexArray = VertexArray::Create();
 
@@ -96,13 +93,6 @@ namespace Fengshui
 		Ref<Texture2D> defaultTexture = Texture2D::Create(1, 1);
 		uint32_t whieTextureData = 0xffffffff;
 		defaultTexture->SetData(&whieTextureData, sizeof(uint32_t));
-		/**
-		s_Data.defaultTexture = Texture2D::Create(1, 1);
-		uint32_t whieTextureData = 0xffffffff;
-		s_Data.defaultTexture->SetData(&whieTextureData, sizeof(uint32_t));
-
-		s_Data.textureSlots[0] = s_Data.defaultTexture;
-		**/
 
 		s_Data.textureSlots[0] = defaultTexture; //0 is the default texture
 
@@ -110,8 +100,6 @@ namespace Fengshui
 		s_Data.quadVertexPositions[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
 		s_Data.quadVertexPositions[2] = { 0.5f, 0.5f, 0.0f, 1.0f };
 		s_Data.quadVertexPositions[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
-
-		//memset(s_Data.textureSlots.data(), 0, s_Data.textureSlots.size() * sizeof(uint32_t));
 	}
 
 	void Renderer2D::Shutdown()
@@ -123,7 +111,6 @@ namespace Fengshui
 	void Renderer2D::BeginScene(CameraComponent* scene)
 	{
 		s_Data.standardShader->Bind();
-		//s_Data.standardShader->SetMat4("u_ViewProjectionMatrix", scene->GetCameraComponent()->GetViewProjectionMatrix());
 		s_Data.standardShader->SetMat4("u_ViewProjectionMatrix", scene->ViewProjectionMatrix);
 
 		PrepareNextBatch();

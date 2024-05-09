@@ -13,7 +13,7 @@ namespace Fengshui
 	{
 		float deltaTime = dt;
 
-		if (!m_IsPlaying || m_Paused)
+		if (!m_Paused)
 		{
 			deltaTime = 0.0f;
 		}
@@ -54,13 +54,14 @@ namespace Fengshui
 
 	void EditorLayer::Start()
 	{
-		GeneralManager::Reset();
-
 		m_Scene = Scene::Init();
 
 		m_Scene->SetZoomLevel(5.0f);
 
-		m_ActiveScene = m_Scene;
+		if (m_ActiveScene == nullptr)
+		{
+			m_ActiveScene = m_Scene;
+		}
 
 		m_SecondCamera = std::make_shared<Entity>("Second Camera");
 		m_SecondCamera->AddComponent<CameraComponent>();
@@ -68,7 +69,7 @@ namespace Fengshui
 
 		m_BigSquare = std::make_shared<Entity>("Big Square");
 
-		//m_BigSquare->AddChild(m_SecondCamera);
+		m_BigSquare->SetParent(m_SecondCamera);
 
 		m_BigSquare->AddComponent<Transform2D>(Transform2D{ {0.0, 0.0} });
 
@@ -77,6 +78,8 @@ namespace Fengshui
 		m_BigSquare->AddComponent(Render2D{ Texture2D::Create("Assets/Textures/Checkerboard.png"),
 			coords
 			});
+
+		m_SecondCamera = nullptr;
 
 		m_OtherScene = Scene::Init();
 		
@@ -92,7 +95,7 @@ namespace Fengshui
 				//Renderer2D::DrawQuad({ i, j, -0.5f }, { 0.5f, 0.5f }, 45.0f, 1.0f, nullptr, defaultCoords, { (i + 0.5f) / 10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f });
 			}
 		}
-
+		
 		GeneralManager::SetActiveScene(m_ActiveScene);
 	}
 

@@ -14,7 +14,7 @@ namespace Fengshui
 		ImGui::Begin("Scene Hierarchy");
 
 		auto& comp = GeneralManager::GetComponent<Hierarchy>(0);
-		for (EntityID entity : GeneralManager::GetComponent<Hierarchy>(0).Children)
+		for (EntityID entity : comp.Children)
 		{
 			DrawEntityNode(entity);
 		}

@@ -11,6 +11,6 @@ namespace Fengshui
 		void AddChild(EntityID entity, EntityID child);
 
 	private:
-		void DestroyInternal(EntityID entity);
+		void LinkChild(EntityID entity, EntityID parent);
 	};
 }

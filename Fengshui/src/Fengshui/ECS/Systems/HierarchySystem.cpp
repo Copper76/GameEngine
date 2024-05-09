@@ -8,7 +8,7 @@ namespace Fengshui
 		auto& related = GeneralManager::GetComponent<Hierarchy>(entity);
 		for (EntityID e : related.Children)
 		{
-			DestroyInternal(e);
+			LinkChild(e, related.Parent);
 		}
 		auto& parent = GeneralManager::GetComponent<Hierarchy>(related.Parent);
 		parent.Children.erase(entity);
@@ -33,13 +33,9 @@ namespace Fengshui
 		hierarchy.Parent = entity;
 	}
 
-	void HierarchySystem::DestroyInternal(EntityID entity)
+	void HierarchySystem::LinkChild(EntityID entity, EntityID parent)
 	{
-		auto& related = GeneralManager::GetComponent<Hierarchy>(entity);
-		for (EntityID e : related.Children)
-		{
-			DestroyInternal(e);
-		}
-		GeneralManager::DestroyEntity(entity);
+		GeneralManager::GetComponent<Hierarchy>(entity).Parent = parent;
+		GeneralManager::GetComponent<Hierarchy>(parent).Children.insert(entity);
 	}
 }

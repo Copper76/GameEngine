@@ -129,6 +129,9 @@ namespace Fengshui
 			FS_ENGINE_ASSERT(entity < MAX_ENTITIES && entity >= 0, "Entity out of range");
 
 			m_Signatures[entity].reset();
+
+			m_AvailableEntities.push(entity);
+			--m_UsedEntityCount;
 		}
 
 		void SetSignature(EntityID entity, Signature signature)
@@ -418,10 +421,11 @@ namespace Fengshui
 			m_Instance->m_SystemManagers[m_Instance->m_ActiveScene]->SetSignature<T>(signature);
 		}
 
-		static void Reset()
+		static void RemoveScene(Ref<Scene> scene)
 		{
-			m_Instance.reset();
-			m_Instance = std::make_unique<GeneralManager>();
+			m_Instance->m_EntityManagers.erase(scene);
+			m_Instance->m_ComponentManagers.erase(scene);
+			m_Instance->m_SystemManagers.erase(scene);
 		}
 
 	private:

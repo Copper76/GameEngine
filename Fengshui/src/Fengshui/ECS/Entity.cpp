@@ -24,23 +24,26 @@ namespace Fengshui
 		}
 	}
 
-	void Entity::Destroy()
+	Entity::~Entity()
 	{
-		GeneralManager::DestroyEntity(m_EntityID);
+		if (m_Scene.lock())
+		{
+			m_Scene.lock()->GetHierarchySystem()->Destroy(m_EntityID);
+		}
 	}
 
 	void Entity::SetParent(EntityID parentID)
 	{
-		GeneralManager::GetActiveScene()->GetHierarchySystem()->SetParent(m_EntityID, parentID);
+		m_Scene.lock()->GetHierarchySystem()->SetParent(m_EntityID, parentID);
 	}
 
 	void Entity::SetParent(Ref<Entity> parent)
 	{
-		GeneralManager::GetActiveScene()->GetHierarchySystem()->SetParent(m_EntityID, parent->GetID());
+		m_Scene.lock()->GetHierarchySystem()->SetParent(m_EntityID, parent->GetID());
 	}
 
 	void Entity::AddChild(Ref<Entity> child)
 	{
-		GeneralManager::GetActiveScene()->GetHierarchySystem()->AddChild(m_EntityID, child->GetID());
+		m_Scene.lock()->GetHierarchySystem()->AddChild(m_EntityID, child->GetID());
 	}
 }
