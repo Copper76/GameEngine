@@ -23,11 +23,32 @@ namespace Fengshui
 			{
 				tag.Name = std::string(buffer);
 			}
+			ImGui::Text(std::to_string(entity).c_str());
+		}
+
+		if (GeneralManager::HasComponent<Hierarchy>(entity))
+		{
+			if (ImGui::CollapsingHeader("Hierarchy", ImGuiTreeNodeFlags_DefaultOpen))
+			{
+				auto& hierarchy = GeneralManager::GetComponent<Hierarchy>(entity);
+				ImGui::Text("Parent: ");
+				ImGui::Text(std::to_string(hierarchy.Parent).c_str());
+				if (!hierarchy.Children.empty())
+				{
+					ImGui::Text("Children:");
+					//std::set<EntityID> children = *hierarchy.Children;
+					//for (EntityID id : children)
+					for (EntityID id : hierarchy.Children)
+					{
+						ImGui::Text(std::to_string(id).c_str());
+					}
+				}
+			}
 		}
 
 		if (GeneralManager::HasComponent<Transform2D>(entity))
 		{
-			if (ImGui::TreeNodeEx((void*) typeid(Transform2D).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform"))
+			if (ImGui::CollapsingHeader("Transform",ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				auto& transform = GeneralManager::GetComponent<Transform2D>(entity);
 
@@ -39,26 +60,22 @@ namespace Fengshui
 				{
 					GeneralManager::GetActiveScene()->UpdateViewMatrix();
 				}
-
-				ImGui::TreePop();
 			}
 		}
 
 		if (GeneralManager::HasComponent<CameraComponent>(entity))
 		{
-			if (ImGui::TreeNodeEx((void*) typeid(CameraComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Camera"))
+			if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				auto& camera = GeneralManager::GetComponent<CameraComponent>(entity);
 				float originalZoom = camera.ZoomLevel;
 
 				ImGui::DragFloat("Zoom Level", &camera.ZoomLevel, 0.1f);
 
-				if (originalZoom != camera.ZoomLevel) 
+				if (originalZoom != camera.ZoomLevel)
 				{
 					GeneralManager::GetActiveScene()->UpdateView();
 				}
-
-				ImGui::TreePop();
 			}
 		}
 	}

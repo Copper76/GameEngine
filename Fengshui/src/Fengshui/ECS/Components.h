@@ -61,6 +61,18 @@ namespace Fengshui
 		{
 
 		}
+
+		glm::mat4 GetTransform()
+		{
+			if (Rotation == 0)
+			{
+				return glm::scale(glm::translate(glm::mat4(1.0f), Position), { Scale.x, Scale.y, 1.0f });
+			}
+			else
+			{
+				return glm::scale(glm::rotate(glm::translate(glm::mat4(1.0f), Position), glm::radians(Rotation), { 0.0f, 0.0f, 1.0f }), { Scale.x, Scale.y, 1.0f });
+			}
+		}
 	};
 
 	struct Transform
@@ -126,11 +138,10 @@ namespace Fengshui
 	struct Hierarchy
 	{
 		uint32_t Parent = 0;
-		std::set<uint32_t> Children = {};
+		std::set<uint32_t> Children;
 
 		Hierarchy()
 		{
-
 		}
 
 		Hierarchy(uint32_t parent)

@@ -57,6 +57,7 @@ namespace Fengshui
 
 	void EditorLayer::Start()
 	{
+		//GeneralManager::Reset();
 		m_Scene = Scene::Init();
 
 		m_Scene->SetZoomLevel(5.0f);
@@ -72,8 +73,6 @@ namespace Fengshui
 
 		m_BigSquare = std::make_shared<Entity>("Big Square");
 
-		m_BigSquare->SetParent(m_SecondCamera);
-
 		m_BigSquare->AddComponent<Transform2D>(Transform2D{ {0.0, 0.0} });
 
 		glm::vec2 coords[] = { {0.0f, 0.0f}, {2.0f, 0.0f}, {2.0f, 1.0f}, {0.0f, 1.0f} };
@@ -82,7 +81,9 @@ namespace Fengshui
 			coords
 			});
 
-		m_SecondCamera = nullptr;
+		m_BigSquare->SetParent(m_SecondCamera);
+		//m_SecondCamera->AddChild(m_BigSquare);
+		//m_BigSquare->AddChild(m_SecondCamera);
 
 		m_OtherScene = Scene::Init();
 		

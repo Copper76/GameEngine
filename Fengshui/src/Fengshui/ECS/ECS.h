@@ -251,7 +251,7 @@ namespace Fengshui
 		{
 			const char* typeName = typeid(T).name();
 			FS_ENGINE_ASSERT(m_Systems.find(typeName) != m_Systems.end(), "System was never registered");//Dangerous function
-			return m_System[typeName];
+			return std::static_pointer_cast<T>(m_Systems[typeName]);
 		}
 
 		template<typename T>
@@ -426,6 +426,18 @@ namespace Fengshui
 			m_Instance->m_EntityManagers.erase(scene);
 			m_Instance->m_ComponentManagers.erase(scene);
 			m_Instance->m_SystemManagers.erase(scene);
+		}
+
+		static void Reset()
+		{
+			m_Instance->m_EntityManagers.clear();
+			m_Instance->m_ComponentManagers.clear();
+			m_Instance->m_SystemManagers.clear();
+		}
+
+		static bool IsSceneValid(Ref<Scene> scene)
+		{
+			return m_Instance->m_EntityManagers.find(scene) != m_Instance->m_EntityManagers.end();
 		}
 
 	private:

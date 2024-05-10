@@ -6,7 +6,8 @@ namespace Fengshui
 	void HierarchySystem::Destroy(EntityID entity)
 	{
 		auto& related = GeneralManager::GetComponent<Hierarchy>(entity);
-		for (EntityID e : related.Children)
+		std::set<EntityID> children = related.Children;
+		for (EntityID e : children)
 		{
 			LinkChild(e, related.Parent);
 		}
@@ -22,15 +23,6 @@ namespace Fengshui
 		GeneralManager::GetComponent<Hierarchy>(hierarchy.Parent).Children.erase(entity);
 		hierarchy.Parent = parent;
 		GeneralManager::GetComponent<Hierarchy>(parent).Children.insert(entity);
-	}
-
-	void HierarchySystem::AddChild(EntityID entity, EntityID child)
-	{
-		FS_ENGINE_ASSERT(child != 0, "Root Node cannot be a child of anything");
-		GeneralManager::GetComponent<Hierarchy>(entity).Children.insert(child);
-		auto& hierarchy = GeneralManager::GetComponent<Hierarchy>(child);
-		GeneralManager::GetComponent<Hierarchy>(hierarchy.Parent).Children.erase(child);
-		hierarchy.Parent = entity;
 	}
 
 	void HierarchySystem::LinkChild(EntityID entity, EntityID parent)

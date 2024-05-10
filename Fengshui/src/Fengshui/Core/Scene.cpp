@@ -121,8 +121,6 @@ namespace Fengshui
 			//Clear the screen
 			RenderCommand::Clear();
 
-			glm::vec2 defaultCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f} };
-
 			//3D Render cycle
 			//Renderer::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));
 

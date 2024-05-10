@@ -142,10 +142,21 @@ namespace Fengshui
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const float rotation, const float tilingFactor, const Ref<Texture2D>& texture, const glm::vec2* texCoords, const glm::vec4& colour)
 	{
-		DrawQuad({ position.x, position.y, 0.0f }, size, rotation, tilingFactor, texture, texCoords, colour);
+		glm::mat4 transform;
+		if (rotation == 0)
+		{
+			transform = glm::scale(glm::translate(glm::mat4(1.0f), { position, 0.0f }), { size.x, size.y, 1.0f });
+		}
+		else
+		{
+			transform = glm::scale(glm::rotate(glm::translate(glm::mat4(1.0f), { position, 0.0f }), glm::radians(rotation), { 0.0f, 0.0f, 1.0f }), { size.x, size.y, 1.0f });
+		}
+		//DrawQuad({ position.x, position.y, 0.0f }, size, rotation, tilingFactor, texture, texCoords, colour);
+		DrawQuad(transform, tilingFactor, texture, texCoords, colour);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const float rotation, const float tilingFactor, const Ref<Texture2D>& texture, const glm::vec2* texCoords, const glm::vec4& colour)
+	//void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const float rotation, const float tilingFactor, const Ref<Texture2D>& texture, const glm::vec2* texCoords, const glm::vec4& colour)
+	void Renderer2D::DrawQuad(const glm::mat4 transform, const float tilingFactor, const Ref<Texture2D>& texture, const glm::vec2* texCoords, const glm::vec4& colour)
 	{
 
 		if (s_Data.QuadIndexCount >= Renderer2DConfig::MaxIndices)
@@ -179,7 +190,7 @@ namespace Fengshui
 			}
 		}
 
-		glm::mat4 transform;
+		/*glm::mat4 transform;
 		if (rotation == 0)
 		{
 			transform = glm::scale(glm::translate(glm::mat4(1.0f), position), { size.x, size.y, 1.0f });
@@ -187,7 +198,7 @@ namespace Fengshui
 		else
 		{
 			transform = glm::scale(glm::rotate(glm::translate(glm::mat4(1.0f), position), glm::radians(rotation), { 0.0f, 0.0f, 1.0f }), { size.x, size.y, 1.0f });
-		}
+		}*/
 
 		for (uint32_t i = 0; i < 4; i++)
 		{

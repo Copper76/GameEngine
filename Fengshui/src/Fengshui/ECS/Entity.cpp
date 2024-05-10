@@ -26,24 +26,29 @@ namespace Fengshui
 
 	Entity::~Entity()
 	{
-		if (m_Scene.lock())
+		//if (m_Scene.lock())
+		if (GeneralManager::IsSceneValid(m_Scene.lock()))
 		{
-			m_Scene.lock()->GetHierarchySystem()->Destroy(m_EntityID);
+			GeneralManager::GetSystem<HierarchySystem>()->Destroy(m_EntityID);
+			//m_Scene.lock()->GetHierarchySystem()->Destroy(m_EntityID);
 		}
 	}
 
 	void Entity::SetParent(EntityID parentID)
 	{
-		m_Scene.lock()->GetHierarchySystem()->SetParent(m_EntityID, parentID);
+		//m_Scene.lock()->GetHierarchySystem()->SetParent(m_EntityID, parentID);
+		GeneralManager::GetSystem<HierarchySystem>()->SetParent(m_EntityID, parentID);
 	}
 
 	void Entity::SetParent(Ref<Entity> parent)
 	{
-		m_Scene.lock()->GetHierarchySystem()->SetParent(m_EntityID, parent->GetID());
+		//m_Scene.lock()->GetHierarchySystem()->SetParent(m_EntityID, parent->GetID());
+		SetParent(parent->GetID());
 	}
 
 	void Entity::AddChild(Ref<Entity> child)
 	{
-		m_Scene.lock()->GetHierarchySystem()->AddChild(m_EntityID, child->GetID());
+		//m_Scene.lock()->GetHierarchySystem()->AddChild(m_EntityID, child->GetID());
+		GeneralManager::GetSystem<HierarchySystem>()->SetParent(child->GetID(), m_EntityID);
 	}
 }

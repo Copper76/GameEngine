@@ -12,8 +12,6 @@ namespace Fengshui
 
 		~Entity();
 
-		//void Destroy();
-
 		template<typename T>
 		T& AddComponent()
 		{
@@ -59,6 +57,7 @@ namespace Fengshui
 
 	private:
 		EntityID m_EntityID;
+
 		WeakRef<Scene> m_Scene;
 	};
 }

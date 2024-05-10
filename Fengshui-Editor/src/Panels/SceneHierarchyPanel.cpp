@@ -14,9 +14,11 @@ namespace Fengshui
 		ImGui::Begin("Scene Hierarchy");
 
 		auto& comp = GeneralManager::GetComponent<Hierarchy>(0);
-		for (EntityID entity : comp.Children)
+		//std::set<EntityID> children = *comp.Children;
+		//for (EntityID e : children)
+		for (EntityID e : comp.Children)
 		{
-			DrawEntityNode(entity);
+			DrawEntityNode(e);
 		}
 
 		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
@@ -37,7 +39,7 @@ namespace Fengshui
 
 	void SceneHierarchyPanel::DrawEntityNode(EntityID entity)
 	{
-		auto& children = GeneralManager::GetComponent<Hierarchy>(entity).Children;
+		auto children = GeneralManager::GetComponent<Hierarchy>(entity).Children;
 		auto& tag = GeneralManager::GetComponent<Tag>(entity).Name;
 		ImGuiTreeNodeFlags flags = ((m_SelectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0);
 		if (children.empty())
@@ -56,9 +58,9 @@ namespace Fengshui
 
 		if (opened)
 		{
-			for (EntityID child : children)
+			for (EntityID e : children)
 			{
-				DrawEntityNode(child);
+				DrawEntityNode(e);
 			}
 			ImGui::TreePop();
 		}

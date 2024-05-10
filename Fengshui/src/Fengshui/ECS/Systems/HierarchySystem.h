@@ -8,7 +8,6 @@ namespace Fengshui
 	public:
 		void Destroy(EntityID entity);
 		void SetParent(EntityID entity, EntityID parent);
-		void AddChild(EntityID entity, EntityID child);
 
 	private:
 		void LinkChild(EntityID entity, EntityID parent);

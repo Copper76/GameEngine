@@ -71,6 +71,12 @@ namespace Fengshui
 					m_Paused = !m_Paused;
 				}
 
+				if (ImGui::Button("Set Parent"))
+				{
+					//m_BigSquare->SetParent(m_SecondCamera);
+					Ref<Entity> tempEntity = std::make_shared<Entity>("Test");
+				}
+
 				ImGui::EndMenuBar();
 			}
 
