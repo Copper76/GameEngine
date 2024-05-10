@@ -12,7 +12,7 @@ namespace Fengshui
 	void EditorLayer::OnUpdate(float dt)
 	{
 
-		if (!m_Paused)
+		if (m_IsPlaying && !m_Paused)
 		{
 
 			if (m_ActiveScene == m_Scene)
@@ -57,15 +57,12 @@ namespace Fengshui
 
 	void EditorLayer::Start()
 	{
-		//GeneralManager::Reset();
+		GeneralManager::Reset();
 		m_Scene = Scene::Init();
 
 		m_Scene->SetZoomLevel(5.0f);
 
-		if (m_ActiveScene == nullptr)
-		{
-			m_ActiveScene = m_Scene;
-		}
+		m_ActiveScene = m_Scene;
 
 		m_SecondCamera = std::make_shared<Entity>("Second Camera");
 		m_SecondCamera->AddComponent<CameraComponent>();

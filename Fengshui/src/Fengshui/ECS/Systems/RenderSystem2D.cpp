@@ -16,16 +16,16 @@ namespace Fengshui
 
 			EntityID curr = entity;
 
-			glm::mat4 transform = transformData.GetTransform();
+			glm::mat4 transform = glm::identity<glm::mat4>();
 
 			while (curr != 0)
 			{
-				curr = hierarchyData.Parent;
-				if (curr != 0)
+				if (GeneralManager::HasComponent<Transform2D>(curr))
 				{
 					transform *= GeneralManager::GetComponent<Transform2D>(curr).GetTransform();
-					hierarchyData = GeneralManager::GetComponent<Hierarchy>(curr);
 				}
+				hierarchyData = GeneralManager::GetComponent<Hierarchy>(curr);
+				curr = hierarchyData.Parent;
 			}
 
 			glm::vec2* texCoords = renderData.TexCoords;

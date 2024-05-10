@@ -27,7 +27,7 @@ namespace Fengshui
 	Entity::~Entity()
 	{
 		//if (m_Scene.lock())
-		if (GeneralManager::IsSceneValid(m_Scene.lock()))
+		if (m_Scene.lock())
 		{
 			GeneralManager::GetSystem<HierarchySystem>()->Destroy(m_EntityID);
 			//m_Scene.lock()->GetHierarchySystem()->Destroy(m_EntityID);

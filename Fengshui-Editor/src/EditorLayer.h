@@ -66,15 +66,22 @@ namespace Fengshui
 					ImGui::EndMenu();
 				}
 
-				if (ImGui::Button("Play/Pause"))
+				if (ImGui::Button("Play/Stop"))
 				{
-					m_Paused = !m_Paused;
+					if (!m_IsPlaying)
+					{
+						Start();
+					}
+					else
+					{
+						m_Paused = false;
+					}
+					m_IsPlaying = !m_IsPlaying;
 				}
 
-				if (ImGui::Button("Set Parent"))
+				if (ImGui::Button("Pause/UnPause"))
 				{
-					//m_BigSquare->SetParent(m_SecondCamera);
-					Ref<Entity> tempEntity = std::make_shared<Entity>("Test");
+					m_Paused = !m_Paused;
 				}
 
 				ImGui::EndMenuBar();
@@ -157,6 +164,7 @@ namespace Fengshui
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize;
 
-		bool m_Paused = true;
+		bool m_Paused = false;
+		bool m_IsPlaying = false;
 	};
 }
