@@ -46,8 +46,12 @@ namespace Fengshui
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
+
+		void UpdateFunction();
+		void RenderFunction();
+
 	private:
-		bool m_Running = true;
+		std::atomic<bool> m_Running = true;
 		bool m_Minimised = false;
 
 		Scope<Window> m_Window;

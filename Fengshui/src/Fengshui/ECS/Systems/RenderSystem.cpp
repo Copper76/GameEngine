@@ -3,7 +3,7 @@
 
 namespace Fengshui
 {
-	void RenderSystem::OnUpdate(float dt)
+	void RenderSystem::OnRender()
 	{
 
 	}

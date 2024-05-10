@@ -6,11 +6,40 @@
 
 namespace Fengshui
 {
-	Renderer::SceneData* Renderer::m_SceneData = new  Renderer::SceneData;
+	//Renderer::SceneData* Renderer::m_SceneData = new  Renderer::SceneData;
 
-	ShaderLibrary* Renderer::m_ShaderLib = new ShaderLibrary;
+	//ShaderLibrary* Renderer::m_ShaderLib = new ShaderLibrary;
 
 	//VertexArrayLibrary* Renderer::m_VertexArrLib = new VertexArrayLibrary;
+
+	struct QuadVertex
+	{
+		glm::vec3 Position;
+		glm::vec4 Colour;
+		glm::vec2 TexCoord;
+		float textureIndex;
+		float tilingFactor;
+	};
+
+	struct RendererConfig
+	{
+		static const uint32_t maxIndices = 50000;
+		static const uint32_t maxTextureSlots = 32;
+
+		uint32_t shapeIndexCount = 0;
+
+		Ref<VertexArray> shapeVertexArray;
+		Ref<VertexBuffer> shapeVertexBuffer;
+		Ref<Shader> standardShader;
+
+		QuadVertex* ShapeVertexBufferBase = 0;
+		QuadVertex* ShapeVertexBufferPtr = 0;
+
+		std::array<Ref<Texture2D>, maxTextureSlots> TextureSlots;
+		uint32_t TextureSlotIndex = 1;
+	};
+
+	static RendererConfig s_Data;
 
 	void Renderer::Init()
 	{
@@ -30,7 +59,10 @@ namespace Fengshui
 
 	void Renderer::BeginScene(CameraComponent* scene)
 	{
-		m_SceneData->ViewProjectionMatrix = scene->ViewProjectionMatrix;
+		s_Data.standardShader->Bind();
+		s_Data.standardShader->SetMat4("u_ViewProjectionMatrix", scene->ViewProjectionMatrix);
+
+		PrepareNextBatch();
 	}
 
 	void Renderer::EndScene()
@@ -38,13 +70,7 @@ namespace Fengshui
 
 	}
 
-	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform)
+	void Renderer::PrepareNextBatch()
 	{
-		shader->Bind();
-		shader->SetMat4("u_ViewProjectionMatrix", m_SceneData->ViewProjectionMatrix);
-		shader->SetMat4("u_Transform", transform);
-
-		vertexArray->Bind();
-		RenderCommand::DrawIndexed(vertexArray);
 	}
 }

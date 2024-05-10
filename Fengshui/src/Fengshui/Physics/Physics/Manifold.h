@@ -58,5 +58,5 @@ public:
 	void Clear() { m_manifolds.clear(); }	// For resetting the demo
 
 public:
-	std::vector< Manifold > m_manifolds;
+	std::vector<Manifold> m_manifolds;
 };

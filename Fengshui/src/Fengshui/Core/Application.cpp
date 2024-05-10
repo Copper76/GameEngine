@@ -13,7 +13,9 @@ namespace Fengshui
 	{
 		FS_ENGINE_ASSERT(!s_Instance, "Applicaiton already running!");
 		s_Instance = this;
-		m_Window = std::unique_ptr<Window>(Window::Create(WindowInfo(name)));
+
+		m_Window = std::unique_ptr<Window>(Window::Create(WindowInfo()));
+
 		m_Window->SetEventCallback(FS_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
@@ -29,9 +31,33 @@ namespace Fengshui
 
 	void Application::Run()
 	{
-		//FS_ENGINE_WARN("Initialized Log!")
-		//FS_INFO("Client works as well")
+		std::thread m_UpdateThread(std::bind(&Application::UpdateFunction, this));
+		
+		while (m_Running)
+		{
+			float time = (float)glfwGetTime();
+			m_Time.UpdateTime(time);
+			float dt = m_Time.GetDeltaTime();
 
+			//Update Render
+			m_ImGuiLayer->Begin();
+			for (Layer* layer : m_LayerStack)
+			{
+				if (layer->IsActive())
+				{
+					layer->OnRender();
+					layer->OnImGuiRender();
+				}
+			}
+			m_ImGuiLayer->End();
+
+			//Update window with poll events, involved in renderering so runs on main thread
+			m_Window->OnUpdate();
+		}
+		
+		
+
+		/**
 		while (m_Running)
 		{
 			float time = (float)glfwGetTime();
@@ -50,18 +76,72 @@ namespace Fengshui
 				}
 			}
 
+			//Update window with poll events
+			m_Window->OnUpdate();
+
+			//Update Render
+			m_ImGuiLayer->Begin();
+			for (Layer* layer : m_LayerStack)
+			{
+				if (layer->IsActive())
+				{
+					layer->OnRender();
+					layer->OnImGuiRender();
+				}
+			}
+			m_ImGuiLayer->End();
+		}
+		**/
+		
+		//std::thread m_RenderThread(std::bind(&Application::RenderFunction, this));
+
+		m_UpdateThread.join();
+		//m_RenderThread.join();
+	}
+
+	void Application::UpdateFunction()
+	{
+		while (m_Running)
+		{
+			float time = (float)glfwGetTime();
+			m_Time.UpdateTime(time);
+			float dt = m_Time.GetDeltaTime();
+
+			if (!m_Minimised)
+			{
+				//Update layers
+				for (Layer* layer : m_LayerStack)
+				{
+					if (layer->IsActive())
+					{
+						layer->OnUpdate(dt);
+					}
+				}
+			}
+		}
+	}
+
+	void Application::RenderFunction()
+	{
+		glfwMakeContextCurrent((GLFWwindow*)m_Window->GetNativeWindow());
+		while (m_Running)
+		{
+			float time = (float)glfwGetTime();
+			m_Time.UpdateTime(time);
+			float dt = m_Time.GetDeltaTime();
+
 			//Update GUI layer
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)
 			{
 				if (layer->IsActive())
 				{
+					layer->OnRender();
 					layer->OnImGuiRender();
 				}
 			}
 			m_ImGuiLayer->End();
 
-			//Update window with poll events
 			m_Window->OnUpdate();
 		}
 	}

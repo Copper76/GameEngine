@@ -14,6 +14,7 @@ namespace Fengshui
 		EditorLayer();
 
 		void OnUpdate(float dt) override;
+		void OnRender() override;
 
 		void OnAttach() override;
 		void OnDetach() override;
@@ -150,6 +151,6 @@ namespace Fengshui
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize;
 
-		bool m_Paused = false;
+		bool m_Paused = true;
 	};
 }

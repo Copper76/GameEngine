@@ -1,6 +1,7 @@
 #include "fspch.h"
 #include "Scene.h"
 
+#include "Fengshui/Renderer/Renderer.h"
 #include "Fengshui/Renderer/Renderer2D.h"
 #include "Fengshui/ECS/ECS.h"
 
@@ -23,10 +24,11 @@ namespace Fengshui
 		GeneralManager::SetActiveScene(scene);
 
 		//Register Systems
-		scene->renderSystem2D = GeneralManager::RegisterSystem<RenderSystem2D>();
-		scene->cameraSystem = GeneralManager::RegisterSystem<CameraSystem>();
-		scene->displaySystem = GeneralManager::RegisterSystem<HierarchyDisplaySystem>();
-		scene->hierarchySystem = GeneralManager::RegisterSystem<HierarchySystem>();
+		scene->m_RenderSystem = GeneralManager::RegisterSystem<RenderSystem>();
+		scene->m_RenderSystem2D = GeneralManager::RegisterSystem<RenderSystem2D>();
+		scene->m_CameraSystem = GeneralManager::RegisterSystem<CameraSystem>();
+		scene->m_DisplaySystem = GeneralManager::RegisterSystem<HierarchyDisplaySystem>();
+		scene->m_HierarchySystem = GeneralManager::RegisterSystem<HierarchySystem>();
 
 		Signature signature;
 		signature.set(GeneralManager::GetComponentType<Render2D>());
@@ -70,7 +72,7 @@ namespace Fengshui
 
 	void Scene::OnUpdate(float dt)
 	{
-		EntityID cameraComp = cameraSystem->GetPrimary();
+		EntityID cameraComp = m_CameraSystem->GetPrimary();
 		
 		if (cameraComp != 0)
 		{
@@ -105,18 +107,33 @@ namespace Fengshui
 				{
 					rotateDelta -= m_CameraMoveSpeed * dt;
 				}
-				cameraSystem->AdjustCamera(cameraComp, moveDelta, rotateDelta);
+				m_CameraSystem->AdjustCamera(cameraComp, moveDelta, rotateDelta);
 			}
+		}
+	}
 
+	void Scene::OnRender()
+	{
+		EntityID cameraComp = m_CameraSystem->GetPrimary();
+
+		if (cameraComp != 0)
+		{
 			//Clear the screen
 			RenderCommand::Clear();
 
 			glm::vec2 defaultCoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f} };
 
+			//3D Render cycle
+			//Renderer::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));
+
+			//m_RenderSystem->OnRender();
+
+			//Renderer::EndScene();
+
 			//2D Render cycle
 			Renderer2D::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));
 
-			renderSystem2D->OnUpdate();
+			m_RenderSystem2D->OnRender();
 
 			Renderer2D::EndScene();
 		}
@@ -132,32 +149,32 @@ namespace Fengshui
 
 	bool Scene::OnMouseScrolled(MouseScrolledEvent& e)
 	{
-		cameraSystem->OnMouseScrolled(m_SceneManager->GetID(), e);
+		m_CameraSystem->OnMouseScrolled(m_SceneManager->GetID(), e);
 		m_CameraMoveSpeed = m_SceneManager->GetComponent<CameraComponent>().ZoomLevel * 2.0f;
 		return false;
 	}
 
 	bool Scene::OnWindowResize(WindowResizeEvent& e)
 	{
-		cameraSystem->OnWindowResize(m_SceneManager->GetID(), e);
+		m_CameraSystem->OnWindowResize(m_SceneManager->GetID(), e);
 		return false;
 	}
 	
 	void Scene::ResizeBounds(float width, float height)
 	{
-		cameraSystem->ResizeBounds(m_SceneManager->GetID(), width, height);
+		m_CameraSystem->ResizeBounds(m_SceneManager->GetID(), width, height);
 	}
 
 	void Scene::SetZoomLevel(float zoomLevel)
 	{
-		cameraSystem->SetZoomLevel(m_SceneManager->GetID(), zoomLevel);
+		m_CameraSystem->SetZoomLevel(m_SceneManager->GetID(), zoomLevel);
 	}
 	void Scene::UpdateView()
 	{
-		cameraSystem->CalculateView(cameraSystem->GetPrimary());
+		m_CameraSystem->CalculateView(m_CameraSystem->GetPrimary());
 	}
 	void Scene::UpdateViewMatrix()
 	{
-		cameraSystem->RecalculateViewMatrix(cameraSystem->GetPrimary());
+		m_CameraSystem->RecalculateViewMatrix(m_CameraSystem->GetPrimary());
 	}
 }

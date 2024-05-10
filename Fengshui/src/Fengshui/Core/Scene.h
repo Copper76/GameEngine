@@ -18,6 +18,7 @@ namespace Fengshui
 		~Scene();
 
 		void OnUpdate(float dt);
+		void OnRender();
 
 		void OnEvent(Event& e);
 
@@ -27,7 +28,7 @@ namespace Fengshui
 
 		inline Ref<Entity> GetSceneManager() { return m_SceneManager; }
 
-		inline Ref<HierarchySystem> GetHierarchySystem() { return hierarchySystem; }
+		inline Ref<HierarchySystem> GetHierarchySystem() { return m_HierarchySystem; }
 
 		void ResizeBounds(float width, float height);
 		void SetZoomLevel(float zoomLevel);
@@ -48,9 +49,10 @@ namespace Fengshui
 		bool m_ViewportFocused = false;
 
 		//Systems
-		Ref<RenderSystem2D> renderSystem2D;
-		Ref<CameraSystem> cameraSystem;
-		Ref<HierarchyDisplaySystem> displaySystem;
-		Ref<HierarchySystem> hierarchySystem;
+		Ref<RenderSystem> m_RenderSystem;
+		Ref<RenderSystem2D> m_RenderSystem2D;
+		Ref<CameraSystem> m_CameraSystem;
+		Ref<HierarchyDisplaySystem> m_DisplaySystem;
+		Ref<HierarchySystem> m_HierarchySystem;
 	};
 }

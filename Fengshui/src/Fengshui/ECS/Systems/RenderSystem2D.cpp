@@ -5,7 +5,7 @@
 
 namespace Fengshui
 {
-	void RenderSystem2D::OnUpdate()
+	void RenderSystem2D::OnRender()
 	{
 		glm::vec2 coords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f} };
 		for (auto const& entity : m_Entities)

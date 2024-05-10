@@ -19,7 +19,6 @@ namespace Fengshui
 		virtual void OnDetach() override;
 
 		virtual void OnEvent(Event& e) override;
-		//virtual void OnUpdate();
 		virtual void OnImGuiRender() override;
 
 		void SetBlockEvent(bool block) { m_BlockEvent = block; }

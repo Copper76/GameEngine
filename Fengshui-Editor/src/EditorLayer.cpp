@@ -11,32 +11,35 @@ namespace Fengshui
 
 	void EditorLayer::OnUpdate(float dt)
 	{
-		float deltaTime = dt;
 
 		if (!m_Paused)
 		{
-			deltaTime = 0.0f;
-		}
 
-		if (m_ActiveScene == m_Scene)
-		{
-			Render2D& renderComp = m_BigSquare->GetComponent<Render2D>();
-			renderComp.Colour = m_SquareColour;
-			renderComp.TilingFactor = m_TilingFactor;
-			Transform2D& trans = m_BigSquare->GetComponent<Transform2D>();
-			trans.Rotation = std::fmod(trans.Rotation + deltaTime * 10.0f, 360.0f);
-		}
-		else
-		{
-			for (Ref<Entity> square : m_BackgroundSquares)
+			if (m_ActiveScene == m_Scene)
 			{
-				Transform2D& squareTrans = square->GetComponent<Transform2D>();
-				squareTrans.Rotation = std::fmod(squareTrans.Rotation + deltaTime * 10.0f, 360.0f);
+				Render2D& renderComp = m_BigSquare->GetComponent<Render2D>();
+				renderComp.Colour = m_SquareColour;
+				renderComp.TilingFactor = m_TilingFactor;
+				Transform2D& trans = m_BigSquare->GetComponent<Transform2D>();
+				trans.Rotation = std::fmod(trans.Rotation + dt * 10.0f, 360.0f);
 			}
-		}
+			else
+			{
+				for (Ref<Entity> square : m_BackgroundSquares)
+				{
+					Transform2D& squareTrans = square->GetComponent<Transform2D>();
+					squareTrans.Rotation = std::fmod(squareTrans.Rotation + dt * 10.0f, 360.0f);
+				}
+			}
 
+			m_ActiveScene->OnUpdate(dt);
+		}
+	}
+
+	void EditorLayer::OnRender()
+	{
 		m_Framebuffer->Bind();
-		m_ActiveScene->OnUpdate(dt);
+		m_ActiveScene->OnRender();
 		m_Framebuffer->Unbind();
 	}
 
