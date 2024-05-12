@@ -68,12 +68,9 @@ namespace Fengshui
 
 				if (ImGui::Button("Play/Stop"))
 				{
-					if (!m_IsPlaying)
+					if (m_IsPlaying)
 					{
-						Start();
-					}
-					else
-					{
+						Reset();
 						m_Paused = false;
 					}
 					m_IsPlaying = !m_IsPlaying;
@@ -141,7 +138,7 @@ namespace Fengshui
 		}
 
 	private:
-		void Start();
+		void Reset();
 
 	private:
 		Ref<Scene> m_ActiveScene;

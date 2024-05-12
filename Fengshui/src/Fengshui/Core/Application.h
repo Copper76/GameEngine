@@ -14,8 +14,6 @@
 #include "Fengshui/Renderer/Buffer.h"
 #include "Fengshui/Renderer/VertexArray.h"
 
-#include "Fengshui/Renderer/Camera.h"
-
 #include "Fengshui/Core/Time.h"
 
 #include "Fengshui/Core/Scene.h"

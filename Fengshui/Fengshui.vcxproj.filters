@@ -240,9 +240,6 @@
     <ClInclude Include="src\Fengshui\Renderer\Buffer.h">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Renderer\Camera.h">
-      <Filter>src\Fengshui\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\Fengshui\Renderer\Framebuffer.h">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClInclude>
@@ -405,9 +402,6 @@
       <Filter>src\Fengshui\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Renderer\Buffer.cpp">
-      <Filter>src\Fengshui\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Fengshui\Renderer\Camera.cpp">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Renderer\Framebuffer.cpp">

@@ -205,7 +205,6 @@
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Fengshui\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Fengshui\Renderer\Buffer.h" />
-    <ClInclude Include="src\Fengshui\Renderer\Camera.h" />
     <ClInclude Include="src\Fengshui\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderContext.h" />
@@ -264,7 +263,6 @@
     <ClCompile Include="src\Fengshui\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Fengshui\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\Buffer.cpp" />
-    <ClCompile Include="src\Fengshui\Renderer\Camera.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\Renderer.cpp" />

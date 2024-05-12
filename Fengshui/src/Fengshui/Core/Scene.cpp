@@ -17,6 +17,7 @@ namespace Fengshui
 	{
 		//set up the clear colour for the scene
 		RenderCommand::SetClearColour({ 0.2f, 0.2f, 0.2f, 1 });
+		RenderCommand::SetClearDepth(1.0f);
 
 		//Create Scene
 		auto scene = std::make_shared<Scene>();
@@ -37,19 +38,14 @@ namespace Fengshui
 		GeneralManager::SetSystemSignature<RenderSystem2D>(signature);
 
 		signature.reset();
-		signature.set(GeneralManager::GetComponentType<Transform2D>());
+		signature.set(GeneralManager::GetComponentType<Transform>());
+		signature.set(GeneralManager::GetComponentType<Hierarchy>());
 		signature.set(GeneralManager::GetComponentType<CameraComponent>());
 		GeneralManager::SetSystemSignature<CameraSystem>(signature);
 
 		signature.reset();
 		signature.set(GeneralManager::GetComponentType<Hierarchy>());
 		GeneralManager::SetSystemSignature<HierarchyDisplaySystem>(signature);
-
-		signature.reset();
-		signature.set(GeneralManager::GetComponentType<Tag>());
-		GeneralManager::SetSystemSignature<HierarchyDisplaySystem>(signature);
-
-
 
 		//Property setup
 		scene->m_RootNode = std::make_shared<Entity>("Root Node");
@@ -59,13 +55,9 @@ namespace Fengshui
 		scene->m_SceneManager->AddComponent(CameraComponent{
 			true,
 			1.0f,
-			1280.0f / 720.0f,
-			-1.0f * 1280.0f / 720.0f * 1.0f,
-			1.0f * 1280.0f / 720.0f * 1.0f,
-			-1.0f * 1.0f,
-			1.0f * 1.0f });
+			1280.0f / 720.0f });
 
-		scene->m_SceneManager->AddComponent<Transform2D>();
+		scene->m_SceneManager->AddComponent<Transform>();
 
 		return scene;
 	}
@@ -107,7 +99,7 @@ namespace Fengshui
 				{
 					rotateDelta -= m_CameraMoveSpeed * dt;
 				}
-				m_CameraSystem->AdjustCamera(cameraComp, moveDelta, rotateDelta);
+				m_CameraSystem->AdjustCamera(cameraComp, moveDelta, glm::vec3{0.0f, 0.0f, rotateDelta });
 			}
 		}
 	}
@@ -171,8 +163,8 @@ namespace Fengshui
 	{
 		m_CameraSystem->CalculateView(m_CameraSystem->GetPrimary());
 	}
-	void Scene::UpdateViewMatrix()
+	void Scene::UpdateViewMatrix(EntityID entity)
 	{
-		m_CameraSystem->RecalculateViewMatrix(m_CameraSystem->GetPrimary());
+		m_CameraSystem->RecalculateViewMatrix(entity);
 	}
 }

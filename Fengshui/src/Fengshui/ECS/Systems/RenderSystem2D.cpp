@@ -20,9 +20,17 @@ namespace Fengshui
 
 			while (curr != 0)
 			{
-				if (GeneralManager::HasComponent<Transform2D>(curr))
+				//Allow trasnform change via 3d transform as well
+				if (GeneralManager::HasComponent<Transform>(curr))
 				{
-					transform *= GeneralManager::GetComponent<Transform2D>(curr).GetTransform();
+					transform = GeneralManager::GetComponent<Transform>(curr).GetTransform() * transform;
+				}
+				else
+				{
+					if (GeneralManager::HasComponent<Transform2D>(curr))
+					{
+						transform = GeneralManager::GetComponent<Transform2D>(curr).GetTransform() * transform;
+					}
 				}
 				hierarchyData = GeneralManager::GetComponent<Hierarchy>(curr);
 				curr = hierarchyData.Parent;
@@ -36,7 +44,7 @@ namespace Fengshui
 
 			switch (renderData.Shape)
 			{
-			case RenderShape::Quad:
+			case RenderShape2D::Quad:
 				Renderer2D::DrawQuad(transform, renderData.TilingFactor, renderData.Texture, texCoords, renderData.Colour);
 				break;
 			default:

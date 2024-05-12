@@ -314,6 +314,7 @@ namespace Fengshui
 			RegisterComponent<Hierarchy>();
 			RegisterComponent<CameraComponent>();
 			RegisterComponent<Render2D>();
+			RegisterComponent<Transform>();
 			RegisterComponent<Transform2D>();
 		}
 		

@@ -23,6 +23,11 @@ namespace Fengshui
 			s_RendererAPI->SetClearColour(colour);
 		};
 
+		inline static void SetClearDepth(const float depth)
+		{
+			s_RendererAPI->SetClearDepth(depth);
+		};
+
 		inline static void Clear()
 		{
 			s_RendererAPI->Clear();

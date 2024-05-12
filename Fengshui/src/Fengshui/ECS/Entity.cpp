@@ -42,7 +42,6 @@ namespace Fengshui
 
 	void Entity::SetParent(Ref<Entity> parent)
 	{
-		//m_Scene.lock()->GetHierarchySystem()->SetParent(m_EntityID, parent->GetID());
 		SetParent(parent->GetID());
 	}
 

@@ -17,25 +17,25 @@ namespace Fengshui
 		glm::vec3 Position;
 		glm::vec4 Colour;
 		glm::vec2 TexCoord;
-		float textureIndex;
-		float tilingFactor;
+		float TextureIndex;
+		float TilingFactor;
 	};
 
 	struct RendererConfig
 	{
-		static const uint32_t maxIndices = 50000;
-		static const uint32_t maxTextureSlots = 32;
+		static const uint32_t MaxIndices = 50000;
+		static const uint32_t MaxTextureSlots = 32;
 
-		uint32_t shapeIndexCount = 0;
+		uint32_t ShapeIndexCount = 0;
 
 		Ref<VertexArray> shapeVertexArray;
 		Ref<VertexBuffer> shapeVertexBuffer;
-		Ref<Shader> standardShader;
+		Ref<Shader> StandardShader;
 
 		QuadVertex* ShapeVertexBufferBase = 0;
 		QuadVertex* ShapeVertexBufferPtr = 0;
 
-		std::array<Ref<Texture2D>, maxTextureSlots> TextureSlots;
+		std::array<Ref<Texture2D>, MaxTextureSlots> TextureSlots;
 		uint32_t TextureSlotIndex = 1;
 	};
 
@@ -57,10 +57,10 @@ namespace Fengshui
 		RenderCommand::SetViewport(0, 0, width, height);
 	}
 
-	void Renderer::BeginScene(CameraComponent* scene)
+	void Renderer::BeginScene(CameraComponent* camera)
 	{
-		s_Data.standardShader->Bind();
-		s_Data.standardShader->SetMat4("u_ViewProjectionMatrix", scene->ViewProjectionMatrix);
+		s_Data.StandardShader->Bind();
+		s_Data.StandardShader->SetMat4("u_ViewProjectionMatrix", camera->ViewProjectionMatrix);
 
 		PrepareNextBatch();
 	}

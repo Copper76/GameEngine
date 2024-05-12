@@ -14,7 +14,10 @@ namespace Fengshui
 	{
 		auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(entity);
 		cameraComp.ZoomLevel = zoomLevel;
-		CalculateView(cameraComp);
+		if (cameraComp.IsOrtho)
+		{
+			CalculateView(cameraComp);
+		}
 	}
 
 	bool CameraSystem::OnMouseScrolled(EntityID entity, MouseScrolledEvent& e)
@@ -22,7 +25,10 @@ namespace Fengshui
 		auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(entity);
 		cameraComp.ZoomLevel -= e.GetYOffset() * 0.1f;
 		cameraComp.ZoomLevel = std::max(cameraComp.ZoomLevel, 0.5f);
-		CalculateView(cameraComp);
+		if (cameraComp.IsOrtho)
+		{
+			CalculateView(cameraComp);
+		}
 		return false;
 	}
 
@@ -32,10 +38,9 @@ namespace Fengshui
 		return false;
 	}
 
-	void CameraSystem::AdjustCamera(EntityID entity, glm::vec3 moveDelta, float rotateDelta)
+	void CameraSystem::AdjustCamera(EntityID entity, glm::vec3 moveDelta, glm::vec3 rotateDelta)
 	{
-		auto& transform = GeneralManager::GetComponent<Transform2D>(entity);
-		auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(entity);
+		auto& transform = GeneralManager::GetComponent<Transform>(entity);
 
 		transform.Position += moveDelta;
 		transform.Rotation += rotateDelta;
@@ -58,7 +63,14 @@ namespace Fengshui
 
 	void CameraSystem::CalculateView(CameraComponent& cameraComp)
 	{
-		cameraComp.ProjectionMatrix = glm::ortho(-1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, 1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, -1.0f * cameraComp.ZoomLevel, 1.0f * cameraComp.ZoomLevel, -1.0f, 1.0f);
+		if (cameraComp.IsOrtho)
+		{
+			cameraComp.ProjectionMatrix = glm::ortho(-1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, 1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, -1.0f * cameraComp.ZoomLevel, 1.0f * cameraComp.ZoomLevel, cameraComp.NearPlane, cameraComp.FarPlane);
+		}
+		else
+		{
+			cameraComp.ProjectionMatrix = glm::perspective(glm::radians(cameraComp.FOV), cameraComp.AspectRatio, cameraComp.NearPlane, cameraComp.FarPlane);
+		}
 		cameraComp.ViewProjectionMatrix = cameraComp.ProjectionMatrix * cameraComp.ViewMatrix;
 	}
 
@@ -66,18 +78,42 @@ namespace Fengshui
 	{
 		auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(entity);
 
-		cameraComp.ProjectionMatrix = glm::ortho(-1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, 1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, -1.0f * cameraComp.ZoomLevel, 1.0f * cameraComp.ZoomLevel, -1.0f, 1.0f);
-		cameraComp.ViewProjectionMatrix = cameraComp.ProjectionMatrix * cameraComp.ViewMatrix;
+		CalculateView(cameraComp);
+
+		//cameraComp.ProjectionMatrix = glm::ortho(-1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, 1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, -1.0f * cameraComp.ZoomLevel, 1.0f * cameraComp.ZoomLevel, -1.0f, 1.0f);
+		//cameraComp.ViewProjectionMatrix = cameraComp.ProjectionMatrix * cameraComp.ViewMatrix;
 	}
 
 	void CameraSystem::RecalculateViewMatrix(EntityID entity)
 	{
-		auto& transform = GeneralManager::GetComponent<Transform2D>(entity);
+		auto transform = GeneralManager::GetComponent<Transform>(entity);
+		auto hierarchyData = GeneralManager::GetComponent<Hierarchy>(entity);
 		auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(entity);
 
-		glm::mat4 camTransform = glm::translate(glm::mat4(1.0f), transform.Position) * glm::rotate(glm::mat4(1.0f), glm::radians(transform.Rotation), glm::vec3(0, 0, 1));
+		EntityID curr = entity;
 
-		cameraComp.ViewMatrix = glm::inverse(camTransform);
+		glm::mat4 camTransform = glm::identity<glm::mat4>();
+
+		while (curr != 0)
+		{
+			//Allow trasnform change via 3d transform as well
+			if (GeneralManager::HasComponent<Transform>(curr))
+			{
+				camTransform = GeneralManager::GetComponent<Transform>(curr).GetTransform() * camTransform;
+			}
+
+			hierarchyData = GeneralManager::GetComponent<Hierarchy>(curr);
+			curr = hierarchyData.Parent;
+		}
+
+		if (cameraComp.IsOrtho)
+		{
+			cameraComp.ViewMatrix = glm::inverse(camTransform);
+		}
+		else
+		{
+			cameraComp.ViewMatrix = glm::lookAt(transform.Position, glm::vec3(transform.GetRotationMatrix() * glm::vec4(0.0f, 0.0f, 1.0f, 1.0f)), glm::vec3(transform.GetRotationMatrix() * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)));
+		}
 		cameraComp.ViewProjectionMatrix = cameraComp.ProjectionMatrix * cameraComp.ViewMatrix; //order based on opengl
 	}
 }

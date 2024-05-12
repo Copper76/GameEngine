@@ -34,7 +34,7 @@ namespace Fengshui
 		void SetZoomLevel(float zoomLevel);
 
 		void UpdateView();
-		void UpdateViewMatrix();
+		void UpdateViewMatrix(EntityID entity);
 
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);

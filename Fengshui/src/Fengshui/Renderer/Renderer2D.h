@@ -13,7 +13,7 @@ namespace Fengshui
 		static void Init();
 		static void Shutdown();
 
-		static void BeginScene(CameraComponent* scene);
+		static void BeginScene(CameraComponent* camera);
 		static void EndScene();
 
 		static void Flush();

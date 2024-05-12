@@ -52,10 +52,10 @@ namespace Fengshui
 
 		m_SceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
 
-		Start();
+		Reset();
 	}
 
-	void EditorLayer::Start()
+	void EditorLayer::Reset()
 	{
 		GeneralManager::Reset();
 		m_Scene = Scene::Init();
@@ -66,11 +66,11 @@ namespace Fengshui
 
 		m_SecondCamera = std::make_shared<Entity>("Second Camera");
 		m_SecondCamera->AddComponent<CameraComponent>();
-		m_SecondCamera->AddComponent<Transform2D>();
+		m_SecondCamera->AddComponent<Transform>();
 
 		m_BigSquare = std::make_shared<Entity>("Big Square");
 
-		m_BigSquare->AddComponent<Transform2D>(Transform2D{ {0.0, 0.0} });
+		m_BigSquare->AddComponent<Transform2D>();
 
 		glm::vec2 coords[] = { {0.0f, 0.0f}, {2.0f, 0.0f}, {2.0f, 1.0f}, {0.0f, 1.0f} };
 
@@ -79,8 +79,6 @@ namespace Fengshui
 			});
 
 		m_BigSquare->SetParent(m_SecondCamera);
-		//m_SecondCamera->AddChild(m_BigSquare);
-		//m_BigSquare->AddChild(m_SecondCamera);
 
 		m_OtherScene = Scene::Init();
 		
