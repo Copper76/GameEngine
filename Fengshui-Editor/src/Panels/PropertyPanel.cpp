@@ -78,7 +78,14 @@ namespace Fengshui
 			}
 		}
 
-		if (GeneralManager::HasComponent<Render2D>(entity))
+		if (GeneralManager::HasComponent<Render>(entity))
+		{
+			if (ImGui::CollapsingHeader("Render", ImGuiTreeNodeFlags_DefaultOpen))
+			{
+				auto& render = GeneralManager::GetComponent<Render>(entity);
+			}
+		}
+		else if (GeneralManager::HasComponent<Render2D>(entity))
 		{
 			if (ImGui::CollapsingHeader("Render2D", ImGuiTreeNodeFlags_DefaultOpen))
 			{

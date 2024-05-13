@@ -17,11 +17,14 @@ namespace Fengshui
 
 			if (m_ActiveScene == m_Scene)
 			{
-				Render2D& renderComp = m_BigSquare->GetComponent<Render2D>();
+				//Render2D& renderComp = m_BigSquare->GetComponent<Render2D>();
+				Render& renderComp = m_BigSquare->GetComponent<Render>();
 				renderComp.Colour = m_SquareColour;
 				renderComp.TilingFactor = m_TilingFactor;
-				Transform2D& trans = m_BigSquare->GetComponent<Transform2D>();
-				trans.Rotation = std::fmod(trans.Rotation + dt * 10.0f, 360.0f);
+				//Transform2D& trans = m_BigSquare->GetComponent<Transform2D>();
+				Transform& trans = m_BigSquare->GetComponent<Transform>();
+				trans.Rotation.x = std::fmod(trans.Rotation.x + dt * 10.0f, 360.0f);
+				trans.Rotation.y = std::fmod(trans.Rotation.y + dt * 10.0f, 360.0f);
 			}
 			else
 			{
@@ -70,13 +73,16 @@ namespace Fengshui
 
 		m_BigSquare = std::make_shared<Entity>("Big Square");
 
-		m_BigSquare->AddComponent<Transform2D>();
+		//m_BigSquare->AddComponent<Transform2D>();
+		m_BigSquare->AddComponent<Transform>();
+
+		m_BigSquare->AddComponent<Render>();
 
 		glm::vec2 coords[] = { {0.0f, 0.0f}, {2.0f, 0.0f}, {2.0f, 1.0f}, {0.0f, 1.0f} };
 
-		m_BigSquare->AddComponent(Render2D{ Texture2D::Create("Assets/Textures/Checkerboard.png"),
+		/*m_BigSquare->AddComponent(Render2D{ Texture2D::Create("Assets/Textures/Checkerboard.png"),
 			coords
-			});
+			});*/
 
 		m_BigSquare->SetParent(m_SecondCamera);
 

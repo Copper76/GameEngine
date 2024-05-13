@@ -32,6 +32,12 @@ namespace Fengshui
 		scene->m_HierarchySystem = GeneralManager::RegisterSystem<HierarchySystem>();
 
 		Signature signature;
+		signature.set(GeneralManager::GetComponentType<Render>());
+		signature.set(GeneralManager::GetComponentType<Transform>());
+		signature.set(GeneralManager::GetComponentType<Hierarchy>());
+		GeneralManager::SetSystemSignature<RenderSystem>(signature);
+
+		signature.reset();
 		signature.set(GeneralManager::GetComponentType<Render2D>());
 		signature.set(GeneralManager::GetComponentType<Transform2D>());
 		signature.set(GeneralManager::GetComponentType<Hierarchy>());//useful for allowing entities to move with parent
@@ -114,11 +120,11 @@ namespace Fengshui
 			RenderCommand::Clear();
 
 			//3D Render cycle
-			//Renderer::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));
+			Renderer::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));
 
-			//m_RenderSystem->OnRender();
+			m_RenderSystem->OnRender();
 
-			//Renderer::EndScene();
+			Renderer::EndScene();
 
 			//2D Render cycle
 			Renderer2D::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));

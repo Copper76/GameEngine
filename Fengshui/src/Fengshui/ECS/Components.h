@@ -164,11 +164,45 @@ namespace Fengshui
 
 	struct Render
 	{
-		Ref<Texture2D> Texture = nullptr;
+		Ref<Texture> Texture = nullptr;
 		glm::vec2* TexCoords = nullptr;
 		glm::vec4 Colour = { 1.0f, 1.0f, 1.0f, 1.0f };
 		float TilingFactor = 1.0f;
 		RenderShape Shape = RenderShape::Cube;
+
+		Render()
+		{
+
+		}
+
+		Render(Ref<Fengshui::Texture> texture) : Texture(texture)
+		{
+
+		}
+
+		Render(Ref<Fengshui::Texture> texture, glm::vec2* coords) : Texture(texture)
+		{
+			TexCoords = new glm::vec2[4];
+			for (int i = 0; i < 4; i++)
+			{
+				TexCoords[i] = coords[i];
+			}
+		}
+
+		Render(glm::vec4 colour) : Colour(colour)
+		{
+
+		}
+
+		Render(Ref<Fengshui::Texture> texture, glm::vec2* coords, glm::vec4 colour, float tilingFactor, RenderShape shape)
+			: Texture(texture), Colour(colour), TilingFactor(tilingFactor), Shape(shape)
+		{
+			TexCoords = new glm::vec2[4];
+			for (int i = 0; i < 4; i++)
+			{
+				TexCoords[i] = coords[i];
+			}
+		}
 	};
 
 	struct Hierarchy

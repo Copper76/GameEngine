@@ -91,8 +91,8 @@ namespace Fengshui
 		s_Data.StandardShader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
 
 		Ref<Texture2D> defaultTexture = Texture2D::Create(1, 1);
-		uint32_t whieTextureData = 0xffffffff;
-		defaultTexture->SetData(&whieTextureData, sizeof(uint32_t));
+		uint32_t whiteTextureData = 0xffffffff;
+		defaultTexture->SetData(&whiteTextureData, sizeof(uint32_t));
 
 		s_Data.TextureSlots[0] = defaultTexture; //0 is the default texture
 
@@ -156,7 +156,6 @@ namespace Fengshui
 
 	void Renderer2D::DrawQuad(const glm::mat4 transform, const float tilingFactor, const Ref<Texture2D>& texture, const glm::vec2* texCoords, const glm::vec4& colour)
 	{
-
 		if (s_Data.QuadIndexCount >= Renderer2DConfig::MaxIndices)
 		{
 			Flush();

@@ -20,9 +20,9 @@ namespace Fengshui
 
 			while (curr != 0)
 			{
-				if (GeneralManager::HasComponent<Transform2D>(curr))
+				if (GeneralManager::HasComponent<Transform>(curr))
 				{
-					transform *= GeneralManager::GetComponent<Transform2D>(curr).GetTransform();
+					transform = GeneralManager::GetComponent<Transform>(curr).GetTransform() * transform;
 				}
 				hierarchyData = GeneralManager::GetComponent<Hierarchy>(curr);
 				curr = hierarchyData.Parent;
@@ -31,7 +31,7 @@ namespace Fengshui
 			switch (renderData.Shape)
 			{
 			case RenderShape::Cube:
-				//Renderer::DrawCube(transform, renderData.TilingFactor, renderData.Texture, texCoords, renderData.Colour);
+				Renderer::DrawCube(transform, renderData.TilingFactor, renderData.Texture, renderData.TexCoords, renderData.Colour);
 				break;
 			default:
 				FS_ENGINE_ASSERT(false, "NO SUPPORT FOR CUSTOM 2D RENDERING")
