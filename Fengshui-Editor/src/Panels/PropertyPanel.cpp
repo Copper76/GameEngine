@@ -83,6 +83,8 @@ namespace Fengshui
 			if (ImGui::CollapsingHeader("Render", ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				auto& render = GeneralManager::GetComponent<Render>(entity);
+
+				ImGui::ColorEdit4("Colour", glm::value_ptr(render.Colour));
 			}
 		}
 		else if (GeneralManager::HasComponent<Render2D>(entity))
@@ -90,6 +92,8 @@ namespace Fengshui
 			if (ImGui::CollapsingHeader("Render2D", ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				auto& render2D = GeneralManager::GetComponent<Render2D>(entity);
+
+				ImGui::ColorEdit4("Colour", glm::value_ptr(render2D.Colour));
 			}
 		}
 

@@ -52,7 +52,7 @@ namespace Fengshui
 		Ref<RenderSystem> m_RenderSystem;
 		Ref<RenderSystem2D> m_RenderSystem2D;
 		Ref<CameraSystem> m_CameraSystem;
-		Ref<HierarchyDisplaySystem> m_DisplaySystem;
 		Ref<HierarchySystem> m_HierarchySystem;
+		Ref<PhysicsSystem> m_PhysicsSystem;
 	};
 }

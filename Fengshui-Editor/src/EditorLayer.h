@@ -85,7 +85,6 @@ namespace Fengshui
 			}
 
 			ImGui::Begin("Settings");
-			ImGui::ColorEdit4("Square Colour", glm::value_ptr(m_SquareColour));
 			ImGui::DragFloat("Tiling Factor", &m_TilingFactor);
 			ImGui::Text("Camera Pos: (%f, %f)", m_ActiveScene->GetSceneManager()->GetComponent<Transform2D>().Position.x, m_ActiveScene->GetSceneManager()->GetComponent<Transform2D>().Position.y);
 			//ImGui::Text("Square Name: %s", m_BigSquare->Name().c_str());

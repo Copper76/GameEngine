@@ -275,7 +275,7 @@
     </ClInclude>
     <ClInclude Include="src\Fengshui\ECS\Systems\CameraSystem.h" />
     <ClInclude Include="src\Fengshui\ECS\Entity.h" />
-    <ClInclude Include="src\Fengshui\ECS\Systems\HierarchyDisplaySystem.h" />
+    <ClInclude Include="src\Fengshui\ECS\Systems\PhysicsSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp">
@@ -436,6 +436,6 @@
     </ClCompile>
     <ClCompile Include="src\Fengshui\ECS\Systems\CameraSystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Entity.cpp" />
-    <ClCompile Include="src\Fengshui\ECS\Systems\HierarchyDisplaySystem.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Systems\PhysicsSystem.cpp" />
   </ItemGroup>
 </Project>

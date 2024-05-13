@@ -28,8 +28,8 @@ namespace Fengshui
 		scene->m_RenderSystem = GeneralManager::RegisterSystem<RenderSystem>();
 		scene->m_RenderSystem2D = GeneralManager::RegisterSystem<RenderSystem2D>();
 		scene->m_CameraSystem = GeneralManager::RegisterSystem<CameraSystem>();
-		scene->m_DisplaySystem = GeneralManager::RegisterSystem<HierarchyDisplaySystem>();
 		scene->m_HierarchySystem = GeneralManager::RegisterSystem<HierarchySystem>();
+		scene->m_PhysicsSystem = GeneralManager::RegisterSystem<PhysicsSystem>();
 
 		Signature signature;
 		signature.set(GeneralManager::GetComponentType<Render>());
@@ -51,7 +51,13 @@ namespace Fengshui
 
 		signature.reset();
 		signature.set(GeneralManager::GetComponentType<Hierarchy>());
-		GeneralManager::SetSystemSignature<HierarchyDisplaySystem>(signature);
+		GeneralManager::SetSystemSignature<HierarchySystem>(signature);
+
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<Physics>());
+		signature.set(GeneralManager::GetComponentType<Transform>());
+		signature.set(GeneralManager::GetComponentType<Hierarchy>());
+		GeneralManager::SetSystemSignature<PhysicsSystem>(signature);
 
 		//Property setup
 		scene->m_RootNode = std::make_shared<Entity>("Root Node");
@@ -108,6 +114,8 @@ namespace Fengshui
 				m_CameraSystem->AdjustCamera(cameraComp, moveDelta, glm::vec3{0.0f, 0.0f, rotateDelta });
 			}
 		}
+
+		m_PhysicsSystem->OnUpdate(dt);
 	}
 
 	void Scene::OnRender()

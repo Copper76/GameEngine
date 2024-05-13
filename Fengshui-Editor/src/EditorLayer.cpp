@@ -76,9 +76,13 @@ namespace Fengshui
 		//m_BigSquare->AddComponent<Transform2D>();
 		m_BigSquare->AddComponent<Transform>();
 
-		m_BigSquare->AddComponent<Render>();
+		glm::vec2 coords[] = { {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f},{0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f} };
 
-		glm::vec2 coords[] = { {0.0f, 0.0f}, {2.0f, 0.0f}, {2.0f, 1.0f}, {0.0f, 1.0f} };
+		m_BigSquare->AddComponent<Render>(Render{ nullptr,
+			coords
+			});
+
+		//glm::vec2 coords[] = { {0.0f, 0.0f}, {2.0f, 0.0f}, {2.0f, 1.0f}, {0.0f, 1.0f} };
 
 		/*m_BigSquare->AddComponent(Render2D{ Texture2D::Create("Assets/Textures/Checkerboard.png"),
 			coords

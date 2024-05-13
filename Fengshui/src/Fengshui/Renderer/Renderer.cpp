@@ -248,8 +248,7 @@ namespace Fengshui
 			s_Data.ShapeVertexBufferPtr->Position = transform * s_Data.ShapeVertexPositions[i];
 			//s_Data.ShapeVertexBufferPtr->Colour = colour;
 			s_Data.ShapeVertexBufferPtr->Colour = {i / 8.0f,i / 8.0f,i / 8.0f, 1.0f };
-			//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
-			s_Data.ShapeVertexBufferPtr->TexCoord = {0,0};
+			s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
 			s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
 			s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
 			s_Data.ShapeVertexBufferPtr++;

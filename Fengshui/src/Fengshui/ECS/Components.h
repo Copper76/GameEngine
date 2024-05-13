@@ -114,6 +114,11 @@ namespace Fengshui
 		}
 	};
 
+	struct Physics
+	{
+
+	};
+
 	struct Render2D
 	{
 		Ref<Texture2D> Texture = nullptr;
