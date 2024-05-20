@@ -67,15 +67,8 @@ namespace Fengshui
 
 		glm::mat4 GetTransform()
 		{
-			return glm::scale(glm::mat4_cast(Rotation) * glm::translate(glm::mat4(1.0f), Position), Scale);
+			return glm::scale(glm::translate(glm::mat4(1.0f), Position) * glm::mat4_cast(Rotation), Scale);
 		}
-
-		//glm::mat4 GetRotationMatrix()
-		//{
-		//	return glm::rotate(glm::rotate(glm::rotate(glm::mat4(1.0f), glm::radians(Rotation.x), glm::vec3{ 1.0f, 0.0f, 0.0f }),
-		//		glm::radians(Rotation.y), glm::vec3{ 0.0f, 1.0f, 0.0f }),
-		//		glm::radians(Rotation.z), glm::vec3{ 0.0f, 0.0f, 1.0f });
-		//}
 	};
 
 	struct Transform2D
@@ -126,8 +119,8 @@ namespace Fengshui
 
 	struct Rigidbody
 	{
-		glm::vec3 offset = glm::vec3(0.0f);
-		glm::vec3 size = glm::vec3(1.0f);
+		glm::vec3 Offset = glm::vec3(0.0f);
+		glm::vec3 Size = glm::vec3(1.0f);
 
 		glm::vec3 LinearVelocity = glm::vec3(0.0f);
 		glm::vec3 AngularVelocity = glm::vec3(0.0f);
@@ -135,7 +128,7 @@ namespace Fengshui
 		float InvMass = 1.0f;
 		float Elasticity = 0.5f;
 		float Friction = 0.5f;
-		float Gravity = 10.0f;
+		glm::vec3 Gravity = glm::vec3(0.0f, -10.0f, 0.0f);
 
 		Rigidbody()
 		{
@@ -272,12 +265,14 @@ namespace Fengshui
 		bool Primary;
 		float AspectRatio = 1280.0f / 720.0f;
 		bool IsOrtho;
-		float NearPlane = -1.0f;
-		float FarPlane = 1.0f;
+		float OrthoNearPlane = -1.0f;
+		float OrthoFarPlane = 1.0f;
+		float PersNearPlane = 0.1f;
+		float PersFarPlane = 1000.0f;
 
 		//Common Derived
 		glm::mat4 ProjectionMatrix;
-		glm::mat4 ViewMatrix = 1.0f;
+		glm::mat4 ViewMatrix = 0.0f;
 		glm::mat4 ViewProjectionMatrix;
 
 		//Orthographic
@@ -290,14 +285,11 @@ namespace Fengshui
 		{
 			if (isOrtho)
 			{
-				ProjectionMatrix = glm::ortho(-1.0f * AspectRatio, 1.0f * AspectRatio, -1.0f, 1.0f, NearPlane, FarPlane);
+				ProjectionMatrix = glm::ortho(-1.0f * AspectRatio, 1.0f * AspectRatio, -1.0f, 1.0f, OrthoNearPlane, OrthoFarPlane);
 			}
 			else
 			{
-				NearPlane = 0.1f;
-				FarPlane = 100.0f;
-				ProjectionMatrix = glm::perspective(glm::radians(FOV), AspectRatio, NearPlane, FarPlane);
-				ViewMatrix = glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+				ProjectionMatrix = glm::perspective(glm::radians(FOV), AspectRatio, PersNearPlane, PersFarPlane);
 			}
 
 			ViewProjectionMatrix = ProjectionMatrix * ViewMatrix;
@@ -314,9 +306,8 @@ namespace Fengshui
 		}
 
 		CameraComponent(bool primary, float fov, float aspectRatio, float nearPlane, float farPlane)
-			: Primary(primary), FOV(fov), AspectRatio(aspectRatio), NearPlane(nearPlane), FarPlane(farPlane), ProjectionMatrix(glm::perspective(glm::radians(fov), aspectRatio, nearPlane, farPlane))
+			: Primary(primary), FOV(fov), AspectRatio(aspectRatio), PersNearPlane(nearPlane), PersFarPlane(farPlane), ProjectionMatrix(glm::perspective(glm::radians(fov), aspectRatio, nearPlane, farPlane))
 		{
-			ViewMatrix = glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 			ViewProjectionMatrix = ProjectionMatrix * ViewMatrix;
 			IsOrtho = false;
 		}

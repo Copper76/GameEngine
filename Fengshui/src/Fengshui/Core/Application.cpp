@@ -101,19 +101,16 @@ namespace Fengshui
 
 	void Application::UpdateFunction()
 	{
-		while (m_Running)
+		while (m_Running && !m_Minimised)
 		{
 			float dt = m_Time.GetDeltaTime();
 
-			if (!m_Minimised)
+			//Update layers
+			for (Layer* layer : m_LayerStack)
 			{
-				//Update layers
-				for (Layer* layer : m_LayerStack)
+				if (layer->IsActive())
 				{
-					if (layer->IsActive())
-					{
-						layer->OnUpdate(dt);
-					}
+					layer->OnUpdate(dt);
 				}
 			}
 		}
@@ -121,7 +118,7 @@ namespace Fengshui
 
 	void Application::FixedUpdateFunction()
 	{
-		while (m_Running)
+		while (m_Running && !m_Minimised)
 		{
 			float dt = m_Time.GetDeltaTimeMicro();
 
@@ -139,15 +136,12 @@ namespace Fengshui
 
 			dt = dt * 0.001f * 0.001f;
 
-			if (!m_Minimised)
+			//Update layers
+			for (Layer* layer : m_LayerStack)
 			{
-				//Update layers
-				for (Layer* layer : m_LayerStack)
+				if (layer->IsActive())
 				{
-					if (layer->IsActive())
-					{
-						layer->OnFixedUpdate(dt);
-					}
+					layer->OnFixedUpdate(dt);
 				}
 			}
 		}

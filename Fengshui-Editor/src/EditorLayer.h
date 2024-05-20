@@ -164,5 +164,6 @@ namespace Fengshui
 
 		std::atomic<bool> m_Paused = false;
 		std::atomic<bool> m_IsPlaying = false;
+		std::atomic<bool> m_EditorReady = false;//Check whether the editor has finished setting up
 	};
 }

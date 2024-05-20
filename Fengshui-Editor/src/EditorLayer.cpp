@@ -16,14 +16,12 @@ namespace Fengshui
 
 			if (m_ActiveScene == m_Scene)
 			{
-				//Render2D& renderComp = m_BigSquare->GetComponent<Render2D>();
 				Render& renderComp = m_BigSquare->GetComponent<Render>();
 				renderComp.Colour = m_SquareColour;
 				renderComp.TilingFactor = m_TilingFactor;
-				//Transform2D& trans = m_BigSquare->GetComponent<Transform2D>();
-				//Transform& trans = m_BigSquare->GetComponent<Transform>();
-				//glm::quat& rotateDelta = glm::normalize(glm::quat(glm::radians(glm::vec3(dt * 0.01f, dt * 0.01f, 0.0f))));
-				//trans.Rotation *= rotateDelta;
+				Transform& trans = m_BigSquare->GetComponent<Transform>();
+				glm::quat& rotateDelta = glm::normalize(glm::quat(glm::radians(glm::vec3(dt * 0.01f, dt * 0.01f, 0.0f))));
+				trans.Rotation *= rotateDelta;
 			}
 			else
 			{
@@ -33,7 +31,9 @@ namespace Fengshui
 					squareTrans.Rotation = std::fmod(squareTrans.Rotation + dt * 10.0f, 360.0f);
 				}
 			}
-
+		}
+		if (m_EditorReady)
+		{
 			m_ActiveScene->OnUpdate(dt);
 		}
 	}
@@ -67,6 +67,7 @@ namespace Fengshui
 
 	void EditorLayer::Reset()
 	{
+		m_EditorReady = false;
 		GeneralManager::Reset();
 		m_Scene = Scene::Init();
 
@@ -90,20 +91,20 @@ namespace Fengshui
 			});
 
 		m_BigSquare->AddComponent<Rigidbody>();
-		m_BigSquare->AddComponent<Collider>();
+		//m_BigSquare->AddComponent<Collider>();
 
 		m_Ground = std::make_shared<Entity>("Ground");
 
-		m_Ground->AddComponent<Transform>(Transform(glm::vec3(0.0f, -2.0f, 0.0f)));
+		m_Ground->AddComponent<Transform>(Transform(glm::vec3(0.5f, -2.0f, 0.0f)));
 
 		m_Ground->AddComponent<Render>(Render{ nullptr,
 			coords
 			});
 
 		m_Ground->AddComponent<Rigidbody>(Rigidbody(0.0f));
-		m_Ground->AddComponent<Collider>();
+		//m_Ground->AddComponent<Collider>();
 
-		m_BigSquare->SetParent(m_SecondCamera);
+		//m_BigSquare->SetParent(m_SecondCamera);
 
 		m_OtherScene = Scene::Init();
 		
@@ -121,6 +122,7 @@ namespace Fengshui
 		}
 		
 		GeneralManager::SetActiveScene(m_ActiveScene);
+		m_EditorReady = true;
 	}
 
 	void EditorLayer::OnDetach()

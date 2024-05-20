@@ -85,14 +85,14 @@ ResolveContact
 namespace Fengshui
 {
 	void ResolveContact(contact_t& contact) {
-		Rigidbody bodyA = GeneralManager::GetComponent<Rigidbody>(contact.bodyA);
-		Rigidbody bodyB = GeneralManager::GetComponent<Rigidbody>(contact.bodyB);
+		Rigidbody& bodyA = GeneralManager::GetComponent<Rigidbody>(contact.bodyA);
+		Rigidbody& bodyB = GeneralManager::GetComponent<Rigidbody>(contact.bodyB);
 
-		Transform transA = GeneralManager::GetComponent<Transform>(contact.bodyA);
-		Transform transB = GeneralManager::GetComponent<Transform>(contact.bodyB);
+		Transform& transA = GeneralManager::GetComponent<Transform>(contact.bodyA);
+		Transform& transB = GeneralManager::GetComponent<Transform>(contact.bodyB);
 
-		Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
-		Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
+		const Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
+		const Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
 
 		const glm::vec3 ptOnA = BodySpaceToWorldSpace(contact.ptOnA_LocalSpace, colliderA, transA);
 		const glm::vec3 ptOnB = BodySpaceToWorldSpace(contact.ptOnB_LocalSpace, colliderB, transB);

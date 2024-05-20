@@ -61,7 +61,7 @@ namespace Fengshui
 
 					glm::vec3 eulerAngles = glm::degrees(glm::eulerAngles(transform.Rotation));
 
-					if (ImGui::DragFloat3("Rotation", glm::value_ptr(eulerAngles), 0.5f))
+					if (ImGui::DragFloat3("Rotation", glm::value_ptr(eulerAngles), 0.5f, -90.0f, 90.0f))
 					{
 						valueChanged = true;
 						transform.Rotation = glm::quat(glm::radians(eulerAngles));
@@ -109,7 +109,28 @@ namespace Fengshui
 				{
 					auto& rigidbody = GeneralManager::GetComponent<Rigidbody>(entity);
 
+					ImGui::DragFloat3("Offset", glm::value_ptr(rigidbody.Offset), 0.1f);
+					ImGui::DragFloat3("Size", glm::value_ptr(rigidbody.Size), 0.1f);
+
 					ImGui::DragFloat3("Velocity", glm::value_ptr(rigidbody.LinearVelocity));
+					//ImGui::DragFloat4("Angular Velocity", glm::value_ptr(rigidbody.AngularVelocity));
+					glm::vec3 eulerAngularVelocity = glm::degrees(rigidbody.AngularVelocity);
+
+					if (ImGui::DragFloat3("Angular Vel", glm::value_ptr(eulerAngularVelocity), 0.5f, -90.0f, 90.0f))
+					{
+						rigidbody.AngularVelocity = glm::radians(eulerAngularVelocity);
+					}
+
+					ImGui::DragFloat3("Gravity", glm::value_ptr(rigidbody.Gravity), 0.1f);
+
+					float mass = rigidbody.InvMass == 0 ? 0.0f : 1.0f / rigidbody.InvMass;
+					if (ImGui::DragFloat("Mass", &mass, 0.1f, 0.0f, std::numeric_limits<float>::max()))
+					{
+						rigidbody.InvMass = mass == 0.0f ? 0.0f : 1.0f / mass;
+					}
+
+					ImGui::DragFloat("Friction", &rigidbody.Friction, 0.1f, 0.0f, 1.0f);
+					ImGui::DragFloat("Elasticity", &rigidbody.Elasticity, 0.1f, 0.0f, 1.0f);
 				}
 			}
 		}
@@ -160,7 +181,7 @@ namespace Fengshui
 					bool valueChanged = false;
 					auto& camera = GeneralManager::GetComponent<CameraComponent>(entity);
 
-					if (ImGui::Checkbox("IsOrtho", &camera.IsOrtho) || ImGui::DragFloat("Near Plane", &camera.NearPlane, 0.1f, -1.0f, 1.0f) || ImGui::DragFloat("Far Plane", &camera.FarPlane, 0.5f, 1.0f, 100.0f))
+					if (ImGui::Checkbox("IsOrtho", &camera.IsOrtho))
 					{
 						valueChanged = true;
 					}
@@ -168,14 +189,14 @@ namespace Fengshui
 					if (camera.IsOrtho)
 					{
 
-						if (ImGui::DragFloat("Zoom Level", &camera.ZoomLevel, 0.1f))
+						if (ImGui::DragFloat("Zoom Level", &camera.ZoomLevel, 0.1f) || ImGui::DragFloat("Near Plane", &camera.OrthoNearPlane, 0.1f, -1.0f, 1.0f) || ImGui::DragFloat("Far Plane", &camera.OrthoFarPlane, 0.5f, 1.0f, 100.0f))
 						{
 							valueChanged = true;
 						}
 					}
 					else
 					{
-						if (ImGui::DragFloat("FOV", &camera.FOV, 30.0f, 90.0f, 0.5f))
+						if (ImGui::DragFloat("FOV", &camera.FOV, 30.0f, 90.0f, 0.5f) || ImGui::DragFloat("Near Plane", &camera.PersNearPlane, 0.1f, 0.1f, 1.0f) || ImGui::DragFloat("Far Plane", &camera.PersFarPlane, 0.5f, 1.0f, 1000.0f))
 						{
 							valueChanged = true;
 						}

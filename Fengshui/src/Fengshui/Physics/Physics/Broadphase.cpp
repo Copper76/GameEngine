@@ -126,8 +126,8 @@ namespace Fengshui
 		int i = 0;
 
 		for (EntityID entity : entities) {
-			const Transform& transform = GeneralManager::GetComponent<Transform>(entity);
-			const Rigidbody& rb = GeneralManager::GetComponent<Rigidbody>(entity);
+			const Transform transform = GeneralManager::GetComponent<Transform>(entity);
+			const Rigidbody rb = GeneralManager::GetComponent<Rigidbody>(entity);
 			const Collider collider = GeneralManager::GetComponent<Collider>(entity);
 			Bounds bounds = collider.Shape->GetBounds(transform.Position, transform.Rotation);
 
@@ -184,7 +184,7 @@ namespace Fengshui
 
 	void BroadPhase(const std::set<EntityID> entities, const int num, std::vector<collisionPair_t>& finalPairs, const float dt_sec) {
 		finalPairs.clear();//why clear twice
-		psuedoBody_t* sortedBodies = (psuedoBody_t*)alloca(sizeof(psuedoBody_t) * num * 2);
+		psuedoBody_t* sortedBodies = (psuedoBody_t*)_malloca(sizeof(psuedoBody_t) * num * 2);
 
 		SortBodiesBounds(entities, num, sortedBodies, dt_sec);
 		BuildPairs(finalPairs, sortedBodies, num);

@@ -65,11 +65,11 @@ namespace Fengshui
 	{
 		if (cameraComp.IsOrtho)
 		{
-			cameraComp.ProjectionMatrix = glm::ortho(-1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, 1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, -1.0f * cameraComp.ZoomLevel, 1.0f * cameraComp.ZoomLevel, cameraComp.NearPlane, cameraComp.FarPlane);
+			cameraComp.ProjectionMatrix = glm::ortho(-1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, 1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, -1.0f * cameraComp.ZoomLevel, 1.0f * cameraComp.ZoomLevel, cameraComp.OrthoNearPlane, cameraComp.OrthoFarPlane);
 		}
 		else
 		{
-			cameraComp.ProjectionMatrix = glm::perspective(glm::radians(cameraComp.FOV), cameraComp.AspectRatio, cameraComp.NearPlane, cameraComp.FarPlane);
+			cameraComp.ProjectionMatrix = glm::perspective(glm::radians(cameraComp.FOV), cameraComp.AspectRatio, cameraComp.PersNearPlane, cameraComp.PersFarPlane);
 		}
 		cameraComp.ViewProjectionMatrix = cameraComp.ProjectionMatrix * cameraComp.ViewMatrix;
 	}
@@ -92,40 +92,20 @@ namespace Fengshui
 
 		EntityID curr = entity;
 
-		if (cameraComp.IsOrtho)
+		glm::mat4 camTransform = glm::identity<glm::mat4>();
+
+		while (curr != 0)
 		{
-			glm::mat4 camTransform = glm::identity<glm::mat4>();
-
-			while (curr != 0)
+			if (GeneralManager::HasComponent<Transform>(curr))
 			{
-				if (GeneralManager::HasComponent<Transform>(curr))
-				{
-					camTransform = GeneralManager::GetComponent<Transform>(curr).GetTransform() * camTransform;
-				}
-
-				hierarchyData = GeneralManager::GetComponent<Hierarchy>(curr);
-				curr = hierarchyData.Parent;
+				camTransform = GeneralManager::GetComponent<Transform>(curr).GetTransform() * camTransform;
 			}
-			cameraComp.ViewMatrix = glm::inverse(camTransform);
-		}
-		else
-		{
-			glm::vec3 position = glm::vec3(0.0f);
-			glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-			while (curr != 0)
-			{
-				if (GeneralManager::HasComponent<Transform>(curr))
-				{
-					transform = GeneralManager::GetComponent<Transform>(curr);
-					position += transform.Position;
-					rotation = transform.Rotation * rotation;
-				}
 
-				hierarchyData = GeneralManager::GetComponent<Hierarchy>(curr);
-				curr = hierarchyData.Parent;
-			}
-			cameraComp.ViewMatrix = glm::lookAt(position, position + glm::vec3(glm::mat4_cast(rotation) * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f)), glm::vec3(glm::mat4_cast(rotation) * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)));
+			hierarchyData = GeneralManager::GetComponent<Hierarchy>(curr);
+			curr = hierarchyData.Parent;
 		}
+		cameraComp.ViewMatrix = glm::inverse(camTransform);
+
 		cameraComp.ViewProjectionMatrix = cameraComp.ProjectionMatrix * cameraComp.ViewMatrix; //order based on opengl
 	}
 }

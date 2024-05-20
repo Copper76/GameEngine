@@ -99,7 +99,7 @@ namespace Fengshui
 		rb.AngularVelocity += alpha * dt_sec;
 
 		glm::vec3 dAngle = rb.AngularVelocity * dt_sec;
-		glm::quat dq = glm::quat(dAngle * glm::length(dAngle));
+		glm::quat dq = glm::quat(glm::length(dAngle), dAngle);
 		trans.Rotation = glm::normalize(dq * trans.Rotation);
 
 		trans.Position = positionCM + (dq * cmToPos);
@@ -123,7 +123,7 @@ namespace Fengshui
 		rb.AngularVelocity += alpha * dt_sec;
 
 		glm::vec3 dAngle = rb.AngularVelocity * dt_sec;
-		glm::quat dq = glm::quat(dAngle * glm::length(dAngle));
+		glm::quat dq = glm::quat(glm::length(dAngle), dAngle);
 		trans.Rotation = glm::normalize(dq * trans.Rotation);
 
 		trans.Position = positionCM + (dq * cmToPos);

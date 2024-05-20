@@ -84,14 +84,14 @@ namespace Fengshui
 		float accumulatedTime = 0.0f;
 		for (int i = 0; i < numContacts; i++) {
 			contact_t& contact = contacts[i];
-			const float dt = contact.timeOfImpact - accumulatedTime;
+			const float dt_sec = contact.timeOfImpact - accumulatedTime;
 
 			//Update the position up to next collision
 			for (EntityID entity : m_Entities) {
-				Update(dt, entity);
+				Update(dt_sec, entity);
 			}
 			ResolveContact(contact);
-			accumulatedTime += dt;
+			accumulatedTime += dt_sec;
 		}
 
 		//Update the position for the rest of the frame's time

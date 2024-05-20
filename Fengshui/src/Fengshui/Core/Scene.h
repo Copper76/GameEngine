@@ -45,7 +45,7 @@ namespace Fengshui
 		Ref<Entity> m_RootNode;
 		Ref<Entity> m_SceneManager;
 
-		float m_CameraMoveSpeed = 2.0f;
+		float m_CameraMoveSpeed = 1.0f;
 
 		bool m_ViewportFocused = false;
 
