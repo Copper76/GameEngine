@@ -22,6 +22,8 @@ namespace Fengshui
 	};
 }
 
+//FS_ENGINE_ERROR("{0}", bla bla) for placeholder
+
 //Engine logging
 #define FS_ENGINE_CRITICAL(...) ::Fengshui::Log::GetEngineLogger()->critical(__VA_ARGS__);
 #define FS_ENGINE_ERROR(...)    ::Fengshui::Log::GetEngineLogger()->error(__VA_ARGS__);

@@ -91,7 +91,7 @@ namespace Fengshui
 			});
 
 		m_BigSquare->AddComponent<Rigidbody>();
-		//m_BigSquare->AddComponent<Collider>();
+		m_BigSquare->AddComponent<Collider>();
 
 		m_Ground = std::make_shared<Entity>("Ground");
 
@@ -102,9 +102,9 @@ namespace Fengshui
 			});
 
 		m_Ground->AddComponent<Rigidbody>(Rigidbody(0.0f));
-		//m_Ground->AddComponent<Collider>();
+		m_Ground->AddComponent<Collider>();
 
-		//m_BigSquare->SetParent(m_SecondCamera);
+		m_BigSquare->SetParent(m_SecondCamera);
 
 		m_OtherScene = Scene::Init();
 		
