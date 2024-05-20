@@ -5,6 +5,7 @@
 #include <math.h>
 #include <assert.h>
 #include <stdio.h>
+#include <glm/glm.hpp>
 
 /*
  ================================
@@ -38,6 +39,7 @@ public:
 	float Dot( const Vec2 & rhs ) const { return x * rhs.x + y * rhs.y; }
 	
 	const float * ToPtr() const { return &x; }
+	glm::vec2 TOGLM() { return glm::vec2{ x,y }; }
 	
 public:
 	float x;
@@ -223,6 +225,7 @@ public:
 	void GetOrtho( Vec3 & u, Vec3 & v ) const;
 	
 	const float * ToPtr() const { return &x; }
+	glm::vec3 TOGLM() { return glm::vec3{ x,y,z }; }
 
 public:
 	float x;
@@ -466,6 +469,7 @@ public:
 	
     const float *   ToPtr() const   { return &x; }
 	float *         ToPtr()         { return &x; }
+	glm::vec4 TOGLM() { return glm::vec4{ x,y,z,w }; }
 	
 public:
 	float x;

@@ -48,18 +48,30 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				bool valueChanged = false;
-				auto& transform = GeneralManager::GetComponent<Transform>(entity);
-
-				if (ImGui::DragFloat3("Position", glm::value_ptr(transform.Position), 0.5f) || ImGui::DragFloat3("Rotation", glm::value_ptr(transform.Rotation), 0.5f)
-					|| ImGui::DragFloat3("Scale", glm::value_ptr(transform.Scale), 0.5f))
+				/*if (ImGui::Button("Remove"))
 				{
-					valueChanged = true;
+					GeneralManager::RemoveComponent<Transform>(entity);
 				}
-
-				if (GeneralManager::HasComponent<CameraComponent>(entity) && valueChanged)
+				else*/
 				{
-					GeneralManager::GetActiveScene()->UpdateViewMatrix(entity);
+					bool valueChanged = false;
+					auto& transform = GeneralManager::GetComponent<Transform>(entity);
+
+					valueChanged |= ImGui::DragFloat3("Position", glm::value_ptr(transform.Position), 0.5f);
+
+					glm::vec3 eulerAngles = glm::degrees(glm::eulerAngles(transform.Rotation));
+
+					if (ImGui::DragFloat3("Rotation", glm::value_ptr(eulerAngles), 0.5f))
+					{
+						valueChanged = true;
+						transform.Rotation = glm::quat(glm::radians(eulerAngles));
+					}
+					valueChanged |= ImGui::DragFloat3("Scale", glm::value_ptr(transform.Scale), 0.5f);
+
+					if (GeneralManager::HasComponent<CameraComponent>(entity) && valueChanged)
+					{
+						GeneralManager::GetActiveScene()->UpdateViewMatrix(entity);
+					}
 				}
 			}
 		}
@@ -69,11 +81,35 @@ namespace Fengshui
 			{
 				if (ImGui::CollapsingHeader("Transform2D", ImGuiTreeNodeFlags_DefaultOpen))
 				{
-					auto& transform2D = GeneralManager::GetComponent<Transform2D>(entity);
+					/*if (ImGui::Button("Remove"))
+					{
+						GeneralManager::RemoveComponent<Transform2D>(entity);
+					}
+					else*/
+					{
+						auto& transform2D = GeneralManager::GetComponent<Transform2D>(entity);
 
-					ImGui::DragFloat3("Position", glm::value_ptr(transform2D.Position), 0.5f);
-					ImGui::DragFloat("Rotation", &transform2D.Rotation, 0.1f);
-					ImGui::DragFloat2("Scale", glm::value_ptr(transform2D.Scale), 0.5f);
+						ImGui::DragFloat3("Position", glm::value_ptr(transform2D.Position), 0.5f);
+						ImGui::DragFloat("Rotation", &transform2D.Rotation, 0.1f);
+						ImGui::DragFloat2("Scale", glm::value_ptr(transform2D.Scale), 0.5f);
+					}
+				}
+			}
+		}
+
+		if (GeneralManager::HasComponent<Rigidbody>(entity))
+		{
+			if (ImGui::CollapsingHeader("Rigidbody", ImGuiTreeNodeFlags_DefaultOpen))
+			{
+				/*if (ImGui::Button("Remove"))
+				{
+					GeneralManager::RemoveComponent<Render>(entity);
+				}
+				else*/
+				{
+					auto& rigidbody = GeneralManager::GetComponent<Rigidbody>(entity);
+
+					ImGui::DragFloat3("Velocity", glm::value_ptr(rigidbody.LinearVelocity));
 				}
 			}
 		}
@@ -82,18 +118,32 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Render", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				auto& render = GeneralManager::GetComponent<Render>(entity);
+				/*if (ImGui::Button("Remove"))
+				{
+					GeneralManager::RemoveComponent<Render>(entity);
+				}
+				else*/
+				{
+					auto& render = GeneralManager::GetComponent<Render>(entity);
 
-				ImGui::ColorEdit4("Colour", glm::value_ptr(render.Colour));
+					ImGui::ColorEdit4("Colour", glm::value_ptr(render.Colour));
+				}
 			}
 		}
 		else if (GeneralManager::HasComponent<Render2D>(entity))
 		{
 			if (ImGui::CollapsingHeader("Render2D", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				auto& render2D = GeneralManager::GetComponent<Render2D>(entity);
+				/*if (ImGui::Button("Remove"))
+				{
+					GeneralManager::RemoveComponent<Render2D>(entity);
+				}
+				else*/
+				{
+					auto& render2D = GeneralManager::GetComponent<Render2D>(entity);
 
-				ImGui::ColorEdit4("Colour", glm::value_ptr(render2D.Colour));
+					ImGui::ColorEdit4("Colour", glm::value_ptr(render2D.Colour));
+				}
 			}
 		}
 
@@ -101,35 +151,52 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				bool valueChanged = false;
-				auto& camera = GeneralManager::GetComponent<CameraComponent>(entity);
-
-				if (ImGui::Checkbox("IsOrtho", &camera.IsOrtho) || ImGui::DragFloat("Near Plane", &camera.NearPlane, 0.1f, -1.0f, 1.0f) || ImGui::DragFloat("Far Plane", &camera.FarPlane, 0.5f, 1.0f, 100.0f))
+				/*if (ImGui::Button("Remove"))
 				{
-					valueChanged = true;
+					GeneralManager::RemoveComponent<CameraComponent>(entity);
 				}
-
-				if (camera.IsOrtho)
+				else*/
 				{
+					bool valueChanged = false;
+					auto& camera = GeneralManager::GetComponent<CameraComponent>(entity);
 
-					if (ImGui::DragFloat("Zoom Level", &camera.ZoomLevel, 0.1f))
+					if (ImGui::Checkbox("IsOrtho", &camera.IsOrtho) || ImGui::DragFloat("Near Plane", &camera.NearPlane, 0.1f, -1.0f, 1.0f) || ImGui::DragFloat("Far Plane", &camera.FarPlane, 0.5f, 1.0f, 100.0f))
 					{
 						valueChanged = true;
 					}
-				}
-				else
-				{
-					if(ImGui::DragFloat("FOV", &camera.FOV, 30.0f, 90.0f, 0.5f))
-					{
-						valueChanged = true;
-					}
-				}
 
-				if (valueChanged)
-				{
-					GeneralManager::GetActiveScene()->UpdateView();
+					if (camera.IsOrtho)
+					{
+
+						if (ImGui::DragFloat("Zoom Level", &camera.ZoomLevel, 0.1f))
+						{
+							valueChanged = true;
+						}
+					}
+					else
+					{
+						if (ImGui::DragFloat("FOV", &camera.FOV, 30.0f, 90.0f, 0.5f))
+						{
+							valueChanged = true;
+						}
+					}
+
+					if (valueChanged)
+					{
+						GeneralManager::GetActiveScene()->UpdateView();
+					}
 				}
 			}
 		}
+		/*
+		if (ImGui::BeginCombo("Components", "Add Component"))
+		{
+			if (ImGui::Selectable("Transform"))
+			{
+				GeneralManager::AddComponent<Transform>(entity, Transform());
+			}
+			ImGui::EndCombo();
+		}
+		*/
 	}
 }

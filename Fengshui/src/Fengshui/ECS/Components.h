@@ -4,7 +4,10 @@
 #include "Fengshui/Renderer/Texture.h"
 #include "Fengshui/Renderer/SubTexture2D.h"
 
+#include "Fengshui/Physics/Physics/Body.h"
+
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 #include <set>
 
@@ -36,7 +39,7 @@ namespace Fengshui
 	struct Transform
 	{
 		glm::vec3 Position = glm::vec3(0.0f);
-		glm::vec3 Rotation = glm::vec3(0.0f);
+		glm::quat Rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 		glm::vec3 Scale = glm::vec3(1.0f);
 
 		Transform()
@@ -49,23 +52,30 @@ namespace Fengshui
 
 		}
 
-		Transform(glm::vec3 pos, glm::vec3 rotation, glm::vec3 scale = glm::vec3(1.0f))
+		Transform(glm::vec3 pos, glm::quat rotation, glm::vec3 scale = glm::vec3(1.0f))
 			: Position(pos), Rotation(rotation), Scale(scale)
 		{
 
 		}
 
-		glm::mat4 GetTransform()
+		Transform(glm::vec3 pos, glm::vec3 rotation, glm::vec3 scale = glm::vec3(1.0f))
+			: Position(pos), Scale(scale)
 		{
-			return glm::scale(GetRotationMatrix() * glm::translate(glm::mat4(1.0f), Position), Scale);
+			glm::vec3 radians = glm::radians(glm::vec3(rotation.x, rotation.y, rotation.z));
+			Rotation = glm::quat(radians);
 		}
 
-		glm::mat4 GetRotationMatrix()
+		glm::mat4 GetTransform()
 		{
-			return glm::rotate(glm::rotate(glm::rotate(glm::mat4(1.0f), glm::radians(Rotation.x), glm::vec3{ 1.0f, 0.0f, 0.0f }),
-				glm::radians(Rotation.y), glm::vec3{ 0.0f, 1.0f, 0.0f }),
-				glm::radians(Rotation.z), glm::vec3{ 0.0f, 0.0f, 1.0f });
+			return glm::scale(glm::mat4_cast(Rotation) * glm::translate(glm::mat4(1.0f), Position), Scale);
 		}
+
+		//glm::mat4 GetRotationMatrix()
+		//{
+		//	return glm::rotate(glm::rotate(glm::rotate(glm::mat4(1.0f), glm::radians(Rotation.x), glm::vec3{ 1.0f, 0.0f, 0.0f }),
+		//		glm::radians(Rotation.y), glm::vec3{ 0.0f, 1.0f, 0.0f }),
+		//		glm::radians(Rotation.z), glm::vec3{ 0.0f, 0.0f, 1.0f });
+		//}
 	};
 
 	struct Transform2D
@@ -114,9 +124,40 @@ namespace Fengshui
 		}
 	};
 
-	struct Physics
+	struct Rigidbody
 	{
+		glm::vec3 offset = glm::vec3(0.0f);
+		glm::vec3 size = glm::vec3(1.0f);
 
+		glm::vec3 LinearVelocity = glm::vec3(0.0f);
+		glm::vec3 AngularVelocity = glm::vec3(0.0f);
+
+		float InvMass = 1.0f;
+		float Elasticity = 0.5f;
+		float Friction = 0.5f;
+		float Gravity = 10.0f;
+
+		Rigidbody()
+		{
+			
+		}
+
+		Rigidbody(float mass)
+		{
+			InvMass = mass == 0.0f ? 0.0f : 1.0f / mass;
+		}
+	};
+
+	struct Collider
+	{
+		//Ref<Shape> Shape = nullptr;
+		Shape* Shape = nullptr;
+
+		Collider()
+		{
+			//Shape = std::make_shared<ShapeBox>(g_boxUnit, sizeof(g_boxUnit) / sizeof(Vec3));
+			Shape = new ShapeBox(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
+		}
 	};
 
 	struct Render2D
@@ -253,8 +294,10 @@ namespace Fengshui
 			}
 			else
 			{
+				NearPlane = 0.1f;
+				FarPlane = 100.0f;
 				ProjectionMatrix = glm::perspective(glm::radians(FOV), AspectRatio, NearPlane, FarPlane);
-				ViewMatrix = glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+				ViewMatrix = glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 			}
 
 			ViewProjectionMatrix = ProjectionMatrix * ViewMatrix;

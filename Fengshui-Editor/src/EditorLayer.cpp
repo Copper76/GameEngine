@@ -11,7 +11,6 @@ namespace Fengshui
 
 	void EditorLayer::OnUpdate(float dt)
 	{
-
 		if (m_IsPlaying && !m_Paused)
 		{
 
@@ -22,9 +21,9 @@ namespace Fengshui
 				renderComp.Colour = m_SquareColour;
 				renderComp.TilingFactor = m_TilingFactor;
 				//Transform2D& trans = m_BigSquare->GetComponent<Transform2D>();
-				Transform& trans = m_BigSquare->GetComponent<Transform>();
-				trans.Rotation.x = std::fmod(trans.Rotation.x + dt * 10.0f, 360.0f);
-				trans.Rotation.y = std::fmod(trans.Rotation.y + dt * 10.0f, 360.0f);
+				//Transform& trans = m_BigSquare->GetComponent<Transform>();
+				//glm::quat& rotateDelta = glm::normalize(glm::quat(glm::radians(glm::vec3(dt * 0.01f, dt * 0.01f, 0.0f))));
+				//trans.Rotation *= rotateDelta;
 			}
 			else
 			{
@@ -36,6 +35,14 @@ namespace Fengshui
 			}
 
 			m_ActiveScene->OnUpdate(dt);
+		}
+	}
+
+	void EditorLayer::OnFixedUpdate(float dt)
+	{
+		if (m_IsPlaying && !m_Paused)
+		{
+			m_ActiveScene->OnFixedUpdate(dt);
 		}
 	}
 
@@ -82,11 +89,19 @@ namespace Fengshui
 			coords
 			});
 
-		//glm::vec2 coords[] = { {0.0f, 0.0f}, {2.0f, 0.0f}, {2.0f, 1.0f}, {0.0f, 1.0f} };
+		m_BigSquare->AddComponent<Rigidbody>();
+		m_BigSquare->AddComponent<Collider>();
 
-		/*m_BigSquare->AddComponent(Render2D{ Texture2D::Create("Assets/Textures/Checkerboard.png"),
+		m_Ground = std::make_shared<Entity>("Ground");
+
+		m_Ground->AddComponent<Transform>(Transform(glm::vec3(0.0f, -2.0f, 0.0f)));
+
+		m_Ground->AddComponent<Render>(Render{ nullptr,
 			coords
-			});*/
+			});
+
+		m_Ground->AddComponent<Rigidbody>(Rigidbody(0.0f));
+		m_Ground->AddComponent<Collider>();
 
 		m_BigSquare->SetParent(m_SecondCamera);
 

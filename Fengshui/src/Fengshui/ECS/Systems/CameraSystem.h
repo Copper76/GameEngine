@@ -13,7 +13,7 @@ namespace Fengshui
 		bool OnMouseScrolled(EntityID entity, MouseScrolledEvent& e);
 		bool OnWindowResize(EntityID entity, WindowResizeEvent& e);
 
-		void AdjustCamera(EntityID entity, glm::vec3 moveDelta, glm::vec3 rotateDelta);
+		void AdjustCamera(EntityID entity, glm::vec3 moveDelta, glm::quat rotateDelta);
 
 		void CalculateView(EntityID entity);
 		void RecalculateViewMatrix(EntityID entity);

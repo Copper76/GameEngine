@@ -96,7 +96,7 @@ namespace Fengshui
 	class System
 	{
 	public:
-		std::set<EntityID> m_Entities;
+		std::set<EntityID> m_Entities;//Entities are stored as set in system
 	};
 
 #pragma endregion
@@ -315,7 +315,8 @@ namespace Fengshui
 			RegisterComponent<CameraComponent>();
 			RegisterComponent<Render>();
 			RegisterComponent<Render2D>();
-			RegisterComponent<Physics>();
+			RegisterComponent<Rigidbody>();
+			RegisterComponent<Collider>();
 			RegisterComponent<Transform>();
 			RegisterComponent<Transform2D>();
 		}

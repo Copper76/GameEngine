@@ -29,7 +29,8 @@ namespace Fengshui
 		scene->m_RenderSystem2D = GeneralManager::RegisterSystem<RenderSystem2D>();
 		scene->m_CameraSystem = GeneralManager::RegisterSystem<CameraSystem>();
 		scene->m_HierarchySystem = GeneralManager::RegisterSystem<HierarchySystem>();
-		scene->m_PhysicsSystem = GeneralManager::RegisterSystem<PhysicsSystem>();
+		scene->m_GravitySystem = GeneralManager::RegisterSystem<GravitySystem>();
+		scene->m_CollisionSystem = GeneralManager::RegisterSystem<CollisionSystem>();
 
 		Signature signature;
 		signature.set(GeneralManager::GetComponentType<Render>());
@@ -54,22 +55,32 @@ namespace Fengshui
 		GeneralManager::SetSystemSignature<HierarchySystem>(signature);
 
 		signature.reset();
-		signature.set(GeneralManager::GetComponentType<Physics>());
+		signature.set(GeneralManager::GetComponentType<Rigidbody>());
+		GeneralManager::SetSystemSignature<GravitySystem>(signature);
+
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<Rigidbody>());
 		signature.set(GeneralManager::GetComponentType<Transform>());
 		signature.set(GeneralManager::GetComponentType<Hierarchy>());
-		GeneralManager::SetSystemSignature<PhysicsSystem>(signature);
+		signature.set(GeneralManager::GetComponentType<Collider>());
+		GeneralManager::SetSystemSignature<CollisionSystem>(signature);
 
 		//Property setup
 		scene->m_RootNode = std::make_shared<Entity>("Root Node");
 
 		scene->m_SceneManager = std::make_shared<Entity>("Scene Manager");
 
-		scene->m_SceneManager->AddComponent(CameraComponent{
+		/*scene->m_SceneManager->AddComponent(CameraComponent{
 			true,
 			1.0f,
-			1280.0f / 720.0f });
+			1280.0f / 720.0f });*/
+		scene->m_SceneManager->AddComponent(CameraComponent{
+			false,
+			true});
 
-		scene->m_SceneManager->AddComponent<Transform>();
+		scene->m_SceneManager->AddComponent<Transform>(Transform(glm::vec3(0.0f, 0.0f, 10.0f)));
+
+		scene->UpdateViewMatrix(scene->m_CameraSystem->GetPrimary());
 
 		return scene;
 	}
@@ -111,11 +122,19 @@ namespace Fengshui
 				{
 					rotateDelta -= m_CameraMoveSpeed * dt;
 				}
-				m_CameraSystem->AdjustCamera(cameraComp, moveDelta, glm::vec3{0.0f, 0.0f, rotateDelta });
+				m_CameraSystem->AdjustCamera(cameraComp, moveDelta, glm::quat(glm::vec3(0.0f, 0.0f, glm::radians(rotateDelta))));
 			}
 		}
+	}
 
-		m_PhysicsSystem->OnUpdate(dt);
+	void Scene::OnFixedUpdate(float dt)
+	{
+		float dt_sec = dt * 0.5f;
+		for (int i = 0; i < 2; i++)
+		{
+			m_GravitySystem->OnUpdate(dt_sec);
+			m_CollisionSystem->OnUpdate(dt_sec);
+		}
 	}
 
 	void Scene::OnRender()

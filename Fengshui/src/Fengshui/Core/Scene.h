@@ -18,6 +18,7 @@ namespace Fengshui
 		~Scene();
 
 		void OnUpdate(float dt);
+		void OnFixedUpdate(float dt);
 		void OnRender();
 
 		void OnEvent(Event& e);
@@ -53,6 +54,7 @@ namespace Fengshui
 		Ref<RenderSystem2D> m_RenderSystem2D;
 		Ref<CameraSystem> m_CameraSystem;
 		Ref<HierarchySystem> m_HierarchySystem;
-		Ref<PhysicsSystem> m_PhysicsSystem;
+		Ref<GravitySystem> m_GravitySystem;
+		Ref<CollisionSystem> m_CollisionSystem;
 	};
 }

@@ -46,6 +46,7 @@ namespace Fengshui
 
 
 		void UpdateFunction();
+		void FixedUpdateFunction();
 		void RenderFunction();
 
 	private:

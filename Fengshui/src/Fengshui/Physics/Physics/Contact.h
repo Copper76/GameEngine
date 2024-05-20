@@ -3,20 +3,23 @@
 //
 #pragma once
 #include "Body.h"
+#include "Fengshui/ECS/ECS.h"
 
+namespace Fengshui
+{
+	struct contact_t {
+		glm::vec3 ptOnA_WorldSpace;
+		glm::vec3 ptOnB_WorldSpace;
+		glm::vec3 ptOnA_LocalSpace;
+		glm::vec3 ptOnB_LocalSpace;
 
-struct contact_t {
-	Vec3 ptOnA_WorldSpace;
-	Vec3 ptOnB_WorldSpace;
-	Vec3 ptOnA_LocalSpace;
-	Vec3 ptOnB_LocalSpace;
+		glm::vec3 normal;	// In World Space coordinates
+		float separationDistance;	// positive when non-penetrating, negative when penetrating
+		float timeOfImpact;
 
-	Vec3 normal;	// In World Space coordinates
-	float separationDistance;	// positive when non-penetrating, negative when penetrating
-	float timeOfImpact;
+		EntityID bodyA;
+		EntityID bodyB;
+	};
 
-	Body * bodyA;
-	Body * bodyB;
-};
-
-void ResolveContact( contact_t & contact );
+	void ResolveContact(contact_t& contact);
+}

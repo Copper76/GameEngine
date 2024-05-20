@@ -15,6 +15,7 @@ namespace Fengshui
 		virtual void OnAttach() = 0;
 		virtual void OnDetach() = 0;
 		virtual void OnUpdate(float dt) {}
+		virtual void OnFixedUpdate(float dt) {}
 		virtual void OnRender() {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event) {}

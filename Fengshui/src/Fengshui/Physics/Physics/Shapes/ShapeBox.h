@@ -9,25 +9,38 @@
 ShapeBox
 ====================================================
 */
-class ShapeBox : public Shape {
-public:
-	explicit ShapeBox( const Vec3 * pts, const int num ) {
-		Build( pts, num );
-	}
-	void Build( const Vec3* pts, const int num ) override;
+namespace Fengshui
+{
+	class ShapeBox : public Shape {
+	public:
+		/*explicit ShapeBox( const Vec3 * pts, const int num ) {
+			Build( pts, num );
+		}*/
 
-	Vec3 Support( const Vec3& dir, const Vec3 & pos, const Quat & orient, const float bias ) const override;
+		explicit ShapeBox(const glm::vec3* pts, const int num) {
+			Build(pts, num);
+		}
+		//void Build( const Vec3* pts, const int num ) override;
+		void Build(const glm::vec3* pts, const int num) override;
 
-	Mat3 InertiaTensor() const override;
+		//Vec3 Support( const Vec3& dir, const Vec3& pos, const Quat & orient, const float bias ) const override;
+		glm::vec3 Support(const glm::vec3& dir, const glm::vec3& pos, const glm::quat& orient, const float bias) const override;
 
-	Bounds GetBounds( const Vec3 & pos, const Quat & orient ) const override;
-	Bounds GetBounds() const override { return m_bounds; }
+		//Mat3 InertiaTensor() const override;
+		glm::mat3 InertiaTensor() const override;
 
-	float FastestLinearSpeed( const Vec3 & angularVelocity, const Vec3 & dir ) const override;
+		//Bounds GetBounds( const Vec3 & pos, const Quat & orient ) const override;
+		Bounds GetBounds(const glm::vec3& pos, const glm::quat& orient) const override;
+		Bounds GetBounds() const override { return m_bounds; }
 
-	shapeType_t GetType() const override { return SHAPE_BOX; }
+		//float FastestLinearSpeed( const Vec3 & angularVelocity, const Vec3 & dir ) const override;
+		float FastestLinearSpeed(const glm::vec3& angularVelocity, const glm::vec3& dir) const override;
 
-public:
-	std::vector< Vec3 > m_points;
-	Bounds m_bounds;
-};
+		shapeType_t GetType() const override { return SHAPE_BOX; }
+
+	public:
+		//std::vector< Vec3 > m_points;
+		std::vector<glm::vec3> m_points;
+		Bounds m_bounds;
+	};
+}

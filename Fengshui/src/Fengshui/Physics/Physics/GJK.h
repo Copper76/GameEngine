@@ -9,7 +9,11 @@
 #include "Body.h"
 #include "Shapes.h"
 
-bool GJK_DoesIntersect( const Body * bodyA, const Body * bodyB );
-bool GJK_DoesIntersect( const Body * bodyA, const Body * bodyB, const float bias, Vec3 & ptOnA, Vec3 & ptOnB );
-void GJK_ClosestPoints( const Body * bodyA, const Body * bodyB, Vec3 & ptOnA, Vec3 & ptOnB );
-void TestSignedVolumeProjection();
+#include "Fengshui/Physics/Helper.h"
+
+namespace Fengshui
+{
+	bool GJK_DoesIntersect(const Collider colliderA, const Transform transA, const Collider colliderB, const Transform transB);
+	bool GJK_DoesIntersect(const Collider colliderA, const Transform transA, const Collider colliderB, const Transform transB, const float bias, glm::vec3& ptOnA, glm::vec3& ptOnB);
+	void GJK_ClosestPoints(const Collider colliderA, const Transform transA, const Collider colliderB, const Transform transB, glm::vec3& ptOnA, glm::vec3& ptOnB);
+}

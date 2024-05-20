@@ -14,6 +14,7 @@ namespace Fengshui
 		EditorLayer();
 
 		void OnUpdate(float dt) override;
+		void OnFixedUpdate(float dt) override;
 		void OnRender() override;
 
 		void OnAttach() override;
@@ -68,12 +69,12 @@ namespace Fengshui
 
 				if (ImGui::Button("Play/Stop"))
 				{
-					if (m_IsPlaying)
+					m_IsPlaying = !m_IsPlaying; //run this first to avoid unwanted updates
+					if (!m_IsPlaying)
 					{
 						Reset();
 						m_Paused = false;
 					}
-					m_IsPlaying = !m_IsPlaying;
 				}
 
 				if (ImGui::Button("Pause/UnPause"))
@@ -149,6 +150,7 @@ namespace Fengshui
 		float m_TilingFactor = 1.0f;
 
 		Ref<Entity> m_BigSquare;
+		Ref<Entity> m_Ground;
 		Ref<Entity> m_SecondCamera;
 		std::vector<Ref<Entity>> m_BackgroundSquares;
 
@@ -160,7 +162,7 @@ namespace Fengshui
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize;
 
-		bool m_Paused = false;
-		bool m_IsPlaying = false;
+		std::atomic<bool> m_Paused = false;
+		std::atomic<bool> m_IsPlaying = false;
 	};
 }

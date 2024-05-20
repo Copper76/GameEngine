@@ -38,12 +38,12 @@ namespace Fengshui
 		return false;
 	}
 
-	void CameraSystem::AdjustCamera(EntityID entity, glm::vec3 moveDelta, glm::vec3 rotateDelta)
+	void CameraSystem::AdjustCamera(EntityID entity, glm::vec3 moveDelta, glm::quat rotateDelta)
 	{
 		auto& transform = GeneralManager::GetComponent<Transform>(entity);
 
 		transform.Position += moveDelta;
-		transform.Rotation += rotateDelta;
+		transform.Rotation *= rotateDelta;
 
 		RecalculateViewMatrix(entity);
 	}
@@ -92,27 +92,39 @@ namespace Fengshui
 
 		EntityID curr = entity;
 
-		glm::mat4 camTransform = glm::identity<glm::mat4>();
-
-		while (curr != 0)
-		{
-			//Allow trasnform change via 3d transform as well
-			if (GeneralManager::HasComponent<Transform>(curr))
-			{
-				camTransform = GeneralManager::GetComponent<Transform>(curr).GetTransform() * camTransform;
-			}
-
-			hierarchyData = GeneralManager::GetComponent<Hierarchy>(curr);
-			curr = hierarchyData.Parent;
-		}
-
 		if (cameraComp.IsOrtho)
 		{
+			glm::mat4 camTransform = glm::identity<glm::mat4>();
+
+			while (curr != 0)
+			{
+				if (GeneralManager::HasComponent<Transform>(curr))
+				{
+					camTransform = GeneralManager::GetComponent<Transform>(curr).GetTransform() * camTransform;
+				}
+
+				hierarchyData = GeneralManager::GetComponent<Hierarchy>(curr);
+				curr = hierarchyData.Parent;
+			}
 			cameraComp.ViewMatrix = glm::inverse(camTransform);
 		}
 		else
 		{
-			cameraComp.ViewMatrix = glm::lookAt(transform.Position, glm::vec3(transform.GetRotationMatrix() * glm::vec4(0.0f, 0.0f, 1.0f, 1.0f)), glm::vec3(transform.GetRotationMatrix() * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)));
+			glm::vec3 position = glm::vec3(0.0f);
+			glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+			while (curr != 0)
+			{
+				if (GeneralManager::HasComponent<Transform>(curr))
+				{
+					transform = GeneralManager::GetComponent<Transform>(curr);
+					position += transform.Position;
+					rotation = transform.Rotation * rotation;
+				}
+
+				hierarchyData = GeneralManager::GetComponent<Hierarchy>(curr);
+				curr = hierarchyData.Parent;
+			}
+			cameraComp.ViewMatrix = glm::lookAt(position, position + glm::vec3(glm::mat4_cast(rotation) * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f)), glm::vec3(glm::mat4_cast(rotation) * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)));
 		}
 		cameraComp.ViewProjectionMatrix = cameraComp.ProjectionMatrix * cameraComp.ViewMatrix; //order based on opengl
 	}
