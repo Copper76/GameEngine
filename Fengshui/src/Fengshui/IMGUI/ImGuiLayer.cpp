@@ -27,40 +27,6 @@ namespace Fengshui
 
 	void ImGuiLayer::OnAttach()
 	{
-		/**
-		ImGui::CreateContext();
-		ImGui::StyleColorsDark();
-
-		ImGuiIO& io = ImGui::GetIO();
-		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
-		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
-		/**
-		//Mapping from imgui_impl_glfw.cpp
-		io.KeyMap[ImGuiKey_Tab] = FS_KEY_TAB;
-		io.KeyMap[ImGuiKey_LeftArrow] = FS_KEY_LEFT;
-		io.KeyMap[ImGuiKey_RightArrow] = FS_KEY_RIGHT;
-		io.KeyMap[ImGuiKey_UpArrow] = FS_KEY_UP;
-		io.KeyMap[ImGuiKey_DownArrow] = FS_KEY_DOWN;
-		io.KeyMap[ImGuiKey_PageUp] = FS_KEY_PAGE_UP;
-		io.KeyMap[ImGuiKey_PageDown] = FS_KEY_PAGE_DOWN;
-		io.KeyMap[ImGuiKey_Home] = FS_KEY_HOME;
-		io.KeyMap[ImGuiKey_End] = FS_KEY_END;
-		io.KeyMap[ImGuiKey_Insert] = FS_KEY_INSERT;
-		io.KeyMap[ImGuiKey_Delete] = FS_KEY_DELETE;
-		io.KeyMap[ImGuiKey_Backspace] = FS_KEY_BACKSPACE;
-		io.KeyMap[ImGuiKey_Space] = FS_KEY_SPACE;
-		io.KeyMap[ImGuiKey_Enter] = FS_KEY_ENTER;
-		io.KeyMap[ImGuiKey_Escape] = FS_KEY_ESCAPE;
-		io.KeyMap[ImGuiKey_A] = FS_KEY_A;
-		io.KeyMap[ImGuiKey_C] = FS_KEY_C;
-		io.KeyMap[ImGuiKey_V] = FS_KEY_V;
-		io.KeyMap[ImGuiKey_X] = FS_KEY_X;
-		io.KeyMap[ImGuiKey_Y] = FS_KEY_Y;
-		io.KeyMap[ImGuiKey_Z] = FS_KEY_Z;
-		
-		ImGui_ImplOpenGL3_Init("#version 410");
-		**/
-		
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -129,7 +95,6 @@ namespace Fengshui
 			ImGui::RenderPlatformWindowsDefault();
 			glfwMakeContextCurrent(backup_current_context);
 		}
-		
 	}
 
 	void ImGuiLayer::OnImGuiRender()

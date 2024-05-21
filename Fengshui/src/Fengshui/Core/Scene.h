@@ -1,10 +1,7 @@
 #pragma once
 
-//#include "Fengshui/ECS/Old/GameEntity.h"
-//#include "Fengshui/ECS/Old/Components/Components.h"
-
 #include "Fengshui/Events/Event.h"
-#include "Fengshui/ECS/ECS.h"
+#include "Fengshui/ECS/Entity.h"
 #include "Fengshui/ECS/Systems.h"
 
 #include "Fengshui/Events/ApplicationEvent.h"
@@ -13,26 +10,16 @@
 
 namespace Fengshui
 {
-	class GameEntity;
-
 	class Scene: public std::enable_shared_from_this<Scene>
 	{
 	public:
-		Scene() = default;
+		Scene() {};
 
 		~Scene();
 
-		//uint32_t RegisterEntity(Ref<GameEntity> entity);
-
-		//bool RegisterComponent(uint32_t entityID, Ref<Component> component);
-
-		//void RemoveEntity(uint32_t entityID);
-
-		//void RemoveEntity(Ref<GameEntity> entity);
-
-		//void RemoveComponent(uint32_t entityID, Ref<Component> component);
-
 		void OnUpdate(float dt);
+		void OnFixedUpdate(float dt);
+		void OnRender();
 
 		void OnEvent(Event& e);
 
@@ -40,28 +27,34 @@ namespace Fengshui
 
 		void SetViewportFocused(bool focused) { m_ViewportFocused = focused; }
 
-		//Ref<GameEntity> GetGameEntity(uint32_t id);
+		inline Ref<Entity> GetSceneManager() { return m_SceneManager; }
 
-		//Ref<CameraComponent> GetCameraComponent() { return m_CameraComponent; }
-		CameraComponent GetCameraComponent() { return GeneralManager::GetComponent<CameraComponent>(m_SceneManager); }
+		inline Ref<HierarchySystem> GetHierarchySystem() { return m_HierarchySystem; }
 
 		void ResizeBounds(float width, float height);
 		void SetZoomLevel(float zoomLevel);
 
+		void UpdateView();
+		void UpdateViewMatrix(EntityID entity);
+
 	private:
-		void CalculateView();
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
 	private:
-		//uint32_t m_NextEntityID = 0;
-		//std::unordered_map<uint32_t, Ref<GameEntity>> m_GameEntities;
-		//std::unordered_map<ComponentType,std::unordered_map<uint32_t, Ref<Component>>> m_Components;
+		Ref<Entity> m_RootNode;
+		Ref<Entity> m_SceneManager;
 
-		Entity m_SceneManager;
+		float m_CameraMoveSpeed = 1.0f;
 
 		bool m_ViewportFocused = false;
 
-		Ref<RenderSystem2D> renderSystem2D;
+		//Systems
+		Ref<RenderSystem> m_RenderSystem;
+		Ref<RenderSystem2D> m_RenderSystem2D;
+		Ref<CameraSystem> m_CameraSystem;
+		Ref<HierarchySystem> m_HierarchySystem;
+		Ref<GravitySystem> m_GravitySystem;
+		Ref<CollisionSystem> m_CollisionSystem;
 	};
 }

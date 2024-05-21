@@ -15,15 +15,20 @@ Shape
 */
 class Shape {
 public:
-	virtual void Build(const Vec3* pts, const int num) {}
-	virtual Vec3 Support(const Vec3& dir, const Vec3& pos, const Quat& orient, const float bias) const = 0;
+	//virtual void Build(const Vec3* pts, const int num) {}
+	virtual void Build(const glm::vec3* pts, const int num) {}
+	//virtual Vec3 Support(const Vec3& dir, const Vec3& pos, const Quat& orient, const float bias) const = 0;
+	virtual glm::vec3 Support(const glm::vec3& dir, const glm::vec3& pos, const glm::quat& orient, const float bias) const = 0;
 
-	virtual Mat3 InertiaTensor() const = 0;
+	//virtual Mat3 InertiaTensor() const = 0;
+	virtual glm::mat3 InertiaTensor() const = 0;
 
-	virtual Bounds GetBounds( const Vec3 & pos, const Quat & orient ) const = 0;
+	//virtual Bounds GetBounds( const Vec3 & pos, const Quat & orient ) const = 0;
+	virtual Bounds GetBounds( const glm::vec3 & pos, const glm::quat& orient ) const = 0;
 	virtual Bounds GetBounds() const = 0;
 
-	virtual Vec3 GetCenterOfMass() const { return m_centerOfMass; }
+	//virtual Vec3 GetCenterOfMass() const { return m_centerOfMass; }
+	virtual glm::vec3 GetCenterOfMass() const { return m_centerOfMass; }
 
 	enum shapeType_t {
 		SHAPE_SPHERE,
@@ -32,8 +37,9 @@ public:
 	};
 	virtual shapeType_t GetType() const = 0;
 
-	virtual float FastestLinearSpeed( const Vec3 & angularVelocity, const Vec3 & dir ) const { return 0.0f; }
+	//virtual float FastestLinearSpeed( const Vec3& angularVelocity, const Vec3& dir ) const { return 0.0f; }
+	virtual float FastestLinearSpeed( const glm::vec3& angularVelocity, const glm::vec3& dir ) const { return 0.0f; }
 
 protected:
-	Vec3 m_centerOfMass;
+	glm::vec3 m_centerOfMass;
 };

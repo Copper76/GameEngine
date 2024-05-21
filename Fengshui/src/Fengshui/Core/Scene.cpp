@@ -1,104 +1,165 @@
 #include "fspch.h"
 #include "Scene.h"
 
+#include "Fengshui/Renderer/Renderer.h"
 #include "Fengshui/Renderer/Renderer2D.h"
+#include "Fengshui/ECS/ECS.h"
 
 
 namespace Fengshui
 {
 	Scene::~Scene()
 	{
-		//m_GameEntities.clear();
+		//GeneralManager::RemoveScene(shared_from_this());
 	}
 
 	Ref<Scene> Scene::Init()
 	{
 		//set up the clear colour for the scene
 		RenderCommand::SetClearColour({ 0.2f, 0.2f, 0.2f, 1 });
+		RenderCommand::SetClearDepth(1.0f);
 
+		//Create Scene
 		auto scene = std::make_shared<Scene>();
 
-		//Register Components
-		GeneralManager::RegisterComponent<Hierarchy>();
-		GeneralManager::RegisterComponent<CameraComponent>();
-		GeneralManager::RegisterComponent<Render2D>();
-		GeneralManager::RegisterComponent<Transform2D>();
+		GeneralManager::SetActiveScene(scene);
 
 		//Register Systems
-		scene->renderSystem2D = GeneralManager::RegisterSystem<RenderSystem2D>();
+		scene->m_RenderSystem = GeneralManager::RegisterSystem<RenderSystem>();
+		scene->m_RenderSystem2D = GeneralManager::RegisterSystem<RenderSystem2D>();
+		scene->m_CameraSystem = GeneralManager::RegisterSystem<CameraSystem>();
+		scene->m_HierarchySystem = GeneralManager::RegisterSystem<HierarchySystem>();
+		scene->m_GravitySystem = GeneralManager::RegisterSystem<GravitySystem>();
+		scene->m_CollisionSystem = GeneralManager::RegisterSystem<CollisionSystem>();
 
 		Signature signature;
+		signature.set(GeneralManager::GetComponentType<Render>());
+		signature.set(GeneralManager::GetComponentType<Transform>());
+		signature.set(GeneralManager::GetComponentType<Hierarchy>());
+		GeneralManager::SetSystemSignature<RenderSystem>(signature);
+
+		signature.reset();
 		signature.set(GeneralManager::GetComponentType<Render2D>());
 		signature.set(GeneralManager::GetComponentType<Transform2D>());
 		signature.set(GeneralManager::GetComponentType<Hierarchy>());//useful for allowing entities to move with parent
 		GeneralManager::SetSystemSignature<RenderSystem2D>(signature);
 
-		Entity m_SceneManager = GeneralManager::CreateEntity();
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<Transform>());
+		signature.set(GeneralManager::GetComponentType<Hierarchy>());
+		signature.set(GeneralManager::GetComponentType<CameraComponent>());
+		GeneralManager::SetSystemSignature<CameraSystem>(signature);
 
-		GeneralManager::AddComponent(m_SceneManager, CameraComponent{
-			1.0f, 2.0f,
-			glm::vec3(0.0f),
-			1280.0f/720.0f,
-			std::make_shared<OrthographicCamera>(-1.0f * 1280.0f / 720.0f * 1.0f, 1.0f * 1280.0f / 720.0f * 1.0f, -1.0f * 1.0f, 1.0f * 1.0f) });
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<Hierarchy>());
+		GeneralManager::SetSystemSignature<HierarchySystem>(signature);
+
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<Rigidbody>());
+		GeneralManager::SetSystemSignature<GravitySystem>(signature);
+
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<Rigidbody>());
+		signature.set(GeneralManager::GetComponentType<Transform>());
+		signature.set(GeneralManager::GetComponentType<Hierarchy>());
+		signature.set(GeneralManager::GetComponentType<Collider>());
+		GeneralManager::SetSystemSignature<CollisionSystem>(signature);
+
+		//Property setup
+		scene->m_RootNode = std::make_shared<Entity>("Root Node");
+
+		scene->m_SceneManager = std::make_shared<Entity>("Scene Manager");
+
+		/*scene->m_SceneManager->AddComponent(CameraComponent{
+			true,
+			1.0f,
+			1280.0f / 720.0f });*/
+		scene->m_SceneManager->AddComponent(CameraComponent{
+			false,
+			true});
+
+		scene->m_SceneManager->AddComponent<Transform>(Transform(glm::vec3(0.0f, 0.0f, 10.0f)));
+
+		scene->UpdateViewMatrix(scene->m_CameraSystem->GetPrimary());
 
 		return scene;
 	}
 
 	void Scene::OnUpdate(float dt)
 	{
-		//Get Components
-		if (m_ViewportFocused)
+		EntityID cameraComp = m_CameraSystem->GetPrimary();
+		
+		if (cameraComp != 0)
 		{
-			auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(m_SceneManager);
-			//Input handling
-			if (Input::IsKeyPressed(FS_KEY_W))
+			if (m_ViewportFocused)
 			{
-				cameraComp.m_CameraPos.y += cameraComp.CameraMoveSpeed * dt;
-			}
-			if (Input::IsKeyPressed(FS_KEY_S))
-			{
-				cameraComp.m_CameraPos.y -= cameraComp.CameraMoveSpeed * dt;
-			}
-			if (Input::IsKeyPressed(FS_KEY_A))
-			{
-				cameraComp.m_CameraPos.x -= cameraComp.CameraMoveSpeed * dt;
-			}
-			if (Input::IsKeyPressed(FS_KEY_D))
-			{
-				cameraComp.m_CameraPos.x += cameraComp.CameraMoveSpeed * dt;
-			}
+				glm::vec3 moveDelta = glm::vec3(0.0f);
+				float rotateDelta = 0.0f;
 
-			cameraComp.Camera->SetPosition(cameraComp.m_CameraPos);
+				//Input handling
+				if (Input::IsKeyPressed(FS_KEY_W))
+				{
+					moveDelta.y += m_CameraMoveSpeed * dt;
+				}
+				if (Input::IsKeyPressed(FS_KEY_S))
+				{
+					moveDelta.y -= m_CameraMoveSpeed * dt;
+				}
+				if (Input::IsKeyPressed(FS_KEY_A))
+				{
+					moveDelta.x -= m_CameraMoveSpeed * dt;
+				}
+				if (Input::IsKeyPressed(FS_KEY_D))
+				{
+					moveDelta.x += m_CameraMoveSpeed * dt;
+				}
 
-			if (Input::IsKeyPressed(FS_KEY_Q))
-			{
-				cameraComp.Camera->SetRotation(cameraComp.Camera->GetRotation() + cameraComp.CameraMoveSpeed * dt);
-			}
-			if (Input::IsKeyPressed(FS_KEY_E))
-			{
-				cameraComp.Camera->SetRotation(cameraComp.Camera->GetRotation() - cameraComp.CameraMoveSpeed * dt);
+				if (Input::IsKeyPressed(FS_KEY_Q))
+				{
+					rotateDelta += m_CameraMoveSpeed * dt;
+				}
+				if (Input::IsKeyPressed(FS_KEY_E))
+				{
+					rotateDelta -= m_CameraMoveSpeed * dt;
+				}
+				m_CameraSystem->AdjustCamera(cameraComp, moveDelta, glm::quat(glm::vec3(0.0f, 0.0f, glm::radians(rotateDelta))));
 			}
 		}
+	}
 
-		//Clear the screen
-		RenderCommand::Clear();
-
-		//2D Render cycle
-		Renderer2D::BeginScene(shared_from_this());
-		for (float i = -15.0f; i < 15.0f; i+= 1.0f)
+	void Scene::OnFixedUpdate(float dt)
+	{
+		float dt_sec = dt * 0.5f;
+		for (int i = 0; i < 2; i++)
 		{
-			for (float j = -15.0f; j < 15.0f; j += 1.0f)
-			{
-
-				Renderer2D::DrawQuad({ i, j, -0.5f }, { 0.5f, 0.5f }, 45.0f, 1.0f, nullptr, { (i+0.5f)/10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f });
-				//Renderer2D::DrawSubQuad({ i, j }, { 0.5f, 0.5f }, 0.0f, 1.0f, subTexture, { (i+0.5f)/10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f });
-			}
+			m_GravitySystem->OnUpdate(dt_sec);
+			m_CollisionSystem->OnUpdate(dt_sec);
 		}
-		//Renderer2D::DrawSubQuad({ 0, 0 }, { 0.5f, 1.0f }, 0.0f, 1.0f, subTexture, { 1.0f, 1.0f, 1.0f, 1.0f });
+	}
 
-		renderSystem2D->OnUpdate();
+	void Scene::OnRender()
+	{
+		EntityID cameraComp = m_CameraSystem->GetPrimary();
 
-		Renderer2D::EndScene();
+		if (cameraComp != 0)
+		{
+			//Clear the screen
+			RenderCommand::Clear();
+
+			//3D Render cycle
+			Renderer::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));
+
+			m_RenderSystem->OnRender();
+
+			Renderer::EndScene();
+
+			//2D Render cycle
+			Renderer2D::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));
+
+			m_RenderSystem2D->OnRender();
+
+			Renderer2D::EndScene();
+		}
 	}
 
 	void Scene::OnEvent(Event& e)
@@ -109,38 +170,34 @@ namespace Fengshui
 		eventDispatcher.Dispatch<WindowResizeEvent>(FS_BIND_EVENT_FN(Scene::OnWindowResize));
 	}
 
-	void Scene::ResizeBounds(float width, float height)
-	{
-		GeneralManager::GetComponent<CameraComponent>(m_SceneManager).AspectRatio = width / height;
-		CalculateView();
-	}
-
-	void Scene::SetZoomLevel(float zoomLevel)
-	{
-		auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(m_SceneManager);
-		cameraComp.ZoomLevel = zoomLevel; 
-		CalculateView();
-	}
-
-	void Scene::CalculateView()
-	{
-		auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(m_SceneManager);
-		cameraComp.Camera->SetProjection(-1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, 1.0f * cameraComp.AspectRatio * cameraComp.ZoomLevel, -1.0f * cameraComp.ZoomLevel, 1.0f * cameraComp.ZoomLevel);
-	}
-
 	bool Scene::OnMouseScrolled(MouseScrolledEvent& e)
 	{
-		auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(m_SceneManager);
-		cameraComp.ZoomLevel -= e.GetYOffset() * 0.1f;
-		cameraComp.ZoomLevel = std::max(cameraComp.ZoomLevel, 0.5f);
-		cameraComp.CameraMoveSpeed = cameraComp.ZoomLevel * 2.0f;
-		CalculateView();
+		m_CameraSystem->OnMouseScrolled(m_SceneManager->GetID(), e);
+		m_CameraMoveSpeed = m_SceneManager->GetComponent<CameraComponent>().ZoomLevel * 2.0f;
 		return false;
 	}
 
 	bool Scene::OnWindowResize(WindowResizeEvent& e)
 	{
-		ResizeBounds((float)e.GetWidth(), (float)e.GetHeight());
+		m_CameraSystem->OnWindowResize(m_SceneManager->GetID(), e);
 		return false;
+	}
+	
+	void Scene::ResizeBounds(float width, float height)
+	{
+		m_CameraSystem->ResizeBounds(m_SceneManager->GetID(), width, height);
+	}
+
+	void Scene::SetZoomLevel(float zoomLevel)
+	{
+		m_CameraSystem->SetZoomLevel(m_SceneManager->GetID(), zoomLevel);
+	}
+	void Scene::UpdateView()
+	{
+		m_CameraSystem->CalculateView(m_CameraSystem->GetPrimary());
+	}
+	void Scene::UpdateViewMatrix(EntityID entity)
+	{
+		m_CameraSystem->RecalculateViewMatrix(entity);
 	}
 }

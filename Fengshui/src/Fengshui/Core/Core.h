@@ -39,3 +39,5 @@ namespace Fengshui
 	template<typename T>
 	using WeakRef = std::weak_ptr<T>;
 }
+
+#define GLM_ENABLE_EXPERIMENTAL

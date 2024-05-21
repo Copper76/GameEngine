@@ -16,27 +16,34 @@ namespace Fengshui
 
 		static void Init();
 		static void Shutdown();
-		static void OnWindowResize(uint32_t width, uint32_t height);
 
-		static void BeginScene(Ref<Scene> scene);
-		static void EndScene();
-		
-		static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform = glm::mat4(1.0f));
+		static void OnWindowResize(uint32_t width, uint32_t height);
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
-		inline static ShaderLibrary* GetShaderLib() { return m_ShaderLib; }
+		static void BeginScene(CameraComponent* camera);
+		static void EndScene();
 
-		//inline static VertexArrayLibrary* GetVertexArrayLib() { return m_VertexArrLib; }
+		static void Flush();
+
+		static void DrawCube(const glm::vec3& position, const glm::vec3& size, const glm::vec3 rotation, const float tilingFactor = 1.0f, const Ref<Texture>& texture = nullptr, const glm::vec2* texCoords = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
+		static void DrawCube(const glm::mat4 transform, const float tilingFactor = 1.0f, const Ref<Texture>& texture = nullptr, const glm::vec2* texCoords = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
 
 	private:
-		struct SceneData
-		{
-			glm::mat4 ViewProjectionMatrix;
-		};
+		static void PrepareNextBatch();
 
-		static SceneData* m_SceneData;
+	//	inline static ShaderLibrary* GetShaderLib() { return m_ShaderLib; }
 
-		static ShaderLibrary* m_ShaderLib;
+	//	inline static VertexArrayLibrary* GetVertexArrayLib() { return m_VertexArrLib; }
+
+	//private:
+	//	struct SceneData
+	//	{
+	//		glm::mat4 ViewProjectionMatrix;
+	//	};
+
+	//	static SceneData* m_SceneData;
+
+	//	static ShaderLibrary* m_ShaderLib;
 	};
 }

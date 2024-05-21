@@ -13,11 +13,12 @@ namespace Fengshui
 	{
 		FS_ENGINE_ASSERT(!s_Instance, "Applicaiton already running!");
 		s_Instance = this;
-		m_Window = std::unique_ptr<Window>(Window::Create(WindowInfo(name)));
+
+		m_Window = std::unique_ptr<Window>(Window::Create(WindowInfo()));
+
 		m_Window->SetEventCallback(FS_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
-		//GeneralManager::Init();//initialising the ECS manager
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -30,26 +31,130 @@ namespace Fengshui
 
 	void Application::Run()
 	{
-		//FS_ENGINE_WARN("Initialized Log!")
-		//FS_INFO("Client works as well")
-
+		std::thread m_UpdateThread(std::bind(&Application::UpdateFunction, this));
+		std::thread m_FixedUpdateThread(std::bind(&Application::FixedUpdateFunction, this));
+		
 		while (m_Running)
 		{
 			float time = (float)glfwGetTime();
 			m_Time.UpdateTime(time);
 			float dt = m_Time.GetDeltaTime();
 
-			if (!m_Minimised)
+			//Update Render
+			m_ImGuiLayer->Begin();
+			for (Layer* layer : m_LayerStack)
 			{
-				//Update layers
-				for (Layer* layer : m_LayerStack)
+				if (layer->IsActive())
 				{
-					if (layer->IsActive())
-					{
-						layer->OnUpdate(dt);
-					}
+					layer->OnRender();
+					layer->OnImGuiRender();
 				}
 			}
+			m_ImGuiLayer->End();
+
+			//Update window with poll events, involved in renderering so runs on main thread
+			m_Window->OnUpdate();
+		}
+
+		
+		//while (m_Running)
+		//{
+		//	float time = (float)glfwGetTime();
+		//	m_Time.UpdateTime(time);
+		//	float dt = m_Time.GetDeltaTime();
+
+		//	if (!m_Minimised)
+		//	{
+		//		//Update layers
+		//		for (Layer* layer : m_LayerStack)
+		//		{
+		//			if (layer->IsActive())
+		//			{
+		//				layer->OnUpdate(dt);
+		//			}
+		//		}
+		//	}
+
+		//	//Update window with poll events
+		//	m_Window->OnUpdate();
+
+		//	//Update Render
+		//	m_ImGuiLayer->Begin();
+		//	for (Layer* layer : m_LayerStack)
+		//	{
+		//		if (layer->IsActive())
+		//		{
+		//			layer->OnRender();
+		//			layer->OnImGuiRender();
+		//		}
+		//	}
+		//	m_ImGuiLayer->End();
+		//}
+		
+		
+		//std::thread m_RenderThread(std::bind(&Application::RenderFunction, this));
+
+		m_UpdateThread.join();
+		m_FixedUpdateThread.join();
+		//m_RenderThread.join();
+	}
+
+	void Application::UpdateFunction()
+	{
+		while (m_Running && !m_Minimised)
+		{
+			float dt = m_Time.GetDeltaTime();
+
+			//Update layers
+			for (Layer* layer : m_LayerStack)
+			{
+				if (layer->IsActive())
+				{
+					layer->OnUpdate(dt);
+				}
+			}
+		}
+	}
+
+	void Application::FixedUpdateFunction()
+	{
+		while (m_Running && !m_Minimised)
+		{
+			float dt = m_Time.GetDeltaTimeMicro();
+
+			if (dt < 16000.0f)
+			{
+				std::this_thread::sleep_for(std::chrono::microseconds(16000 - (int)dt));
+				dt = 16000;
+			}
+
+			//Avoid the time step to be too big
+			if (dt > 33000.0f)
+			{
+				dt = 33000.0f;
+			}
+
+			dt = dt * 0.001f * 0.001f;
+
+			//Update layers
+			for (Layer* layer : m_LayerStack)
+			{
+				if (layer->IsActive())
+				{
+					layer->OnFixedUpdate(dt);
+				}
+			}
+		}
+	}
+
+	void Application::RenderFunction()
+	{
+		glfwMakeContextCurrent((GLFWwindow*)m_Window->GetNativeWindow());
+		while (m_Running)
+		{
+			float time = (float)glfwGetTime();
+			m_Time.UpdateTime(time);
+			float dt = m_Time.GetDeltaTime();
 
 			//Update GUI layer
 			m_ImGuiLayer->Begin();
@@ -57,12 +162,12 @@ namespace Fengshui
 			{
 				if (layer->IsActive())
 				{
+					layer->OnRender();
 					layer->OnImGuiRender();
 				}
 			}
 			m_ImGuiLayer->End();
 
-			//Update window with poll events
 			m_Window->OnUpdate();
 		}
 	}

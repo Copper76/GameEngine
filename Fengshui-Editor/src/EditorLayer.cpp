@@ -1,5 +1,7 @@
 #include "EditorLayer.h"
 
+#include <cmath>
+
 namespace Fengshui
 {
 	EditorLayer::EditorLayer() : Layer("Sandbox2D")
@@ -9,61 +11,118 @@ namespace Fengshui
 
 	void EditorLayer::OnUpdate(float dt)
 	{
-		/**
-		Ref<RenderComponent2D> renderComp = m_BigSquare->GetComponent<RenderComponent2D>();
-		renderComp->SetColour(m_SquareColour);
-		renderComp->SetTilingFactor(m_TilingFactor);
-		Ref<TransformComponent2D> trans = m_BigSquare->GetComponent<TransformComponent2D>();
-		trans->Rotation += dt * 10.0f;
-		**/
+		if (m_IsPlaying && !m_Paused)
+		{
 
-		Render2D& renderComp = GeneralManager::GetComponent<Render2D>(m_BigSquare);
-		renderComp.Colour = m_SquareColour;
-		renderComp.TilingFactor = m_TilingFactor;
-		Transform2D& trans = GeneralManager::GetComponent<Transform2D>(m_BigSquare);
-		trans.Rotation += dt * 10.0f;
+			if (m_ActiveScene == m_Scene)
+			{
+				Render& renderComp = m_BigSquare->GetComponent<Render>();
+				renderComp.Colour = m_SquareColour;
+				renderComp.TilingFactor = m_TilingFactor;
+				Transform& trans = m_BigSquare->GetComponent<Transform>();
+				glm::quat& rotateDelta = glm::normalize(glm::quat(glm::radians(glm::vec3(dt * 0.01f, dt * 0.01f, 0.0f))));
+				trans.Rotation *= rotateDelta;
+			}
+			else
+			{
+				for (Ref<Entity> square : m_BackgroundSquares)
+				{
+					Transform2D& squareTrans = square->GetComponent<Transform2D>();
+					squareTrans.Rotation = std::fmod(squareTrans.Rotation + dt * 10.0f, 360.0f);
+				}
+			}
+		}
+		if (m_EditorReady)
+		{
+			m_ActiveScene->OnUpdate(dt);
+		}
+	}
 
+	void EditorLayer::OnFixedUpdate(float dt)
+	{
+		if (m_IsPlaying && !m_Paused)
+		{
+			m_ActiveScene->OnFixedUpdate(dt);
+		}
+	}
+
+	void EditorLayer::OnRender()
+	{
 		m_Framebuffer->Bind();
-		m_Scene->OnUpdate(dt);
+		m_ActiveScene->OnRender();
 		m_Framebuffer->Unbind();
 	}
 
 	void EditorLayer::OnAttach()
 	{
-		m_Scene = Scene::Init();
-
-		m_Scene->SetZoomLevel(5.0f);
-
-		//m_BigSquare = GameEntity::Create(m_Scene);
-		m_BigSquare = GeneralManager::CreateEntity();
-
-		GeneralManager::AddComponent(m_BigSquare, Transform2D{ glm::vec3(0.0f), 0.0f, 45.0f, glm::vec2(5.0f)});
-
-		glm::vec2 coords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f} };
-
-		GeneralManager::AddComponent(m_BigSquare, Render2D{ Texture2D::Create("Assets/Textures/Checkerboard.png"),
-			coords,
-			{ 1.0f, 1.0f, 1.0f, 1.0f },
-			1.0f,
-			RenderShape::Quad
-			});
-
-		GeneralManager::AddComponent(m_BigSquare, Hierarchy{});
-		//Ref<TransformComponent2D> trans = m_BigSquare->AddComponent<TransformComponent2D>();
-		//trans->Position = { 0.5f, 0.0f };
-		//trans->Rotation = 45.0f;
-		//trans->Scale = { 5.0f, 5.0f };
-
-		//Ref<RenderComponent2D> renderComp = m_BigSquare->AddComponent<RenderComponent2D>(Texture2D::Create("Assets/Textures/Checkerboard.png"));
-		//Ref<RenderComponent2D> renderComp = m_BigSquare->AddComponent<RenderComponent2D>();
-
-		//Ref<RenderComponent2D> renderComp = m_BigSquare->AddComponent<RenderComponent2D>();
-		//renderComp->SetTexture(Texture2D::Create("Assets/Textures/ChernoLogo.png"));
-
 		FramebufferSpec spec;
 		spec.Width = 1280;
 		spec.Height = 720;
 		m_Framebuffer = Framebuffer::Create(spec);
+
+		m_SceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
+
+		Reset();
+	}
+
+	void EditorLayer::Reset()
+	{
+		m_EditorReady = false;
+		GeneralManager::Reset();
+		m_Scene = Scene::Init();
+
+		m_Scene->SetZoomLevel(5.0f);
+
+		m_ActiveScene = m_Scene;
+
+		m_SecondCamera = std::make_shared<Entity>("Second Camera");
+		m_SecondCamera->AddComponent<CameraComponent>();
+		m_SecondCamera->AddComponent<Transform>();
+
+		m_BigSquare = std::make_shared<Entity>("Big Square");
+
+		//m_BigSquare->AddComponent<Transform2D>();
+		m_BigSquare->AddComponent<Transform>();
+
+		glm::vec2 coords[] = { {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f},{0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f} };
+
+		m_BigSquare->AddComponent<Render>(Render{ nullptr,
+			coords
+			});
+
+		m_BigSquare->AddComponent<Rigidbody>();
+		m_BigSquare->AddComponent<Collider>();
+
+		m_Ground = std::make_shared<Entity>("Ground");
+
+		m_Ground->AddComponent<Transform>(Transform(glm::vec3(0.5f, -2.0f, 0.0f)));
+
+		m_Ground->AddComponent<Render>(Render{ nullptr,
+			coords
+			});
+
+		m_Ground->AddComponent<Rigidbody>(Rigidbody(0.0f));
+		m_Ground->AddComponent<Collider>();
+
+		m_BigSquare->SetParent(m_SecondCamera);
+
+		m_OtherScene = Scene::Init();
+		
+		Ref<Entity> square;
+		for (float i = -5.0f; i < 5.0f; i += 1.0f)
+		{
+			for (float j = -5.0f; j < 5.0f; j += 1.0f)
+			{
+				square = std::make_shared<Entity>("(" + std::to_string(i) + "," + std::to_string(j) + ")");
+				square->AddComponent<Transform2D>(Transform2D{ { i, j}, -0.5f, 45.0f, { 0.5f, 0.5f } });
+				square->AddComponent(Render2D{ {(i + 5.0f) / 10.0f, (j + 5.0f) / 10.0f, 1.0f, 1.0f } });
+				m_BackgroundSquares.emplace_back(square);
+				//Renderer2D::DrawQuad({ i, j, -0.5f }, { 0.5f, 0.5f }, 45.0f, 1.0f, nullptr, defaultCoords, { (i + 0.5f) / 10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f });
+			}
+		}
+		
+		GeneralManager::SetActiveScene(m_ActiveScene);
+		m_EditorReady = true;
 	}
 
 	void EditorLayer::OnDetach()

@@ -11,7 +11,7 @@
 Bounds::operator =
 ====================================================
 */
-const Bounds & Bounds::operator = ( const Bounds & rhs ) {
+const Bounds& Bounds::operator = ( const Bounds& rhs ) {
 	mins = rhs.mins;
 	maxs = rhs.maxs;
 	return *this;
@@ -22,7 +22,7 @@ const Bounds & Bounds::operator = ( const Bounds & rhs ) {
 Bounds::DoesIntersect
 ====================================================
 */
-bool Bounds::DoesIntersect( const Bounds & rhs ) const {
+bool Bounds::DoesIntersect( const Bounds& rhs ) const {
 	if ( maxs.x < rhs.mins.x || maxs.y < rhs.mins.y || maxs.z < rhs.mins.z ) {
 		return false;
 	}
@@ -37,7 +37,8 @@ bool Bounds::DoesIntersect( const Bounds & rhs ) const {
 Bounds::Expand
 ====================================================
 */
-void Bounds::Expand( const Vec3 * pts, const int num ) {
+//void Bounds::Expand( const Vec3 * pts, const int num ) {
+void Bounds::Expand( const glm::vec3* pts, const int num ) {
 	for ( int i = 0; i < num; i++ ) {
 		Expand( pts[ i ] );
 	}
@@ -48,7 +49,8 @@ void Bounds::Expand( const Vec3 * pts, const int num ) {
 Bounds::Expand
 ====================================================
 */
-void Bounds::Expand( const Vec3 & rhs ) {
+//void Bounds::Expand( const Vec3 & rhs ) {
+void Bounds::Expand( const glm::vec3& rhs ) {
 	if ( rhs.x < mins.x ) {
 		mins.x = rhs.x;
 	}
@@ -75,7 +77,8 @@ void Bounds::Expand( const Vec3 & rhs ) {
 Bounds::Expand
 ====================================================
 */
-void Bounds::Expand( const Bounds & rhs ) {
+void Bounds::Expand( const Bounds& rhs ) {
 	Expand( rhs.mins );
 	Expand( rhs.maxs );
+
 }

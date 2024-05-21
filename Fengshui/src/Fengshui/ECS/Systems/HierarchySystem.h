@@ -6,9 +6,10 @@ namespace Fengshui
 	class HierarchySystem : public System
 	{
 	public:
-		void Destroy(Entity entity);
+		void Destroy(EntityID entity);
+		void SetParent(EntityID entity, EntityID parent);
 
 	private:
-		void DestroyInternal(Entity entity);
+		void LinkChild(EntityID entity, EntityID parent);
 	};
 }

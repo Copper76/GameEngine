@@ -6,6 +6,6 @@ namespace Fengshui
 	class RenderSystem : public System
 	{
 	public:
-		void OnUpdate(float dt);
+		void OnRender();
 	};
 }

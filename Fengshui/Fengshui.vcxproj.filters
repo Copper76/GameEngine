@@ -240,9 +240,6 @@
     <ClInclude Include="src\Fengshui\Renderer\Buffer.h">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Renderer\Camera.h">
-      <Filter>src\Fengshui\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\Fengshui\Renderer\Framebuffer.h">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClInclude>
@@ -276,6 +273,11 @@
     <ClInclude Include="src\fspch.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\Systems\CameraSystem.h" />
+    <ClInclude Include="src\Fengshui\ECS\Entity.h" />
+    <ClInclude Include="src\Fengshui\ECS\Systems\GravitySystem.h" />
+    <ClInclude Include="src\Fengshui\ECS\Systems\CollisionSystem.h" />
+    <ClInclude Include="src\Fengshui\Physics\Helper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp">
@@ -404,9 +406,6 @@
     <ClCompile Include="src\Fengshui\Renderer\Buffer.cpp">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Renderer\Camera.cpp">
-      <Filter>src\Fengshui\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="src\Fengshui\Renderer\Framebuffer.cpp">
       <Filter>src\Fengshui\Renderer</Filter>
     </ClCompile>
@@ -437,5 +436,9 @@
     <ClCompile Include="src\fspch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Systems\CameraSystem.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Entity.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Systems\GravitySystem.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Systems\CollisionSystem.cpp" />
   </ItemGroup>
 </Project>

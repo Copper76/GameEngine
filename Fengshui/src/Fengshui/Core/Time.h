@@ -14,6 +14,8 @@ namespace Fengshui
 		float GetMilliseconds() const { return m_Time * 1000.0f; }
 
 		float GetDeltaTime() const { return m_DeltaTime; }
+		float GetDeltaTimeMilli() const { return m_DeltaTime * 1000.0f; }
+		float GetDeltaTimeMicro() const { return m_DeltaTime * 1000.0f * 1000.0f; }
 
 		void UpdateTime(float time)
 		{

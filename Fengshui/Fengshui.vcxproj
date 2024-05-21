@@ -143,7 +143,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Fengshui\ECS\Systems\CollisionSystem.h" />
     <ClInclude Include="External\stb_image\stb_image.h" />
+    <ClInclude Include="src\Fengshui\ECS\Systems\GravitySystem.h" />
     <ClInclude Include="src\Fengshui.h" />
     <ClInclude Include="src\Fengshui\Core\Application.h" />
     <ClInclude Include="src\Fengshui\Core\Core.h" />
@@ -156,7 +158,9 @@
     <ClInclude Include="src\Fengshui\Core\Window.h" />
     <ClInclude Include="src\Fengshui\ECS\Components.h" />
     <ClInclude Include="src\Fengshui\ECS\ECS.h" />
+    <ClInclude Include="src\Fengshui\ECS\Entity.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems.h" />
+    <ClInclude Include="src\Fengshui\ECS\Systems\CameraSystem.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems\HierarchySystem.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems\RenderSystem.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems\RenderSystem2D.h" />
@@ -168,6 +172,7 @@
     <ClInclude Include="src\Fengshui\Layers\Layer.h" />
     <ClInclude Include="src\Fengshui\Layers\LayerStack.h" />
     <ClInclude Include="src\Fengshui\Logging\Log.h" />
+    <ClInclude Include="src\Fengshui\Physics\Helper.h" />
     <ClInclude Include="src\Fengshui\Physics\Math\Bounds.h" />
     <ClInclude Include="src\Fengshui\Physics\Math\LCP.h" />
     <ClInclude Include="src\Fengshui\Physics\Math\Matrix.h" />
@@ -202,7 +207,6 @@
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Fengshui\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Fengshui\Renderer\Buffer.h" />
-    <ClInclude Include="src\Fengshui\Renderer\Camera.h" />
     <ClInclude Include="src\Fengshui\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderContext.h" />
@@ -216,10 +220,14 @@
     <ClInclude Include="src\fspch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Fengshui\ECS\Systems\CollisionSystem.cpp" />
     <ClCompile Include="External\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Systems\GravitySystem.cpp" />
     <ClCompile Include="src\Fengshui\Core\Application.cpp" />
     <ClCompile Include="src\Fengshui\Core\Scene.cpp" />
     <ClCompile Include="src\Fengshui\ECS\ECS.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Entity.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Systems\CameraSystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\HierarchySystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\RenderSystem2D.cpp" />
@@ -258,7 +266,6 @@
     <ClCompile Include="src\Fengshui\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Fengshui\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\Buffer.cpp" />
-    <ClCompile Include="src\Fengshui\Renderer\Camera.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\Renderer.cpp" />

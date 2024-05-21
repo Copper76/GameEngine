@@ -14,8 +14,6 @@
 #include "Fengshui/Renderer/Buffer.h"
 #include "Fengshui/Renderer/VertexArray.h"
 
-#include "Fengshui/Renderer/Camera.h"
-
 #include "Fengshui/Core/Time.h"
 
 #include "Fengshui/Core/Scene.h"
@@ -46,8 +44,13 @@ namespace Fengshui
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
+
+		void UpdateFunction();
+		void FixedUpdateFunction();
+		void RenderFunction();
+
 	private:
-		bool m_Running = true;
+		std::atomic<bool> m_Running = true;
 		bool m_Minimised = false;
 
 		Scope<Window> m_Window;

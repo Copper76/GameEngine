@@ -27,6 +27,8 @@ namespace Fengshui
 		virtual ~Texture() = default;
 		static Ref<Texture> Create(uint32_t width, uint32_t height);
 		static Ref<Texture> Create(const std::string& filePath);
+
+		virtual bool operator==(const Texture& other) const = 0;
 	};
 
 	class Texture2D : public TextureBase

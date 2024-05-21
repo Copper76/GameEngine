@@ -8,9 +8,6 @@
 #include "../Math/Bounds.h"
 #include "Shapes.h"
 
-//#include "Fengshui/Renderer/model.h"
-#include "Fengshui/Renderer/Shader.h"
-
 /*
 ====================================================
 Body
@@ -18,7 +15,7 @@ Body
 */
 class Body {
 public:
-	Vec3 m_position;
+	Vec3 m_position;//This needs to be checked as the position is not global
 	Quat m_orientation;
 	Vec3 m_linearVelocity;
 	Vec3 m_angularVelocity;

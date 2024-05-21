@@ -1,5 +1,6 @@
 #pragma once
 #include <Fengshui.h>
+#include "Panels.h"
 
 //External includes
 #include <imgui.h>
@@ -13,6 +14,8 @@ namespace Fengshui
 		EditorLayer();
 
 		void OnUpdate(float dt) override;
+		void OnFixedUpdate(float dt) override;
+		void OnRender() override;
 
 		void OnAttach() override;
 		void OnDetach() override;
@@ -45,7 +48,7 @@ namespace Fengshui
 			// all active windows docked into it will lose their parent and become undocked.
 			// We cannot preserve the docking relationship between an active window and an inactive docking, otherwise
 			// any change of dockspace/settings would lead to windows being stuck in limbo and never being visible.
-			ImGui::Begin("DockSpace Demo", &dockspaceOpen, window_flags);
+			ImGui::Begin("Fengshui Editor", &dockspaceOpen, window_flags);
 
 			ImGui::PopStyleVar(2);
 
@@ -64,18 +67,54 @@ namespace Fengshui
 					ImGui::EndMenu();
 				}
 
+				if (ImGui::Button("Play/Stop"))
+				{
+					m_IsPlaying = !m_IsPlaying; //run this first to avoid unwanted updates
+					if (!m_IsPlaying)
+					{
+						Reset();
+						m_Paused = false;
+					}
+				}
+
+				if (ImGui::Button("Pause/UnPause"))
+				{
+					m_Paused = !m_Paused;
+				}
+
 				ImGui::EndMenuBar();
 			}
 
 			ImGui::Begin("Settings");
-			ImGui::ColorEdit4("Square Colour", glm::value_ptr(m_SquareColour));
 			ImGui::DragFloat("Tiling Factor", &m_TilingFactor);
-			ImGui::Text("Camera Pos: (%f, %f)", m_Scene->GetCameraComponent().m_CameraPos.x , m_Scene->GetCameraComponent().m_CameraPos.y);
+			ImGui::Text("Camera Pos: (%f, %f)", m_ActiveScene->GetSceneManager()->GetComponent<Transform2D>().Position.x, m_ActiveScene->GetSceneManager()->GetComponent<Transform2D>().Position.y);
+			//ImGui::Text("Square Name: %s", m_BigSquare->Name().c_str());
+			if(ImGui::Checkbox("Scene Camera", &m_UsingSceneCamera))
+			{
+				m_SecondCamera->GetComponent<CameraComponent>().Primary = !m_UsingSceneCamera;
+				m_ActiveScene->GetSceneManager()->GetComponent<CameraComponent>().Primary = m_UsingSceneCamera;
+			}
+
+			if (ImGui::Checkbox("Active Scene", &m_UsingSceneOne))
+			{
+				m_SceneHierarchyPanel->ResetSelection();
+				if (m_UsingSceneOne)
+				{
+					m_ActiveScene = m_Scene;
+				}
+				else
+				{
+					m_ActiveScene = m_OtherScene;
+				}
+				GeneralManager::SetActiveScene(m_ActiveScene);
+			}
 			ImGui::End();
+
+			m_SceneHierarchyPanel->OnImGuiRender();
 
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
 			ImGui::Begin("ViewPort");
-			m_Scene->SetViewportFocused(ImGui::IsWindowFocused());
+			m_ActiveScene->SetViewportFocused(ImGui::IsWindowFocused());
 			Application::GetInstance().GetImGuiLayer()->SetBlockEvent(!ImGui::IsWindowHovered() || !ImGui::IsWindowFocused());
 			ImVec2 viewportSize = ImGui::GetContentRegionAvail();
 			if (m_ViewportSize != *(glm::vec2*)&viewportSize)
@@ -83,7 +122,7 @@ namespace Fengshui
 				m_Framebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
 				m_ViewportSize = { viewportSize.x, viewportSize.y };
 
-				m_Scene->ResizeBounds(viewportSize.x, viewportSize.y);
+				m_ActiveScene->ResizeBounds(viewportSize.x, viewportSize.y);
 			}
 			uint32_t textureID = m_Framebuffer->GetColourAttachmentRendererID();
 			ImGui::Image((void*)textureID, viewportSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
@@ -99,14 +138,32 @@ namespace Fengshui
 		}
 
 	private:
+		void Reset();
+
+	private:
+		Ref<Scene> m_ActiveScene;
+
 		Ref<Scene> m_Scene;
+		Ref<Scene> m_OtherScene;
+
 		glm::vec4 m_SquareColour = { 1.0f, 1.0f, 1.0f, 1.0f };
 		float m_TilingFactor = 1.0f;
 
-		//Ref<GameEntity> m_BigSquare;
-		Entity m_BigSquare;
+		Ref<Entity> m_BigSquare;
+		Ref<Entity> m_Ground;
+		Ref<Entity> m_SecondCamera;
+		std::vector<Ref<Entity>> m_BackgroundSquares;
+
+		Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;
+
+		bool m_UsingSceneCamera = true;
+		bool m_UsingSceneOne = true;
 
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize;
+
+		std::atomic<bool> m_Paused = false;
+		std::atomic<bool> m_IsPlaying = false;
+		std::atomic<bool> m_EditorReady = false;//Check whether the editor has finished setting up
 	};
 }
