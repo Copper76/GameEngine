@@ -4,7 +4,7 @@
 #include "Fengshui/Renderer/Texture.h"
 #include "Fengshui/Renderer/SubTexture2D.h"
 
-#include "Fengshui/Physics/Physics/Body.h"
+#include "Fengshui/Physics/Physics/Shapes.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>

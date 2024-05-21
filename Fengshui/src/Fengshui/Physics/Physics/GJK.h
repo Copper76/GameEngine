@@ -6,7 +6,6 @@
 #include "../Math/Quat.h"
 #include "../Math/Matrix.h"
 #include "../Math/Bounds.h"
-#include "Body.h"
 #include "Shapes.h"
 
 #include "Fengshui/Physics/Helper.h"

@@ -1,19 +1,22 @@
-////
-////	ConstraintMover.h
-////
-//#pragma once
-//#include "ConstraintBase.h"
 //
-///*
-//====================================================
-//ConstraintMoverSimple
-//====================================================
-//*/
-//class ConstraintMoverSimple : public Constraint {
-//public:
-//	ConstraintMoverSimple() : Constraint(), m_time( 0 ) {}
+//	ConstraintMover.h
 //
-//	void PreSolve( const float dt_sec ) override;
-//
-//	float m_time;
-//};
+#pragma once
+#include "ConstraintBase.h"
+
+namespace Fengshui
+{
+	/*
+	====================================================
+	ConstraintMoverSimple
+	====================================================
+	*/
+	class ConstraintMoverSimple : public Constraint {
+	public:
+		ConstraintMoverSimple() : Constraint(), m_time(0) {}
+
+		void PreSolve(const float dt_sec) override;
+
+		float m_time;
+	};
+}

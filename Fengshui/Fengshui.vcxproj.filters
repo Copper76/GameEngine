@@ -153,9 +153,6 @@
     <ClInclude Include="src\Fengshui\Physics\Math\Vector.h">
       <Filter>src\Fengshui\Physics\Math</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Body.h">
-      <Filter>src\Fengshui\Physics\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Fengshui\Physics\Physics\Broadphase.h">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClInclude>
@@ -321,9 +318,6 @@
     </ClCompile>
     <ClCompile Include="src\Fengshui\Physics\Math\LCP.cpp">
       <Filter>src\Fengshui\Physics\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Body.cpp">
-      <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Physics\Physics\Broadphase.cpp">
       <Filter>src\Fengshui\Physics\Physics</Filter>

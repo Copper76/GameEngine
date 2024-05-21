@@ -3,6 +3,8 @@
 //
 #include "fspch.h"
 
+#include "Fengshui/ECS/Components.h"
+
 #include "ShapeSphere.h"
 #include <glm/gtx/norm.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -77,8 +79,8 @@ ShapeSphere
 ShapeSphere::Support
 ====================================================
 */
-	glm::vec3 ShapeSphere::Support(const glm::vec3& dir, const glm::vec3& pos, const glm::quat& orient, const float bias) const {
-		return (pos + dir * (m_radius + bias));
+	glm::vec3 ShapeSphere::Support(const glm::vec3& dir, const Transform transform, const float bias) const {
+		return (transform.Position + transform.Rotation * transform.Scale * dir * (m_radius + bias));
 	}
 
 	/*
@@ -99,10 +101,10 @@ ShapeSphere::Support
 	ShapeSphere::GetBounds
 	====================================================
 	*/
-	Bounds ShapeSphere::GetBounds(const glm::vec3& pos, const glm::quat& orient) const {
+	Bounds ShapeSphere::GetBounds(const Transform transform) const {
 		Bounds tmp;
-		tmp.mins = glm::vec3(-m_radius) + pos;
-		tmp.maxs = glm::vec3(m_radius) + pos;
+		tmp.mins = glm::vec3(-m_radius) * transform.Scale + transform.Position;
+		tmp.maxs = glm::vec3(m_radius) * transform.Scale + transform.Position;
 		return tmp;
 	}
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Fengshui/ECS/ECS.h"
+#include "Fengshui/Physics/Physics/Shapes.h"
 
 #include <glm/gtx/norm.hpp>
 
@@ -20,7 +21,7 @@ namespace Fengshui
 
 	static glm::vec3 GetCenterOfMassWorldSpace(const Collider collider, const Transform trans) {
 		const glm::vec3 centerOfMass = collider.Shape->GetCenterOfMass();
-		return trans.Position + (trans.Rotation * centerOfMass);
+		return trans.Position + (trans.Rotation * centerOfMass) * trans.Scale;
 	}
 
 	static glm::vec3 GetCenterOfMassModelSpace(const Collider collider) {
@@ -28,13 +29,13 @@ namespace Fengshui
 		return centerOfMass;
 	}
 
-	static glm::vec3 WorldSpaceToBodySpace(const glm::vec3& worldPt, Collider collider, Transform trans) {
+	static glm::vec3 WorldSpaceToBodySpace(const glm::vec3& worldPt, const Collider collider, const Transform trans) {
 		glm::quat inverseOrient = glm::inverse(trans.Rotation);
 		return inverseOrient * (worldPt - GetCenterOfMassWorldSpace(collider, trans));
 	}
 
 	static glm::vec3 BodySpaceToWorldSpace(const glm::vec3& worldPt, const Collider collider, const Transform trans) {
-		return GetCenterOfMassWorldSpace(collider, trans) + (trans.Rotation * worldPt);
+		return GetCenterOfMassWorldSpace(collider, trans) + (trans.Rotation * worldPt) * trans.Scale;
 	}
 	static glm::mat3 GetInverseInertiaTensorBodySpace(Collider collider, Rigidbody rb) {
 		glm::mat3 inertiaTensor = collider.Shape->InertiaTensor();
@@ -60,7 +61,7 @@ namespace Fengshui
 		rb.LinearVelocity += impulse * rb.InvMass;
 	}
 
-	static void ApplyImpulseAngular(const glm::vec3& impulse, const Collider collider, Rigidbody& rb, Transform& trans) {
+	static void ApplyImpulseAngular(const glm::vec3& impulse, const Collider collider, Rigidbody& rb, const Transform trans) {
 		if (rb.InvMass == 0.0f) { return; }
 
 		//change in speed = inertia*impulse

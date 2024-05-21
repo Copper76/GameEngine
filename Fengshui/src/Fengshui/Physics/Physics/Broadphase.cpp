@@ -4,6 +4,8 @@
 #include "fspch.h"
 
 #include "Broadphase.h"
+#include "Fengshui/Physics/Math/Bounds.h"
+#include "Fengshui/Physics/Physics/Shapes.h"
 #include "glm/glm.hpp"
 
 //struct psuedoBody_t {
@@ -129,7 +131,7 @@ namespace Fengshui
 			const Transform transform = GeneralManager::GetComponent<Transform>(entity);
 			const Rigidbody rb = GeneralManager::GetComponent<Rigidbody>(entity);
 			const Collider collider = GeneralManager::GetComponent<Collider>(entity);
-			Bounds bounds = collider.Shape->GetBounds(transform.Position, transform.Rotation);
+			Bounds bounds = collider.Shape->GetBounds(transform);
 
 			//expand bounds by velocity and a little extra
 			bounds.Expand(bounds.mins + rb.LinearVelocity * dt_sec);

@@ -20,8 +20,8 @@ namespace Fengshui
 				renderComp.Colour = m_SquareColour;
 				renderComp.TilingFactor = m_TilingFactor;
 				Transform& trans = m_BigSquare->GetComponent<Transform>();
-				glm::quat& rotateDelta = glm::normalize(glm::quat(glm::radians(glm::vec3(dt * 0.01f, dt * 0.01f, 0.0f))));
-				trans.Rotation *= rotateDelta;
+				//glm::quat& rotateDelta = glm::normalize(glm::quat(glm::radians(glm::vec3(dt * 0.01f, dt * 0.01f, 0.0f))));
+				//trans.Rotation *= rotateDelta;
 			}
 			else
 			{
@@ -68,6 +68,9 @@ namespace Fengshui
 	void EditorLayer::Reset()
 	{
 		m_EditorReady = false;
+
+		glm::vec2 coords[] = { {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f},{0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f} };
+
 		GeneralManager::Reset();
 		m_Scene = Scene::Init();
 
@@ -79,32 +82,56 @@ namespace Fengshui
 		m_SecondCamera->AddComponent<CameraComponent>();
 		m_SecondCamera->AddComponent<Transform>();
 
+		////stacking box
+		//for (int y = 0; y < 5; y++) {
+		//	Ref<Entity> box = std::make_shared<Entity>("Box");
+		//	float offset = ((y & 1) == 0) ? 0.0f : 0.15f;//offset even-numbered boxes
+		//	float delta = 0.04f;
+		//	float scaleHeight = 2.0f + delta;
+		//	float deltaHeight = 1.0f + delta;
+		//	box->AddComponent<Transform>(glm::vec3(offset * scaleHeight, deltaHeight + (float)y * scaleHeight, offset * scaleHeight));
+		//	box->AddComponent<Rigidbody>();
+		//	box->AddComponent<Collider>();
+		//	box->AddComponent<Render>(Render{ nullptr,
+		//	coords
+		//		});
+		//	m_StackingBoxes.push_back(box);
+		//}
+
 		m_BigSquare = std::make_shared<Entity>("Big Square");
 
-		//m_BigSquare->AddComponent<Transform2D>();
-		m_BigSquare->AddComponent<Transform>();
-
-		glm::vec2 coords[] = { {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f},{0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f} };
+		Transform bigSquareTrans = m_BigSquare->AddComponent<Transform>(Transform(glm::vec3(1.0f, 2.0f, 0.0f)));
 
 		m_BigSquare->AddComponent<Render>(Render{ nullptr,
 			coords
 			});
 
 		m_BigSquare->AddComponent<Rigidbody>();
-		m_BigSquare->AddComponent<Collider>();
+		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>();
 
 		m_Ground = std::make_shared<Entity>("Ground");
 
-		m_Ground->AddComponent<Transform>(Transform(glm::vec3(0.5f, -2.0f, 0.0f)));
+		Transform groundTrans = m_Ground->AddComponent<Transform>(Transform(glm::vec3(0.0f, -2.0f, 0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 1.0f)));
 
 		m_Ground->AddComponent<Render>(Render{ nullptr,
 			coords
 			});
 
 		m_Ground->AddComponent<Rigidbody>(Rigidbody(0.0f));
-		m_Ground->AddComponent<Collider>();
+		Collider groundCollider = m_Ground->AddComponent<Collider>();
 
 		m_BigSquare->SetParent(m_SecondCamera);
+
+		//ConstraintDistance* joint = new ConstraintDistance();
+
+		//const glm::vec3 jointWorldSpaceAnchor = groundTrans.Position;
+
+		//joint->m_BodyA = m_BigSquare->GetID();
+		//joint->m_anchorA = WorldSpaceToBodySpace(jointWorldSpaceAnchor, bigSquareCollider, bigSquareTrans);
+
+		//joint->m_BodyB = m_Ground->GetID();
+		//joint->m_anchorB = WorldSpaceToBodySpace(jointWorldSpaceAnchor, groundCollider, groundTrans);
+		//m_Scene->AddConstraint(joint);
 
 		m_OtherScene = Scene::Init();
 		

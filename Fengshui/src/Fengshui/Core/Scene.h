@@ -37,6 +37,9 @@ namespace Fengshui
 		void UpdateView();
 		void UpdateViewMatrix(EntityID entity);
 
+		void AddConstraint(Constraint* constraint);
+		void RemoveConstraint(Constraint* constraint);
+
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
