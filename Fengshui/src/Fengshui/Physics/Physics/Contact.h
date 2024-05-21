@@ -2,7 +2,6 @@
 //	Contact.h
 //
 #pragma once
-#include "Body.h"
 #include "Fengshui/ECS/ECS.h"
 
 namespace Fengshui

@@ -695,12 +695,12 @@ public:
 	
 public:
 	int		N;
-	float *	data;
+	float*	data;
 };
 
-inline VecN::VecN( int _N ) {
-	N = _N;
-	data = new float[ _N ];
+inline VecN::VecN( int n ) {
+	N = n;
+	data = new float[ n ];
 }
 
 inline VecN::VecN( const VecN & rhs ) {

@@ -23,6 +23,16 @@ namespace Fengshui
 		return 1;
 	}
 
+	void CollisionSystem::AddConstraint(Constraint* constraint)
+	{
+		m_Constraints.push_back(constraint);
+	}
+
+	void CollisionSystem::RemoveConstraint(Constraint* constraint)
+	{
+		m_Constraints.erase(std::remove(m_Constraints.begin(), m_Constraints.end(), constraint), m_Constraints.end());
+	}
+
 	void CollisionSystem::OnUpdate(float dt)
 	{
 		//m_manifolds.RemoveExpired();
@@ -38,20 +48,15 @@ namespace Fengshui
 		for (int i = 0; i < collisionPairs.size(); i++) {
 			const collisionPair_t& pair = collisionPairs[i];
 
-			//skip infinite mass pairs, defer checking to intersect
-			//if (0.0f == bodyA->m_invMass && 0.0f == bodyB->m_invMass) {
-			//	continue;
-			//}
-
 			contact_t contact;
 			if (Intersect(pair, dt, contact)) {
 				if (contact.timeOfImpact == 0.0f) {
-					//m_manifolds.AddContact(contact);
+					m_Manifolds.AddContact(contact);
 				}
-				//else {//use dynamic contact checking
+				else {//use dynamic contact checking
 					contacts[numContacts] = contact;
 					numContacts++;
-				//}
+				}
 			}
 		}
 
@@ -60,26 +65,26 @@ namespace Fengshui
 			qsort(contacts, numContacts, sizeof(contact_t), CompareContacts);
 		}
 
-		////
-		////solve constraints for each constraint
-		////
-		//for (int i = 0; i < m_constraints.size(); i++) {
-		//	m_constraints[i]->PreSolve(dt_sec);
-		//}
-		//m_manifolds.PreSolve(dt_sec);
+		//
+		//solve constraints for each constraint
+		//
+		for (int i = 0; i < m_Constraints.size(); i++) {
+			m_Constraints[i]->PreSolve(dt);
+		}
+		m_Manifolds.PreSolve(dt);
 
-		//const int numIter = 5;
-		//for (int j = 0; j < numIter; j++) {
-		//	for (int i = 0; i < m_constraints.size(); i++) {
-		//		m_constraints[i]->Solve();
-		//	}
-		//	m_manifolds.Solve();
-		//}
+		const int numIter = 5;
+		for (int j = 0; j < numIter; j++) {
+			for (int i = 0; i < m_Constraints.size(); i++) {
+				m_Constraints[i]->Solve();
+			}
+			m_Manifolds.Solve();
+		}
 
-		//for (int i = 0; i < m_constraints.size(); i++) {
-		//	m_constraints[i]->PostSolve();
-		//}
-		//m_manifolds.PostSolve();
+		for (int i = 0; i < m_Constraints.size(); i++) {
+			m_Constraints[i]->PostSolve();
+		}
+		m_Manifolds.PostSolve();
 
 		float accumulatedTime = 0.0f;
 		for (int i = 0; i < numContacts; i++) {

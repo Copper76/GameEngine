@@ -178,7 +178,6 @@
     <ClInclude Include="src\Fengshui\Physics\Math\Matrix.h" />
     <ClInclude Include="src\Fengshui\Physics\Math\Quat.h" />
     <ClInclude Include="src\Fengshui\Physics\Math\Vector.h" />
-    <ClInclude Include="src\Fengshui\Physics\Physics\Body.h" />
     <ClInclude Include="src\Fengshui\Physics\Physics\Broadphase.h" />
     <ClInclude Include="src\Fengshui\Physics\Physics\Constraints.h" />
     <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintBase.h" />
@@ -238,7 +237,6 @@
     <ClCompile Include="src\Fengshui\Logging\Log.cpp" />
     <ClCompile Include="src\Fengshui\Physics\Math\Bounds.cpp" />
     <ClCompile Include="src\Fengshui\Physics\Math\LCP.cpp" />
-    <ClCompile Include="src\Fengshui\Physics\Physics\Body.cpp" />
     <ClCompile Include="src\Fengshui\Physics\Physics\Broadphase.cpp" />
     <ClCompile Include="src\Fengshui\Physics\Physics\Constraints.cpp" />
     <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintConstantVelocity.cpp" />

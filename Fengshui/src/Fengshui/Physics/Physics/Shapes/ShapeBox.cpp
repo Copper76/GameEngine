@@ -3,6 +3,8 @@
 //
 #include "fspch.h"
 
+#include "Fengshui/ECS/Components.h"
+
 #include "ShapeBox.h"
 #include <glm/gtx/norm.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -165,11 +167,11 @@ namespace Fengshui
 	ShapeBox::Support
 	====================================================
 	*/
-	glm::vec3 ShapeBox::Support(const glm::vec3& dir, const glm::vec3& pos, const glm::quat& orient, const float bias) const {
-		glm::vec3 maxPt = (orient * m_points[0]) + pos;
+	glm::vec3 ShapeBox::Support(const glm::vec3& dir, const Transform transform, const float bias) const {
+		glm::vec3 maxPt = (transform.Rotation * m_points[0]) * transform.Scale + transform.Position;
 		float maxDist = glm::dot(dir, maxPt);
 		for (int i = 1; i < m_points.size(); i++) {
-			const glm::vec3 pt = (orient * m_points[i]) + pos;
+			const glm::vec3 pt = (transform.Rotation * m_points[i]) * transform.Scale + transform.Position;
 			const float dist = glm::dot(dir,pt);
 			if (dist > maxDist) {
 				maxDist = dist;
@@ -190,6 +192,7 @@ namespace Fengshui
 	glm::mat3 ShapeBox::InertiaTensor() const {
 		//inertiaTensor around origin
 		glm::mat3 tensor = glm::mat3(0.0f);
+		Bounds bounds = GetBounds();
 		const float dx = m_bounds.maxs.x - m_bounds.mins.x;
 		const float dy = m_bounds.maxs.y - m_bounds.mins.y;
 		const float dz = m_bounds.maxs.z - m_bounds.mins.z;
@@ -218,7 +221,7 @@ namespace Fengshui
 	ShapeBox::GetBounds
 	====================================================
 	*/
-	Bounds ShapeBox::GetBounds(const glm::vec3& pos, const  glm::quat& orient) const {
+	Bounds ShapeBox::GetBounds(const Transform transform) const {
 		glm::vec3 corners[8];
 
 		corners[0] = glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.mins.z);
@@ -233,7 +236,7 @@ namespace Fengshui
 
 		Bounds bounds;
 		for (int i = 0; i < 8; i++) {
-			bounds.Expand((orient * corners[i]) + pos);
+			bounds.Expand((transform.Rotation * corners[i]) * transform.Scale + transform.Position);
 		}
 
 		return bounds;

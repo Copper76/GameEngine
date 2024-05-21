@@ -192,12 +192,23 @@ namespace Fengshui
 	{
 		m_CameraSystem->SetZoomLevel(m_SceneManager->GetID(), zoomLevel);
 	}
+
 	void Scene::UpdateView()
 	{
 		m_CameraSystem->CalculateView(m_CameraSystem->GetPrimary());
 	}
+
 	void Scene::UpdateViewMatrix(EntityID entity)
 	{
 		m_CameraSystem->RecalculateViewMatrix(entity);
+	}
+
+	void Scene::AddConstraint(Constraint* constraint)
+	{
+		m_CollisionSystem->AddConstraint(constraint);
+	}
+	void Scene::RemoveConstraint(Constraint* constraint)
+	{
+		m_CollisionSystem->RemoveConstraint(constraint);
 	}
 }

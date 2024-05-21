@@ -10,9 +10,12 @@ namespace Fengshui
 	public:
 		void OnUpdate(float dt);
 
+		void AddConstraint(Constraint* constraint);
+		void RemoveConstraint(Constraint* contraint);
+
 	private:
-		//std::vector< Constraint* >	m_constraints;
-		//ManifoldCollector m_manifolds;
+		std::vector< Constraint* > m_Constraints;
+		ManifoldCollector m_Manifolds;
 	};
 
 }
