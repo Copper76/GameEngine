@@ -13,6 +13,7 @@ This project is a practice project to make a game engine using Entity-Component 
 - [X] Integrate GLFW into the ECS. The GLFW now works under render component, which stores all the information required for rendering.
 - [X] Create a entity component system structure, a simple ECS is created in the ECS folder.
 - [X] Continue with the Cherno series on Hazel to further develop the renderer. The 2D renderer now supports batch rendering, subtexture 
+- [X] Added a preliminary editor, which can display entities in the scene in hierarchy, as well as modifying components
 - [X] Added perspective camera and 3d rendering to support the 3d physics system.
 - [X] Integrated the 3D Physics Engine that was previously made in [Physics Engine](https://github.com/Copper76/Physics-Engine). 
 
