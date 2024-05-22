@@ -5,7 +5,7 @@
 
 namespace Fengshui
 {
-	class CollisionSystem : public System
+	class PhysicsSystem : public System
 	{
 	public:
 		void OnUpdate(float dt);

@@ -1,5 +1,5 @@
 #include "fspch.h"
-#include "CollisionSystem.h"
+#include "PhysicsSystem.h"
 
 #include "Fengshui/Physics/Physics/Contact.h"
 #include "Fengshui/Physics/Physics/Intersections.h"
@@ -23,19 +23,19 @@ namespace Fengshui
 		return 1;
 	}
 
-	void CollisionSystem::AddConstraint(Constraint* constraint)
+	void PhysicsSystem::AddConstraint(Constraint* constraint)
 	{
 		m_Constraints.push_back(constraint);
 	}
 
-	void CollisionSystem::RemoveConstraint(Constraint* constraint)
+	void PhysicsSystem::RemoveConstraint(Constraint* constraint)
 	{
 		m_Constraints.erase(std::remove(m_Constraints.begin(), m_Constraints.end(), constraint), m_Constraints.end());
 	}
 
-	void CollisionSystem::OnUpdate(float dt)
+	void PhysicsSystem::OnUpdate(float dt)
 	{
-		//m_manifolds.RemoveExpired();
+		m_Manifolds.RemoveExpired();
 
 		//Broadphase to retain only the possible collsions to reduce collision calculation in the narrow phase
 		std::vector< collisionPair_t > collisionPairs;

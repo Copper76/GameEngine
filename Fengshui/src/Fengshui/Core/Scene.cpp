@@ -30,7 +30,7 @@ namespace Fengshui
 		scene->m_CameraSystem = GeneralManager::RegisterSystem<CameraSystem>();
 		scene->m_HierarchySystem = GeneralManager::RegisterSystem<HierarchySystem>();
 		scene->m_GravitySystem = GeneralManager::RegisterSystem<GravitySystem>();
-		scene->m_CollisionSystem = GeneralManager::RegisterSystem<CollisionSystem>();
+		scene->m_PhysicsSystem = GeneralManager::RegisterSystem<PhysicsSystem>();
 
 		Signature signature;
 		signature.set(GeneralManager::GetComponentType<Render>());
@@ -63,7 +63,7 @@ namespace Fengshui
 		signature.set(GeneralManager::GetComponentType<Transform>());
 		signature.set(GeneralManager::GetComponentType<Hierarchy>());
 		signature.set(GeneralManager::GetComponentType<Collider>());
-		GeneralManager::SetSystemSignature<CollisionSystem>(signature);
+		GeneralManager::SetSystemSignature<PhysicsSystem>(signature);
 
 		//Property setup
 		scene->m_RootNode = std::make_shared<Entity>("Root Node");
@@ -133,7 +133,7 @@ namespace Fengshui
 		for (int i = 0; i < 2; i++)
 		{
 			m_GravitySystem->OnUpdate(dt_sec);
-			m_CollisionSystem->OnUpdate(dt_sec);
+			m_PhysicsSystem->OnUpdate(dt_sec);
 		}
 	}
 
@@ -205,10 +205,10 @@ namespace Fengshui
 
 	void Scene::AddConstraint(Constraint* constraint)
 	{
-		m_CollisionSystem->AddConstraint(constraint);
+		m_PhysicsSystem->AddConstraint(constraint);
 	}
 	void Scene::RemoveConstraint(Constraint* constraint)
 	{
-		m_CollisionSystem->RemoveConstraint(constraint);
+		m_PhysicsSystem->RemoveConstraint(constraint);
 	}
 }
