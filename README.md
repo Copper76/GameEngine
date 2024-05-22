@@ -15,18 +15,18 @@ This project is a practice project to make a game engine using Entity-Component 
 - [X] Continue with the Cherno series on Hazel to further develop the renderer. The 2D renderer now supports batch rendering, subtexture 
 - [X] Added a preliminary editor, which can display entities in the scene in hierarchy, as well as modifying components
 - [X] Added perspective camera and 3d rendering to support the 3d physics system.
-- [X] Integrated the 3D Physics Engine that was previously made in [Physics Engine](https://github.com/Copper76/Physics-Engine). 
+- [X] Integrated the 3D Physics Engine that was previously made in [Physics Engine](https://github.com/Copper76/Physics-Engine), the engine doesn't play nicely with hierarchy yet. 
 
 ## TODO
-- [ ] Fix the 3d physics engine, which is behaving funny at the moment, fix the 3d renderer as well
+- [ ] expand the 3d renderer to allow rendering with custom shapes
+- [ ] Embellish the panels
+
+## Stretch Goal
 - [ ] Look into raytracing and see how to add that into the engine
 
 ## Deprecated Objectives
 - [ ] Integrate SFML into the ECS
 - [X] Develop several components and entities, simple ones to start with such as simple data such as transform. The system now supports a hierarchy component that stores the position of entity in hierarchy, and transform to represent the location and orientation of the component in the world as the basics, with more to come. The ECS system was not a real ECS system so is now deprecated.
-
-## Stretch Goal
-- [ ] Integrate my physics engine into this game engine
 
 ## Requirement
 - [sfml 2.6.1](https://github.com/SFML/SFML) (for snake game, deprecated)
