@@ -1081,11 +1081,11 @@ namespace Fengshui
 
 		point_t point;
 
-		point.ptA = colliderA.Shape->Support(dir, transA, bias);
+		point.ptA = colliderA.Shape->Support(dir, transA, colliderA, bias);
 
 		dir *= -1.0f;
 
-		point.ptB = colliderB.Shape->Support(dir, transB, bias);
+		point.ptB = colliderB.Shape->Support(dir, transB, colliderB, bias);
 
 		point.xyz = point.ptA - point.ptB;//A-B huh
 		return point;

@@ -119,9 +119,6 @@ namespace Fengshui
 
 	struct Rigidbody
 	{
-		glm::vec3 Offset = glm::vec3(0.0f);
-		glm::vec3 Size = glm::vec3(1.0f);
-
 		glm::vec3 LinearVelocity = glm::vec3(0.0f);
 		glm::vec3 AngularVelocity = glm::vec3(0.0f);
 
@@ -145,6 +142,8 @@ namespace Fengshui
 	{
 		//Ref<Shape> Shape = nullptr;
 		Shape* Shape = nullptr;
+		glm::vec3 Offset = glm::vec3(0.0f);
+		glm::vec3 Size = glm::vec3(1.0f);
 
 		Collider()
 		{

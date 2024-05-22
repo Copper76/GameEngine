@@ -20,12 +20,12 @@ namespace Fengshui
 	};
 
 	static glm::vec3 GetCenterOfMassWorldSpace(const Collider collider, const Transform trans) {
-		const glm::vec3 centerOfMass = collider.Shape->GetCenterOfMass();
+		const glm::vec3 centerOfMass = collider.Shape->GetCenterOfMass(collider.Offset);
 		return trans.Position + (trans.Rotation * centerOfMass) * trans.Scale;
 	}
 
 	static glm::vec3 GetCenterOfMassModelSpace(const Collider collider) {
-		const glm::vec3 centerOfMass = collider.Shape->GetCenterOfMass();
+		const glm::vec3 centerOfMass = collider.Shape->GetCenterOfMass(collider.Offset);
 		return centerOfMass;
 	}
 
@@ -37,14 +37,14 @@ namespace Fengshui
 	static glm::vec3 BodySpaceToWorldSpace(const glm::vec3& worldPt, const Collider collider, const Transform trans) {
 		return GetCenterOfMassWorldSpace(collider, trans) + (trans.Rotation * worldPt) * trans.Scale;
 	}
-	static glm::mat3 GetInverseInertiaTensorBodySpace(Collider collider, Rigidbody rb) {
-		glm::mat3 inertiaTensor = collider.Shape->InertiaTensor();
+	static glm::mat3 GetInverseInertiaTensorBodySpace(const Collider collider, const Rigidbody rb, const Transform trans) {
+		glm::mat3 inertiaTensor = collider.Shape->InertiaTensor(trans, collider);
 		return glm::inverse(inertiaTensor) * rb.InvMass;
 	}
 
 	//used with global vectors
 	static glm::mat3 GetInverseInertiaTensorWorldSpace(const Collider collider, const Rigidbody rb, const Transform trans) {
-		glm::mat3 inertiaTensor = collider.Shape->InertiaTensor();
+		glm::mat3 inertiaTensor = collider.Shape->InertiaTensor(trans, collider);
 		glm::mat3 invInertiaTensor = glm::inverse(inertiaTensor) * rb.InvMass;
 		glm::mat3 orient = glm::mat3_cast(trans.Rotation);
 		//the transposed orient converts a global vector to local space for calculation before translating it back into global space with orient
@@ -95,13 +95,13 @@ namespace Fengshui
 		//Need to update the rotation torque as it needs to be always perpendicular to center of mass
 		//alpha is carried over acceleration from last iteration
 		glm::mat3 orientation = glm::mat3_cast(trans.Rotation);
-		glm::mat3 inertiaTensor = orientation * collider.Shape->InertiaTensor() * glm::transpose(orientation);
+		glm::mat3 inertiaTensor = orientation * collider.Shape->InertiaTensor(trans, collider) * glm::transpose(orientation);
 		glm::vec3 alpha = glm::inverse(inertiaTensor) * (glm::cross(rb.AngularVelocity, inertiaTensor * rb.AngularVelocity));
 		rb.AngularVelocity += alpha * dt_sec;
 
 		glm::vec3 dAngle = rb.AngularVelocity * dt_sec;
 		glm::quat dq = glm::quat(dAngle);
-		trans.Rotation = glm::normalize(dq * trans.Rotation);
+		trans.Rotation = dq * trans.Rotation;
 
 		trans.Position = positionCM + (dq * cmToPos);
 	}
@@ -119,13 +119,13 @@ namespace Fengshui
 		//Need to update the rotation torque as it needs to be always perpendicular to center of mass
 		//alpha is carried over acceleration from last iteration
 		glm::mat3 orientation = glm::mat3_cast(trans.Rotation);
-		glm::mat3 inertiaTensor = orientation * collider.Shape->InertiaTensor() * glm::transpose(orientation);
+		glm::mat3 inertiaTensor = orientation * collider.Shape->InertiaTensor(trans, collider) * glm::transpose(orientation);
 		glm::vec3 alpha = glm::inverse(inertiaTensor) * (glm::cross(rb.AngularVelocity, inertiaTensor * rb.AngularVelocity));
 		rb.AngularVelocity += alpha * dt_sec;
 
 		glm::vec3 dAngle = rb.AngularVelocity * dt_sec;
 		glm::quat dq = glm::quat(dAngle);
-		trans.Rotation = glm::normalize(dq * trans.Rotation);
+		trans.Rotation = dq * trans.Rotation;
 
 		trans.Position = positionCM + (dq * cmToPos);
 	}

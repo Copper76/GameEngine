@@ -273,7 +273,7 @@
     <ClInclude Include="src\Fengshui\ECS\Systems\CameraSystem.h" />
     <ClInclude Include="src\Fengshui\ECS\Entity.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems\GravitySystem.h" />
-    <ClInclude Include="src\Fengshui\ECS\Systems\CollisionSystem.h" />
+    <ClInclude Include="src\Fengshui\ECS\Systems\PhysicsSystem.h" />
     <ClInclude Include="src\Fengshui\Physics\Helper.h" />
   </ItemGroup>
   <ItemGroup>
@@ -433,6 +433,6 @@
     <ClCompile Include="src\Fengshui\ECS\Systems\CameraSystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Entity.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\GravitySystem.cpp" />
-    <ClCompile Include="src\Fengshui\ECS\Systems\CollisionSystem.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Systems\PhysicsSystem.cpp" />
   </ItemGroup>
 </Project>

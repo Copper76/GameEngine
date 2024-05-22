@@ -58,6 +58,6 @@ namespace Fengshui
 		Ref<CameraSystem> m_CameraSystem;
 		Ref<HierarchySystem> m_HierarchySystem;
 		Ref<GravitySystem> m_GravitySystem;
-		Ref<CollisionSystem> m_CollisionSystem;
+		Ref<PhysicsSystem> m_PhysicsSystem;
 	};
 }

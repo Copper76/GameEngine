@@ -109,9 +109,6 @@ namespace Fengshui
 				{
 					auto& rigidbody = GeneralManager::GetComponent<Rigidbody>(entity);
 
-					ImGui::DragFloat3("Offset", glm::value_ptr(rigidbody.Offset), 0.1f);
-					ImGui::DragFloat3("Size", glm::value_ptr(rigidbody.Size), 0.1f);
-
 					ImGui::DragFloat3("Velocity", glm::value_ptr(rigidbody.LinearVelocity));
 					//ImGui::DragFloat4("Angular Velocity", glm::value_ptr(rigidbody.AngularVelocity));
 					glm::vec3 eulerAngularVelocity = glm::degrees(rigidbody.AngularVelocity);
@@ -131,6 +128,24 @@ namespace Fengshui
 
 					ImGui::DragFloat("Friction", &rigidbody.Friction, 0.1f, 0.0f, 1.0f);
 					ImGui::DragFloat("Elasticity", &rigidbody.Elasticity, 0.1f, 0.0f, 1.0f);
+				}
+			}
+		}
+
+		if (GeneralManager::HasComponent<Collider>(entity))
+		{
+			if (ImGui::CollapsingHeader("Collider", ImGuiTreeNodeFlags_DefaultOpen))
+			{
+				/*if (ImGui::Button("Remove"))
+				{
+					GeneralManager::RemoveComponent<Render>(entity);
+				}
+				else*/
+				{
+					auto& collider = GeneralManager::GetComponent<Collider>(entity);
+
+					ImGui::DragFloat3("Offset", glm::value_ptr(collider.Offset));
+					ImGui::DragFloat3("Size", glm::value_ptr(collider.Size));
 				}
 			}
 		}
