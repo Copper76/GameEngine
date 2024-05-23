@@ -91,8 +91,7 @@ namespace Fengshui
 			//ImGui::Text("Square Name: %s", m_BigSquare->Name().c_str());
 			if(ImGui::Checkbox("Scene Camera", &m_UsingSceneCamera))
 			{
-				m_SecondCamera->GetComponent<CameraComponent>().Primary = !m_UsingSceneCamera;
-				m_ActiveScene->GetSceneManager()->GetComponent<CameraComponent>().Primary = m_UsingSceneCamera;
+				m_Scene->SetPrimaryCamera(m_UsingSceneCamera ? m_Scene->GetSceneManager() : m_SecondCamera);
 			}
 
 			if (ImGui::Checkbox("Active Scene", &m_UsingSceneOne))

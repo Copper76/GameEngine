@@ -164,6 +164,7 @@
     <ClInclude Include="src\Fengshui\ECS\Systems\HierarchySystem.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems\RenderSystem.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems\RenderSystem2D.h" />
+    <ClInclude Include="src\Fengshui\ECS\Systems\TransformSystem.h" />
     <ClInclude Include="src\Fengshui\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Fengshui\Events\Event.h" />
     <ClInclude Include="src\Fengshui\Events\KeyEvent.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="src\Fengshui\ECS\Systems\HierarchySystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\RenderSystem2D.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Systems\TransformSystem.cpp" />
     <ClCompile Include="src\Fengshui\IMGUI\ImGuiBuild.cpp" />
     <ClCompile Include="src\Fengshui\IMGUI\ImGuiLayer.cpp" />
     <ClCompile Include="src\Fengshui\Layers\Layer.cpp" />

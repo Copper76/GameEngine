@@ -61,6 +61,20 @@ namespace Fengshui
 		return 0;
 	}
 
+	void CameraSystem::SetPrimary(EntityID entity)
+	{
+		for (EntityID cameraID : m_Entities)
+		{
+			auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(cameraID);
+			if (cameraComp.Primary)
+			{
+				cameraComp.Primary = false;
+				break;
+			}
+		}
+		GeneralManager::GetComponent<CameraComponent>(entity).Primary = true;
+	}
+
 	void CameraSystem::CalculateView(CameraComponent& cameraComp)
 	{
 		if (cameraComp.IsOrtho)

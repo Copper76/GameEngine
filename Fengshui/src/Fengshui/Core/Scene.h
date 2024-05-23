@@ -8,6 +8,9 @@
 #include "Fengshui/Events/MouseEvent.h"
 #include "Fengshui/Core/Input.h"
 
+#include "Fengshui/Physics/Physics/Constraints.h"
+#include "Fengshui/Physics/Physics/Manifold.h"
+
 namespace Fengshui
 {
 	class Scene: public std::enable_shared_from_this<Scene>
@@ -40,6 +43,9 @@ namespace Fengshui
 		void AddConstraint(Constraint* constraint);
 		void RemoveConstraint(Constraint* constraint);
 
+		void SetPrimaryCamera(Ref<Entity> entity);
+		void SetPrimaryCamera(EntityID entity);
+
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
@@ -48,10 +54,15 @@ namespace Fengshui
 		Ref<Entity> m_RootNode;
 		Ref<Entity> m_SceneManager;
 
-		float m_CameraMoveSpeed = 1.0f;
+	private:
+		std::vector< Constraint*> m_Constraints;
+		Ref<ManifoldCollector> m_Manifolds;
 
+	private:
+		float m_CameraMoveSpeed = 1.0f;
 		bool m_ViewportFocused = false;
 
+	private:
 		//Systems
 		Ref<RenderSystem> m_RenderSystem;
 		Ref<RenderSystem2D> m_RenderSystem2D;
@@ -59,5 +70,6 @@ namespace Fengshui
 		Ref<HierarchySystem> m_HierarchySystem;
 		Ref<GravitySystem> m_GravitySystem;
 		Ref<PhysicsSystem> m_PhysicsSystem;
+		Ref<TransformSystem> m_TransformSystem;
 	};
 }

@@ -12,6 +12,7 @@ namespace Fengshui
 
 	void Fengshui::PropertyPanel::DrawComponents(EntityID entity)
 	{
+		//size_t imGuiID = 0;
 		if (GeneralManager::HasComponent<Tag>(entity))
 		{
 			auto& tag = GeneralManager::GetComponent<Tag>(entity);
@@ -48,11 +49,12 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				/*if (ImGui::Button("Remove"))
-				{
-					GeneralManager::RemoveComponent<Transform>(entity);
-				}
-				else*/
+				//if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
+				//{
+				//	GeneralManager::RemoveComponent<Transform>(entity);
+				//	--imGuiID;
+				//}
+				//else
 				{
 					bool valueChanged = false;
 					auto& transform = GeneralManager::GetComponent<Transform>(entity);
@@ -81,11 +83,12 @@ namespace Fengshui
 			{
 				if (ImGui::CollapsingHeader("Transform2D", ImGuiTreeNodeFlags_DefaultOpen))
 				{
-					/*if (ImGui::Button("Remove"))
-					{
-						GeneralManager::RemoveComponent<Transform2D>(entity);
-					}
-					else*/
+					//if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
+					//{
+					//	GeneralManager::RemoveComponent<Transform2D>(entity);
+					//	--imGuiID;
+					//}
+					//else
 					{
 						auto& transform2D = GeneralManager::GetComponent<Transform2D>(entity);
 
@@ -101,11 +104,12 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Rigidbody", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				/*if (ImGui::Button("Remove"))
-				{
-					GeneralManager::RemoveComponent<Render>(entity);
-				}
-				else*/
+				//if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
+				//{
+				//	GeneralManager::RemoveComponent<Render>(entity);
+				//	--imGuiID;
+				//}
+				//else
 				{
 					auto& rigidbody = GeneralManager::GetComponent<Rigidbody>(entity);
 
@@ -136,11 +140,12 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Collider", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				/*if (ImGui::Button("Remove"))
-				{
-					GeneralManager::RemoveComponent<Render>(entity);
-				}
-				else*/
+				//if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
+				//{
+				//	GeneralManager::RemoveComponent<Render>(entity);
+				//	--imGuiID;
+				//}
+				//else
 				{
 					auto& collider = GeneralManager::GetComponent<Collider>(entity);
 
@@ -154,11 +159,12 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Render", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				/*if (ImGui::Button("Remove"))
-				{
-					GeneralManager::RemoveComponent<Render>(entity);
-				}
-				else*/
+				//if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
+				//{
+				//	GeneralManager::RemoveComponent<Render>(entity);
+				//	--imGuiID;
+				//}
+				//else
 				{
 					auto& render = GeneralManager::GetComponent<Render>(entity);
 
@@ -170,11 +176,12 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Render2D", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				/*if (ImGui::Button("Remove"))
-				{
-					GeneralManager::RemoveComponent<Render2D>(entity);
-				}
-				else*/
+				//if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
+				//{
+				//	GeneralManager::RemoveComponent<Render2D>(entity);
+				//	--imGuiID;
+				//}
+				//else
 				{
 					auto& render2D = GeneralManager::GetComponent<Render2D>(entity);
 
@@ -187,14 +194,17 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				/*if (ImGui::Button("Remove"))
-				{
-					GeneralManager::RemoveComponent<CameraComponent>(entity);
-				}
-				else*/
+				//if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
+				//{
+				//	GeneralManager::RemoveComponent<CameraComponent>(entity);
+				//	--imGuiID;
+				//}
+				//else
 				{
 					bool valueChanged = false;
 					auto& camera = GeneralManager::GetComponent<CameraComponent>(entity);
+
+					ImGui::Checkbox("Primary", &camera.Primary);
 
 					if (ImGui::Checkbox("IsOrtho", &camera.IsOrtho))
 					{

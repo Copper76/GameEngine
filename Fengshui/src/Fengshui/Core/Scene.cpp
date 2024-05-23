@@ -31,6 +31,7 @@ namespace Fengshui
 		scene->m_HierarchySystem = GeneralManager::RegisterSystem<HierarchySystem>();
 		scene->m_GravitySystem = GeneralManager::RegisterSystem<GravitySystem>();
 		scene->m_PhysicsSystem = GeneralManager::RegisterSystem<PhysicsSystem>();
+		scene->m_TransformSystem = GeneralManager::RegisterSystem<TransformSystem>();
 
 		Signature signature;
 		signature.set(GeneralManager::GetComponentType<Render>());
@@ -64,6 +65,14 @@ namespace Fengshui
 		signature.set(GeneralManager::GetComponentType<Hierarchy>());
 		signature.set(GeneralManager::GetComponentType<Collider>());
 		GeneralManager::SetSystemSignature<PhysicsSystem>(signature);
+
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<Transform>());
+		signature.set(GeneralManager::GetComponentType<Hierarchy>());
+		GeneralManager::SetSystemSignature<TransformSystem>(signature);
+
+		//Physics System
+		scene->m_Manifolds = std::make_shared<ManifoldCollector>();
 
 		//Property setup
 		scene->m_RootNode = std::make_shared<Entity>("Root Node");
@@ -133,7 +142,7 @@ namespace Fengshui
 		for (int i = 0; i < 2; i++)
 		{
 			m_GravitySystem->OnUpdate(dt_sec);
-			m_PhysicsSystem->OnUpdate(dt_sec);
+			m_PhysicsSystem->OnUpdate(dt_sec, m_Manifolds, m_Constraints);
 		}
 	}
 
@@ -149,7 +158,7 @@ namespace Fengshui
 			//3D Render cycle
 			Renderer::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));
 
-			m_RenderSystem->OnRender();
+			m_RenderSystem->OnRender(m_TransformSystem);
 
 			Renderer::EndScene();
 
@@ -205,10 +214,21 @@ namespace Fengshui
 
 	void Scene::AddConstraint(Constraint* constraint)
 	{
-		m_PhysicsSystem->AddConstraint(constraint);
+		m_Constraints.push_back(constraint);
 	}
+
 	void Scene::RemoveConstraint(Constraint* constraint)
 	{
-		m_PhysicsSystem->RemoveConstraint(constraint);
+		m_Constraints.erase(std::remove(m_Constraints.begin(), m_Constraints.end(), constraint), m_Constraints.end());
+	}
+
+	void Scene::SetPrimaryCamera(Ref<Entity> entity)
+	{
+		m_CameraSystem->SetPrimary(entity->GetID());
+	}
+
+	void Scene::SetPrimaryCamera(EntityID entity)
+	{
+		m_CameraSystem->SetPrimary(entity);
 	}
 }

@@ -554,8 +554,8 @@ namespace Fengshui
 	ShapeConvex::Support
 	====================================================
 	*/
-	glm::vec3 ShapeConvex::Support(const glm::vec3& dir, const Transform transform, const Collider collider, const float bias) const {
-		glm::vec3 maxPt = (transform.Rotation * m_points[0]) * transform.Scale * collider.Size + transform.Position + collider.Offset;
+	glm::vec3 ShapeConvex::Support(const glm::vec3& dir, const Transform transform, const float bias) const {
+		glm::vec3 maxPt = (transform.Rotation * m_points[0]) * transform.Scale + transform.Position;
 		float maxDist = glm::dot(dir, maxPt);
 		for (int i = 1; i < m_points.size(); i++) {
 			const glm::vec3 pt = (transform.Rotation * m_points[i]) * transform.Scale + transform.Position;
@@ -573,7 +573,7 @@ namespace Fengshui
 		return maxPt + norm;
 	}
 
-	glm::mat3 ShapeConvex::InertiaTensor(const Transform transform, const Collider collider) const
+	glm::mat3 ShapeConvex::InertiaTensor(const Transform transform) const
 	{
 		return m_inertiaTensor;
 	}
@@ -583,7 +583,7 @@ namespace Fengshui
 	ShapeConvex::GetBounds
 	====================================================
 	*/
-	Bounds ShapeConvex::GetBounds(const Transform transform, const Collider collider) const {
+	Bounds ShapeConvex::GetBounds(const Transform transform) const {
 		glm::vec3 corners[8];
 
 		corners[0] = glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.mins.z);
@@ -598,13 +598,13 @@ namespace Fengshui
 
 		Bounds bounds;
 		for (int i = 0; i < 8; i++) {
-			bounds.Expand((transform.Rotation * corners[i]) * transform.Scale * collider.Size + transform.Position + collider.Offset);
+			bounds.Expand((transform.Rotation * corners[i]) * transform.Scale + transform.Position);
 		}
 
 		return bounds;
 	}
 
-	Bounds ShapeConvex::GetBounds(const glm::vec3 scale, const Collider collider) const
+	Bounds ShapeConvex::GetBounds(const glm::vec3 scale) const
 	{
 		glm::vec3 corners[8];
 
@@ -620,7 +620,7 @@ namespace Fengshui
 
 		Bounds bounds;
 		for (int i = 0; i < 8; i++) {
-			bounds.Expand(corners[i] * scale * collider.Size + collider.Offset);
+			bounds.Expand(corners[i] * scale);
 		}
 
 		return bounds;

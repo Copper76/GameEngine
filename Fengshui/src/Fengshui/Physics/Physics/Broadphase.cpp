@@ -131,7 +131,11 @@ namespace Fengshui
 			const Transform transform = GeneralManager::GetComponent<Transform>(entity);
 			const Rigidbody rb = GeneralManager::GetComponent<Rigidbody>(entity);
 			const Collider collider = GeneralManager::GetComponent<Collider>(entity);
-			Bounds bounds = collider.Shape->GetBounds(transform, collider);
+			Transform boundsTrans = Transform();
+			boundsTrans.Position = transform.Position + collider.Offset;
+			boundsTrans.Rotation = transform.Rotation;
+			boundsTrans.Scale = transform.Scale * collider.Size;
+			Bounds bounds = collider.Shape->GetBounds(boundsTrans);
 
 			//expand bounds by velocity and a little extra
 			bounds.Expand(bounds.mins + rb.LinearVelocity * dt_sec);

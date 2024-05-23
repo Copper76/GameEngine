@@ -5,16 +5,16 @@
 
 namespace Fengshui
 {
-	void RenderSystem::OnRender()
+	void RenderSystem::OnRender(Ref<TransformSystem> transformSystem)
 	{
 		glm::vec2 coords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f} };
 		for (auto const& entity : m_Entities)
 		{
-			auto transformData = GeneralManager::GetComponent<Transform>(entity);
+			//auto transformData = GeneralManager::GetComponent<Transform>(entity);
 			auto renderData = GeneralManager::GetComponent<Render>(entity);
-			auto hierarchyData = GeneralManager::GetComponent<Hierarchy>(entity);
+			//auto hierarchyData = GeneralManager::GetComponent<Hierarchy>(entity);
 
-			EntityID curr = entity;
+			/*EntityID curr = entity;
 
 			glm::mat4 transform = glm::identity<glm::mat4>();
 
@@ -26,7 +26,9 @@ namespace Fengshui
 				}
 				hierarchyData = GeneralManager::GetComponent<Hierarchy>(curr);
 				curr = hierarchyData.Parent;
-			}
+			}*/
+
+			glm::mat4 transform = transformSystem->GetWorldTransformMatrix(entity);
 
 			switch (renderData.Shape)
 			{

@@ -19,6 +19,7 @@ namespace Fengshui
 		void RecalculateViewMatrix(EntityID entity);
 
 		EntityID GetPrimary();
+		void SetPrimary(EntityID entity);
 
 	private:
 		void CalculateView(CameraComponent& cameraComp);

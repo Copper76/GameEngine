@@ -23,19 +23,9 @@ namespace Fengshui
 		return 1;
 	}
 
-	void PhysicsSystem::AddConstraint(Constraint* constraint)
+	void PhysicsSystem::OnUpdate(float dt, Ref<ManifoldCollector> manifolds, std::vector<Constraint*> constraints)
 	{
-		m_Constraints.push_back(constraint);
-	}
-
-	void PhysicsSystem::RemoveConstraint(Constraint* constraint)
-	{
-		m_Constraints.erase(std::remove(m_Constraints.begin(), m_Constraints.end(), constraint), m_Constraints.end());
-	}
-
-	void PhysicsSystem::OnUpdate(float dt)
-	{
-		m_Manifolds.RemoveExpired();
+		manifolds->RemoveExpired();
 
 		//Broadphase to retain only the possible collsions to reduce collision calculation in the narrow phase
 		std::vector< collisionPair_t > collisionPairs;
@@ -51,7 +41,7 @@ namespace Fengshui
 			contact_t contact;
 			if (Intersect(pair, dt, contact)) {
 				if (contact.timeOfImpact == 0.0f) {
-					m_Manifolds.AddContact(contact);
+					manifolds->AddContact(contact);
 				}
 				else {//use dynamic contact checking
 					contacts[numContacts] = contact;
@@ -68,23 +58,23 @@ namespace Fengshui
 		//
 		//solve constraints for each constraint
 		//
-		for (int i = 0; i < m_Constraints.size(); i++) {
-			m_Constraints[i]->PreSolve(dt);
+		for (int i = 0; i < constraints.size(); i++) {
+			constraints[i]->PreSolve(dt);
 		}
-		m_Manifolds.PreSolve(dt);
+		manifolds->PreSolve(dt);
 
 		const int numIter = 5;
 		for (int j = 0; j < numIter; j++) {
-			for (int i = 0; i < m_Constraints.size(); i++) {
-				m_Constraints[i]->Solve();
+			for (int i = 0; i < constraints.size(); i++) {
+				constraints[i]->Solve();
 			}
-			m_Manifolds.Solve();
+			manifolds->Solve();
 		}
 
-		for (int i = 0; i < m_Constraints.size(); i++) {
-			m_Constraints[i]->PostSolve();
+		for (int i = 0; i < constraints.size(); i++) {
+			constraints[i]->PostSolve();
 		}
-		m_Manifolds.PostSolve();
+		manifolds->PostSolve();
 
 		float accumulatedTime = 0.0f;
 		for (int i = 0; i < numContacts; i++) {
