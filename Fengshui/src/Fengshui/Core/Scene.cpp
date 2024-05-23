@@ -11,6 +11,7 @@ namespace Fengshui
 	Scene::~Scene()
 	{
 		//GeneralManager::RemoveScene(shared_from_this());
+		//m_Entities.clear();
 	}
 
 	Ref<Scene> Scene::Init()
@@ -243,12 +244,12 @@ namespace Fengshui
 		m_CameraSystem->RecalculateViewMatrix(entity, m_TransformSystem);
 	}
 
-	void Scene::AddConstraint(Constraint* constraint)
+	void Scene::AddConstraint(Ref<Constraint> constraint)
 	{
 		m_Constraints.push_back(constraint);
 	}
 
-	void Scene::RemoveConstraint(Constraint* constraint)
+	void Scene::RemoveConstraint(Ref<Constraint> constraint)
 	{
 		m_Constraints.erase(std::remove(m_Constraints.begin(), m_Constraints.end(), constraint), m_Constraints.end());
 	}
@@ -261,5 +262,12 @@ namespace Fengshui
 	void Scene::SetPrimaryCamera(EntityID entity)
 	{
 		m_CameraSystem->SetPrimary(entity);
+	}
+
+	Ref<Entity> Scene::CreateEntity()
+	{
+		return MakeRef<Entity>();
+		 
+		//m_Entities.insert(MakeRef<Entity>(entity));
 	}
 }

@@ -23,7 +23,7 @@ namespace Fengshui
 		return 1;
 	}
 
-	void PhysicsSystem::OnUpdate(float dt, Ref<ManifoldCollector> manifolds, std::vector<Constraint*> constraints)
+	void PhysicsSystem::OnUpdate(float dt, Ref<ManifoldCollector> manifolds, std::vector<Ref<Constraint>> constraints)
 	{
 		manifolds->RemoveExpired();
 

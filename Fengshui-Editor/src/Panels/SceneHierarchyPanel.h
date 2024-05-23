@@ -16,7 +16,6 @@ namespace Fengshui
 		inline void ResetSelection() { m_SelectedEntity = 0; }
 
 	private:
-		Ref<Scene> m_Context;
 		Ref<PropertyPanel> m_PropertyPanel;
 
 		EntityID m_SelectedEntity = 0;

@@ -13,7 +13,7 @@
 
 namespace Fengshui
 {
-	class Scene: public std::enable_shared_from_this<Scene>
+	class Scene
 	{
 	public:
 		Scene() {};
@@ -42,11 +42,17 @@ namespace Fengshui
 		void UpdateView();
 		void UpdateViewMatrix(EntityID entity);
 
-		void AddConstraint(Constraint* constraint);
-		void RemoveConstraint(Constraint* constraint);
+		void AddConstraint(Ref<Constraint> constraint);
+		void RemoveConstraint(Ref<Constraint> constraint);
 
 		void SetPrimaryCamera(Ref<Entity> entity);
 		void SetPrimaryCamera(EntityID entity);
+
+		Ref<Entity> CreateEntity();
+
+		inline void AddEntity(Ref<Entity> entity) { m_Entities[entity->GetID()] = entity; }
+		inline void RemoveEntity(Ref<Entity> entity) { m_Entities.erase(entity->GetID()); }
+		inline void RemoveEntity(EntityID entity) { m_Entities.erase(entity); }
 
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
@@ -56,8 +62,10 @@ namespace Fengshui
 		Ref<Entity> m_RootNode;
 		Ref<Entity> m_SceneManager;
 
+		std::unordered_map<EntityID, Ref<Entity>> m_Entities;
+
 	private:
-		std::vector< Constraint*> m_Constraints;
+		std::vector<Ref<Constraint>> m_Constraints;
 		Ref<ManifoldCollector> m_Manifolds;
 
 	private:

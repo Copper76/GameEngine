@@ -183,7 +183,7 @@ namespace Fengshui
 
 	void Renderer::Flush()
 	{
-		uint32_t dataSize = (uint8_t*)s_Data.ShapeVertexBufferPtr - (uint8_t*)s_Data.ShapeVertexBufferBase;
+		uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.ShapeVertexBufferPtr - (uint8_t*)s_Data.ShapeVertexBufferBase);
 		s_Data.ShapeVertexBuffer->SetData(s_Data.ShapeVertexBufferBase, dataSize);
 		for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
 		{

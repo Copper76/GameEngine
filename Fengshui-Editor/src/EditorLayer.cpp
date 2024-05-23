@@ -60,7 +60,7 @@ namespace Fengshui
 		spec.Height = 720;
 		m_Framebuffer = Framebuffer::Create(spec);
 
-		m_SceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
+		m_SceneHierarchyPanel = MakeRef<SceneHierarchyPanel>();
 
 		Reset();
 	}
@@ -69,8 +69,6 @@ namespace Fengshui
 	{
 		m_EditorReady = false;
 
-		glm::vec2 coords[] = { {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f},{0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f} };
-
 		GeneralManager::Reset();
 		m_Scene = Scene::Init();
 
@@ -78,13 +76,13 @@ namespace Fengshui
 
 		m_ActiveScene = m_Scene;
 
-		m_SecondCamera = std::make_shared<Entity>("Second Camera");
+		m_SecondCamera = MakeRef<Entity>("Second Camera");
 		m_SecondCamera->AddComponent<CameraComponent>();
 		m_SecondCamera->AddComponent<Transform>();
 
 		////stacking box
 		//for (int y = 0; y < 5; y++) {
-		//	Ref<Entity> box = std::make_shared<Entity>("Box");
+		//	Ref<Entity> box = MakeRef<Entity>("Box");
 		//	float offset = ((y & 1) == 0) ? 0.0f : 0.15f;//offset even-numbered boxes
 		//	float delta = 0.04f;
 		//	float scaleHeight = 2.0f + delta;
@@ -98,24 +96,20 @@ namespace Fengshui
 		//	m_StackingBoxes.push_back(box);
 		//}
 
-		m_BigSquare = std::make_shared<Entity>("Big Square");
+		m_BigSquare = MakeRef<Entity>("Big Square");
 
 		Transform bigSquareTrans = m_BigSquare->AddComponent<Transform>(Transform(glm::vec3(1.0f, 2.0f, 0.0f)));
 
-		m_BigSquare->AddComponent<Render>(Render{ nullptr,
-			coords
-			});
+		m_BigSquare->AddComponent<Render>();
 
 		m_BigSquare->AddComponent<Rigidbody>();
 		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>();
 
-		m_Ground = std::make_shared<Entity>("Ground");
+		m_Ground = MakeRef<Entity>("Ground");
 
 		Transform groundTrans = m_Ground->AddComponent<Transform>(Transform(glm::vec3(0.0f, -2.0f, 0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 1.0f)));
 
-		m_Ground->AddComponent<Render>(Render{ nullptr,
-			coords
-			});
+		m_Ground->AddComponent<Render>();
 
 		m_Ground->AddComponent<Rigidbody>(Rigidbody(0.0f));
 		Collider groundCollider = m_Ground->AddComponent<Collider>();
@@ -140,7 +134,7 @@ namespace Fengshui
 		{
 			for (float j = -5.0f; j < 5.0f; j += 1.0f)
 			{
-				square = std::make_shared<Entity>("(" + std::to_string(i) + "," + std::to_string(j) + ")");
+				square = MakeRef<Entity>("(" + std::to_string(i) + "," + std::to_string(j) + ")");
 				square->AddComponent<Transform2D>(Transform2D{ { i, j}, -0.5f, 45.0f, { 0.5f, 0.5f } });
 				square->AddComponent(Render2D{ {(i + 5.0f) / 10.0f, (j + 5.0f) / 10.0f, 1.0f, 1.0f } });
 				m_BackgroundSquares.emplace_back(square);
