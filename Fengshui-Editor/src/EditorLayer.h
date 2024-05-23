@@ -86,8 +86,6 @@ namespace Fengshui
 			}
 
 			ImGui::Begin("Settings");
-			ImGui::DragFloat("Tiling Factor", &m_TilingFactor);
-			ImGui::Text("Camera Pos: (%f, %f)", m_ActiveScene->GetSceneManager()->GetComponent<Transform2D>().Position.x, m_ActiveScene->GetSceneManager()->GetComponent<Transform2D>().Position.y);
 			//ImGui::Text("Square Name: %s", m_BigSquare->Name().c_str());
 			if(ImGui::Checkbox("Scene Camera", &m_UsingSceneCamera))
 			{

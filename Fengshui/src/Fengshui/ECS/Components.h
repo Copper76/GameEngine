@@ -64,11 +64,6 @@ namespace Fengshui
 			glm::vec3 radians = glm::radians(glm::vec3(rotation.x, rotation.y, rotation.z));
 			Rotation = glm::quat(radians);
 		}
-
-		glm::mat4 GetTransform()
-		{
-			return glm::scale(glm::translate(glm::mat4(1.0f), Position) * glm::mat4_cast(Rotation), Scale);
-		}
 	};
 
 	struct Transform2D
@@ -102,18 +97,6 @@ namespace Fengshui
 			: Position(pos), Rotation(rotation), Scale(scale)
 		{
 
-		}
-
-		glm::mat4 GetTransform()
-		{
-			if (Rotation == 0)
-			{
-				return glm::scale(glm::translate(glm::mat4(1.0f), Position), { Scale.x, Scale.y, 1.0f });
-			}
-			else
-			{
-				return glm::scale(glm::rotate(glm::translate(glm::mat4(1.0f), Position), glm::radians(Rotation), { 0.0f, 0.0f, 1.0f }), { Scale.x, Scale.y, 1.0f });
-			}
 		}
 	};
 

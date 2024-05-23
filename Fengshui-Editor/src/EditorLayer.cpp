@@ -28,7 +28,7 @@ namespace Fengshui
 				for (Ref<Entity> square : m_BackgroundSquares)
 				{
 					Transform2D& squareTrans = square->GetComponent<Transform2D>();
-					squareTrans.Rotation = std::fmod(squareTrans.Rotation + dt * 10.0f, 360.0f);
+					squareTrans.Rotation = std::fmod(squareTrans.Rotation + dt, 360.0f);
 				}
 			}
 		}

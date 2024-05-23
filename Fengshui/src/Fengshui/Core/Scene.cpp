@@ -103,17 +103,9 @@ namespace Fengshui
 			if (m_ViewportFocused)
 			{
 				glm::vec3 moveDelta = glm::vec3(0.0f);
-				float rotateDelta = 0.0f;
+				glm::vec3 rotateDelta = glm::vec3(0.0f);
 
 				//Input handling
-				if (Input::IsKeyPressed(FS_KEY_W))
-				{
-					moveDelta.y += m_CameraMoveSpeed * dt;
-				}
-				if (Input::IsKeyPressed(FS_KEY_S))
-				{
-					moveDelta.y -= m_CameraMoveSpeed * dt;
-				}
 				if (Input::IsKeyPressed(FS_KEY_A))
 				{
 					moveDelta.x -= m_CameraMoveSpeed * dt;
@@ -122,16 +114,50 @@ namespace Fengshui
 				{
 					moveDelta.x += m_CameraMoveSpeed * dt;
 				}
+				if (Input::IsKeyPressed(FS_KEY_SPACE))
+				{
+					moveDelta.y += m_CameraMoveSpeed * dt;
+				}
+				if (Input::IsKeyPressed(FS_KEY_LEFT_CONTROL))
+				{
+					moveDelta.y -= m_CameraMoveSpeed * dt;
+				}
+				if (Input::IsKeyPressed(FS_KEY_W))
+				{
+					moveDelta.z -= m_CameraMoveSpeed * dt;
+				}
+				if (Input::IsKeyPressed(FS_KEY_S))
+				{
+					moveDelta.z += m_CameraMoveSpeed * dt;
+				}
+
+				if (Input::IsKeyPressed(FS_KEY_I))
+				{
+					rotateDelta.x += m_CameraMoveSpeed * dt;
+				}
+				if (Input::IsKeyPressed(FS_KEY_K))
+				{
+					rotateDelta.x -= m_CameraMoveSpeed * dt;
+				}
+				if (Input::IsKeyPressed(FS_KEY_J))
+				{
+					rotateDelta.y += m_CameraMoveSpeed * dt;
+				}
+				if (Input::IsKeyPressed(FS_KEY_L))
+				{
+					rotateDelta.y -= m_CameraMoveSpeed * dt;
+				}
 
 				if (Input::IsKeyPressed(FS_KEY_Q))
 				{
-					rotateDelta += m_CameraMoveSpeed * dt;
+					rotateDelta.z += m_CameraMoveSpeed * dt;
 				}
 				if (Input::IsKeyPressed(FS_KEY_E))
 				{
-					rotateDelta -= m_CameraMoveSpeed * dt;
+					rotateDelta.z -= m_CameraMoveSpeed * dt;
 				}
-				m_CameraSystem->AdjustCamera(cameraComp, moveDelta, glm::quat(glm::vec3(0.0f, 0.0f, glm::radians(rotateDelta))));
+
+				AdjustCamera(cameraComp, moveDelta, glm::quat(glm::radians(rotateDelta)));
 			}
 		}
 	}
@@ -165,7 +191,7 @@ namespace Fengshui
 			//2D Render cycle
 			Renderer2D::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));
 
-			m_RenderSystem2D->OnRender();
+			m_RenderSystem2D->OnRender(m_TransformSystem);
 
 			Renderer2D::EndScene();
 		}
@@ -182,7 +208,7 @@ namespace Fengshui
 	bool Scene::OnMouseScrolled(MouseScrolledEvent& e)
 	{
 		m_CameraSystem->OnMouseScrolled(m_SceneManager->GetID(), e);
-		m_CameraMoveSpeed = m_SceneManager->GetComponent<CameraComponent>().ZoomLevel * 2.0f;
+		//m_CameraMoveSpeed = m_SceneManager->GetComponent<CameraComponent>().ZoomLevel * 0.01f;
 		return false;
 	}
 
@@ -202,6 +228,11 @@ namespace Fengshui
 		m_CameraSystem->SetZoomLevel(m_SceneManager->GetID(), zoomLevel);
 	}
 
+	void Scene::AdjustCamera(EntityID entity, glm::vec3 moveDelta, glm::quat rotateDelta)
+	{
+		m_CameraSystem->AdjustCamera(entity, moveDelta, rotateDelta, m_TransformSystem);
+	}
+
 	void Scene::UpdateView()
 	{
 		m_CameraSystem->CalculateView(m_CameraSystem->GetPrimary());
@@ -209,7 +240,7 @@ namespace Fengshui
 
 	void Scene::UpdateViewMatrix(EntityID entity)
 	{
-		m_CameraSystem->RecalculateViewMatrix(entity);
+		m_CameraSystem->RecalculateViewMatrix(entity, m_TransformSystem);
 	}
 
 	void Scene::AddConstraint(Constraint* constraint)
