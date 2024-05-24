@@ -81,7 +81,7 @@ namespace Fengshui
 		points[2] = FindPointFurthestFromLine(verts, num, points[0], points[1]);
 		points[3] = FindPointFurthestFromTriangle(verts, num, points[0], points[1], points[2]);
 
-		//need to make sure teh points are in counter clockwise order
+		//need to make sure the points are in counter clockwise order
 		float dist = DistanceFromTriangle(points[0], points[1], points[2], points[3]);
 		if (dist > 0.0f) {
 			std::swap(points[0], points[1]);

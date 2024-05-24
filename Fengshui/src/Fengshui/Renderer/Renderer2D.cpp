@@ -124,12 +124,15 @@ namespace Fengshui
 	void Renderer2D::Flush()
 	{
 		uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
-		s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
-		for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
+		if (dataSize > 0)
 		{
-			s_Data.TextureSlots[i]->Bind(i);
+			s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
+			for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
+			{
+				s_Data.TextureSlots[i]->Bind(i);
+			}
+			RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
 		}
-		RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
 	}
 
 	void Renderer2D::PrepareNextBatch()

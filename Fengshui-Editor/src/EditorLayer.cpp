@@ -40,7 +40,7 @@ namespace Fengshui
 
 	void EditorLayer::OnFixedUpdate(float dt)
 	{
-		if (m_IsPlaying && !m_Paused)
+		if (m_IsPlaying && !m_Paused && m_EditorReady)
 		{
 			m_ActiveScene->OnFixedUpdate(dt);
 		}
@@ -48,9 +48,12 @@ namespace Fengshui
 
 	void EditorLayer::OnRender()
 	{
-		m_Framebuffer->Bind();
-		m_ActiveScene->OnRender();
-		m_Framebuffer->Unbind();
+		if (m_EditorReady)
+		{
+			m_Framebuffer->Bind();
+			m_ActiveScene->OnRender();
+			m_Framebuffer->Unbind();
+		}
 	}
 
 	void EditorLayer::OnAttach()
@@ -81,7 +84,7 @@ namespace Fengshui
 		m_SecondCamera->AddComponent<Transform>();
 
 		////stacking box
-		//for (int y = 0; y < 5; y++) {
+		//for (int y = 0; y < 50; y++) {
 		//	Ref<Entity> box = MakeRef<Entity>("Box");
 		//	float offset = ((y & 1) == 0) ? 0.0f : 0.15f;//offset even-numbered boxes
 		//	float delta = 0.04f;
@@ -90,9 +93,7 @@ namespace Fengshui
 		//	box->AddComponent<Transform>(glm::vec3(offset * scaleHeight, deltaHeight + (float)y * scaleHeight, offset * scaleHeight));
 		//	box->AddComponent<Rigidbody>();
 		//	box->AddComponent<Collider>();
-		//	box->AddComponent<Render>(Render{ nullptr,
-		//	coords
-		//		});
+		//	box->AddComponent<Render>();
 		//	m_StackingBoxes.push_back(box);
 		//}
 
@@ -138,9 +139,14 @@ namespace Fengshui
 				square->AddComponent<Transform2D>(Transform2D{ { i, j}, -0.5f, 45.0f, { 0.5f, 0.5f } });
 				square->AddComponent(Render2D{ {(i + 5.0f) / 10.0f, (j + 5.0f) / 10.0f, 1.0f, 1.0f } });
 				m_BackgroundSquares.emplace_back(square);
-				//Renderer2D::DrawQuad({ i, j, -0.5f }, { 0.5f, 0.5f }, 45.0f, 1.0f, nullptr, defaultCoords, { (i + 0.5f) / 10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f });
 			}
+
+			square = MakeRef<Entity>("cube");
+			square->AddComponent<Transform>();
+			square->AddComponent<Render>();
+			m_BackgroundSquares.emplace_back(square);
 		}
+		
 		
 		GeneralManager::SetActiveScene(m_ActiveScene);
 		m_EditorReady = true;

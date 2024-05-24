@@ -124,28 +124,7 @@ namespace Fengshui
 		Rigidbody& rb = GeneralManager::GetComponent<Rigidbody>(entity);
 		Transform& trans = GeneralManager::GetComponent<Transform>(entity);
 
-		trans.Position += rb.LinearVelocity * dt_sec;
-
-		glm::vec3 positionCM = GetCenterOfMassWorldSpace(collider, trans);
-		glm::vec3 cmToPos = trans.Position - positionCM;
-
-		Transform& transform = Transform();
-		transform.Position = trans.Position + collider.Offset;
-		transform.Rotation = trans.Rotation;
-		transform.Scale = trans.Scale * collider.Size;
-
-		//Need to update the rotation torque as it needs to be always perpendicular to center of mass
-		//alpha is carried over acceleration from last iteration
-		glm::mat3 orientation = glm::mat3_cast(trans.Rotation);
-		glm::mat3 inertiaTensor = orientation * collider.Shape->InertiaTensor(transform) * glm::transpose(orientation);
-		glm::vec3 alpha = glm::inverse(inertiaTensor) * (glm::cross(rb.AngularVelocity, inertiaTensor * rb.AngularVelocity));
-		rb.AngularVelocity += alpha * dt_sec;
-
-		glm::vec3 dAngle = rb.AngularVelocity * dt_sec;
-		glm::quat dq = glm::quat(dAngle);
-		trans.Rotation = dq * trans.Rotation;
-
-		trans.Position = positionCM + (dq * cmToPos);
+		Update(dt_sec, collider, rb, trans);
 	}
 
 	static glm::mat3 Minor(const glm::mat4 matrix, const int i, const int j) {

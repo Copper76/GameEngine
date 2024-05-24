@@ -29,17 +29,17 @@ namespace Fengshui
 
 		//Broadphase to retain only the possible collsions to reduce collision calculation in the narrow phase
 		std::vector< collisionPair_t > collisionPairs;
-		BroadPhase(m_Entities, (int)m_Entities.size(), collisionPairs, dt);
+		BroadPhase(m_Entities, (int)m_Entities.size(), collisionPairs, dt);//Get components here
 
 		//narrow phase, where general contact and collision are calculated
 		int numContacts = 0;
-		const int maxContacts = (int)m_Entities.size() * (int)m_Entities.size();
-		contact_t* contacts = (contact_t*)alloca(sizeof(contact_t) * maxContacts);
+		//const int maxContacts = (int)m_Entities.size() * (int)m_Entities.size();
+		contact_t* contacts = (contact_t*)alloca(sizeof(contact_t) * collisionPairs.size());
 		for (int i = 0; i < collisionPairs.size(); i++) {
 			const collisionPair_t& pair = collisionPairs[i];
 
 			contact_t contact;
-			if (Intersect(pair, dt, contact)) {
+			if (Intersect(pair, dt, contact)) {//Get components here
 				if (contact.timeOfImpact == 0.0f) {
 					manifolds->AddContact(contact);
 				}
@@ -58,6 +58,7 @@ namespace Fengshui
 		//
 		//solve constraints for each constraint
 		//
+		//Get componentsfor each
 		for (int i = 0; i < constraints.size(); i++) {
 			constraints[i]->PreSolve(dt);
 		}
@@ -83,9 +84,9 @@ namespace Fengshui
 
 			//Update the position up to next collision
 			for (EntityID entity : m_Entities) {
-				Update(dt_sec, entity);
+				Update(dt_sec, entity);//Get components here
 			}
-			ResolveContact(contact);
+			ResolveContact(contact);//Get components here
 			accumulatedTime += dt_sec;
 		}
 
@@ -93,7 +94,7 @@ namespace Fengshui
 		const float timeRemaining = dt - accumulatedTime;
 		if (timeRemaining > 0.0f) {
 			for (EntityID entity : m_Entities) {
-				Update(timeRemaining, entity);
+				Update(timeRemaining, entity);//Get components here
 			}
 		}
 	}
