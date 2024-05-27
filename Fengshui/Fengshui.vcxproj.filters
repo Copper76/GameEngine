@@ -287,9 +287,6 @@
     <ClCompile Include="src\Fengshui\Core\Scene.cpp">
       <Filter>src\Fengshui\Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\ECS\ECS.cpp">
-      <Filter>src\Fengshui\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="src\Fengshui\ECS\Systems\HierarchySystem.cpp">
       <Filter>src\Fengshui\ECS\Systems</Filter>
     </ClCompile>
@@ -436,5 +433,6 @@
     <ClCompile Include="src\Fengshui\ECS\Systems\GravitySystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\PhysicsSystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\TransformSystem.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\ECS.cpp" />
   </ItemGroup>
 </Project>

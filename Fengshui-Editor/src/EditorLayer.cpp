@@ -110,7 +110,7 @@ namespace Fengshui
 
 		Transform groundTrans = m_Ground->AddComponent<Transform>(Transform(glm::vec3(0.0f, -2.0f, 0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 1.0f)));
 
-		m_Ground->AddComponent<Render>();
+		m_Ground->AddComponent<Render>(Render(Texture::Create("E:/GitStuff/GameEngine/Fengshui-Editor/Assets/Textures/Checkerboard.png")));
 
 		m_Ground->AddComponent<Rigidbody>(Rigidbody(0.0f));
 		Collider groundCollider = m_Ground->AddComponent<Collider>();
@@ -140,11 +140,6 @@ namespace Fengshui
 				square->AddComponent(Render2D{ {(i + 5.0f) / 10.0f, (j + 5.0f) / 10.0f, 1.0f, 1.0f } });
 				m_BackgroundSquares.emplace_back(square);
 			}
-
-			square = MakeRef<Entity>("cube");
-			square->AddComponent<Transform>();
-			square->AddComponent<Render>();
-			m_BackgroundSquares.emplace_back(square);
 		}
 		
 		

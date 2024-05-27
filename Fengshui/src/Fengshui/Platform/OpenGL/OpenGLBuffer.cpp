@@ -5,15 +5,7 @@
 
 namespace Fengshui
 {
-	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)
-	{
-		glCreateBuffers(1, &m_RendererID);
-		//glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-		Bind();
-		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
-	}
-
-	Fengshui::OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size, float* vertices)
+	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size, float* vertices)
 	{
 		glCreateBuffers(1, &m_RendererID);
 		//glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
@@ -26,12 +18,12 @@ namespace Fengshui
 		glDeleteBuffers(1, &m_RendererID);
 	}
 
-	void Fengshui::OpenGLVertexBuffer::Bind() const
+	void OpenGLVertexBuffer::Bind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 	}
 
-	void Fengshui::OpenGLVertexBuffer::Unbind() const
+	void OpenGLVertexBuffer::Unbind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
@@ -42,7 +34,7 @@ namespace Fengshui
 		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
 	}
 
-	Fengshui::OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t count, uint32_t* indices) : m_Count(count)
+	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t count, uint32_t* indices) : m_Count(count)
 	{
 		glCreateBuffers(1, &m_RendererID);
 		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
@@ -55,13 +47,21 @@ namespace Fengshui
 		glDeleteBuffers(1, &m_RendererID);
 	}
 
-	void Fengshui::OpenGLIndexBuffer::Bind() const
+	void OpenGLIndexBuffer::Bind() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
 	}
 
-	void Fengshui::OpenGLIndexBuffer::Unbind() const
+	void OpenGLIndexBuffer::Unbind() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+
+	void OpenGLIndexBuffer::SetData(const void* data, uint32_t size)
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
+		glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, size * 4, data);
+
+		m_Count = size;
 	}
 }

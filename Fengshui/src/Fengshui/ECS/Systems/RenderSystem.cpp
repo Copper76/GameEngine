@@ -7,7 +7,7 @@ namespace Fengshui
 {
 	void RenderSystem::OnRender(Ref<TransformSystem> transformSystem)
 	{
-		glm::vec2 coords[] = { {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f},{0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f} };
+		glm::vec2 coords[] = { {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f}};
 		for (auto const& entity : m_Entities)
 		{
 			auto renderData = GeneralManager::GetComponent<Render>(entity);
@@ -15,14 +15,14 @@ namespace Fengshui
 			glm::mat4 transform = transformSystem->GetWorldTransformMatrix(entity);
 
 			glm::vec2* texCoords = renderData.TexCoords;
-			if (texCoords == nullptr)
-			{
-				texCoords = coords;
-			}
 
 			switch (renderData.Shape)
 			{
 			case RenderShape::Cube:
+				if (texCoords == nullptr)
+				{
+					texCoords = coords;
+				}
 				Renderer::DrawCube(transform, renderData.TilingFactor, renderData.Texture, texCoords, renderData.Colour);
 				break;
 			default:
