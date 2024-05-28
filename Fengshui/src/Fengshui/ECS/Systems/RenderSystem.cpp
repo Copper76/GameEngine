@@ -16,17 +16,20 @@ namespace Fengshui
 
 			glm::vec2* texCoords = renderData.TexCoords;
 
-			switch (renderData.Shape)
+			switch (renderData.Shape->GetType())
 			{
-			case RenderShape::Cube:
+			case RenderShapeType::SHAPE_CUBE:
 				if (texCoords == nullptr)
 				{
 					texCoords = coords;
 				}
 				Renderer::DrawCube(transform, renderData.TilingFactor, renderData.Texture, texCoords, renderData.Colour);
 				break;
+			case RenderShapeType::SHAPE_CONVEX:
+				Renderer::DrawConvex(transform, renderData.Shape->GetVertexCoords(), renderData.Shape->GetTris(), renderData.Colour);
+				break;
 			default:
-				FS_ENGINE_ASSERT(false, "NO SUPPORT FOR CUSTOM 2D RENDERING")
+				FS_ENGINE_ASSERT(false, "NO SUPPORT FOR CUSTOM RENDERING")
 			}
 		}
 	}

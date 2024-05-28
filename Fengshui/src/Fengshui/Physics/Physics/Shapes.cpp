@@ -48,13 +48,13 @@ glm::vec3 g_boxWall1[] = {
 glm::vec3 g_boxUnit[] = {
 	glm::vec3(-0.5,-0.5,-0.5),
 	glm::vec3(0.5,-0.5,-0.5),
-	glm::vec3(-0.5, 0.5,-0.5),
 	glm::vec3(0.5, 0.5,-0.5),
+	glm::vec3(-0.5, 0.5,-0.5),
 
 	glm::vec3(-0.5,-0.5, 0.5),
 	glm::vec3(0.5,-0.5, 0.5),
-	glm::vec3(-0.5, 0.5, 0.5),
 	glm::vec3(0.5, 0.5, 0.5),
+	glm::vec3(-0.5, 0.5, 0.5),
 };
 
 static const float t = 0.25f;

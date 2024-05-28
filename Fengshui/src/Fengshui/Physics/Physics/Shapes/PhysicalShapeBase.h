@@ -15,7 +15,8 @@ namespace Fengshui
 	Shape
 	====================================================
 	*/
-	class Shape {
+	class PhysicalShape
+	{
 	public:
 		//virtual void Build(const Vec3* pts, const int num) {}
 		virtual void Build(const glm::vec3* pts, const int num) {}
@@ -32,12 +33,12 @@ namespace Fengshui
 		//virtual Vec3 GetCenterOfMass() const { return m_centerOfMass; }
 		virtual glm::vec3 GetCenterOfMass(const glm::vec3 offset, const glm::vec3 scale) const { return (m_centerOfMass * scale) + offset; }
 
-		enum shapeType_t {
+		enum PhysicalShapeType {
 			SHAPE_SPHERE,
 			SHAPE_BOX,
 			SHAPE_CONVEX,
 		};
-		virtual shapeType_t GetType() const = 0;
+		virtual PhysicalShapeType GetType() const = 0;
 
 		//virtual float FastestLinearSpeed( const Vec3& angularVelocity, const Vec3& dir ) const { return 0.0f; }
 		virtual float FastestLinearSpeed(const glm::vec3& angularVelocity, const glm::vec3& dir) const { return 0.0f; }

@@ -2,7 +2,7 @@
 //	ShapeBox.h
 //
 #pragma once
-#include "ShapeBase.h"
+#include "PhysicalShapeBase.h"
 
 /*
 ====================================================
@@ -11,13 +11,13 @@ ShapeBox
 */
 namespace Fengshui
 {
-	class ShapeBox : public Shape {
+	class PhysicalShapeBox : public PhysicalShape {
 	public:
 		/*explicit ShapeBox( const Vec3 * pts, const int num ) {
 			Build( pts, num );
 		}*/
 
-		explicit ShapeBox(const glm::vec3* pts, const int num) {
+		explicit PhysicalShapeBox(const glm::vec3* pts, const int num) {
 			Build(pts, num);
 		}
 		//void Build( const Vec3* pts, const int num ) override;
@@ -36,7 +36,7 @@ namespace Fengshui
 		//float FastestLinearSpeed( const Vec3 & angularVelocity, const Vec3 & dir ) const override;
 		float FastestLinearSpeed(const glm::vec3& angularVelocity, const glm::vec3& dir) const override;
 
-		shapeType_t GetType() const override { return SHAPE_BOX; }
+		PhysicalShapeType GetType() const override { return SHAPE_BOX; }
 
 	public:
 		//std::vector< Vec3 > m_points;

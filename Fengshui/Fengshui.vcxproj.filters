@@ -198,16 +198,16 @@
     <ClInclude Include="src\Fengshui\Physics\Physics\Shapes.h">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeBase.h">
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeBase.h">
       <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeBox.h">
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeBox.h">
       <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeConvex.h">
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeConvex.h">
       <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeSphere.h">
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeSphere.h">
       <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.h">
@@ -276,6 +276,10 @@
     <ClInclude Include="src\Fengshui\ECS\Systems\PhysicsSystem.h" />
     <ClInclude Include="src\Fengshui\Physics\Helper.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems\TransformSystem.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeBase.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeCube.h" />
+    <ClInclude Include="src\Fengshui\Core\Geometry.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp">
@@ -359,13 +363,13 @@
     <ClCompile Include="src\Fengshui\Physics\Physics\Shapes.cpp">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\ShapeBox.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeBox.cpp">
       <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\ShapeConvex.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeConvex.cpp">
       <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\ShapeSphere.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeSphere.cpp">
       <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -434,5 +438,6 @@
     <ClCompile Include="src\Fengshui\ECS\Systems\PhysicsSystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\TransformSystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\ECS.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\RenderShapes\RenderShapeCube.cpp" />
   </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
 
 #include "Fengshui/ECS/Components.h"
 
-#include "ShapeConvex.h"
+#include "PhysicalShapeConvex.h"
 #include <glm/gtx/norm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
@@ -529,7 +529,7 @@ namespace Fengshui
 	ShapeConvex::Build
 	====================================================
 	*/
-	void ShapeConvex::Build(const glm::vec3* pts, const int num) {
+	void PhysicalShapeConvex::Build(const glm::vec3* pts, const int num) {
 		m_points.clear();
 		m_points.reserve(num);
 		for (int i = 0; i < num; i++) {
@@ -554,7 +554,7 @@ namespace Fengshui
 	ShapeConvex::Support
 	====================================================
 	*/
-	glm::vec3 ShapeConvex::Support(const glm::vec3& dir, const Transform transform, const float bias) const {
+	glm::vec3 PhysicalShapeConvex::Support(const glm::vec3& dir, const Transform transform, const float bias) const {
 		glm::vec3 maxPt = (transform.Rotation * m_points[0]) * transform.Scale + transform.Position;
 		float maxDist = glm::dot(dir, maxPt);
 		for (int i = 1; i < m_points.size(); i++) {
@@ -573,7 +573,7 @@ namespace Fengshui
 		return maxPt + norm;
 	}
 
-	glm::mat3 ShapeConvex::InertiaTensor(const Transform transform) const
+	glm::mat3 PhysicalShapeConvex::InertiaTensor(const Transform transform) const
 	{
 		return m_inertiaTensor;
 	}
@@ -583,7 +583,7 @@ namespace Fengshui
 	ShapeConvex::GetBounds
 	====================================================
 	*/
-	Bounds ShapeConvex::GetBounds(const Transform transform) const {
+	Bounds PhysicalShapeConvex::GetBounds(const Transform transform) const {
 		glm::vec3 corners[8];
 
 		corners[0] = glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.mins.z);
@@ -604,7 +604,7 @@ namespace Fengshui
 		return bounds;
 	}
 
-	Bounds ShapeConvex::GetBounds(const glm::vec3 scale) const
+	Bounds PhysicalShapeConvex::GetBounds(const glm::vec3 scale) const
 	{
 		glm::vec3 corners[8];
 
@@ -631,7 +631,7 @@ namespace Fengshui
 	ShapeConvex::FastestLinearSpeed
 	====================================================
 	*/
-	float ShapeConvex::FastestLinearSpeed(const glm::vec3& angularVelocity, const glm::vec3& dir) const {
+	float PhysicalShapeConvex::FastestLinearSpeed(const glm::vec3& angularVelocity, const glm::vec3& dir) const {
 		float maxSpeed = 0.0f;
 		for (int i = 0; i < m_points.size(); i++) {
 			glm::vec3 r = m_points[i] - m_centerOfMass;

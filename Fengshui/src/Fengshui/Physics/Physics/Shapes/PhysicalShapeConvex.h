@@ -2,7 +2,7 @@
 //	ShapeConvex.h
 //
 #pragma once
-#include "ShapeBase.h"
+#include "PhysicalShapeBase.h"
 
 namespace Fengshui
 {
@@ -29,12 +29,12 @@ namespace Fengshui
 	ShapeConvex
 	====================================================
 	*/
-	class ShapeConvex : public Shape {
+	class PhysicalShapeConvex : public PhysicalShape {
 	public:
 		/*explicit ShapeConvex( const Vec3 * pts, const int num ) {
 			Build( pts, num );
 		}*/
-		explicit ShapeConvex(const glm::vec3* pts, const int num) {
+		explicit PhysicalShapeConvex(const glm::vec3* pts, const int num) {
 			Build(pts, num);
 		}
 
@@ -54,7 +54,7 @@ namespace Fengshui
 		//float FastestLinearSpeed( const Vec3 & angularVelocity, const Vec3 & dir ) const override;
 		float FastestLinearSpeed(const glm::vec3& angularVelocity, const glm::vec3& dir) const override;
 
-		shapeType_t GetType() const override { return SHAPE_CONVEX; }
+		PhysicalShapeType GetType() const override { return SHAPE_CONVEX; }
 
 	public:
 		std::vector<glm::vec3> m_points;

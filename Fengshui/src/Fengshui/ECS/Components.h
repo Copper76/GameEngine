@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Fengshui/Renderer/RenderShapes/RenderShapes.h"
 #include "Fengshui/Renderer/VertexArray.h"
 #include "Fengshui/Renderer/Texture.h"
 #include "Fengshui/Renderer/SubTexture2D.h"
@@ -17,11 +18,6 @@ namespace Fengshui
 	enum class RenderShape2D
 	{
 		Custom, Quad
-	};
-
-	enum class RenderShape
-	{
-		Custom, Cube
 	};
 
 	struct Tag
@@ -123,15 +119,13 @@ namespace Fengshui
 
 	struct Collider
 	{
-		//Ref<Shape> Shape = nullptr;
-		Shape* Shape = nullptr;
+		PhysicalShape* Shape = nullptr;
 		glm::vec3 Offset = glm::vec3(0.0f);
 		glm::vec3 Size = glm::vec3(1.0f);
 
 		Collider()
 		{
-			//Shape = std::make_shared<ShapeBox>(g_boxUnit, sizeof(g_boxUnit) / sizeof(Vec3));
-			Shape = new ShapeBox(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
+			Shape = new PhysicalShapeBox(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
 		}
 	};
 
@@ -189,16 +183,16 @@ namespace Fengshui
 		glm::vec2* TexCoords = nullptr;
 		glm::vec4 Colour = { 1.0f, 1.0f, 1.0f, 1.0f };
 		float TilingFactor = 1.0f;
-		RenderShape Shape = RenderShape::Cube;
+		RenderShape* Shape = nullptr;
 
 		Render()
 		{
-
+			Shape = new RenderShapeCube(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
 		}
 
 		Render(Ref<Fengshui::Texture> texture) : Texture(texture)
 		{
-
+			Shape = new RenderShapeCube(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
 		}
 
 		Render(Ref<Fengshui::Texture> texture, glm::vec2* coords) : Texture(texture)
@@ -208,14 +202,16 @@ namespace Fengshui
 			{
 				TexCoords[i] = coords[i];
 			}
+
+			Shape = new RenderShapeCube(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
 		}
 
 		Render(glm::vec4 colour) : Colour(colour)
 		{
-
+			Shape = new RenderShapeCube(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
 		}
 
-		Render(Ref<Fengshui::Texture> texture, glm::vec2* coords, glm::vec4 colour, float tilingFactor, RenderShape shape)
+		Render(Ref<Fengshui::Texture> texture, glm::vec2* coords, glm::vec4 colour, float tilingFactor, RenderShape* shape)
 			: Texture(texture), Colour(colour), TilingFactor(tilingFactor), Shape(shape)
 		{
 			TexCoords = new glm::vec2[4];

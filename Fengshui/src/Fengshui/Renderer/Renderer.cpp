@@ -247,4 +247,89 @@ namespace Fengshui
 			s_Data.ShapeIndexCount += 6;
 		}
 	}
+
+	void Renderer::DrawConvex(const glm::vec3& position, const glm::vec3& size, const glm::vec3 rotation, const std::vector<glm::vec3>& vertexCoords, const  std::vector<Triangle>& tris, const glm::vec4& colour)
+	{
+		glm::mat4 transform;
+		transform = glm::scale(glm::rotate(glm::rotate(glm::rotate(glm::translate(glm::mat4(1.0f), position), glm::radians(rotation.x), glm::vec3{ 1.0f, 0.0f, 0.0f }),
+			glm::radians(rotation.y), glm::vec3{ 0.0f, 1.0f, 0.0f }),
+			glm::radians(rotation.z), glm::vec3{ 0.0f, 0.0f, 1.0f }), size);
+		DrawConvex(transform, vertexCoords, tris, colour);
+	}
+
+	void Renderer::DrawConvex(const glm::mat4 transform, const std::vector<glm::vec3>& vertexCoords, const std::vector<Triangle>& tris, const glm::vec4& colour)
+	{
+		if (s_Data.ShapeIndexCount >= RendererConfig::MaxIndices)
+		{
+			Flush();
+			PrepareNextBatch();
+		}
+
+		float textureIndex = 0.0f;
+
+		//if (texture)
+		//{
+		//	for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+		//	{
+		//		if (*s_Data.TextureSlots[i] == *texture)
+		//		{
+		//			textureIndex = (float)i;
+		//			break;
+		//		}
+		//	}
+		//	if (textureIndex == 0.0f)
+		//	{
+		//		if (s_Data.TextureSlotIndex >= RendererConfig::MaxTextureSlots)
+		//		{
+		//			Flush();
+		//			PrepareNextBatch();
+		//		}
+		//		textureIndex = (float)s_Data.TextureSlotIndex;
+		//		s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+		//		s_Data.TextureSlotIndex++;
+		//	}
+		//
+
+		for (Triangle tri : tris)
+		{
+			s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.a], 1.0f };
+			s_Data.ShapeVertexBufferPtr->Colour = colour;
+			//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
+			s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
+			s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
+			//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
+			s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
+			s_Data.ShapeVertexBufferPtr++;
+
+			s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.b], 1.0f };
+			s_Data.ShapeVertexBufferPtr->Colour = colour;
+			//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
+			s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
+			s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
+			//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
+			s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
+			s_Data.ShapeVertexBufferPtr++;
+
+			s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.c], 1.0f };
+			s_Data.ShapeVertexBufferPtr->Colour = colour;
+			//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
+			s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
+			s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
+			//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
+			s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
+			s_Data.ShapeVertexBufferPtr++;
+		}
+
+		uint32_t indexCount = tris.size() * 3;
+		uint32_t vertexBase = s_Data.ShapeVertexCount;
+		uint32_t indexBase = s_Data.ShapeIndexCount;
+
+		for (uint32_t offset = 0; offset < indexCount; offset++)
+		{
+			s_Data.ShapeIndexBufferPtr[indexBase+offset] = vertexBase + offset;
+		}
+
+		s_Data.ShapeVertexCount += indexCount;
+		s_Data.ShapeIndexCount += indexCount;
+	}
 }

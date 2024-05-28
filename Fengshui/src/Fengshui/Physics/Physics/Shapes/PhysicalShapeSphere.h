@@ -2,7 +2,7 @@
 //	ShapeSphere.h
 //
 #pragma once
-#include "ShapeBase.h"
+#include "PhysicalShapeBase.h"
 
 namespace Fengshui
 {
@@ -11,12 +11,12 @@ namespace Fengshui
 ShapeSphere
 ====================================================
 */
-	class ShapeSphere : public Shape {
+	class PhysicalShapeSphere : public PhysicalShape {
 	public:
 		/*explicit ShapeSphere( const float radius ) : m_radius( radius ) {
 			m_centerOfMass.Zero();
 		}*/
-		explicit ShapeSphere(const float radius) : m_radius(radius) {
+		explicit PhysicalShapeSphere(const float radius) : m_radius(radius) {
 			m_centerOfMass = glm::vec3(0.0f);
 		}
 
@@ -30,7 +30,7 @@ ShapeSphere
 		Bounds GetBounds(const Transform transform) const override;
 		Bounds GetBounds(const glm::vec3 scale) const override;
 
-		shapeType_t GetType() const override { return SHAPE_SPHERE; }
+		PhysicalShapeType GetType() const override { return SHAPE_SPHERE; }
 
 	public:
 		float m_radius;

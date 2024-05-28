@@ -2,9 +2,9 @@
 //	Shapes.h
 //
 #pragma once
-#include "Shapes/ShapeSphere.h"
-#include "Shapes/ShapeBox.h"
-#include "Shapes/ShapeConvex.h"
+#include "Shapes/PhysicalShapeSphere.h"
+#include "Shapes/PhysicalShapeBox.h"
+#include "Shapes/PhysicalShapeConvex.h"
 
 extern glm::vec3 g_boxGround[ 8 ];
 extern glm::vec3 g_boxWall0[ 8 ];

@@ -143,6 +143,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Fengshui\Core\Geometry.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeCube.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeBase.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems\PhysicsSystem.h" />
     <ClInclude Include="External\stb_image\stb_image.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems\GravitySystem.h" />
@@ -194,10 +197,10 @@
     <ClInclude Include="src\Fengshui\Physics\Physics\Intersections.h" />
     <ClInclude Include="src\Fengshui\Physics\Physics\Manifold.h" />
     <ClInclude Include="src\Fengshui\Physics\Physics\Shapes.h" />
-    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeBase.h" />
-    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeBox.h" />
-    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeConvex.h" />
-    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\ShapeSphere.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeBase.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeBox.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeConvex.h" />
+    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeSphere.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLFramebuffer.h" />
@@ -213,6 +216,7 @@
     <ClInclude Include="src\Fengshui\Renderer\Renderer.h" />
     <ClInclude Include="src\Fengshui\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Fengshui\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapes.h" />
     <ClInclude Include="src\Fengshui\Renderer\Shader.h" />
     <ClInclude Include="src\Fengshui\Renderer\SubTexture2D.h" />
     <ClInclude Include="src\Fengshui\Renderer\Texture.h" />
@@ -220,6 +224,7 @@
     <ClInclude Include="src\fspch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Fengshui\Renderer\RenderShapes\RenderShapeCube.cpp" />
     <ClCompile Include="src\Fengshui\ECS\ECS.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\PhysicsSystem.cpp" />
     <ClCompile Include="External\stb_image\stb_image.cpp" />
@@ -253,9 +258,9 @@
     <ClCompile Include="src\Fengshui\Physics\Physics\Intersections.cpp" />
     <ClCompile Include="src\Fengshui\Physics\Physics\Manifold.cpp" />
     <ClCompile Include="src\Fengshui\Physics\Physics\Shapes.cpp" />
-    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\ShapeBox.cpp" />
-    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\ShapeConvex.cpp" />
-    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\ShapeSphere.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeBox.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeConvex.cpp" />
+    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeSphere.cpp" />
     <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLFramebuffer.cpp" />

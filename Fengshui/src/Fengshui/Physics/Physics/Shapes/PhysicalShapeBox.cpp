@@ -5,13 +5,13 @@
 
 #include "Fengshui/ECS/Components.h"
 
-#include "ShapeBox.h"
+#include "PhysicalShapeBox.h"
 #include <glm/gtx/norm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
 namespace Fengshui
 {
-	void ShapeBox::Build(const glm::vec3* pts, const int num) {
+	void PhysicalShapeBox::Build(const glm::vec3* pts, const int num) {
 		for (int i = 0; i < num; i++) {
 			m_bounds.Expand(pts[i]);
 		}
@@ -35,7 +35,7 @@ namespace Fengshui
 	ShapeBox::Support
 	====================================================
 	*/
-	glm::vec3 ShapeBox::Support(const glm::vec3& dir, const Transform transform, const float bias) const {
+	glm::vec3 PhysicalShapeBox::Support(const glm::vec3& dir, const Transform transform, const float bias) const {
 		glm::vec3 maxPt = (transform.Rotation * m_points[0]) * transform.Scale + transform.Position;
 		float maxDist = glm::dot(dir, maxPt);
 		for (int i = 1; i < m_points.size(); i++) {
@@ -57,7 +57,7 @@ namespace Fengshui
 	ShapeBox::InertiaTensor
 	====================================================
 	*/
-	glm::mat3 ShapeBox::InertiaTensor(const Transform transform) const {
+	glm::mat3 PhysicalShapeBox::InertiaTensor(const Transform transform) const {
 		//inertiaTensor around origin
 		glm::mat3 tensor = glm::mat3(0.0f);
 		Bounds bounds = GetBounds(transform.Scale);
@@ -89,7 +89,7 @@ namespace Fengshui
 	ShapeBox::GetBounds
 	====================================================
 	*/
-	Bounds ShapeBox::GetBounds(const Transform transform) const {
+	Bounds PhysicalShapeBox::GetBounds(const Transform transform) const {
 		glm::vec3 corners[8];
 
 		corners[0] = glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.mins.z);
@@ -110,7 +110,7 @@ namespace Fengshui
 		return bounds;
 	}
 
-	Bounds ShapeBox::GetBounds(const glm::vec3 scale) const {
+	Bounds PhysicalShapeBox::GetBounds(const glm::vec3 scale) const {
 		glm::vec3 corners[8];
 
 		corners[0] = glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.mins.z);
@@ -136,7 +136,7 @@ namespace Fengshui
 	ShapeBox::FastestLinearSpeed
 	====================================================
 	*/
-	float ShapeBox::FastestLinearSpeed(const  glm::vec3& angularVelocity, const  glm::vec3& dir) const {
+	float PhysicalShapeBox::FastestLinearSpeed(const  glm::vec3& angularVelocity, const  glm::vec3& dir) const {
 		float maxSpeed = 0.0f;
 		for (int i = 0; i < m_points.size(); i++) {
 			glm::vec3 r = m_points[i] - m_centerOfMass;

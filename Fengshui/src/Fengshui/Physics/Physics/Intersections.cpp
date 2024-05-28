@@ -10,7 +10,7 @@
 
 namespace Fengshui
 {
-	bool SphereSphereStatic(const ShapeSphere* sphereA, const ShapeSphere* sphereB, const glm::vec3& posA, const glm::vec3& posB, glm::vec3& ptOnA, glm::vec3& ptOnB) {
+	bool SphereSphereStatic(const PhysicalShapeSphere* sphereA, const PhysicalShapeSphere* sphereB, const glm::vec3& posA, const glm::vec3& posB, glm::vec3& ptOnA, glm::vec3& ptOnB) {
 		const glm::vec3 ab = posB - posA;
 		glm::vec3 norm = glm::normalize(ab);
 
@@ -50,9 +50,9 @@ namespace Fengshui
 		const Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
 		const Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
 
-		if (colliderA.Shape->GetType() == Shape::SHAPE_SPHERE && colliderB.Shape->GetType() == Shape::SHAPE_SPHERE) {
-			const ShapeSphere* sphereA = (const ShapeSphere*)colliderA.Shape;
-			const ShapeSphere* sphereB = (const ShapeSphere*)colliderB.Shape;
+		if (colliderA.Shape->GetType() == PhysicalShape::SHAPE_SPHERE && colliderB.Shape->GetType() == PhysicalShape::SHAPE_SPHERE) {
+			const PhysicalShapeSphere* sphereA = (const PhysicalShapeSphere*)colliderA.Shape;
+			const PhysicalShapeSphere* sphereB = (const PhysicalShapeSphere*)colliderB.Shape;
 
 			glm::vec3 posA = transA.Position;
 			glm::vec3 posB = transB.Position;
@@ -129,7 +129,7 @@ namespace Fengshui
 		return true;
 	}
 
-	bool SphereSphereDynamic(const ShapeSphere* shapeA, const ShapeSphere* shapeB, const glm::vec3& posA, const glm::vec3& posB, const glm::vec3& velA, const glm::vec3& velB, const float dt, glm::vec3& ptOnA, glm::vec3& ptOnB, float& toi) {
+	bool SphereSphereDynamic(const PhysicalShapeSphere* shapeA, const PhysicalShapeSphere* shapeB, const glm::vec3& posA, const glm::vec3& posB, const glm::vec3& velA, const glm::vec3& velB, const float dt, glm::vec3& ptOnA, glm::vec3& ptOnB, float& toi) {
 		const glm::vec3 relativeVelocity = velA - velB;
 
 		const glm::vec3 startPtA = posA;
@@ -200,9 +200,9 @@ namespace Fengshui
 		const Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
 		const Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
 
-		if (colliderA.Shape->GetType() == Shape::SHAPE_SPHERE && colliderB.Shape->GetType() == Shape::SHAPE_SPHERE) {
-			const ShapeSphere* sphereA = (const ShapeSphere*)colliderA.Shape;
-			const ShapeSphere* sphereB = (const ShapeSphere*)colliderB.Shape;
+		if (colliderA.Shape->GetType() == PhysicalShape::SHAPE_SPHERE && colliderB.Shape->GetType() == PhysicalShape::SHAPE_SPHERE) {
+			const PhysicalShapeSphere* sphereA = (const PhysicalShapeSphere*)colliderA.Shape;
+			const PhysicalShapeSphere* sphereB = (const PhysicalShapeSphere*)colliderB.Shape;
 
 			glm::vec3 posA = transA.Position;
 			glm::vec3 posB = transB.Position;
