@@ -331,5 +331,29 @@ namespace Fengshui
 
 		s_Data.ShapeVertexCount += indexCount;
 		s_Data.ShapeIndexCount += indexCount;
+
+		//for (glm::vec3 coords : vertexCoords)
+		//{
+		//	s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ coords, 1.0f };
+		//	s_Data.ShapeVertexBufferPtr->Colour = colour;
+		//	//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
+		//	s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
+		//	s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
+		//	//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
+		//	s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
+		//	s_Data.ShapeVertexBufferPtr++;
+		//}
+
+		//uint32_t indexCount = tris.size() * 3;
+		//uint32_t vertexBase = s_Data.ShapeVertexCount;
+		//uint32_t indexBase = s_Data.ShapeIndexCount;
+
+		//for (uint32_t offset = 0; offset < indexCount; offset++)
+		//{
+		//	s_Data.ShapeIndexBufferPtr[indexBase + offset] = vertexBase + offset;
+		//}
+
+		//s_Data.ShapeVertexCount += vertexCoords.size();
+		//s_Data.ShapeIndexCount += indexCount;
 	}
 }

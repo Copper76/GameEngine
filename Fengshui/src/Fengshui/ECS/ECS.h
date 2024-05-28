@@ -22,8 +22,6 @@ namespace Fengshui
 	const ComponentType MAX_COMPONENTS = 32;
 
 	using Signature = std::bitset<MAX_COMPONENTS>;
-
-	class Scene;
 #pragma endregion
 
 #pragma region Data Structure
@@ -99,8 +97,5 @@ namespace Fengshui
 		std::set<EntityID> m_Entities;//Entities are stored as set in system
 	};
 
-#pragma endregion
-
-#pragma region Individual Managers
 #pragma endregion
 }

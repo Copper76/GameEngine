@@ -576,7 +576,7 @@ namespace Fengshui
 		return lambdas;
 	}
 
-	glm::vec3 NormalDirection(const tri_t& tri, const std::vector<point_t>& points) {
+	glm::vec3 NormalDirection(const Triangle& tri, const std::vector<point_t>& points) {
 		const glm::vec3& a = points[tri.a].xyz;
 		const glm::vec3& b = points[tri.b].xyz;
 		const glm::vec3& c = points[tri.c].xyz;
@@ -587,19 +587,19 @@ namespace Fengshui
 		return normal;
 	}
 
-	float SignedDistanceToTriangle(const tri_t& tri, const glm::vec3& pt, const std::vector<point_t>& points) {
+	float SignedDistanceToTriangle(const Triangle& tri, const glm::vec3& pt, const std::vector<point_t>& points) {
 		const glm::vec3 normal = NormalDirection(tri, points);
 		const glm::vec3& a = points[tri.a].xyz;
 		const float dist = glm::dot(normal, (pt - a));
 		return dist;
 	}
 
-	int ClosestTriangle(const std::vector<tri_t>& triangles, const std::vector<point_t>& points) {
+	int ClosestTriangle(const std::vector<Triangle>& triangles, const std::vector<point_t>& points) {
 		float minDistSqr = 1e10;//manual unlikely upperbound, like python's math.inf
 
 		int idx = -1;
 		for (int i = 0; i < triangles.size(); i++) {
-			const tri_t& tri = triangles[i];
+			const Triangle& tri = triangles[i];
 
 			float dist = SignedDistanceToTriangle(tri, glm::vec3(0.0f), points);
 			float distSqr = dist * dist;
@@ -612,12 +612,12 @@ namespace Fengshui
 		return idx;
 	}
 
-	bool HasPoint(const glm::vec3& w, const std::vector<tri_t> triangles, const std::vector<point_t>& points) {
+	bool HasPoint(const glm::vec3& w, const std::vector<Triangle> triangles, const std::vector<point_t>& points) {
 		const float epsilons = 0.001f * 0.001f;
 		glm::vec3 delta;
 
 		for (int i = 0; i < triangles.size(); i++) {
-			const tri_t& tri = triangles[i];
+			const Triangle& tri = triangles[i];
 
 			delta = w - points[tri.a].xyz;
 			if (glm::length2(delta) < epsilons) {
@@ -635,10 +635,10 @@ namespace Fengshui
 		return false;
 	}
 
-	int RemoveTrianglesFacingPoint(const glm::vec3& pt, std::vector<tri_t>& triangles, const std::vector<point_t>& points) {
+	int RemoveTrianglesFacingPoint(const glm::vec3& pt, std::vector<Triangle>& triangles, const std::vector<point_t>& points) {
 		int numRemoved = 0;
 		for (int i = 0; i < triangles.size(); i++) {
-			const tri_t& tri = triangles[i];
+			const Triangle& tri = triangles[i];
 
 			float dist = SignedDistanceToTriangle(tri, pt, points);
 			if (dist > 0.0f) {//this triangle faces the point
@@ -650,13 +650,13 @@ namespace Fengshui
 		return numRemoved;
 	}
 
-	void FindDanglingEdges(std::vector<edge_t>& danglingEdges, const std::vector<tri_t>& triangles) {
+	void FindDanglingEdges(std::vector<Edge>& danglingEdges, const std::vector<Triangle>& triangles) {
 		danglingEdges.clear();
 
 		for (int i = 0; i < triangles.size(); i++) {
-			const tri_t tri = triangles[i];
+			const Triangle tri = triangles[i];
 
-			edge_t edges[3];
+			Edge edges[3];
 			edges[0].a = tri.a;
 			edges[0].b = tri.b;
 
@@ -676,9 +676,9 @@ namespace Fengshui
 					continue;
 				}
 
-				const tri_t tri2 = triangles[j];
+				const Triangle tri2 = triangles[j];
 
-				edge_t edges2[3];
+				Edge edges2[3];
 				edges2[0].a = tri2.a;
 				edges2[0].b = tri2.b;
 
@@ -711,8 +711,8 @@ namespace Fengshui
 
 	float EPA_Expand(const Collider colliderA, const Transform transA, const Collider colliderB, const Transform transB, const float bias, const point_t simplexPoints[4], glm::vec3& ptOnA, glm::vec3& ptOnB) {
 		std::vector<point_t> points;
-		std::vector<tri_t> triangles;
-		std::vector<edge_t> danglingEdges;
+		std::vector<Triangle> triangles;
+		std::vector<Edge> danglingEdges;
 
 		glm::vec3 center(0.0f);
 		for (int i = 0; i < 4; i++) {
@@ -725,7 +725,7 @@ namespace Fengshui
 			int j = (i + 1) % 4;
 			int k = (i + 2) % 4;
 
-			tri_t tri;
+			Triangle tri;
 			tri.a = i;
 			tri.b = j;
 			tri.c = k;
@@ -775,9 +775,9 @@ namespace Fengshui
 
 			//form new triangles using the newly added point and the dangling edges
 			for (int i = 0; i < danglingEdges.size(); i++) {
-				const edge_t& edge = danglingEdges[i];
+				const Edge& edge = danglingEdges[i];
 
-				tri_t triangle;
+				Triangle triangle;
 				triangle.a = newIdx;
 				triangle.b = edge.b;
 				triangle.c = edge.a;
@@ -794,7 +794,7 @@ namespace Fengshui
 
 		//get projection of the origin on the closest triangle
 		const int idx = ClosestTriangle(triangles, points);
-		const tri_t& tri = triangles[idx];
+		const Triangle& tri = triangles[idx];
 		glm::vec3 ptA_w = points[tri.a].xyz;
 		glm::vec3 ptB_w = points[tri.b].xyz;
 		glm::vec3 ptC_w = points[tri.c].xyz;

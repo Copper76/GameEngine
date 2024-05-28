@@ -65,7 +65,7 @@ namespace Fengshui
 		qsort(sortedArray, num * 2, sizeof(psuedoBody_t), CompareSAP);
 	}
 
-	void BuildPairs(std::vector< collisionPair_t >& collisionPairs, const psuedoBody_t* sortedBodies, const int num) {
+	void BuildPairs(std::vector<CollisionPair>& collisionPairs, const psuedoBody_t* sortedBodies, const int num) {
 		collisionPairs.clear();
 
 		//build collision pairs from sorted bodies
@@ -75,7 +75,7 @@ namespace Fengshui
 				continue;
 			}
 
-			collisionPair_t pair;
+			CollisionPair pair;
 			pair.a = a.id;
 
 			for (int j = i + 1; j < num * 2; j++) {
@@ -94,7 +94,7 @@ namespace Fengshui
 		}
 	}
 
-	void BroadPhase(const std::set<EntityID> entities, const int num, std::vector<collisionPair_t>& finalPairs, const float dt_sec) {
+	void BroadPhase(const std::set<EntityID> entities, const int num, std::vector<CollisionPair>& finalPairs, const float dt_sec) {
 		finalPairs.clear();//why clear twice
 		psuedoBody_t* sortedBodies = (psuedoBody_t*)_malloca(sizeof(psuedoBody_t) * num * 2);
 

@@ -30,5 +30,6 @@ namespace Fengshui
 	protected:
 		std::vector<glm::vec3> m_VertexCoords;
 		std::vector<Triangle> m_Tris;
+		RenderShapeType m_Shape;
 	};
 }

@@ -7,6 +7,8 @@
 
 namespace Fengshui
 {
+	class Scene;
+
 	class GeneralManager
 	{
 	public:

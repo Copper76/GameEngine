@@ -27,6 +27,8 @@
 #include "Fengshui/Renderer/VertexArray.h"
 #include "Fengshui/Renderer/Texture.h"
 
+#include "Fengshui/Renderer/RenderShapes/RenderShapes.h"
+
 //Inputs with mouse button and key codes
 #include "Fengshui/Core/Input.h"
 
@@ -37,6 +39,3 @@
 #include "Fengshui/ECS/GeneralManager.h"
 #include "Fengshui/ECS/Entity.h"
 
-
-//Physics
-//#include "Fengshui/Physics/Helper.h"

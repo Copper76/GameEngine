@@ -284,6 +284,9 @@
     <ClInclude Include="src\Fengshui\ECS\EntityManager.h" />
     <ClInclude Include="src\Fengshui\ECS\ComponentManager.h" />
     <ClInclude Include="src\Fengshui\ECS\SystemManager.h" />
+    <ClInclude Include="src\Fengshui\Core\Triangularisation\Delaunay.h" />
+    <ClInclude Include="src\Fengshui\Core\Triangularisation\FurthestPoint.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeConvex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp">
@@ -443,5 +446,6 @@
     <ClCompile Include="src\Fengshui\ECS\Systems\TransformSystem.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\RenderShapes\RenderShapeCube.cpp" />
     <ClCompile Include="src\Fengshui\ECS\GeneralManager.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\RenderShapes\RenderShapeConvex.cpp" />
   </ItemGroup>
 </Project>

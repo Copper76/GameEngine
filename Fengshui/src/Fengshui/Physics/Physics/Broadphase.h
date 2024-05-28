@@ -9,5 +9,5 @@
 
 namespace Fengshui
 {
-	void BroadPhase(const std::set<EntityID> entities, const int num, std::vector<collisionPair_t>& finalPairs, const float dt_sec);
+	void BroadPhase(const std::set<EntityID> entities, const int num, std::vector<CollisionPair>& finalPairs, const float dt_sec);
 }

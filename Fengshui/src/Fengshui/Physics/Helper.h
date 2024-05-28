@@ -8,14 +8,14 @@
 
 namespace Fengshui
 {
-	struct collisionPair_t {
+	struct CollisionPair {
 		EntityID a;
 		EntityID b;
 
-		bool operator == (const collisionPair_t& rhs) const {
+		bool operator == (const CollisionPair& rhs) const {
 			return (((a == rhs.a) && (b == rhs.b)) || ((a == rhs.b) && (b == rhs.a)));
 		}
-		bool operator != (const collisionPair_t& rhs) const {
+		bool operator != (const CollisionPair& rhs) const {
 			return !(*this == rhs);
 		}
 	};

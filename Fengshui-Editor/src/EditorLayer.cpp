@@ -102,6 +102,18 @@ namespace Fengshui
 		Transform bigSquareTrans = m_BigSquare->AddComponent<Transform>(Transform(glm::vec3(1.0f, 2.0f, 0.0f)));
 
 		m_BigSquare->AddComponent<Render>();
+		glm::vec3 pts[] =
+		{ glm::vec3(-0.5,-0.5,-0.5),
+		glm::vec3(0.5,-0.5,-0.5),
+		glm::vec3(0.5, 0.5,-0.5),
+		glm::vec3(-0.5, 0.5,-0.5),
+
+		glm::vec3(-0.5,-0.5, 0.5),
+		glm::vec3(0.5,-0.5, 0.5),
+		glm::vec3(0.5, 0.5, 0.5) };
+
+		Render test = m_BigSquare->AddComponent<Render>(Render(new RenderShapeConvex(pts, sizeof(pts) / sizeof(glm::vec3))));
+		//m_BigSquare->AddComponent<Render>();
 
 		m_BigSquare->AddComponent<Rigidbody>();
 		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>();

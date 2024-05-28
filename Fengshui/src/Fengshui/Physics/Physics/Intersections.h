@@ -7,6 +7,6 @@
 
 namespace Fengshui
 {
-	bool Intersect(const collisionPair_t pair, contact_t& contact);
-	bool Intersect(const collisionPair_t pair, const float dt, contact_t& contact);
+	bool Intersect(const CollisionPair pair, contact_t& contact);
+	bool Intersect(const CollisionPair pair, const float dt, contact_t& contact);
 }

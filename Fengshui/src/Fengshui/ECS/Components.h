@@ -190,6 +190,11 @@ namespace Fengshui
 			Shape = new RenderShapeCube(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
 		}
 
+		Render(RenderShape* shape) : Shape(shape)
+		{
+
+		}
+
 		Render(Ref<Fengshui::Texture> texture) : Texture(texture)
 		{
 			Shape = new RenderShapeCube(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));

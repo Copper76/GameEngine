@@ -6,24 +6,6 @@
 
 namespace Fengshui
 {
-	struct tri_t {
-		int a;
-		int b;
-		int c;
-	};
-
-	struct edge_t {
-		int a;
-		int b;
-
-		bool operator == (const edge_t& rhs) const {
-			return ((a == rhs.a && b == rhs.b) || (a == rhs.b && b == rhs.a));
-		}
-	};
-
-	//void BuildConvexHull( const std::vector< Vec3 > & verts, std::vector< Vec3 > & hullPts, std::vector< tri_t > & hullTris );
-	void BuildConvexHull(const std::vector<glm::vec3>& verts, std::vector<glm::vec3>& hullPts, std::vector< tri_t >& hullTris);
-
 	/*
 	====================================================
 	ShapeConvex

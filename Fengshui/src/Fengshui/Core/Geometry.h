@@ -4,8 +4,15 @@ namespace Fengshui
 {
 	struct Triangle
 	{
-		uint32_t a;
-		uint32_t b;
-		uint32_t c;
+		int a, b, c;
+	};
+
+	struct Edge {
+		int a;
+		int b;
+
+		bool operator == (const Edge& rhs) const {
+			return ((a == rhs.a && b == rhs.b) || (a == rhs.b && b == rhs.a));
+		}
 	};
 }

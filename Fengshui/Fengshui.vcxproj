@@ -143,7 +143,10 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeConvex.h" />
     <ClInclude Include="src\Fengshui\Core\Geometry.h" />
+    <ClInclude Include="src\Fengshui\Core\Triangularisation\Delaunay.h" />
+    <ClInclude Include="src\Fengshui\Core\Triangularisation\FurthestPoint.h" />
     <ClInclude Include="src\Fengshui\ECS\ComponentManager.h" />
     <ClInclude Include="src\Fengshui\ECS\EntityManager.h" />
     <ClInclude Include="src\Fengshui\ECS\GeneralManager.h" />
@@ -228,6 +231,7 @@
     <ClInclude Include="src\fspch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Fengshui\Renderer\RenderShapes\RenderShapeConvex.cpp" />
     <ClCompile Include="src\Fengshui\ECS\GeneralManager.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\RenderShapes\RenderShapeCube.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\PhysicsSystem.cpp" />

@@ -30,7 +30,7 @@ namespace Fengshui
 	Intersect Static
 	====================================================
 	*/
-	bool Intersect(const collisionPair_t pair, contact_t& contact) {
+	bool Intersect(const CollisionPair pair, contact_t& contact) {
 		const Rigidbody bodyA = GeneralManager::GetComponent<Rigidbody>(contact.bodyA);
 		const Rigidbody bodyB = GeneralManager::GetComponent<Rigidbody>(contact.bodyB);
 
@@ -180,7 +180,7 @@ namespace Fengshui
 
 
 	//dynamic
-	bool Intersect(const collisionPair_t pair, const float dt, contact_t& contact) {
+	bool Intersect(const CollisionPair pair, const float dt, contact_t& contact) {
 		Rigidbody& bodyA = GeneralManager::GetComponent<Rigidbody>(contact.bodyA);
 		Rigidbody& bodyB = GeneralManager::GetComponent<Rigidbody>(contact.bodyB);
 
