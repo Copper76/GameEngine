@@ -1,5 +1,6 @@
 #include "fspch.h"
 #include "Fengshui/ECS/Systems/CameraSystem.h"
+#include "Fengshui/ECS/GeneralManager.h"
 
 namespace Fengshui
 {

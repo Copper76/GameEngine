@@ -1,6 +1,7 @@
 #include "fspch.h"
 #include "GravitySystem.h"
 #include "Fengshui/Physics/Helper.h"
+#include "Fengshui/ECS/GeneralManager.h"
 
 namespace Fengshui
 {

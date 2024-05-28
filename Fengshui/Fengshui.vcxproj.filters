@@ -280,6 +280,10 @@
     <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeCube.h" />
     <ClInclude Include="src\Fengshui\Core\Geometry.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapes.h" />
+    <ClInclude Include="src\Fengshui\ECS\GeneralManager.h" />
+    <ClInclude Include="src\Fengshui\ECS\EntityManager.h" />
+    <ClInclude Include="src\Fengshui\ECS\ComponentManager.h" />
+    <ClInclude Include="src\Fengshui\ECS\SystemManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp">
@@ -437,7 +441,7 @@
     <ClCompile Include="src\Fengshui\ECS\Systems\GravitySystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\PhysicsSystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\TransformSystem.cpp" />
-    <ClCompile Include="src\Fengshui\ECS\ECS.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\RenderShapes\RenderShapeCube.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\GeneralManager.cpp" />
   </ItemGroup>
 </Project>

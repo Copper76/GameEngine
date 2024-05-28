@@ -1,5 +1,5 @@
 #include "fspch.h"
-#include "Fengshui/ECS/ECS.h"
+#include "Fengshui/ECS/GeneralManager.h"
 
 namespace Fengshui
 {

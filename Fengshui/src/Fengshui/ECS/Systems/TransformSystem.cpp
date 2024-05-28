@@ -1,5 +1,6 @@
 #include "fspch.h"
 #include "TransformSystem.h"
+#include "Fengshui/ECS/GeneralManager.h"
 
 namespace Fengshui
 {

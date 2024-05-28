@@ -2,6 +2,7 @@
 #include "RenderSystem2D.h"
 
 #include "Fengshui/Renderer/Renderer2D.h"
+#include "Fengshui/ECS/GeneralManager.h"
 
 namespace Fengshui
 {
