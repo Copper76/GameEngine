@@ -1,10 +1,10 @@
 #include "fspch.h"
 #include "PhysicsSystem.h"
 
-#include "Fengshui/Physics/Physics/Contact.h"
-#include "Fengshui/Physics/Physics/Intersections.h"
-#include "Fengshui/Physics/Physics/Broadphase.h"
-#include "Fengshui/Physics/Physics/Shapes.h"
+#include "Fengshui/Physics/Contact.h"
+#include "Fengshui/Physics/Intersections.h"
+#include "Fengshui/Physics/Broadphase.h"
+#include "Fengshui/Physics/Shapes.h"
 
 
 namespace Fengshui
@@ -23,35 +23,24 @@ namespace Fengshui
 		return 1;
 	}
 
-	void PhysicsSystem::AddConstraint(Constraint* constraint)
+	void PhysicsSystem::OnUpdate(float dt, Ref<ManifoldCollector> manifolds, std::vector<Ref<Constraint>> constraints)
 	{
-		m_Constraints.push_back(constraint);
-	}
-
-	void PhysicsSystem::RemoveConstraint(Constraint* constraint)
-	{
-		m_Constraints.erase(std::remove(m_Constraints.begin(), m_Constraints.end(), constraint), m_Constraints.end());
-	}
-
-	void PhysicsSystem::OnUpdate(float dt)
-	{
-		m_Manifolds.RemoveExpired();
+		manifolds->RemoveExpired();
 
 		//Broadphase to retain only the possible collsions to reduce collision calculation in the narrow phase
-		std::vector< collisionPair_t > collisionPairs;
-		BroadPhase(m_Entities, (int)m_Entities.size(), collisionPairs, dt);
+		std::vector<CollisionPair> collisionPairs;
+		BroadPhase(m_Entities, (int)m_Entities.size(), collisionPairs, dt);//Get components here
 
 		//narrow phase, where general contact and collision are calculated
 		int numContacts = 0;
-		const int maxContacts = (int)m_Entities.size() * (int)m_Entities.size();
-		contact_t* contacts = (contact_t*)alloca(sizeof(contact_t) * maxContacts);
+		contact_t* contacts = new contact_t[sizeof(contact_t) * collisionPairs.size()];
 		for (int i = 0; i < collisionPairs.size(); i++) {
-			const collisionPair_t& pair = collisionPairs[i];
+			const CollisionPair& pair = collisionPairs[i];
 
 			contact_t contact;
-			if (Intersect(pair, dt, contact)) {
+			if (Intersect(pair, dt, contact)) {//Get components here
 				if (contact.timeOfImpact == 0.0f) {
-					m_Manifolds.AddContact(contact);
+					manifolds->AddContact(contact);
 				}
 				else {//use dynamic contact checking
 					contacts[numContacts] = contact;
@@ -68,23 +57,24 @@ namespace Fengshui
 		//
 		//solve constraints for each constraint
 		//
-		for (int i = 0; i < m_Constraints.size(); i++) {
-			m_Constraints[i]->PreSolve(dt);
+		//Get componentsfor each
+		for (int i = 0; i < constraints.size(); i++) {
+			constraints[i]->PreSolve(dt);
 		}
-		m_Manifolds.PreSolve(dt);
+		manifolds->PreSolve(dt);
 
 		const int numIter = 5;
 		for (int j = 0; j < numIter; j++) {
-			for (int i = 0; i < m_Constraints.size(); i++) {
-				m_Constraints[i]->Solve();
+			for (int i = 0; i < constraints.size(); i++) {
+				constraints[i]->Solve();
 			}
-			m_Manifolds.Solve();
+			manifolds->Solve();
 		}
 
-		for (int i = 0; i < m_Constraints.size(); i++) {
-			m_Constraints[i]->PostSolve();
+		for (int i = 0; i < constraints.size(); i++) {
+			constraints[i]->PostSolve();
 		}
-		m_Manifolds.PostSolve();
+		manifolds->PostSolve();
 
 		float accumulatedTime = 0.0f;
 		for (int i = 0; i < numContacts; i++) {
@@ -93,17 +83,19 @@ namespace Fengshui
 
 			//Update the position up to next collision
 			for (EntityID entity : m_Entities) {
-				Update(dt_sec, entity);
+				Update(dt_sec, entity);//Get components here
 			}
-			ResolveContact(contact);
+			ResolveContact(contact);//Get components here
 			accumulatedTime += dt_sec;
 		}
+
+		delete[] contacts;
 
 		//Update the position for the rest of the frame's time
 		const float timeRemaining = dt - accumulatedTime;
 		if (timeRemaining > 0.0f) {
 			for (EntityID entity : m_Entities) {
-				Update(timeRemaining, entity);
+				Update(timeRemaining, entity);//Get components here
 			}
 		}
 	}

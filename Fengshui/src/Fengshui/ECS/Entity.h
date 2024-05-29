@@ -1,11 +1,12 @@
 #pragma once
 #include "Fengshui/ECS/ECS.h"
+#include "Fengshui/ECS/GeneralManager.h"
 
 namespace Fengshui
 {
 	class Scene;
 
-	class Entity
+	class Entity : public std::enable_shared_from_this<Entity>
 	{
 	public:
 		Entity(const std::string& name = "GameEntity", Ref<Entity> parent = nullptr);
@@ -46,11 +47,17 @@ namespace Fengshui
 
 		void SetParent(Ref<Entity> parent);
 
+		void SetParent(WeakRef<Entity> parent);
+
 		void AddChild(Ref<Entity> child);
+
+		void AddChild(WeakRef<Entity> child);
 
 		inline EntityID GetID() { return m_EntityID; }
 
 		inline std::string& Name() { return GetComponent<Tag>().Name; }
+
+		operator EntityID() const { return m_EntityID; }
 
 	private:
 		void SetParent(EntityID parentID);

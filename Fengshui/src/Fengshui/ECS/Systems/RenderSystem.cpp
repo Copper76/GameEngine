@@ -2,39 +2,35 @@
 #include "RenderSystem.h"
 
 #include "Fengshui/Renderer/Renderer.h"
+#include "Fengshui/ECS/GeneralManager.h"
 
 namespace Fengshui
 {
-	void RenderSystem::OnRender()
+	void RenderSystem::OnRender(Ref<TransformSystem> transformSystem)
 	{
-		glm::vec2 coords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f} };
+		glm::vec2 coords[] = { {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f}};
 		for (auto const& entity : m_Entities)
 		{
-			auto transformData = GeneralManager::GetComponent<Transform>(entity);
 			auto renderData = GeneralManager::GetComponent<Render>(entity);
-			auto hierarchyData = GeneralManager::GetComponent<Hierarchy>(entity);
 
-			EntityID curr = entity;
+			glm::mat4 transform = transformSystem->GetWorldTransformMatrix(entity);
 
-			glm::mat4 transform = glm::identity<glm::mat4>();
+			glm::vec2* texCoords = renderData.TexCoords;
 
-			while (curr != 0)
+			switch (renderData.Shape->GetType())
 			{
-				if (GeneralManager::HasComponent<Transform>(curr))
+			case RenderShapeType::SHAPE_CUBE:
+				if (texCoords == nullptr)
 				{
-					transform = GeneralManager::GetComponent<Transform>(curr).GetTransform() * transform;
+					texCoords = coords;
 				}
-				hierarchyData = GeneralManager::GetComponent<Hierarchy>(curr);
-				curr = hierarchyData.Parent;
-			}
-
-			switch (renderData.Shape)
-			{
-			case RenderShape::Cube:
-				Renderer::DrawCube(transform, renderData.TilingFactor, renderData.Texture, renderData.TexCoords, renderData.Colour);
+				Renderer::DrawCube(transform, renderData.TilingFactor, renderData.Texture, texCoords, renderData.Colour);
+				break;
+			case RenderShapeType::SHAPE_CONVEX:
+				Renderer::DrawConvex(transform, renderData.Shape->GetVertexCoords(), renderData.Shape->GetTris(), renderData.Colour);
 				break;
 			default:
-				FS_ENGINE_ASSERT(false, "NO SUPPORT FOR CUSTOM 2D RENDERING")
+				FS_ENGINE_ASSERT(false, "NO SUPPORT FOR CUSTOM RENDERING")
 			}
 		}
 	}

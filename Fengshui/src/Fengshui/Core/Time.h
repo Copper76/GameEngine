@@ -2,6 +2,9 @@
 
 namespace Fengshui
 {
+	/*
+	* A simple storage class used to calculate curent time and delta time
+	*/
 	class Time
 	{
 	public:

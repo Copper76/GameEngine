@@ -22,21 +22,20 @@ namespace Fengshui
 				SetParent(0);
 			}
 		}
+
+		GeneralManager::GetActiveScene()->AddEntity(std::shared_ptr<Entity>(this, [](Entity*) {}));
 	}
 
 	Entity::~Entity()
 	{
-		//if (m_Scene.lock())
 		if (m_Scene.lock())
 		{
 			GeneralManager::GetSystem<HierarchySystem>()->Destroy(m_EntityID);
-			//m_Scene.lock()->GetHierarchySystem()->Destroy(m_EntityID);
 		}
 	}
 
 	void Entity::SetParent(EntityID parentID)
 	{
-		//m_Scene.lock()->GetHierarchySystem()->SetParent(m_EntityID, parentID);
 		GeneralManager::GetSystem<HierarchySystem>()->SetParent(m_EntityID, parentID);
 	}
 
@@ -45,9 +44,18 @@ namespace Fengshui
 		SetParent(parent->GetID());
 	}
 
+	void Entity::SetParent(WeakRef<Entity> parent)
+	{
+		SetParent(parent.lock()->GetID());
+	}
+
 	void Entity::AddChild(Ref<Entity> child)
 	{
-		//m_Scene.lock()->GetHierarchySystem()->AddChild(m_EntityID, child->GetID());
 		GeneralManager::GetSystem<HierarchySystem>()->SetParent(child->GetID(), m_EntityID);
+	}
+
+	void Entity::AddChild(WeakRef<Entity> child)
+	{
+		GeneralManager::GetSystem<HierarchySystem>()->SetParent(child.lock()->GetID(), m_EntityID);
 	}
 }

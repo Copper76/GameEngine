@@ -1,7 +1,6 @@
 #pragma once
 
-//From glfw3.h
-/* Printable keys */
+//A list of all the keycodes, since glfw3 is used, these are keycodes taken from glfw3.h
 #define FS_KEY_SPACE              32
 #define FS_KEY_APOSTROPHE         39  /* ' */
 #define FS_KEY_COMMA              44  /* , */

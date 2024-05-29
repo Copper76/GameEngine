@@ -15,27 +15,6 @@ namespace Fengshui
 
 	}
 
-	Ref<VertexBuffer> VertexBuffer::Create(uint32_t size)
-	{
-		switch (Renderer::GetAPI())
-		{
-		case RendererAPI::API::None:
-		{
-			FS_ENGINE_ASSERT(false, "RenderAPI::None is not supported");
-			return nullptr;
-		}
-		case RendererAPI::API::OpenGL:
-		{
-			return std::make_shared<OpenGLVertexBuffer>(size);
-		}
-		default:
-		{
-			FS_ENGINE_ASSERT(false, "Unknown render API");
-			return nullptr;
-		}
-		}
-	}
-
 	Ref<VertexBuffer> VertexBuffer::Create(uint32_t size, float* vertices)
 	{
 		switch (Renderer::GetAPI())

@@ -22,7 +22,7 @@ namespace Fengshui
 	};
 }
 
-//FS_ENGINE_ERROR("{0}", bla bla) for placeholder
+//FS_ENGINE_ERROR("{0}", words) for placeholder
 
 //Engine logging
 #define FS_ENGINE_CRITICAL(...) ::Fengshui::Log::GetEngineLogger()->critical(__VA_ARGS__);
@@ -38,17 +38,3 @@ namespace Fengshui
 #define FS_WARN(...) ::Fengshui::Log::GetClientLogger()->warn(__VA_ARGS__);
 #define FS_INFO(...) ::Fengshui::Log::GetClientLogger()->info(__VA_ARGS__);
 #define FS_TRACE(...) ::Fengshui::Log::GetClientLogger()->trace(__VA_ARGS__);
-
-/**
-#define FS_CRITICAL(...) std::cout<< __VA_ARGS__ << std::endl;
-#define FS_ERROR(...) std::cout<< __VA_ARGS__ << std::endl;
-#define FS_WARN(...) std::cout<< __VA_ARGS__ << std::endl;
-#define FS_INFO(...) std::cout<< __VA_ARGS__ << std::endl;
-#define FS_TRACE(...) std::cout<< __VA_ARGS__ << std::endl;
-
-#define FS_CRITICAL(...)
-#define FS_ERROR(...)
-#define FS_WARN(...)
-#define FS_INFO(...)
-#define FS_TRACE(...)
-**/

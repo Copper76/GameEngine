@@ -12,6 +12,7 @@ namespace Fengshui
 
 	void Fengshui::PropertyPanel::DrawComponents(EntityID entity)
 	{
+		size_t imGuiID = 0;
 		if (GeneralManager::HasComponent<Tag>(entity))
 		{
 			auto& tag = GeneralManager::GetComponent<Tag>(entity);
@@ -48,11 +49,11 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				/*if (ImGui::Button("Remove"))
+				bool toRemove = false;
+				if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
 				{
-					GeneralManager::RemoveComponent<Transform>(entity);
+					toRemove = true;
 				}
-				else*/
 				{
 					bool valueChanged = false;
 					auto& transform = GeneralManager::GetComponent<Transform>(entity);
@@ -73,6 +74,11 @@ namespace Fengshui
 						GeneralManager::GetActiveScene()->UpdateViewMatrix(entity);
 					}
 				}
+				if (toRemove)
+				{
+					GeneralManager::RemoveComponent<Transform>(entity);
+					--imGuiID;
+				}
 			}
 		}
 		else
@@ -81,17 +87,22 @@ namespace Fengshui
 			{
 				if (ImGui::CollapsingHeader("Transform2D", ImGuiTreeNodeFlags_DefaultOpen))
 				{
-					/*if (ImGui::Button("Remove"))
+					bool toRemove = false;
+					if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
 					{
-						GeneralManager::RemoveComponent<Transform2D>(entity);
+						toRemove = true;
 					}
-					else*/
 					{
 						auto& transform2D = GeneralManager::GetComponent<Transform2D>(entity);
 
 						ImGui::DragFloat3("Position", glm::value_ptr(transform2D.Position), 0.5f);
 						ImGui::DragFloat("Rotation", &transform2D.Rotation, 0.1f);
 						ImGui::DragFloat2("Scale", glm::value_ptr(transform2D.Scale), 0.5f);
+					}
+					if (toRemove)
+					{
+						GeneralManager::RemoveComponent<Transform2D>(entity);
+						--imGuiID;
 					}
 				}
 			}
@@ -101,11 +112,11 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Rigidbody", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				/*if (ImGui::Button("Remove"))
+				bool toRemove = false;
+				if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
 				{
-					GeneralManager::RemoveComponent<Render>(entity);
+					toRemove = true;
 				}
-				else*/
 				{
 					auto& rigidbody = GeneralManager::GetComponent<Rigidbody>(entity);
 
@@ -129,6 +140,11 @@ namespace Fengshui
 					ImGui::DragFloat("Friction", &rigidbody.Friction, 0.1f, 0.0f, 1.0f);
 					ImGui::DragFloat("Elasticity", &rigidbody.Elasticity, 0.1f, 0.0f, 1.0f);
 				}
+				if (toRemove)
+				{
+					GeneralManager::RemoveComponent<Rigidbody>(entity);
+					--imGuiID;
+				}
 			}
 		}
 
@@ -136,16 +152,21 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Collider", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				/*if (ImGui::Button("Remove"))
+				bool toRemove = false;
+				if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
 				{
-					GeneralManager::RemoveComponent<Render>(entity);
+					toRemove = true;
 				}
-				else*/
 				{
 					auto& collider = GeneralManager::GetComponent<Collider>(entity);
 
 					ImGui::DragFloat3("Offset", glm::value_ptr(collider.Offset));
 					ImGui::DragFloat3("Size", glm::value_ptr(collider.Size));
+				}
+				if (toRemove)
+				{
+					GeneralManager::RemoveComponent<Collider>(entity);
+					--imGuiID;
 				}
 			}
 		}
@@ -154,15 +175,20 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Render", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				/*if (ImGui::Button("Remove"))
+				bool toRemove = false;
+				if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
 				{
-					GeneralManager::RemoveComponent<Render>(entity);
+					toRemove = true;
 				}
-				else*/
 				{
 					auto& render = GeneralManager::GetComponent<Render>(entity);
 
 					ImGui::ColorEdit4("Colour", glm::value_ptr(render.Colour));
+				}
+				if (toRemove)
+				{
+					GeneralManager::RemoveComponent<Render>(entity);
+					--imGuiID;
 				}
 			}
 		}
@@ -170,15 +196,20 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Render2D", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				/*if (ImGui::Button("Remove"))
+				bool toRemove = false;
+				if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
 				{
-					GeneralManager::RemoveComponent<Render2D>(entity);
+					toRemove = true;
 				}
-				else*/
 				{
 					auto& render2D = GeneralManager::GetComponent<Render2D>(entity);
 
 					ImGui::ColorEdit4("Colour", glm::value_ptr(render2D.Colour));
+				}
+				if (toRemove)
+				{
+					GeneralManager::RemoveComponent<Render2D>(entity);
+					--imGuiID;
 				}
 			}
 		}
@@ -187,14 +218,16 @@ namespace Fengshui
 		{
 			if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				/*if (ImGui::Button("Remove"))
+				bool toRemove = false;
+				if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
 				{
-					GeneralManager::RemoveComponent<CameraComponent>(entity);
+					toRemove = true;
 				}
-				else*/
 				{
 					bool valueChanged = false;
 					auto& camera = GeneralManager::GetComponent<CameraComponent>(entity);
+
+					ImGui::Checkbox("Primary", &camera.Primary);
 
 					if (ImGui::Checkbox("IsOrtho", &camera.IsOrtho))
 					{
@@ -222,17 +255,13 @@ namespace Fengshui
 						GeneralManager::GetActiveScene()->UpdateView();
 					}
 				}
+
+				if (toRemove)
+				{
+					GeneralManager::RemoveComponent<CameraComponent>(entity);
+					--imGuiID;
+				}
 			}
 		}
-		/*
-		if (ImGui::BeginCombo("Components", "Add Component"))
-		{
-			if (ImGui::Selectable("Transform"))
-			{
-				GeneralManager::AddComponent<Transform>(entity, Transform());
-			}
-			ImGui::EndCombo();
-		}
-		*/
 	}
 }

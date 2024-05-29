@@ -25,10 +25,12 @@ namespace Fengshui
 
 		Ref<VertexArray> QuadVertexArray;
 		Ref<VertexBuffer> QuadVertexBuffer;
+		Ref<IndexBuffer> QuadIndexBuffer;
 		Ref<Shader> StandardShader;
 
 		QuadVertex* QuadVertexBufferBase = 0;
 		QuadVertex* QuadVertexBufferPtr = 0;
+		uint32_t* QuadIndicesPtr = 0;
 
 		std::array<Ref<Texture2D>, MaxTextureSlots> TextureSlots;
 		uint32_t TextureSlotIndex = 1;
@@ -60,25 +62,25 @@ namespace Fengshui
 
 		s_Data.QuadVertexBufferBase = new QuadVertex[s_Data.MaxVertices];
 
-		uint32_t* quadIndices = new uint32_t[s_Data.MaxIndices];
+		s_Data.QuadIndicesPtr = new uint32_t[s_Data.MaxIndices];
 
 		uint32_t offset = 0;
 		for (uint32_t i = 0; i < s_Data.MaxIndices; i += 6)
 		{
-			quadIndices[i + 0] = offset + 0;
-			quadIndices[i + 1] = offset + 1;
-			quadIndices[i + 2] = offset + 2;
+			s_Data.QuadIndicesPtr[i + 0] = offset + 0;
+			s_Data.QuadIndicesPtr[i + 1] = offset + 1;
+			s_Data.QuadIndicesPtr[i + 2] = offset + 2;
 
-			quadIndices[i + 3] = offset + 2;
-			quadIndices[i + 4] = offset + 3;
-			quadIndices[i + 5] = offset + 0;
+			s_Data.QuadIndicesPtr[i + 3] = offset + 2;
+			s_Data.QuadIndicesPtr[i + 4] = offset + 3;
+			s_Data.QuadIndicesPtr[i + 5] = offset + 0;
 
 			offset += 4;
 		}
-		Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(s_Data.MaxIndices, quadIndices);
-		s_Data.QuadVertexArray->SetIndexBuffer(indexBuffer);
+		s_Data.QuadIndexBuffer = IndexBuffer::Create(s_Data.MaxIndices, s_Data.QuadIndicesPtr);
+		s_Data.QuadVertexArray->SetIndexBuffer(s_Data.QuadIndexBuffer);
 
-		delete[] quadIndices;
+		//delete[] quadIndices;
 
 		int32_t samplers[s_Data.MaxTextureSlots];
 		for (uint32_t i = 0; i < s_Data.MaxTextureSlots; i++)
@@ -123,13 +125,17 @@ namespace Fengshui
 
 	void Renderer2D::Flush()
 	{
-		uint32_t dataSize = (uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase;
-		s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
-		for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
+		if (s_Data.QuadIndexCount)
 		{
-			s_Data.TextureSlots[i]->Bind(i);
+			uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
+			s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
+			s_Data.QuadIndexBuffer->SetData(s_Data.QuadIndicesPtr, s_Data.QuadIndexCount);
+			for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
+			{
+				s_Data.TextureSlots[i]->Bind(i);
+			}
+			RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
 		}
-		RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
 	}
 
 	void Renderer2D::PrepareNextBatch()

@@ -20,6 +20,9 @@
 
 namespace Fengshui
 {
+	/*
+	* Application class which will launch and maintain the application and application window
+	*/
 	class Application
 	{
 	public:

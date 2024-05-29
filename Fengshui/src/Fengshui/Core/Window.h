@@ -7,6 +7,9 @@
 
 namespace Fengshui
 {
+	/*
+	* struct used to store the necessary information for instantiating a window
+	*/
 	struct WindowInfo
 	{
 		std::string Title;
@@ -19,12 +22,13 @@ namespace Fengshui
 			: Title(title), Width(width), Height(height) {}
 	};
 
+	/*
+	* The actual window that is created for the application to run, the implementation is found in Platform/Windows
+	*/
 	class Window
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
-
-		//virtual ~Window();
 
 		virtual void OnUpdate() = 0;
 

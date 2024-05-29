@@ -4,11 +4,13 @@
 
 namespace Fengshui
 {
-	EditorLayer::EditorLayer() : Layer("Sandbox2D")
+	//Creating the editor layer
+	EditorLayer::EditorLayer() : Layer("Sandbox")
 	{
 
 	}
 
+	//Update function called for editor, you can also treat this as game update
 	void EditorLayer::OnUpdate(float dt)
 	{
 		if (m_IsPlaying && !m_Paused)
@@ -28,7 +30,7 @@ namespace Fengshui
 				for (Ref<Entity> square : m_BackgroundSquares)
 				{
 					Transform2D& squareTrans = square->GetComponent<Transform2D>();
-					squareTrans.Rotation = std::fmod(squareTrans.Rotation + dt * 10.0f, 360.0f);
+					squareTrans.Rotation = std::fmod(squareTrans.Rotation + dt, 360.0f);
 				}
 			}
 		}
@@ -38,38 +40,44 @@ namespace Fengshui
 		}
 	}
 
+	//Fixed update code for the editor, it just simply call the scene update for now
 	void EditorLayer::OnFixedUpdate(float dt)
 	{
-		if (m_IsPlaying && !m_Paused)
+		if (m_IsPlaying && !m_Paused && m_EditorReady)
 		{
 			m_ActiveScene->OnFixedUpdate(dt);
 		}
 	}
 
+	//Render code for editor, if the application is a game, no framebuffer will be required
 	void EditorLayer::OnRender()
 	{
-		m_Framebuffer->Bind();
-		m_ActiveScene->OnRender();
-		m_Framebuffer->Unbind();
+		if (m_EditorReady)
+		{
+			m_Framebuffer->Bind();
+			m_ActiveScene->OnRender();
+			m_Framebuffer->Unbind();
+		}
 	}
 
+	//Code run when the layer is attached to the layer stack
 	void EditorLayer::OnAttach()
 	{
+		//Creates a framebuffer to fit into imgui
 		FramebufferSpec spec;
 		spec.Width = 1280;
 		spec.Height = 720;
 		m_Framebuffer = Framebuffer::Create(spec);
 
-		m_SceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
+		m_SceneHierarchyPanel = MakeRef<SceneHierarchyPanel>();
 
 		Reset();
 	}
 
+	//Code to reset the scene
 	void EditorLayer::Reset()
 	{
 		m_EditorReady = false;
-
-		glm::vec2 coords[] = { {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f},{0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f} };
 
 		GeneralManager::Reset();
 		m_Scene = Scene::Init();
@@ -78,13 +86,13 @@ namespace Fengshui
 
 		m_ActiveScene = m_Scene;
 
-		m_SecondCamera = std::make_shared<Entity>("Second Camera");
+		m_SecondCamera = MakeRef<Entity>("Second Camera");
 		m_SecondCamera->AddComponent<CameraComponent>();
 		m_SecondCamera->AddComponent<Transform>();
 
 		////stacking box
-		//for (int y = 0; y < 5; y++) {
-		//	Ref<Entity> box = std::make_shared<Entity>("Box");
+		//for (int y = 0; y < 50; y++) {
+		//	Ref<Entity> box = MakeRef<Entity>("Box");
 		//	float offset = ((y & 1) == 0) ? 0.0f : 0.15f;//offset even-numbered boxes
 		//	float delta = 0.04f;
 		//	float scaleHeight = 2.0f + delta;
@@ -92,37 +100,39 @@ namespace Fengshui
 		//	box->AddComponent<Transform>(glm::vec3(offset * scaleHeight, deltaHeight + (float)y * scaleHeight, offset * scaleHeight));
 		//	box->AddComponent<Rigidbody>();
 		//	box->AddComponent<Collider>();
-		//	box->AddComponent<Render>(Render{ nullptr,
-		//	coords
-		//		});
+		//	box->AddComponent<Render>();
 		//	m_StackingBoxes.push_back(box);
 		//}
 
-		m_BigSquare = std::make_shared<Entity>("Big Square");
+		m_BigSquare = MakeRef<Entity>("Big Square");
 
 		Transform bigSquareTrans = m_BigSquare->AddComponent<Transform>(Transform(glm::vec3(1.0f, 2.0f, 0.0f)));
 
-		m_BigSquare->AddComponent<Render>(Render{ nullptr,
-			coords
-			});
+		glm::vec3 pts[] =
+		{ glm::vec3(-0.5,-0.5,-0.5),
+		glm::vec3(0.5, -0.5,-0.5),
+		glm::vec3(0.5, -0.5,0.5),
+		glm::vec3(-0.5, -0.5,0.5),
+		glm::vec3(0,0.5,0), };
+		RenderShapeConvex* convexShape = new RenderShapeConvex(pts, sizeof(pts) / sizeof(glm::vec3));
+
+		m_BigSquare->AddComponent<Render>(Render(convexShape));
 
 		m_BigSquare->AddComponent<Rigidbody>();
-		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>();
+		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>(Collider(new PhysicalShapeConvex(convexShape)));
 
-		m_Ground = std::make_shared<Entity>("Ground");
+		m_Ground = MakeRef<Entity>("Ground");
 
 		Transform groundTrans = m_Ground->AddComponent<Transform>(Transform(glm::vec3(0.0f, -2.0f, 0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 1.0f)));
 
-		m_Ground->AddComponent<Render>(Render{ nullptr,
-			coords
-			});
+		m_Ground->AddComponent<Render>(Render(Texture::Create("E:/GitStuff/GameEngine/Fengshui-Editor/Assets/Textures/Checkerboard.png")));
 
 		m_Ground->AddComponent<Rigidbody>(Rigidbody(0.0f));
 		Collider groundCollider = m_Ground->AddComponent<Collider>();
 
 		m_BigSquare->SetParent(m_SecondCamera);
 
-		//ConstraintDistance* joint = new ConstraintDistance();
+		//Ref<ConstraintDistance> joint = MakeRef<ConstraintDistance>();
 
 		//const glm::vec3 jointWorldSpaceAnchor = groundTrans.Position;
 
@@ -140,13 +150,13 @@ namespace Fengshui
 		{
 			for (float j = -5.0f; j < 5.0f; j += 1.0f)
 			{
-				square = std::make_shared<Entity>("(" + std::to_string(i) + "," + std::to_string(j) + ")");
+				square = MakeRef<Entity>("(" + std::to_string(i) + "," + std::to_string(j) + ")");
 				square->AddComponent<Transform2D>(Transform2D{ { i, j}, -0.5f, 45.0f, { 0.5f, 0.5f } });
 				square->AddComponent(Render2D{ {(i + 5.0f) / 10.0f, (j + 5.0f) / 10.0f, 1.0f, 1.0f } });
 				m_BackgroundSquares.emplace_back(square);
-				//Renderer2D::DrawQuad({ i, j, -0.5f }, { 0.5f, 0.5f }, 45.0f, 1.0f, nullptr, defaultCoords, { (i + 0.5f) / 10.0f, (j + 0.5f) / 10.0f, 1.0f, 1.0f });
 			}
 		}
+		
 		
 		GeneralManager::SetActiveScene(m_ActiveScene);
 		m_EditorReady = true;

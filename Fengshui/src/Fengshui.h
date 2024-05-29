@@ -34,9 +34,10 @@
 #include "Fengshui/Core/Scene.h"
 
 //ECS
-#include "Fengshui/ECS/ECS.h"
+#include "Fengshui/ECS/GeneralManager.h"
 #include "Fengshui/ECS/Entity.h"
 
+//Shapes
+#include "Fengshui/Renderer/RenderShapes/RenderShapes.h"
+#include "Fengshui/Physics/Shapes.h"
 
-//Physics
-//#include "Fengshui/Physics/Helper.h"

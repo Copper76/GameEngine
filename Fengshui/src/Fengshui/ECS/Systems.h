@@ -6,3 +6,4 @@
 #include "Fengshui/ECS/Systems/HierarchySystem.h"
 #include "Fengshui/ECS/Systems/GravitySystem.h"
 #include "Fengshui/ECS/Systems/PhysicsSystem.h"
+#include "Fengshui/ECS/Systems/TransformSystem.h"
