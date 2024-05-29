@@ -8,7 +8,8 @@ This project is a practice project to make a game engine using Entity-Component 
 - Entity-Component System for rendering, transform, position and camera.
 
 ## Functions implemented
-- [X] Create a simple snake game using pure SFML to learn the basics of input handling and rendering. It was a simple practice with no connection with the rest of the engine. It is implemented in the [Snake Branch](https://github.com/Copper76/GameEngine/tree/Snake), the game was remade with Fengshui using the Fengshui editor interface in [NewSnake Branch](https://github.com/Copper76/GameEngine/tree/NewSnake), all the game code are implemented in the editor layer which only calls functions from the Fengshui engine.
+- [X] Create a simple snake game using pure SFML to learn the basics of input handling and rendering. It was a simple practice with no connection with the rest of the engine. It is implemented in the [Snake Branch](https://github.com/Copper76/GameEngine/tree/Snake).
+- [X] Remade the snake game with Fengshui using the Fengshui editor interface in [NewSnake Branch](https://github.com/Copper76/GameEngine/tree/NewSnake), all the game code are implemented in the editor layer which only calls functions from the Fengshui engine.
 - [X] Get Logging working with spdlog
 - [X] Integrate GLFW into the ECS. The GLFW now works under render component, which stores all the information required for rendering.
 - [X] Create a entity component system structure, a simple ECS is created in the ECS folder.
