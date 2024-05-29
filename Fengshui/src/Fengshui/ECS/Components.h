@@ -5,7 +5,7 @@
 #include "Fengshui/Renderer/Texture.h"
 #include "Fengshui/Renderer/SubTexture2D.h"
 
-#include "Fengshui/Physics/Physics/Shapes.h"
+#include "Fengshui/Physics/Shapes.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -119,13 +119,18 @@ namespace Fengshui
 
 	struct Collider
 	{
-		PhysicalShape* Shape = nullptr;
 		glm::vec3 Offset = glm::vec3(0.0f);
 		glm::vec3 Size = glm::vec3(1.0f);
+		PhysicalShape* Shape = nullptr;
 
 		Collider()
 		{
 			Shape = new PhysicalShapeBox(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
+		}
+
+		Collider(PhysicalShape* shape) : Shape(shape)
+		{
+
 		}
 	};
 

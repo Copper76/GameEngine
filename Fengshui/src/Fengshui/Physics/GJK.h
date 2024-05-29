@@ -2,10 +2,9 @@
 //	GJK.h
 //
 #pragma once
-#include "../Math/Vector.h"
-#include "../Math/Quat.h"
-#include "../Math/Matrix.h"
-#include "../Math/Bounds.h"
+#include "Fengshui/Maths/Vector.h"
+#include "Fengshui/Maths/Matrix.h"
+#include "Fengshui/Maths/Bounds.h"
 #include "Shapes.h"
 
 #include "Fengshui/Physics/Helper.h"

@@ -4,8 +4,8 @@
 #include "fspch.h"
 
 #include "Broadphase.h"
-#include "Fengshui/Physics/Math/Bounds.h"
-#include "Fengshui/Physics/Physics/Shapes.h"
+#include "Fengshui/Maths/Bounds.h"
+#include "Fengshui/Physics/Shapes.h"
 #include "glm/glm.hpp"
 
 namespace Fengshui

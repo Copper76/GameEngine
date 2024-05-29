@@ -138,76 +138,76 @@
     <ClInclude Include="src\Fengshui\Logging\Log.h">
       <Filter>src\Fengshui\Logging</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Math\Bounds.h">
+    <ClInclude Include="src\Fengshui\Maths\Bounds.h">
       <Filter>src\Fengshui\Physics\Math</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Math\LCP.h">
+    <ClInclude Include="src\Fengshui\Maths\LCP.h">
       <Filter>src\Fengshui\Physics\Math</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Math\Matrix.h">
+    <ClInclude Include="src\Fengshui\Maths\Matrix.h">
       <Filter>src\Fengshui\Physics\Math</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Math\Quat.h">
+    <ClInclude Include="src\Fengshui\Maths\Quat.h">
       <Filter>src\Fengshui\Physics\Math</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Math\Vector.h">
+    <ClInclude Include="src\Fengshui\Maths\Vector.h">
       <Filter>src\Fengshui\Physics\Math</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Broadphase.h">
+    <ClInclude Include="src\Fengshui\Physics\Broadphase.h">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints.h">
+    <ClInclude Include="src\Fengshui\Physics\Constraints.h">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintBase.h">
+    <ClInclude Include="src\Fengshui\Physics\Constraints\ConstraintBase.h">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintConstantVelocity.h">
+    <ClInclude Include="src\Fengshui\Physics\Constraints\ConstraintConstantVelocity.h">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintDistance.h">
+    <ClInclude Include="src\Fengshui\Physics\Constraints\ConstraintDistance.h">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintHinge.h">
+    <ClInclude Include="src\Fengshui\Physics\Constraints\ConstraintHinge.h">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintMotor.h">
+    <ClInclude Include="src\Fengshui\Physics\Constraints\ConstraintMotor.h">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintMover.h">
+    <ClInclude Include="src\Fengshui\Physics\Constraints\ConstraintMover.h">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintOrientation.h">
+    <ClInclude Include="src\Fengshui\Physics\Constraints\ConstraintOrientation.h">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Constraints\ConstraintPenetration.h">
+    <ClInclude Include="src\Fengshui\Physics\Constraints\ConstraintPenetration.h">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Contact.h">
+    <ClInclude Include="src\Fengshui\Physics\Contact.h">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\GJK.h">
+    <ClInclude Include="src\Fengshui\Physics\GJK.h">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Intersections.h">
+    <ClInclude Include="src\Fengshui\Physics\Intersections.h">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Manifold.h">
+    <ClInclude Include="src\Fengshui\Physics\Manifold.h">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes.h">
+    <ClInclude Include="src\Fengshui\Physics\Shapes.h">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeBase.h">
+    <ClInclude Include="src\Fengshui\Physics\Shapes\PhysicalShapeBase.h">
       <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeBox.h">
+    <ClInclude Include="src\Fengshui\Physics\Shapes\PhysicalShapeBox.h">
       <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeConvex.h">
+    <ClInclude Include="src\Fengshui\Physics\Shapes\PhysicalShapeConvex.h">
       <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeSphere.h">
+    <ClInclude Include="src\Fengshui\Physics\Shapes\PhysicalShapeSphere.h">
       <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.h">
@@ -278,16 +278,16 @@
     <ClInclude Include="src\Fengshui\ECS\Systems\TransformSystem.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeBase.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeCube.h" />
-    <ClInclude Include="src\Fengshui\Core\Geometry.h" />
+    <ClInclude Include="src\Fengshui\Maths\Geometry.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapes.h" />
     <ClInclude Include="src\Fengshui\ECS\GeneralManager.h" />
     <ClInclude Include="src\Fengshui\ECS\EntityManager.h" />
     <ClInclude Include="src\Fengshui\ECS\ComponentManager.h" />
     <ClInclude Include="src\Fengshui\ECS\SystemManager.h" />
-    <ClInclude Include="src\Fengshui\Core\Triangularisation\Delaunay.h" />
-    <ClInclude Include="src\Fengshui\Core\Triangularisation\FurthestPoint.h" />
+    <ClInclude Include="src\Fengshui\Maths\Triangulation\BowyerWatson.h" />
+    <ClInclude Include="src\Fengshui\Maths\Triangulation\FurthestPoint.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeConvex.h" />
-    <ClInclude Include="src\Fengshui\Core\Triangularisation\TriangleHelper.h" />
+    <ClInclude Include="src\Fengshui\Maths\Triangulation\TriMethod.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp">
@@ -323,61 +323,61 @@
     <ClCompile Include="src\Fengshui\Logging\Log.cpp">
       <Filter>src\Fengshui\Logging</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Math\Bounds.cpp">
+    <ClCompile Include="src\Fengshui\Maths\Bounds.cpp">
       <Filter>src\Fengshui\Physics\Math</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Math\LCP.cpp">
+    <ClCompile Include="src\Fengshui\Maths\LCP.cpp">
       <Filter>src\Fengshui\Physics\Math</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Broadphase.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Broadphase.cpp">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Constraints.cpp">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintConstantVelocity.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Constraints\ConstraintConstantVelocity.cpp">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintDistance.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Constraints\ConstraintDistance.cpp">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintHinge.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Constraints\ConstraintHinge.cpp">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintMotor.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Constraints\ConstraintMotor.cpp">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintMover.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Constraints\ConstraintMover.cpp">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintOrientation.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Constraints\ConstraintOrientation.cpp">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Constraints\ConstraintPenetration.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Constraints\ConstraintPenetration.cpp">
       <Filter>src\Fengshui\Physics\Physics\Constraints</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Contact.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Contact.cpp">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\GJK.cpp">
+    <ClCompile Include="src\Fengshui\Physics\GJK.cpp">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Intersections.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Intersections.cpp">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Manifold.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Manifold.cpp">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Shapes.cpp">
       <Filter>src\Fengshui\Physics\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeBox.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Shapes\PhysicalShapeBox.cpp">
       <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeConvex.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Shapes\PhysicalShapeConvex.cpp">
       <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Physics\Physics\Shapes\PhysicalShapeSphere.cpp">
+    <ClCompile Include="src\Fengshui\Physics\Shapes\PhysicalShapeSphere.cpp">
       <Filter>src\Fengshui\Physics\Physics\Shapes</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -448,5 +448,9 @@
     <ClCompile Include="src\Fengshui\Renderer\RenderShapes\RenderShapeCube.cpp" />
     <ClCompile Include="src\Fengshui\ECS\GeneralManager.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\RenderShapes\RenderShapeConvex.cpp" />
+    <ClCompile Include="src\Fengshui\Maths\Triangulation\FurthestPoint.cpp" />
+    <ClCompile Include="src\Fengshui\Maths\Geometry.cpp" />
+    <ClCompile Include="src\Fengshui\Maths\Triangulation\BowyerWatson.cpp" />
+    <ClCompile Include="src\Fengshui\Maths\Triangulation\TriMethod.cpp" />
   </ItemGroup>
 </Project>

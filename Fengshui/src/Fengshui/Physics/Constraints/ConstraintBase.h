@@ -2,11 +2,11 @@
 //	ConstraintBase.h
 //
 #pragma once
-#include "../../Math/Vector.h"
-#include "../../Math/Matrix.h"
-#include "../../Math/Bounds.h"
-#include "../../Math/LCP.h"
-#include "Fengshui/ECS/ECS.h"
+#include "Fengshui/Maths/Vector.h"
+#include "Fengshui/Maths/Matrix.h"
+#include "Fengshui/Maths/Bounds.h"
+#include "Fengshui/Maths/LCP.h"
+#include "Fengshui/ECS/GeneralManager.h"
 #include "Fengshui/Physics/Helper.h"
 #include <vector>
 

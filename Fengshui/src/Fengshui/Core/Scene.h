@@ -8,8 +8,8 @@
 #include "Fengshui/Events/MouseEvent.h"
 #include "Fengshui/Core/Input.h"
 
-#include "Fengshui/Physics/Physics/Constraints.h"
-#include "Fengshui/Physics/Physics/Manifold.h"
+#include "Fengshui/Physics/Constraints.h"
+#include "Fengshui/Physics/Manifold.h"
 
 namespace Fengshui
 {

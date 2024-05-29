@@ -1,5 +1,5 @@
 #pragma once
-#include "Fengshui/Core/Geometry.h"
+#include "Fengshui/Maths/Geometry.h"
 
 #include <glm/glm.hpp>
 

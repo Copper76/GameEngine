@@ -34,14 +34,14 @@ namespace Fengshui
 		//Create the hull
 		std::vector<glm::vec3> hullPoints;
 		std::vector<Triangle> hullTriangles;
-		BuildConvexHull(m_points, hullPoints, hullTriangles);
+		Geometry::BuildConvexHull(m_points, hullPoints, hullTriangles);
 		m_points = hullPoints;
 
 		//Expand the bounds
 		m_bounds.Clear();
 		m_bounds.Expand(m_points.data(), (int)m_points.size());
-		m_centerOfMass = CalculateCenterOfMassTetrahedron(hullPoints, hullTriangles);
-		m_inertiaTensor = CalculateInertiaTensorTetrahedron(hullPoints, hullTriangles, m_centerOfMass);
+		m_centerOfMass = Geometry::CalculateCenterOfMassTetrahedron(hullPoints, hullTriangles);
+		m_inertiaTensor = Geometry::CalculateInertiaTensorTetrahedron(hullPoints, hullTriangles, m_centerOfMass);
 	}
 
 	void PhysicalShapeConvex::Build(const std::vector<glm::vec3> pts, const std::vector<Triangle> tris) {
@@ -50,8 +50,8 @@ namespace Fengshui
 		//Expand the bounds
 		m_bounds.Clear();
 		m_bounds.Expand(m_points.data(), (int)m_points.size());
-		m_centerOfMass = CalculateCenterOfMassTetrahedron(pts, tris);
-		m_inertiaTensor = CalculateInertiaTensorTetrahedron(pts, tris, m_centerOfMass);
+		m_centerOfMass = Geometry::CalculateCenterOfMassTetrahedron(pts, tris);
+		m_inertiaTensor = Geometry::CalculateInertiaTensorTetrahedron(pts, tris, m_centerOfMass);
 	}
 
 	/*

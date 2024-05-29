@@ -103,20 +103,17 @@ namespace Fengshui
 
 		glm::vec3 pts[] =
 		{ glm::vec3(-0.5,-0.5,-0.5),
-		glm::vec3(0.5,-0.5,-0.5),
-		glm::vec3(0.5, 0.5,-0.5),
-		glm::vec3(-0.5, 0.5,-0.5),
-
-		glm::vec3(-0.5,-0.5, 0.5),
-		glm::vec3(0.5,-0.5, 0.5),
-		glm::vec3(0.5, 0.5, 0.5) };
+		glm::vec3(0.5, -0.5,-0.5),
+		glm::vec3(0.5, -0.5,0.5),
+		glm::vec3(-0.5, -0.5,0.5),
+		glm::vec3(0,0.5,0), };
 		RenderShapeConvex* convexShape = new RenderShapeConvex(pts, sizeof(pts) / sizeof(glm::vec3));
 
 		m_BigSquare->AddComponent<Render>(Render(convexShape));
 		//m_BigSquare->AddComponent<Render>();
 
 		m_BigSquare->AddComponent<Rigidbody>();
-		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>();
+		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>(Collider(new PhysicalShapeConvex(convexShape)));
 
 		m_Ground = MakeRef<Entity>("Ground");
 

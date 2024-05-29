@@ -1,7 +1,7 @@
 #pragma once
 #include "Fengshui/ECS/ECS.h"
-#include "Fengshui/Physics/Physics/Constraints.h"
-#include "Fengshui/Physics/Physics/Manifold.h"
+#include "Fengshui/Physics/Constraints.h"
+#include "Fengshui/Physics/Manifold.h"
 #include "Fengshui/ECS/Systems/TransformSystem.h"
 
 namespace Fengshui

@@ -1,10 +1,10 @@
 #include "fspch.h"
 #include "PhysicsSystem.h"
 
-#include "Fengshui/Physics/Physics/Contact.h"
-#include "Fengshui/Physics/Physics/Intersections.h"
-#include "Fengshui/Physics/Physics/Broadphase.h"
-#include "Fengshui/Physics/Physics/Shapes.h"
+#include "Fengshui/Physics/Contact.h"
+#include "Fengshui/Physics/Intersections.h"
+#include "Fengshui/Physics/Broadphase.h"
+#include "Fengshui/Physics/Shapes.h"
 
 
 namespace Fengshui

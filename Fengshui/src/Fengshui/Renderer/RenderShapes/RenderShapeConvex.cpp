@@ -1,7 +1,7 @@
 #include "fspch.h"
 #include "RenderShapeConvex.h"
 
-#include "Fengshui/Core/Geometry.h"
+#include "Fengshui/Maths/Geometry.h"
 
 namespace Fengshui
 {
@@ -15,7 +15,7 @@ namespace Fengshui
 
 		//Create the hull
 		std::vector<glm::vec3> hullPoints;
-		BuildConvexHull(m_VertexCoords, hullPoints, m_Tris);
+		Geometry::BuildConvexHull(m_VertexCoords, hullPoints, m_Tris);
 		m_VertexCoords = hullPoints;
 	}
 }

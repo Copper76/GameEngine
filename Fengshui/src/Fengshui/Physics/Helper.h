@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Fengshui/ECS/ECS.h"
 #include "Fengshui/ECS/GeneralManager.h"
-#include "Fengshui/Physics/Physics/Shapes.h"
+#include "Fengshui/Physics/Shapes.h"
 
 #include <glm/gtx/norm.hpp>
 

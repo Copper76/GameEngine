@@ -4,7 +4,7 @@
 #pragma once
 #include "PhysicalShapeBase.h"
 
-#include "Fengshui/Core/Geometry.h"
+#include "Fengshui/Renderer/RenderShapes/RenderShapes.h"
 
 namespace Fengshui
 {
@@ -24,6 +24,10 @@ namespace Fengshui
 
 		explicit PhysicalShapeConvex(const std::vector<glm::vec3> pts, const std::vector<Triangle> tris) {
 			Build(pts, tris);
+		}
+
+		explicit PhysicalShapeConvex(const RenderShape* shape) {
+			Build(shape->GetVertexCoords(), shape->GetTris());
 		}
 
 		//void Build( const Vec3 * pts, const int num ) override;
