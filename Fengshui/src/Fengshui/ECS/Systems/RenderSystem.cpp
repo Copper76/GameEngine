@@ -19,14 +19,14 @@ namespace Fengshui
 
 			switch (renderData.Shape->GetType())
 			{
-			case RenderShapeType::SHAPE_CUBE:
+			case ShapeType::SHAPE_CUBE:
 				if (texCoords == nullptr)
 				{
 					texCoords = coords;
 				}
 				Renderer::DrawCube(transform, renderData.TilingFactor, renderData.Texture, texCoords, renderData.Colour);
 				break;
-			case RenderShapeType::SHAPE_CONVEX:
+			case ShapeType::SHAPE_CONVEX:
 				Renderer::DrawConvex(transform, renderData.Shape->GetVertexCoords(), renderData.Shape->GetTris(), renderData.Colour);
 				break;
 			default:

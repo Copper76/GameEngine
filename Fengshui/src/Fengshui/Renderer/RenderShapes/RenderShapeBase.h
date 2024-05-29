@@ -5,12 +5,6 @@
 
 namespace Fengshui
 {
-	enum class RenderShapeType {
-		SHAPE_SPHERE,
-		SHAPE_CUBE,
-		SHAPE_CONVEX,
-	};
-
 	/*
 	====================================================
 	Shape
@@ -21,7 +15,7 @@ namespace Fengshui
 	public:
 		virtual void Build(const glm::vec3* pts, const int num) {}
 
-		virtual RenderShapeType GetType() const = 0;
+		virtual ShapeType GetType() const = 0;
 
 		inline const std::vector<glm::vec3> GetVertexCoords() const { return m_VertexCoords; }
 		inline const std::vector<Triangle> GetTris() const { return m_Tris; }

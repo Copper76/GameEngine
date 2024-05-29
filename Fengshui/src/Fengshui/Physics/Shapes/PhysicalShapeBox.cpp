@@ -16,16 +16,16 @@ namespace Fengshui
 			m_bounds.Expand(pts[i]);
 		}
 
-		m_points.clear();
-		m_points.push_back(glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.mins.z));
-		m_points.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.mins.z));
-		m_points.push_back(glm::vec3(m_bounds.mins.x, m_bounds.maxs.y, m_bounds.mins.z));
-		m_points.push_back(glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.maxs.z));
+		m_VertexCoords.clear();
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.mins.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.mins.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.maxs.y, m_bounds.mins.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.maxs.z));
 
-		m_points.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.maxs.z));
-		m_points.push_back(glm::vec3(m_bounds.mins.x, m_bounds.maxs.y, m_bounds.maxs.z));
-		m_points.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.maxs.z));
-		m_points.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.mins.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.maxs.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.maxs.y, m_bounds.maxs.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.maxs.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.mins.z));
 
 		m_centerOfMass = (m_bounds.maxs + m_bounds.mins) * 0.5f;
 	}
@@ -36,10 +36,10 @@ namespace Fengshui
 	====================================================
 	*/
 	glm::vec3 PhysicalShapeBox::Support(const glm::vec3& dir, const Transform transform, const float bias) const {
-		glm::vec3 maxPt = (transform.Rotation * m_points[0]) * transform.Scale + transform.Position;
+		glm::vec3 maxPt = (transform.Rotation * m_VertexCoords[0]) * transform.Scale + transform.Position;
 		float maxDist = glm::dot(dir, maxPt);
-		for (int i = 1; i < m_points.size(); i++) {
-			const glm::vec3 pt = (transform.Rotation * m_points[i]) * transform.Scale + transform.Position;
+		for (int i = 1; i < m_VertexCoords.size(); i++) {
+			const glm::vec3 pt = (transform.Rotation * m_VertexCoords[i]) * transform.Scale + transform.Position;
 			const float dist = glm::dot(dir,pt);
 			if (dist > maxDist) {
 				maxDist = dist;
@@ -138,8 +138,8 @@ namespace Fengshui
 	*/
 	float PhysicalShapeBox::FastestLinearSpeed(const  glm::vec3& angularVelocity, const  glm::vec3& dir) const {
 		float maxSpeed = 0.0f;
-		for (int i = 0; i < m_points.size(); i++) {
-			glm::vec3 r = m_points[i] - m_centerOfMass;
+		for (int i = 0; i < m_VertexCoords.size(); i++) {
+			glm::vec3 r = m_VertexCoords[i] - m_centerOfMass;
 			//glm::vec3 linearVelocity = angularVelocity.Cross(r);//perpendicular component of the angular speed
 			glm::vec3 linearVelocity = glm::cross(angularVelocity, r);//perpendicular component of the angular speed
 			float speed = glm::dot(dir, linearVelocity);//component of the perpendicular speed in direction of dir

@@ -25,29 +25,29 @@ namespace Fengshui
 	====================================================
 	*/
 	void PhysicalShapeConvex::Build(const glm::vec3* pts, const int num) {
-		m_points.clear();
-		m_points.reserve(num);
+		m_VertexCoords.clear();
+		m_VertexCoords.reserve(num);
 		for (int i = 0; i < num; i++) {
-			m_points.push_back(pts[i]);
+			m_VertexCoords.push_back(pts[i]);
 		}
 
 		//Create the hull
-		std::vector<Triangle> hullTriangles;
-		Geometry::BuildConvexHull(m_points, hullTriangles);
+		Geometry::BuildConvexHull(m_VertexCoords, m_Tris);
 
 		//Expand the bounds
 		m_bounds.Clear();
-		m_bounds.Expand(m_points.data(), (int)m_points.size());
-		m_centerOfMass = Geometry::CalculateCenterOfMassTetrahedron(m_points, hullTriangles);
-		m_inertiaTensor = Geometry::CalculateInertiaTensorTetrahedron(m_points, hullTriangles, m_centerOfMass);
+		m_bounds.Expand(m_VertexCoords.data(), (int)m_VertexCoords.size());
+		m_centerOfMass = Geometry::CalculateCenterOfMassTetrahedron(m_VertexCoords, m_Tris);
+		m_inertiaTensor = Geometry::CalculateInertiaTensorTetrahedron(m_VertexCoords, m_Tris, m_centerOfMass);
 	}
 
 	void PhysicalShapeConvex::Build(const std::vector<glm::vec3> pts, const std::vector<Triangle> tris) {
-		m_points = pts;
+		m_VertexCoords = pts;
+		m_Tris = tris;
 
 		//Expand the bounds
 		m_bounds.Clear();
-		m_bounds.Expand(m_points.data(), (int)m_points.size());
+		m_bounds.Expand(m_VertexCoords.data(), (int)m_VertexCoords.size());
 		m_centerOfMass = Geometry::CalculateCenterOfMassTetrahedron(pts, tris);
 		m_inertiaTensor = Geometry::CalculateInertiaTensorTetrahedron(pts, tris, m_centerOfMass);
 	}
@@ -58,10 +58,10 @@ namespace Fengshui
 	====================================================
 	*/
 	glm::vec3 PhysicalShapeConvex::Support(const glm::vec3& dir, const Transform transform, const float bias) const {
-		glm::vec3 maxPt = (transform.Rotation * m_points[0]) * transform.Scale + transform.Position;
+		glm::vec3 maxPt = (transform.Rotation * m_VertexCoords[0]) * transform.Scale + transform.Position;
 		float maxDist = glm::dot(dir, maxPt);
-		for (int i = 1; i < m_points.size(); i++) {
-			const glm::vec3 pt = (transform.Rotation * m_points[i]) * transform.Scale + transform.Position;
+		for (int i = 1; i < m_VertexCoords.size(); i++) {
+			const glm::vec3 pt = (transform.Rotation * m_VertexCoords[i]) * transform.Scale + transform.Position;
 			const float dist = glm::dot(dir, pt);
 
 			if (dist > maxDist) {
@@ -136,8 +136,8 @@ namespace Fengshui
 	*/
 	float PhysicalShapeConvex::FastestLinearSpeed(const glm::vec3& angularVelocity, const glm::vec3& dir) const {
 		float maxSpeed = 0.0f;
-		for (int i = 0; i < m_points.size(); i++) {
-			glm::vec3 r = m_points[i] - m_centerOfMass;
+		for (int i = 0; i < m_VertexCoords.size(); i++) {
+			glm::vec3 r = m_VertexCoords[i] - m_centerOfMass;
 			glm::vec3 linearVelocity = glm::cross(angularVelocity, r);//perpendicular component of the angular speed
 			float speed = glm::dot(dir, linearVelocity);//component of the perpendicular speed in direction of dir
 			if (speed > maxSpeed) {

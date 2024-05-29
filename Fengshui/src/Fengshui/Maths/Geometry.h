@@ -6,6 +6,12 @@
 
 namespace Fengshui
 {
+	enum class ShapeType {
+		SHAPE_SPHERE,
+		SHAPE_CUBE,
+		SHAPE_CONVEX,
+	};
+
 	class Geometry
 	{
 	public:

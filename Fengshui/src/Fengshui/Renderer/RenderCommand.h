@@ -33,9 +33,9 @@ namespace Fengshui
 			s_RendererAPI->Clear();
 		};
 
-		inline static void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount  = 0)
+		inline static void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount  = 0, bool isWireFrame = false)
 		{
-			s_RendererAPI->DrawIndexed(vertexArray, indexCount);
+			s_RendererAPI->DrawIndexed(vertexArray, indexCount, isWireFrame);
 		}
 	private:
 		static RendererAPI* s_RendererAPI;

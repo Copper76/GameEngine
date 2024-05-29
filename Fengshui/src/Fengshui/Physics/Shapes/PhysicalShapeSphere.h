@@ -24,7 +24,7 @@ ShapeSphere
 		Bounds GetBounds(const Transform transform) const override;
 		Bounds GetBounds(const glm::vec3 scale) const override;
 
-		PhysicalShapeType GetType() const override { return SHAPE_SPHERE; }
+		ShapeType GetType() const override { return ShapeType::SHAPE_SPHERE; }
 
 	public:
 		float m_radius;

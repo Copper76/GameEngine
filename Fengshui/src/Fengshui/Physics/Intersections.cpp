@@ -34,12 +34,6 @@ namespace Fengshui
 		const Rigidbody bodyA = GeneralManager::GetComponent<Rigidbody>(contact.bodyA);
 		const Rigidbody bodyB = GeneralManager::GetComponent<Rigidbody>(contact.bodyB);
 
-		//Unnecessary as this is only called in the other intersect
-		//if (bodyA.InvMass == 0.0f && bodyB.InvMass == 0.0f)
-		//{
-		//	return false;
-		//}
-
 		contact.bodyA = pair.a;
 		contact.bodyB = pair.b;
 		contact.timeOfImpact = 0.0f;
@@ -50,7 +44,7 @@ namespace Fengshui
 		const Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
 		const Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
 
-		if (colliderA.Shape->GetType() == PhysicalShape::SHAPE_SPHERE && colliderB.Shape->GetType() == PhysicalShape::SHAPE_SPHERE) {
+		if (colliderA.Shape->GetType() == ShapeType::SHAPE_SPHERE && colliderB.Shape->GetType() == ShapeType::SHAPE_SPHERE) {
 			const PhysicalShapeSphere* sphereA = (const PhysicalShapeSphere*)colliderA.Shape;
 			const PhysicalShapeSphere* sphereB = (const PhysicalShapeSphere*)colliderB.Shape;
 
@@ -200,7 +194,7 @@ namespace Fengshui
 		const Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
 		const Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
 
-		if (colliderA.Shape->GetType() == PhysicalShape::SHAPE_SPHERE && colliderB.Shape->GetType() == PhysicalShape::SHAPE_SPHERE) {
+		if (colliderA.Shape->GetType() == ShapeType::SHAPE_SPHERE && colliderB.Shape->GetType() == ShapeType::SHAPE_SPHERE) {
 			const PhysicalShapeSphere* sphereA = (const PhysicalShapeSphere*)colliderA.Shape;
 			const PhysicalShapeSphere* sphereB = (const PhysicalShapeSphere*)colliderB.Shape;
 

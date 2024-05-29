@@ -12,6 +12,6 @@ namespace Fengshui
 
 		virtual void Build(const glm::vec3* pts, const int num) override;
 
-		virtual RenderShapeType GetType() const override { return RenderShapeType::SHAPE_CUBE; }
+		virtual ShapeType GetType() const override { return ShapeType::SHAPE_CUBE; }
 	};
 }

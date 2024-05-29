@@ -40,10 +40,9 @@ namespace Fengshui
 
 		float FastestLinearSpeed(const glm::vec3& angularVelocity, const glm::vec3& dir) const override;
 
-		PhysicalShapeType GetType() const override { return SHAPE_CONVEX; }
+		ShapeType GetType() const override { return ShapeType::SHAPE_CONVEX; }
 
 	public:
-		std::vector<glm::vec3> m_points;
 		Bounds m_bounds;
 		glm::mat3 m_inertiaTensor;
 	};
