@@ -32,16 +32,14 @@ namespace Fengshui
 		}
 
 		//Create the hull
-		std::vector<glm::vec3> hullPoints;
 		std::vector<Triangle> hullTriangles;
-		Geometry::BuildConvexHull(m_points, hullPoints, hullTriangles);
-		m_points = hullPoints;
+		Geometry::BuildConvexHull(m_points, hullTriangles);
 
 		//Expand the bounds
 		m_bounds.Clear();
 		m_bounds.Expand(m_points.data(), (int)m_points.size());
-		m_centerOfMass = Geometry::CalculateCenterOfMassTetrahedron(hullPoints, hullTriangles);
-		m_inertiaTensor = Geometry::CalculateInertiaTensorTetrahedron(hullPoints, hullTriangles, m_centerOfMass);
+		m_centerOfMass = Geometry::CalculateCenterOfMassTetrahedron(m_points, hullTriangles);
+		m_inertiaTensor = Geometry::CalculateInertiaTensorTetrahedron(m_points, hullTriangles, m_centerOfMass);
 	}
 
 	void PhysicalShapeConvex::Build(const std::vector<glm::vec3> pts, const std::vector<Triangle> tris) {

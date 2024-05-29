@@ -6,17 +6,64 @@
 
 namespace Fengshui
 {
-	struct Triangle
-	{
-		int a, b, c;
-	};
-
 	struct Edge {
 		int a;
 		int b;
 
+		Edge()
+		{
+			a = 0;
+			b = 0;
+		}
+
+		Edge(int first, int second)
+		{
+			a = first;
+			b = second;
+		}
+
 		bool operator == (const Edge& rhs) const {
 			return ((a == rhs.a && b == rhs.b) || (a == rhs.b && b == rhs.a));
+		}
+	};
+
+	struct Triangle
+	{
+		int a, b, c;
+
+		Triangle()
+		{
+			a = 0;
+			b = 0;
+			c = 0;
+		}
+
+		Triangle(int first, int second, int third)
+		{
+			a = first;
+			b = second;
+			c = third;
+		}
+	};
+
+	struct Tetrahedron
+	{
+		int a, b, c, d;
+
+		Tetrahedron(int first, int second, int third, int fourth)
+		{
+			a = first;
+			b = second;
+			c = third;
+			d = fourth;
+		}
+
+		Tetrahedron(Triangle& tri, int last)
+		{
+			a = tri.a;
+			b = tri.b;
+			c = tri.c;
+			d = last;
 		}
 	};
 
@@ -27,6 +74,6 @@ namespace Fengshui
 
 		glm::mat3 CalculateInertiaTensorTetrahedron(const std::vector<glm::vec3>& pts, const std::vector<Triangle>& tris, const glm::vec3& cm);
 
-		virtual void BuildConvexHull(const std::vector< glm::vec3 >& verts, std::vector< glm::vec3 >& hullPts, std::vector< Triangle >& hullTris) = 0;
+		virtual void BuildConvexHull(std::vector<glm::vec3>& verts, std::vector< Triangle >& hullTris) = 0;
 	};
 }

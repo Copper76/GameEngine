@@ -126,7 +126,7 @@ namespace Fengshui
 
 		m_BigSquare->SetParent(m_SecondCamera);
 
-		//ConstraintDistance* joint = new ConstraintDistance();
+		//Ref<ConstraintDistance> joint = MakeRef<ConstraintDistance>();
 
 		//const glm::vec3 jointWorldSpaceAnchor = groundTrans.Position;
 

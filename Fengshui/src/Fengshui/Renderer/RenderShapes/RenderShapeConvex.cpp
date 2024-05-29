@@ -14,8 +14,6 @@ namespace Fengshui
 		}
 
 		//Create the hull
-		std::vector<glm::vec3> hullPoints;
-		Geometry::BuildConvexHull(m_VertexCoords, hullPoints, m_Tris);
-		m_VertexCoords = hullPoints;
+		Geometry::BuildConvexHull(m_VertexCoords, m_Tris);
 	}
 }

@@ -9,12 +9,12 @@ namespace Fengshui
 	class Geometry
 	{
 	public:
-		static void BuildConvexHull(const std::vector<glm::vec3>& verts, std::vector<glm::vec3>& hullPts, std::vector<Triangle>& hullTris) {
+		static void BuildConvexHull(std::vector<glm::vec3>& verts, std::vector<Triangle>& hullTris) {
 			if (verts.size() < 4) {
 				return;
 			}
 
-			s_TriMethod->BuildConvexHull(verts, hullPts, hullTris);
+			s_TriMethod->BuildConvexHull(verts, hullTris);
 		}
 
 		static glm::mat3 CalculateInertiaTensorTetrahedron(const std::vector<glm::vec3>& pts, const std::vector<Triangle>& tris, const glm::vec3& cm)

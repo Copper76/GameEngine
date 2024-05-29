@@ -165,14 +165,11 @@ namespace Fengshui
 			const Triangle& tri = tris[triIdx];
 
 			Edge edges[3];
-			edges[0].a = tri.a;
-			edges[0].b = tri.b;
+			edges[0] = Edge(tri.a, tri.b);
 
-			edges[1].a = tri.b;
-			edges[1].b = tri.c;
+			edges[1] = Edge(tri.b, tri.c);
 
-			edges[2].a = tri.c;
-			edges[2].b = tri.a;
+			edges[2] = Edge(tri.c, tri.a);
 
 			for (int e = 0; e < 3; e++) {
 				if (edge == edges[e]) {
@@ -200,21 +197,18 @@ namespace Fengshui
 			}
 		}
 
-		//add all the unique edges in the oldd triangles
+		//add all the unique edges in the old triangles
 		std::vector<Edge> uniqueEdges;
 		for (int i = 0; i < facingTris.size(); i++) {
 			const int triIdx = facingTris[i];
 			const Triangle& tri = hullTris[triIdx];
 
 			Edge edges[3];
-			edges[0].a = tri.a;
-			edges[0].b = tri.b;
+			edges[0] = Edge(tri.a, tri.b);
 
-			edges[1].a = tri.b;
-			edges[1].b = tri.c;
+			edges[1] = Edge(tri.b, tri.c);
 
-			edges[2].a = tri.c;
-			edges[2].b = tri.a;
+			edges[2] = Edge(tri.c, tri.a);
 
 			for (int e = 0; e < 3; e++) {
 				if (IsEdgeUnique(hullTris, facingTris, triIdx, edges[e])) {
@@ -236,10 +230,8 @@ namespace Fengshui
 		for (int i = 0; i < uniqueEdges.size(); i++) {
 			const Edge& edge = uniqueEdges[i];
 
-			Triangle tri;
-			tri.a = edge.a;
-			tri.b = edge.b;
-			tri.c = newPtIdx;
+			Triangle tri(edge.a, edge.b, newPtIdx);
+
 			hullTris.push_back(tri);
 		}
 	}
@@ -290,9 +282,11 @@ namespace Fengshui
 		RemoveUnreferencedVerts(hullPoints, hullTris);
 	}
 
-	void FurthestPoint::BuildConvexHull(const std::vector<glm::vec3>& verts, std::vector<glm::vec3>& hullPts, std::vector<Triangle>& hullTris) {
+	void FurthestPoint::BuildConvexHull(std::vector<glm::vec3>& verts, std::vector<Triangle>& hullTris) {
+		std::vector<glm::vec3>& hullPts = std::vector<glm::vec3>();
 		BuildTetrahedron(verts.data(), (int)verts.size(), hullPts, hullTris);
 
 		ExpandConverHull(hullPts, hullTris, verts);
+		verts = hullPts;
 	}
 }
