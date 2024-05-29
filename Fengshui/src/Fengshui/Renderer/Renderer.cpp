@@ -23,9 +23,8 @@ namespace Fengshui
 
 	struct RendererConfig
 	{
-		static const uint32_t MaxCubes = 10000;
-		static const uint32_t MaxVertices = MaxCubes * 8;
-		static const uint32_t MaxIndices = MaxCubes * 36;
+		static const uint32_t MaxIndices = 10000;
+		static const uint32_t MaxVertices = MaxIndices;
 		static const uint32_t MaxTextureSlots = 32;
 
 		uint32_t ShapeIndexCount = 0;
@@ -219,18 +218,18 @@ namespace Fengshui
 			}
 		}
 
-		uint32_t i = s_Data.ShapeIndexCount;
+		uint32_t indexOffset = s_Data.ShapeIndexCount;
+		uint32_t vertexOffset = s_Data.ShapeVertexCount;
 		for (uint32_t face = 0; face < 6; face++)
 		{
-			uint32_t offset = s_Data.ShapeVertexCount;
 
-			s_Data.ShapeIndexBufferPtr[i + 0] = offset + 0;
-			s_Data.ShapeIndexBufferPtr[i + 1] = offset + 1;
-			s_Data.ShapeIndexBufferPtr[i + 2] = offset + 2;
+			s_Data.ShapeIndexBufferPtr[indexOffset + 0] = vertexOffset + 0;
+			s_Data.ShapeIndexBufferPtr[indexOffset + 1] = vertexOffset + 1;
+			s_Data.ShapeIndexBufferPtr[indexOffset + 2] = vertexOffset + 2;
 
-			s_Data.ShapeIndexBufferPtr[i + 3] = offset + 2;
-			s_Data.ShapeIndexBufferPtr[i + 4] = offset + 3;
-			s_Data.ShapeIndexBufferPtr[i + 5] = offset + 0;
+			s_Data.ShapeIndexBufferPtr[indexOffset + 3] = vertexOffset + 2;
+			s_Data.ShapeIndexBufferPtr[indexOffset + 4] = vertexOffset + 3;
+			s_Data.ShapeIndexBufferPtr[indexOffset + 5] = vertexOffset + 0;
 
 			for (uint32_t i = 0; i < 4; i++)
 			{
@@ -242,10 +241,12 @@ namespace Fengshui
 				s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
 				s_Data.ShapeVertexBufferPtr++;
 			}
-
-			s_Data.ShapeVertexCount += 4;
-			s_Data.ShapeIndexCount += 6;
+			vertexOffset += 4;
+			indexOffset += 6;
 		}
+
+		s_Data.ShapeVertexCount += 24;
+		s_Data.ShapeIndexCount += 36;
 	}
 
 	void Renderer::DrawConvex(const glm::vec3& position, const glm::vec3& size, const glm::vec3 rotation, const std::vector<glm::vec3>& vertexCoords, const  std::vector<Triangle>& tris, const glm::vec4& colour)
@@ -320,7 +321,7 @@ namespace Fengshui
 			s_Data.ShapeVertexBufferPtr++;
 		}
 
-		uint32_t indexCount = tris.size() * 3;
+		uint32_t indexCount = static_cast<uint32_t>(tris.size()) * 3;
 		uint32_t vertexBase = s_Data.ShapeVertexCount;
 		uint32_t indexBase = s_Data.ShapeIndexCount;
 
@@ -331,29 +332,5 @@ namespace Fengshui
 
 		s_Data.ShapeVertexCount += indexCount;
 		s_Data.ShapeIndexCount += indexCount;
-
-		//for (glm::vec3 coords : vertexCoords)
-		//{
-		//	s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ coords, 1.0f };
-		//	s_Data.ShapeVertexBufferPtr->Colour = colour;
-		//	//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
-		//	s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
-		//	s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
-		//	//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
-		//	s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
-		//	s_Data.ShapeVertexBufferPtr++;
-		//}
-
-		//uint32_t indexCount = tris.size() * 3;
-		//uint32_t vertexBase = s_Data.ShapeVertexCount;
-		//uint32_t indexBase = s_Data.ShapeIndexCount;
-
-		//for (uint32_t offset = 0; offset < indexCount; offset++)
-		//{
-		//	s_Data.ShapeIndexBufferPtr[indexBase + offset] = vertexBase + offset;
-		//}
-
-		//s_Data.ShapeVertexCount += vertexCoords.size();
-		//s_Data.ShapeIndexCount += indexCount;
 	}
 }

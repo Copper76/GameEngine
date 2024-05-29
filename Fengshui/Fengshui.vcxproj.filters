@@ -287,6 +287,7 @@
     <ClInclude Include="src\Fengshui\Core\Triangularisation\Delaunay.h" />
     <ClInclude Include="src\Fengshui\Core\Triangularisation\FurthestPoint.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeConvex.h" />
+    <ClInclude Include="src\Fengshui\Core\Triangularisation\TriangleHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp">

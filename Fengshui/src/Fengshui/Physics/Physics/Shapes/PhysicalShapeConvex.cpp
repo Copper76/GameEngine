@@ -3,8 +3,6 @@
 //
 #include "fspch.h"
 
-#include "Fengshui/Core/Triangularisation/FurthestPoint.h"
-
 #include "Fengshui/ECS/Components.h"
 
 #include "PhysicalShapeConvex.h"
@@ -44,6 +42,16 @@ namespace Fengshui
 		m_bounds.Expand(m_points.data(), (int)m_points.size());
 		m_centerOfMass = CalculateCenterOfMassTetrahedron(hullPoints, hullTriangles);
 		m_inertiaTensor = CalculateInertiaTensorTetrahedron(hullPoints, hullTriangles, m_centerOfMass);
+	}
+
+	void PhysicalShapeConvex::Build(const std::vector<glm::vec3> pts, const std::vector<Triangle> tris) {
+		m_points = pts;
+
+		//Expand the bounds
+		m_bounds.Clear();
+		m_bounds.Expand(m_points.data(), (int)m_points.size());
+		m_centerOfMass = CalculateCenterOfMassTetrahedron(pts, tris);
+		m_inertiaTensor = CalculateInertiaTensorTetrahedron(pts, tris, m_centerOfMass);
 	}
 
 	/*

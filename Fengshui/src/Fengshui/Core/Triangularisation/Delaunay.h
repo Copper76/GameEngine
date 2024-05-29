@@ -1,3 +1,3 @@
 #pragma once
 
-#include "Fengshui/Core/Geometry.h"
+#include "Fengshui/Core/Triangularisation/TriangleHelper.h"

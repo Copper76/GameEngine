@@ -6,6 +6,10 @@ namespace Fengshui
 {
 	void CameraSystem::ResizeBounds(EntityID entity, float width, float height)
 	{
+		if (width == 0 || height == 0)
+		{
+			return;
+		}
 		auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(entity);
 		cameraComp.AspectRatio = width / height;
 		CalculateView(cameraComp);

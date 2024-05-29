@@ -8,7 +8,6 @@ namespace Fengshui
 	public:
 		explicit RenderShapeCube(const glm::vec3* pts, const int num) {
 			Build(pts, num);
-			m_Shape = RenderShapeType::SHAPE_CUBE;
 		}
 
 		virtual void Build(const glm::vec3* pts, const int num) override;

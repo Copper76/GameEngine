@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Fengshui/Core/Geometry.h"
+#include "Fengshui/Core/Triangularisation/TriangleHelper.h"
 
 #include "Fengshui/Physics/Math/Bounds.h"
 
@@ -324,7 +324,7 @@ namespace Fengshui
 		return fabsf(volume);//return the absolute value
 	}
 
-	static glm::vec3 CalculateCenterOfMassTetrahedron(const std::vector<glm::vec3>& pts, const std::vector<Triangle>& tris) {
+	static glm::vec3 CalculateCenterOfMassTetrahedronFurthestPoint(const std::vector<glm::vec3>& pts, const std::vector<Triangle>& tris) {
 		std::vector<glm::vec3> cms;
 		float totalVolume = 0.0f;
 		cms.reserve(tris.size());
@@ -407,7 +407,7 @@ namespace Fengshui
 		return inertiaTensor;
 	}
 
-	static glm::mat3 CalculateInertiaTensorTetrahedron(const std::vector<glm::vec3>& pts, const std::vector<Triangle>& tris, const glm::vec3& cm) {
+	static glm::mat3 CalculateInertiaTensorTetrahedronFurthestPoint(const std::vector<glm::vec3>& pts, const std::vector<Triangle>& tris, const glm::vec3& cm) {
 		glm::mat3 inertiaTensor = glm::mat3(0.0f);
 		float totalVolume = 0.0f;
 
@@ -504,7 +504,7 @@ namespace Fengshui
 		return tensor;
 	}
 
-	static void BuildConvexHull(const std::vector< glm::vec3 >& verts, std::vector< glm::vec3 >& hullPts, std::vector< Triangle >& hullTris) {
+	static void BuildConvexHullFurthestPoint(const std::vector< glm::vec3 >& verts, std::vector< glm::vec3 >& hullPts, std::vector< Triangle >& hullTris) {
 		if (verts.size() < 4) {
 			return;
 		}

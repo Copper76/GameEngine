@@ -143,6 +143,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Fengshui\Core\Triangularisation\TriangleHelper.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeConvex.h" />
     <ClInclude Include="src\Fengshui\Core\Geometry.h" />
     <ClInclude Include="src\Fengshui\Core\Triangularisation\Delaunay.h" />
