@@ -8,21 +8,23 @@
 
 namespace Fengshui
 {
+	//Default destructor
 	Scene::~Scene()
 	{
-		//GeneralManager::RemoveScene(shared_from_this());
-		//m_Entities.clear();
+
 	}
 
+	//Function for initialising a scene
 	Ref<Scene> Scene::Init()
 	{
-		//set up the clear colour for the scene
+		//set up the clear settings for the scene
 		RenderCommand::SetClearColour({ 0.2f, 0.2f, 0.2f, 1 });
 		RenderCommand::SetClearDepth(1.0f);
 
 		//Create Scene
 		auto scene = std::make_shared<Scene>();
 
+		//Make the current scene active for the purpose of working with general manager
 		GeneralManager::SetActiveScene(scene);
 
 		//Register Systems
@@ -43,7 +45,7 @@ namespace Fengshui
 		signature.reset();
 		signature.set(GeneralManager::GetComponentType<Render2D>());
 		signature.set(GeneralManager::GetComponentType<Transform2D>());
-		signature.set(GeneralManager::GetComponentType<Hierarchy>());//useful for allowing entities to move with parent
+		signature.set(GeneralManager::GetComponentType<Hierarchy>());
 		GeneralManager::SetSystemSignature<RenderSystem2D>(signature);
 
 		signature.reset();
@@ -80,10 +82,7 @@ namespace Fengshui
 
 		scene->m_SceneManager = std::make_shared<Entity>("Scene Manager");
 
-		/*scene->m_SceneManager->AddComponent(CameraComponent{
-			true,
-			1.0f,
-			1280.0f / 720.0f });*/
+		//Setup a default perspective camera
 		scene->m_SceneManager->AddComponent(CameraComponent{
 			false,
 			true});
@@ -95,10 +94,12 @@ namespace Fengshui
 		return scene;
 	}
 
+	//Update function for the scene
 	void Scene::OnUpdate(float dt)
 	{
 		EntityID cameraComp = m_CameraSystem->GetPrimary();
 		
+		//A default camera control for navigating the scene
 		if (cameraComp != 0)
 		{
 			if (m_ViewportFocused)
@@ -163,8 +164,10 @@ namespace Fengshui
 		}
 	}
 
+	//Fixed update function for updating the gravity and physics of the scene
 	void Scene::OnFixedUpdate(float dt)
 	{
+		//Update is conducted in two halves
 		float dt_sec = dt * 0.5f;
 		for (int i = 0; i < 2; i++)
 		{
@@ -173,6 +176,7 @@ namespace Fengshui
 		}
 	}
 
+	//Render function for updating the graphics of the scene
 	void Scene::OnRender()
 	{
 		EntityID cameraComp = m_CameraSystem->GetPrimary();
@@ -198,21 +202,20 @@ namespace Fengshui
 		}
 	}
 
+	//Event callback for the scene
 	void Scene::OnEvent(Event& e)
 	{
-		//m_CameraComponent->OnEvent(e);
 		EventDispatcher eventDispatcher(e);
 		eventDispatcher.Dispatch<MouseScrolledEvent>(FS_BIND_EVENT_FN(Scene::OnMouseScrolled));
 		eventDispatcher.Dispatch<WindowResizeEvent>(FS_BIND_EVENT_FN(Scene::OnWindowResize));
 	}
 
+	//Wrapper functions for the camera system
 	bool Scene::OnMouseScrolled(MouseScrolledEvent& e)
 	{
 		m_CameraSystem->OnMouseScrolled(m_SceneManager->GetID(), e);
-		//m_CameraMoveSpeed = m_SceneManager->GetComponent<CameraComponent>().ZoomLevel * 0.01f;
 		return false;
 	}
-
 	bool Scene::OnWindowResize(WindowResizeEvent& e)
 	{
 		m_CameraSystem->OnWindowResize(m_SceneManager->GetID(), e);
@@ -244,16 +247,6 @@ namespace Fengshui
 		m_CameraSystem->RecalculateViewMatrix(entity, m_TransformSystem);
 	}
 
-	void Scene::AddConstraint(Ref<Constraint> constraint)
-	{
-		m_Constraints.push_back(constraint);
-	}
-
-	void Scene::RemoveConstraint(Ref<Constraint> constraint)
-	{
-		m_Constraints.erase(std::remove(m_Constraints.begin(), m_Constraints.end(), constraint), m_Constraints.end());
-	}
-
 	void Scene::SetPrimaryCamera(Ref<Entity> entity)
 	{
 		m_CameraSystem->SetPrimary(entity->GetID());
@@ -264,10 +257,14 @@ namespace Fengshui
 		m_CameraSystem->SetPrimary(entity);
 	}
 
-	Ref<Entity> Scene::CreateEntity()
+	//Wrapper for the handling constraints to be used in physics system
+	void Scene::AddConstraint(Ref<Constraint> constraint)
 	{
-		return MakeRef<Entity>();
-		 
-		//m_Entities.insert(MakeRef<Entity>(entity));
+		m_Constraints.push_back(constraint);
+	}
+
+	void Scene::RemoveConstraint(Ref<Constraint> constraint)
+	{
+		m_Constraints.erase(std::remove(m_Constraints.begin(), m_Constraints.end(), constraint), m_Constraints.end());
 	}
 }

@@ -11,7 +11,6 @@ namespace Fengshui
 		Layer(const std::string& name = "Layer", bool isActive = true);
 		virtual ~Layer() = default;
 
-		//Need implementation
 		virtual void OnAttach() = 0;
 		virtual void OnDetach() = 0;
 		virtual void OnUpdate(float dt) {}

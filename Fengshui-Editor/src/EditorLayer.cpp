@@ -4,11 +4,13 @@
 
 namespace Fengshui
 {
-	EditorLayer::EditorLayer() : Layer("Sandbox2D")
+	//Creating the editor layer
+	EditorLayer::EditorLayer() : Layer("Sandbox")
 	{
 
 	}
 
+	//Update function called for editor, you can also treat this as game update
 	void EditorLayer::OnUpdate(float dt)
 	{
 		if (m_IsPlaying && !m_Paused)
@@ -38,6 +40,7 @@ namespace Fengshui
 		}
 	}
 
+	//Fixed update code for the editor, it just simply call the scene update for now
 	void EditorLayer::OnFixedUpdate(float dt)
 	{
 		if (m_IsPlaying && !m_Paused && m_EditorReady)
@@ -46,6 +49,7 @@ namespace Fengshui
 		}
 	}
 
+	//Render code for editor, if the application is a game, no framebuffer will be required
 	void EditorLayer::OnRender()
 	{
 		if (m_EditorReady)
@@ -56,8 +60,10 @@ namespace Fengshui
 		}
 	}
 
+	//Code run when the layer is attached to the layer stack
 	void EditorLayer::OnAttach()
 	{
+		//Creates a framebuffer to fit into imgui
 		FramebufferSpec spec;
 		spec.Width = 1280;
 		spec.Height = 720;
@@ -68,6 +74,7 @@ namespace Fengshui
 		Reset();
 	}
 
+	//Code to reset the scene
 	void EditorLayer::Reset()
 	{
 		m_EditorReady = false;
@@ -110,7 +117,6 @@ namespace Fengshui
 		RenderShapeConvex* convexShape = new RenderShapeConvex(pts, sizeof(pts) / sizeof(glm::vec3));
 
 		m_BigSquare->AddComponent<Render>(Render(convexShape));
-		//m_BigSquare->AddComponent<Render>();
 
 		m_BigSquare->AddComponent<Rigidbody>();
 		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>(Collider(new PhysicalShapeConvex(convexShape)));

@@ -6,6 +6,7 @@
 
 namespace Fengshui
 {
+	//An input class for checking if a specific input is made or get the mouse position, implementation can be found in window class
 	class Input
 	{
 	public:

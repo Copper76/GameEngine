@@ -20,6 +20,7 @@ namespace Fengshui
 		void OnAttach() override;
 		void OnDetach() override;
 
+		//ImGui code which will help render the imgui windows
 		void OnImGuiRender() override
 		{
 			static bool dockspaceOpen = true;
@@ -86,7 +87,6 @@ namespace Fengshui
 			}
 
 			ImGui::Begin("Settings");
-			//ImGui::Text("Square Name: %s", m_BigSquare->Name().c_str());
 			if(ImGui::Checkbox("Scene Camera", &m_UsingSceneCamera))
 			{
 				m_Scene->SetPrimaryCamera(m_UsingSceneCamera ? m_Scene->GetSceneManager() : m_SecondCamera);
@@ -129,6 +129,7 @@ namespace Fengshui
 			ImGui::End();
 		}
 
+		//propogate any event to the active scene
 		void OnEvent(Event& e) override
 		{
 			m_Scene->OnEvent(e);
@@ -136,6 +137,12 @@ namespace Fengshui
 
 	private:
 		void Reset();
+
+	private:
+		//Editor associated variables
+		std::atomic<bool> m_Paused = false;
+		std::atomic<bool> m_IsPlaying = false;
+		std::atomic<bool> m_EditorReady = false;//Check whether the editor has finished setting up
 
 	private:
 		Ref<Scene> m_ActiveScene;
@@ -159,9 +166,5 @@ namespace Fengshui
 
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize;
-
-		std::atomic<bool> m_Paused = false;
-		std::atomic<bool> m_IsPlaying = false;
-		std::atomic<bool> m_EditorReady = false;//Check whether the editor has finished setting up
 	};
 }

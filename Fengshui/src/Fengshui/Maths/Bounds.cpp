@@ -50,7 +50,6 @@ namespace Fengshui
 	Bounds::Expand
 	====================================================
 	*/
-	//void Bounds::Expand( const Vec3 & rhs ) {
 	void Bounds::Expand(const glm::vec3& rhs) {
 		if (rhs.x < mins.x) {
 			mins.x = rhs.x;
@@ -81,6 +80,5 @@ namespace Fengshui
 	void Bounds::Expand(const Bounds& rhs) {
 		Expand(rhs.mins);
 		Expand(rhs.maxs);
-
 	}
 }

@@ -178,7 +178,7 @@ namespace Fengshui
 
 		~Render2D()
 		{
-			//delete[] TexCoords;
+
 		}
 	};
 

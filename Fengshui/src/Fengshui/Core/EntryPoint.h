@@ -4,15 +4,15 @@
 
 extern Fengshui::Application* Fengshui::CreateApplication();
 
+//The main function
 int main(int argc, char** argv)
 {
-	//Logging system doesn't work at the moment
+	//Inmitialise logging for the engine
 	Fengshui::Log::Init();
-	//FS_INFO("Client Log!");
 
+	//Creates the application that will run and enters the running cycle
 	auto app = Fengshui::CreateApplication();
 	app->Run();
-	//delete app;
 
 	return 0;
 }

@@ -13,6 +13,9 @@
 
 namespace Fengshui
 {
+	/*
+	* Scene class representing what is happening in the current context
+	*/
 	class Scene
 	{
 	public:
@@ -30,9 +33,7 @@ namespace Fengshui
 
 		void SetViewportFocused(bool focused) { m_ViewportFocused = focused; }
 
-		inline Ref<Entity> GetSceneManager() { return m_SceneManager; }
-
-		inline Ref<HierarchySystem> GetHierarchySystem() { return m_HierarchySystem; }
+		inline Ref<Entity> GetSceneManager() { return m_SceneManager; }//Returns the default first element of the scene, which is used to handle most default behaviours
 
 		void ResizeBounds(float width, float height);
 		void SetZoomLevel(float zoomLevel);
@@ -48,8 +49,6 @@ namespace Fengshui
 		void SetPrimaryCamera(Ref<Entity> entity);
 		void SetPrimaryCamera(EntityID entity);
 
-		Ref<Entity> CreateEntity();
-
 		inline void AddEntity(Ref<Entity> entity) { m_Entities[entity->GetID()] = entity; }
 		inline void RemoveEntity(Ref<Entity> entity) { m_Entities.erase(entity->GetID()); }
 		inline void RemoveEntity(EntityID entity) { m_Entities.erase(entity); }
@@ -59,12 +58,14 @@ namespace Fengshui
 		bool OnWindowResize(WindowResizeEvent& e);
 
 	private:
+		//ECS related variables
 		Ref<Entity> m_RootNode;
 		Ref<Entity> m_SceneManager;
 
 		std::unordered_map<EntityID, Ref<Entity>> m_Entities;
 
 	private:
+		//Physics related variables
 		std::vector<Ref<Constraint>> m_Constraints;
 		Ref<ManifoldCollector> m_Manifolds;
 

@@ -20,21 +20,4 @@ namespace Fengshui
 
 		static Ref<VertexArray> Create();
 	};
-
-	/**
-	//TODO: Move this to RenderComponent
-	class VertexArrayLibrary
-	{
-	public:
-		void Add(const Ref<VertexArray> vertexArray, const std::string& name = "vertexArray");
-
-		Ref<VertexArray> Get(const std::string& name);
-
-	private:
-		bool Exist(const std::string& name);
-
-	private:
-		std::unordered_map<std::string, Ref<VertexArray>> m_VertexArrays;
-	};
-	**/
 }

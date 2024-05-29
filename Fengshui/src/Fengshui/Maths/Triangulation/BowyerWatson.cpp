@@ -3,7 +3,7 @@
 
 namespace Fengshui
 {
-
+	//The class is currently under development and is incomplete
 	void BuildSupraTetrahedron(std::vector<glm::vec3>& verts, std::vector<Tetrahedron>& hullTetra)
 	{
 		hullTetra.clear();

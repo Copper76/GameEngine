@@ -16,6 +16,7 @@ namespace Fengshui
 		ConstraintConstantVelocity() : Constraint(), m_cachedLambda(2), m_Jacobian(2, 12) {
 			m_cachedLambda.Zero();
 			m_baumgarte = 0.0f;
+			m_q0 = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 		}
 		void PreSolve(const float dt_sec) override;
 		void Solve() override;
@@ -43,6 +44,7 @@ namespace Fengshui
 			m_isAngleViolatedV = false;
 			m_angleU = 0.0f;
 			m_angleV = 0.0f;
+			m_q0 = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 		}
 		void PreSolve(const float dt_sec) override;
 		void Solve() override;

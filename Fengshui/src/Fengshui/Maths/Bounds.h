@@ -22,12 +22,9 @@ namespace Fengshui
 		const Bounds & operator = ( const Bounds & rhs );
 		~Bounds() {}
 
-		//void Clear() { mins = Vec3( 1e6 ); maxs = Vec3( -1e6 ); }
 		void Clear() { mins = glm::vec3( 1e6 ); maxs = glm::vec3( -1e6 ); }
 		bool DoesIntersect( const Bounds & rhs ) const;
-		//void Expand( const Vec3 * pts, const int num );
 		void Expand( const glm::vec3* pts, const int num );
-		//void Expand( const Vec3 & rhs );
 		void Expand( const glm::vec3& rhs );
 		void Expand( const Bounds & rhs );
 
@@ -36,9 +33,7 @@ namespace Fengshui
 		float WidthZ() const { return maxs.z - mins.z; }
 
 	public:
-		//Vec3 mins;
 		glm::vec3 mins;
-		//Vec3 maxs;
 		glm::vec3 maxs;
 	};
 }

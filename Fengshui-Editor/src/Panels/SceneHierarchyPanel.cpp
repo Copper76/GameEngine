@@ -14,8 +14,6 @@ namespace Fengshui
 		ImGui::Begin("Scene Hierarchy");
 
 		auto& comp = GeneralManager::GetComponent<Hierarchy>(0);
-		//std::set<EntityID> children = *comp.Children;
-		//for (EntityID e : children)
 		for (EntityID e : comp.Children)
 		{
 			DrawEntityNode(e);
@@ -24,15 +22,6 @@ namespace Fengshui
 		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
 		{
 			ResetSelection();
-		}
-
-		if (ImGui::BeginPopupContextWindow(0, 1))
-		{
-			if (ImGui::MenuItem("Create Entity"))
-			{
-				//GeneralManager::GetActiveScene()->CreateEntity();
-			}
-			ImGui::EndPopup();
 		}
 
 		ImGui::End();
@@ -122,16 +111,6 @@ namespace Fengshui
 			m_SelectedEntity = entity;
 		}
 
-		bool entityDeleted = false;
-		if (ImGui::BeginPopupContextWindow(0))
-		{
-			if (ImGui::MenuItem("Delete Entity"))
-			{
-				entityDeleted = true;
-			}
-			ImGui::EndPopup();
-		}
-
 		if (opened)
 		{
 			for (EntityID e : children)
@@ -140,10 +119,5 @@ namespace Fengshui
 			}
 			ImGui::TreePop();
 		}
-		if (entityDeleted)
-		{
-			//GeneralManager::GetActiveScene()->RemoveEntity(entity);
-		}
-
 	}
 }
