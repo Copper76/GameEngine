@@ -14,7 +14,7 @@ ShapeSphere
 	class PhysicalShapeSphere : public PhysicalShape {
 	public:
 		explicit PhysicalShapeSphere(const float radius) : m_radius(radius) {
-			m_centerOfMass = glm::vec3(0.0f);
+			m_CenterOfMass = glm::vec3(0.0f);
 		}
 
 		glm::vec3 Support(const glm::vec3& dir, const Transform transform, const float bias) const override;

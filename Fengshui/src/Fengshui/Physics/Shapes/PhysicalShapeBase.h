@@ -26,11 +26,11 @@ namespace Fengshui
 		virtual Bounds GetBounds(const Transform transform) const = 0;
 		virtual Bounds GetBounds(const glm::vec3 scale) const = 0;
 
-		virtual glm::vec3 GetCenterOfMass(const glm::vec3 offset, const glm::vec3 scale) const { return (m_centerOfMass * scale) + offset; }
+		virtual glm::vec3 GetCenterOfMass() const { return m_CenterOfMass; }
 
 		virtual float FastestLinearSpeed(const glm::vec3& angularVelocity, const glm::vec3& dir) const { return 0.0f; }
 
 	protected:
-		glm::vec3 m_centerOfMass;
+		glm::vec3 m_CenterOfMass;
 	};
 }

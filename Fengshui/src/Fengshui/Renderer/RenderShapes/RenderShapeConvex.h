@@ -13,9 +13,7 @@ namespace Fengshui
 
 		virtual void Build(const glm::vec3* pts, const int num) override;
 
-		virtual void Rebuild(const std::vector<glm::vec3> pts);
-
-		inline void Rebuild() { Build(m_VertexCoords.data(), (int)m_VertexCoords.size()); }
+		void Rebuild(const std::vector<glm::vec3> pts, bool removeUnused = false);
 
 		virtual ShapeType GetType() const override { return ShapeType::SHAPE_CONVEX;  }
 

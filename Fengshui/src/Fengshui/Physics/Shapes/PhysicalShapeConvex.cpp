@@ -38,8 +38,8 @@ namespace Fengshui
 		//Expand the bounds
 		m_bounds.Clear();
 		m_bounds.Expand(m_VertexCoords.data(), (int)m_VertexCoords.size());
-		m_centerOfMass = Geometry::CalculateCenterOfMassTetrahedron(m_VertexCoords, hullTris);
-		m_inertiaTensor = Geometry::CalculateInertiaTensorTetrahedron(m_VertexCoords, hullTris, m_centerOfMass);
+		m_CenterOfMass = Geometry::CalculateCenterOfMassTetrahedron(m_VertexCoords, hullTris);
+		m_inertiaTensor = Geometry::CalculateInertiaTensorTetrahedron(m_VertexCoords, hullTris, m_CenterOfMass);
 	}
 
 	void PhysicalShapeConvex::Build(const std::vector<glm::vec3> pts, const std::vector<Triangle> tris) {
@@ -48,8 +48,8 @@ namespace Fengshui
 		//Expand the bounds
 		m_bounds.Clear();
 		m_bounds.Expand(m_VertexCoords.data(), (int)m_VertexCoords.size());
-		m_centerOfMass = Geometry::CalculateCenterOfMassTetrahedron(pts, tris);
-		m_inertiaTensor = Geometry::CalculateInertiaTensorTetrahedron(pts, tris, m_centerOfMass);
+		m_CenterOfMass = Geometry::CalculateCenterOfMassTetrahedron(pts, tris);
+		m_inertiaTensor = Geometry::CalculateInertiaTensorTetrahedron(pts, tris, m_CenterOfMass);
 	}
 
 	/*
@@ -137,7 +137,7 @@ namespace Fengshui
 	float PhysicalShapeConvex::FastestLinearSpeed(const glm::vec3& angularVelocity, const glm::vec3& dir) const {
 		float maxSpeed = 0.0f;
 		for (int i = 0; i < m_VertexCoords.size(); i++) {
-			glm::vec3 r = m_VertexCoords[i] - m_centerOfMass;
+			glm::vec3 r = m_VertexCoords[i] - m_CenterOfMass;
 			glm::vec3 linearVelocity = glm::cross(angularVelocity, r);//perpendicular component of the angular speed
 			float speed = glm::dot(dir, linearVelocity);//component of the perpendicular speed in direction of dir
 			if (speed > maxSpeed) {

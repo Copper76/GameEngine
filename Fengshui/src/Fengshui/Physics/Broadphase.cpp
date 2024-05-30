@@ -51,7 +51,6 @@ namespace Fengshui
 			bounds.Expand(bounds.mins + glm::vec3(-1, -1, -1) * epsilon);
 			bounds.Expand(bounds.maxs + glm::vec3(1, 1, 1) * epsilon);
 
-			//Sorting needs changing, I am not using an array here
 			sortedArray[i * 2 + 0].id = entity;
 			sortedArray[i * 2 + 0].value = glm::dot(axis, bounds.mins);
 			sortedArray[i * 2 + 0].ismin = true;

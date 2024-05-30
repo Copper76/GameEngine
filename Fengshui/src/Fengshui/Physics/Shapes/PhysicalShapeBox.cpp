@@ -27,7 +27,7 @@ namespace Fengshui
 		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.maxs.z));
 		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.mins.z));
 
-		m_centerOfMass = (m_bounds.maxs + m_bounds.mins) * 0.5f;
+		m_CenterOfMass = (m_bounds.maxs + m_bounds.mins) * 0.5f;
 	}
 
 	/*
@@ -139,7 +139,7 @@ namespace Fengshui
 	float PhysicalShapeBox::FastestLinearSpeed(const  glm::vec3& angularVelocity, const  glm::vec3& dir) const {
 		float maxSpeed = 0.0f;
 		for (int i = 0; i < m_VertexCoords.size(); i++) {
-			glm::vec3 r = m_VertexCoords[i] - m_centerOfMass;
+			glm::vec3 r = m_VertexCoords[i] - m_CenterOfMass;
 			glm::vec3 linearVelocity = glm::cross(angularVelocity, r);//perpendicular component of the angular speed
 			float speed = glm::dot(dir, linearVelocity);//component of the perpendicular speed in direction of dir
 			if (speed > maxSpeed) {

@@ -19,14 +19,16 @@ namespace Fengshui
 		}
 	};
 
-	static glm::vec3 GetCenterOfMassWorldSpace(const Collider collider, const Transform trans) {
-		const glm::vec3 centerOfMass = collider.Shape->GetCenterOfMass(collider.Offset, collider.Size);
-		return (trans.Rotation * centerOfMass) * trans.Scale + trans.Position;
+	static glm::vec3 GetCenterOfMassWorldSpace(const Collider collider, const Transform trans)
+	{
+		const glm::vec3 centerOfMass = collider.Shape->GetCenterOfMass();
+		return (trans.Rotation * (centerOfMass * trans.Scale * collider.Size)) + trans.Position + collider.Offset;
 	}
 
-	static glm::vec3 GetCenterOfMassModelSpace(const Collider collider) {
-		const glm::vec3 centerOfMass = collider.Shape->GetCenterOfMass(collider.Offset, collider.Size);
-		return centerOfMass;
+	static glm::vec3 GetCenterOfMassModelSpace(const Collider collider) 
+	{
+		const glm::vec3 centerOfMass = collider.Shape->GetCenterOfMass();
+		return centerOfMass * collider.Size + collider.Offset;
 	}
 
 	static glm::vec3 WorldSpaceToBodySpace(const glm::vec3& worldPt, const Collider collider, const Transform trans) {
