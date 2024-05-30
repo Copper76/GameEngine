@@ -282,11 +282,14 @@ namespace Fengshui
 		RemoveUnreferencedVerts(hullPoints, hullTris);
 	}
 
-	void FurthestPoint::BuildConvexHull(std::vector<glm::vec3>& verts, std::vector<Triangle>& hullTris) {
+	void FurthestPoint::BuildConvexHull(std::vector<glm::vec3>& verts, std::vector<Triangle>& hullTris, bool removeUnused) {
 		std::vector<glm::vec3>& hullPts = std::vector<glm::vec3>();
 		BuildTetrahedron(verts.data(), (int)verts.size(), hullPts, hullTris);
 
 		ExpandConverHull(hullPts, hullTris, verts);
-		verts = hullPts;
+		if (removeUnused)
+		{
+			verts = hullPts;
+		}
 	}
 }

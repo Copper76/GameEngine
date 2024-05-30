@@ -23,7 +23,7 @@ namespace Fengshui
 			Build(pts, tris);
 		}
 
-		explicit PhysicalShapeConvex(const RenderShape* shape) {
+		explicit PhysicalShapeConvex(const RenderShapeConvex* shape) {
 			Build(shape->GetVertexCoords(), shape->GetTris());
 		}
 
@@ -43,6 +43,7 @@ namespace Fengshui
 		ShapeType GetType() const override { return ShapeType::SHAPE_CONVEX; }
 
 	public:
+		std::vector<glm::vec3> m_VertexCoords;
 		Bounds m_bounds;
 		glm::mat3 m_inertiaTensor;
 	};

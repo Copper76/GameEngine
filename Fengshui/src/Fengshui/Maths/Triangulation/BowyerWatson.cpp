@@ -48,7 +48,7 @@ namespace Fengshui
 		//}
 	}
 
-	void BowyerWatson::BuildConvexHull(std::vector<glm::vec3>& verts, std::vector<Triangle>& hullTris)
+	void BowyerWatson::BuildConvexHull(std::vector<glm::vec3>& verts, std::vector<Triangle>& hullTris, bool removeUnused)
 	{
 		std::vector<Tetrahedron>& hullTetra = std::vector<Tetrahedron>();
 		BuildSupraTetrahedron(verts, hullTetra);

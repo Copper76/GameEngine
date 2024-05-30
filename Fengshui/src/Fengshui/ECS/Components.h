@@ -192,7 +192,7 @@ namespace Fengshui
 
 		Render()
 		{
-			Shape = new RenderShapeCube(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
+			Shape = new RenderShapeCube();
 		}
 
 		Render(RenderShape* shape) : Shape(shape)
@@ -202,7 +202,7 @@ namespace Fengshui
 
 		Render(Ref<Fengshui::Texture> texture) : Texture(texture)
 		{
-			Shape = new RenderShapeCube(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
+			Shape = new RenderShapeCube();
 		}
 
 		Render(Ref<Fengshui::Texture> texture, glm::vec2* coords) : Texture(texture)
@@ -213,12 +213,12 @@ namespace Fengshui
 				TexCoords[i] = coords[i];
 			}
 
-			Shape = new RenderShapeCube(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
+			Shape = new RenderShapeCube();
 		}
 
 		Render(glm::vec4 colour) : Colour(colour)
 		{
-			Shape = new RenderShapeCube(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
+			Shape = new RenderShapeCube();
 		}
 
 		Render(Ref<Fengshui::Texture> texture, glm::vec2* coords, glm::vec4 colour, float tilingFactor, RenderShape* shape)

@@ -32,6 +32,7 @@ namespace Fengshui
 		ShapeType GetType() const override { return ShapeType::SHAPE_CUBE; }
 
 	public:
+		std::vector<glm::vec3> m_VertexCoords;
 		Bounds m_bounds;
 	};
 }

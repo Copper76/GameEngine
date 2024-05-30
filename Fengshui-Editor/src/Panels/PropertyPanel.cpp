@@ -134,7 +134,7 @@ namespace Fengshui
 					float mass = rigidbody.InvMass == 0 ? 0.0f : 1.0f / rigidbody.InvMass;
 					if (ImGui::DragFloat("Mass", &mass, 0.1f, 0.0f, std::numeric_limits<float>::max()))
 					{
-						rigidbody.InvMass = mass == 0.0f ? 0.0f : 1.0f / mass;
+						rigidbody.InvMass = (mass == 0.0f) ? 0.0f : 1.0f / mass;
 					}
 
 					ImGui::DragFloat("Friction", &rigidbody.Friction, 0.1f, 0.0f, 1.0f);
@@ -184,6 +184,66 @@ namespace Fengshui
 					auto& render = GeneralManager::GetComponent<Render>(entity);
 
 					ImGui::ColorEdit4("Colour", glm::value_ptr(render.Colour));
+
+					if (ImGui::BeginCombo("Shape", render.Shape->GetDisplayName().c_str()))
+					{
+						if (ImGui::Selectable("Cube"))
+						{
+							render.Shape = new RenderShapeCube();
+						}
+
+						if (ImGui::Selectable("Sphere"))
+						{
+							render.Shape = new RenderShapeSphere();
+						}
+
+						if (ImGui::Selectable("Convex"))
+						{
+							render.Shape = new RenderShapeConvex(nullptr, 0);
+						}
+
+						ImGui::EndCombo();
+					}
+
+					switch (render.Shape->GetType())
+					{
+					case ShapeType::SHAPE_CUBE:
+						break;
+					case ShapeType::SHAPE_SPHERE:
+						ImGui::DragFloat("Radius", &((RenderShapeSphere*)render.Shape)->GetRadius(), 0.1f, 0.0f, std::numeric_limits<float>::max());
+						ImGui::DragInt("Divisions", &((RenderShapeSphere*)render.Shape)->GetDivisions(), 0.1f, 1, 64);
+						break;
+					case ShapeType::SHAPE_CONVEX:
+					{
+						bool changed = false;
+						int num = ((RenderShapeConvex*)render.Shape)->GetVertexNum();
+						changed |= ImGui::DragInt("Num of Vertices", &num, 0.1f, 0, std::numeric_limits<int>::max());
+						std::vector<glm::vec3> vertexCoords = ((RenderShapeConvex*)render.Shape)->GetVertexCoords();
+						if (num > 0)
+						{
+							ImGui::Text("Vertices:");
+							for (int i = vertexCoords.size(); i < num; i++)
+							{
+								vertexCoords.push_back(glm::vec3(0.0f));
+							}
+
+							for (int i = 0; i < num; i++)
+							{
+								ImGui::PushID(i);
+								changed |= ImGui::DragFloat3("##dragfloat3", glm::value_ptr(vertexCoords[i]), 0.1f);
+								ImGui::PopID();
+							}
+
+						}
+						if (changed)
+						{
+							((RenderShapeConvex*)render.Shape)->Rebuild(vertexCoords);
+						}
+						break;
+					}
+					default:
+						FS_ENGINE_ASSERT(false, "Unsupported render type");
+					}
 				}
 				if (toRemove)
 				{

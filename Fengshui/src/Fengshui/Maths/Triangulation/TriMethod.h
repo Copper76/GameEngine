@@ -74,6 +74,6 @@ namespace Fengshui
 
 		glm::mat3 CalculateInertiaTensorTetrahedron(const std::vector<glm::vec3>& pts, const std::vector<Triangle>& tris, const glm::vec3& cm);
 
-		virtual void BuildConvexHull(std::vector<glm::vec3>& verts, std::vector< Triangle >& hullTris) = 0;
+		virtual void BuildConvexHull(std::vector<glm::vec3>& verts, std::vector< Triangle >& hullTris, bool removeUnused) = 0;
 	};
 }

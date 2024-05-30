@@ -140,7 +140,6 @@ namespace Fengshui
 		float maxSpeed = 0.0f;
 		for (int i = 0; i < m_VertexCoords.size(); i++) {
 			glm::vec3 r = m_VertexCoords[i] - m_centerOfMass;
-			//glm::vec3 linearVelocity = angularVelocity.Cross(r);//perpendicular component of the angular speed
 			glm::vec3 linearVelocity = glm::cross(angularVelocity, r);//perpendicular component of the angular speed
 			float speed = glm::dot(dir, linearVelocity);//component of the perpendicular speed in direction of dir
 			if (speed > maxSpeed) {

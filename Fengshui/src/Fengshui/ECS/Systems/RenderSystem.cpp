@@ -27,8 +27,17 @@ namespace Fengshui
 				Renderer::DrawCube(transform, renderData.TilingFactor, renderData.Texture, texCoords, renderData.Colour);
 				break;
 			case ShapeType::SHAPE_CONVEX:
-				Renderer::DrawConvex(transform, renderData.Shape->GetVertexCoords(), renderData.Shape->GetTris(), renderData.Colour);
+				{
+				RenderShapeConvex* shape = (RenderShapeConvex*)renderData.Shape;
+				Renderer::DrawConvex(transform, shape->GetVertexCoords(), shape->GetTris(), renderData.Colour);
+				}
 				break;
+			case ShapeType::SHAPE_SPHERE:
+			{
+				RenderShapeSphere* shape = (RenderShapeSphere*)renderData.Shape;
+				//Renderer::DrawConvex(transform, shape->GetVertexCoords(), shape->GetTris(), renderData.Colour);
+				break;
+			}
 			default:
 				FS_ENGINE_ASSERT(false, "NO SUPPORT FOR CUSTOM RENDERING")
 			}
