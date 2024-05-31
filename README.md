@@ -8,21 +8,25 @@ This project is a practice project to make a game engine using Entity-Component 
 - Entity-Component System for rendering, transform, position and camera.
 
 ## Functions implemented
-- [X] Create a simple snake game using pure SFML to learn the basics of input handling and rendering. It is implemented in the [Snake Branch](https://github.com/Copper76/GameEngine/tree/Snake)
+- [X] Create a simple snake game using pure SFML to learn the basics of input handling and rendering. It was a simple practice with no connection with the rest of the engine. It is implemented in the [Snake Branch](https://github.com/Copper76/GameEngine/tree/Snake).
+- [X] Remade the snake game with Fengshui using the Fengshui editor interface in [NewSnake Branch](https://github.com/Copper76/GameEngine/tree/NewSnake), all the game code are implemented in the editor layer which only calls functions from the Fengshui engine.
 - [X] Get Logging working with spdlog
 - [X] Integrate GLFW into the ECS. The GLFW now works under render component, which stores all the information required for rendering.
 - [X] Create a entity component system structure, a simple ECS is created in the ECS folder.
 - [X] Continue with the Cherno series on Hazel to further develop the renderer. The 2D renderer now supports batch rendering, subtexture 
 - [X] Added a preliminary editor, which can display entities in the scene in hierarchy, as well as modifying components
 - [X] Added perspective camera and 3d rendering to support the 3d physics system.
-- [X] Integrated the 3D Physics Engine that was previously made in [Physics Engine](https://github.com/Copper76/Physics-Engine), the engine doesn't play nicely with hierarchy yet. 
+- [X] Integrated the 3D Physics Engine that was previously made in [Physics Engine](https://github.com/Copper76/Physics-Engine), the engine doesn't play nicely with hierarchy yet.
+- [X] expand the 3d renderer to allow rendering with custom shapes, it now uses the same technique as physical shapes to build convex shape from a set of points
+- [X] Improve the panels. The panels now allow add and removal of components at runtime, as well as the ability to modify most value based data, with the exception of hierarchy.
 
 ## TODO
-- [ ] expand the 3d renderer to allow rendering with custom shapes
-- [ ] Embellish the panels
+- [ ] Add functionality to render a circle
+- [ ] Look into raytracing and integrate it into the engine(stretch goal)
 
-## Stretch Goal
-- [ ] Look into raytracing and see how to add that into the engine
+## Knonw Issues
+- The physics system breaks when the object is rotated by a parent
+- The sphere collider can only scale uniformly
 
 ## Deprecated Objectives
 - [ ] Integrate SFML into the ECS
