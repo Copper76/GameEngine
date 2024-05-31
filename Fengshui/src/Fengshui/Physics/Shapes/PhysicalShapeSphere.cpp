@@ -25,7 +25,7 @@ ShapeSphere::Support
 ====================================================
 */
 	glm::vec3 PhysicalShapeSphere::Support(const glm::vec3& dir, const Transform transform, const float bias) const {
-		return (transform.Position + transform.Rotation * dir * (m_radius + bias));
+		return (transform.Position + transform.Rotation * dir * (m_Radius + bias));
 	}
 
 	/*
@@ -35,14 +35,16 @@ ShapeSphere::Support
 	*/
 	glm::mat3 PhysicalShapeSphere::InertiaTensor() const {
 		glm::mat3 tensor = glm::mat3(0.0f);
-		//tensor[0][0] = 2.0f * m_radius.x * m_radius.x / 5.0f;
-		//tensor[1][1] = 2.0f * m_radius.y * m_radius.y / 5.0f;
-		//tensor[2][2] = 2.0f * m_radius.z * m_radius.z / 5.0f;
 
-		tensor[0][0] = 2.0f * m_radius * m_radius / 5.0f;
-		tensor[1][1] = 2.0f * m_radius * m_radius / 5.0f;
-		tensor[2][2] = 2.0f * m_radius * m_radius / 5.0f;
+		tensor[0][0] = 2.0f * m_Radius * m_Radius / 5.0f;
+		tensor[1][1] = 2.0f * m_Radius * m_Radius / 5.0f;
+		tensor[2][2] = 2.0f * m_Radius * m_Radius / 5.0f;
 		return tensor;
+	}
+
+	void PhysicalShapeSphere::Rebuild(const glm::vec3 offset, const glm::vec3 scale)
+	{
+		m_Radius = m_BaseRadius * scale.x;
 	}
 
 	/*
@@ -52,10 +54,10 @@ ShapeSphere::Support
 	*/
 	Bounds PhysicalShapeSphere::GetBounds(const Transform transform) const {
 		Bounds tmp;
-		//tmp.mins = (transform.Rotation * (-m_radius)) + transform.Position;
-		//tmp.maxs = (transform.Rotation * m_radius) + transform.Position;
-		tmp.mins = (transform.Rotation * glm::vec3(-m_radius)) + transform.Position;
-		tmp.maxs = (transform.Rotation * glm::vec3(m_radius)) + transform.Position;
+		//tmp.mins = (transform.Rotation * (-m_Radius)) + transform.Position;
+		//tmp.maxs = (transform.Rotation * m_Radius) + transform.Position;
+		tmp.mins = (transform.Rotation * glm::vec3(-m_Radius)) + transform.Position;
+		tmp.maxs = (transform.Rotation * glm::vec3(m_Radius)) + transform.Position;
 		return tmp;
 	}
 }

@@ -166,8 +166,11 @@ namespace Fengshui
 				{
 					auto& collider = GeneralManager::GetComponent<Collider>(entity);
 
-					colliderChanged |= ImGui::DragFloat3("Offset", glm::value_ptr(collider.Offset));
-					colliderChanged |= ImGui::DragFloat3("Size", glm::value_ptr(collider.Size));
+					if (collider.Shape->GetType() != ShapeType::SHAPE_SPHERE)
+					{
+						colliderChanged |= ImGui::DragFloat3("Offset", glm::value_ptr(collider.Offset));
+						colliderChanged |= ImGui::DragFloat3("Size", glm::value_ptr(collider.Size));
+					}
 
 					glm::vec3 globalScale = collider.Size * TransformSystem::GetWorldTransform(entity).Scale;
 
@@ -199,7 +202,7 @@ namespace Fengshui
 					case ShapeType::SHAPE_CUBE:
 						break;
 					case ShapeType::SHAPE_SPHERE:
-						ImGui::DragFloat("Radius", &((PhysicalShapeSphere*)collider.Shape)->m_radius, 0.1f, 0.0f, std::numeric_limits<float>::max());
+						ImGui::DragFloat("Radius", &((PhysicalShapeSphere*)collider.Shape)->m_Radius, 0.1f, 0.0f, std::numeric_limits<float>::max());
 						break;
 					case ShapeType::SHAPE_CONVEX:
 					{

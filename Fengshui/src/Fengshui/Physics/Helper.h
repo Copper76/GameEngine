@@ -97,21 +97,21 @@ namespace Fengshui
 		ApplyImpulseAngular(dL, collider, rb, trans);
 	}
 
-	static void Update(const float dt_sec, const Collider collider, Rigidbody& rb, Transform& trans, const Transform& globalTrans)
+	static void Update(const float dt_sec, const Collider collider, Rigidbody& rb, Transform& trans, const glm::quat globalRotation)
 	{
-		trans.Position += trans.Rotation * glm::inverse(globalTrans.Rotation) * rb.LinearVelocity * dt_sec;
+		trans.Position += trans.Rotation * glm::inverse(globalRotation) * rb.LinearVelocity * dt_sec;
 
 		glm::vec3 positionCM = GetCenterOfMassWorldSpace(collider, trans);
 		glm::vec3 cmToPos = trans.Position - positionCM;
 
 		//Need to update the rotation torque as it needs to be always perpendicular to center of mass
 		//alpha is carried over acceleration from last iteration
-		glm::mat3 orientation = glm::mat3_cast(globalTrans.Rotation);
+		glm::mat3 orientation = glm::mat3_cast(globalRotation);
 		glm::mat3 inertiaTensor = orientation * collider.Shape->InertiaTensor() * glm::transpose(orientation);
 		glm::vec3 alpha = glm::inverse(inertiaTensor) * (glm::cross(rb.AngularVelocity, inertiaTensor * rb.AngularVelocity));
 		rb.AngularVelocity += alpha * dt_sec;
 
-		glm::vec3 dAngle = trans.Rotation * glm::inverse(globalTrans.Rotation) * rb.AngularVelocity * dt_sec;
+		glm::vec3 dAngle = trans.Rotation * glm::inverse(globalRotation) * rb.AngularVelocity * dt_sec;
 		glm::quat dq = glm::quat(dAngle);
 		trans.Rotation = dq * trans.Rotation;
 
@@ -124,9 +124,9 @@ namespace Fengshui
 		Rigidbody& rb = GeneralManager::GetComponent<Rigidbody>(entity);
 		Transform& trans = GeneralManager::GetComponent<Transform>(entity);
 
-		const Transform& globalTrans = TransformSystem::GetWorldTransform(entity);
+		const glm::quat globalRotation = TransformSystem::GetWorldTransform(entity).Rotation;
 
-		Update(dt_sec, collider, rb, trans, globalTrans);
+		Update(dt_sec, collider, rb, trans, globalRotation);
 	}
 
 	static glm::mat3 Minor(const glm::mat4 matrix, const int i, const int j) 

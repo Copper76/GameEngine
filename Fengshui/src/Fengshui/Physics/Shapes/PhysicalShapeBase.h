@@ -24,7 +24,7 @@ namespace Fengshui
 
 		virtual void Build(const glm::vec3* pts, const int num, const glm::vec3 offset, const glm::vec3 scale) {};
 
-		virtual void Rebuild(const glm::vec3 offset, const glm::vec3 scale) {};
+		virtual void Rebuild(const glm::vec3 offset, const glm::vec3 scale) = 0;
 
 		virtual glm::mat3 InertiaTensor() const = 0;
 

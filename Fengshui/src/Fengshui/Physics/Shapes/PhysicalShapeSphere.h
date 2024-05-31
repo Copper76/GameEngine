@@ -14,26 +14,24 @@ ShapeSphere
 	class PhysicalShapeSphere : public PhysicalShape {
 	public:
 		PhysicalShapeSphere() {
-			//m_radius = glm::vec3(radius);
-			m_radius = 1.0f;
+			m_Radius = 1.0f;
 			m_CenterOfMass = glm::vec3(0.0f);
+
+			m_BaseRadius = 1.0f;
 		}
 
 		PhysicalShapeSphere(const float radius) {
-			//m_radius = glm::vec3(radius);
-			m_radius = radius;
+			m_Radius = radius;
 			m_CenterOfMass = glm::vec3(0.0f);
-		}
 
-		PhysicalShapeSphere(const glm::vec3 offset, const glm::vec3 scale) {
-			//m_radius = scale;
-			//m_radius = scale;
-			m_CenterOfMass = offset;
+			m_BaseRadius = radius;
 		}
 
 		glm::vec3 Support(const glm::vec3& dir, const Transform transform, const float bias) const override;
 
 		glm::mat3 InertiaTensor() const override;
+
+		virtual void Rebuild(const glm::vec3 offset, const glm::vec3 scale) override;
 
 		Bounds GetBounds(const Transform transform) const override;
 
@@ -42,8 +40,8 @@ ShapeSphere
 		virtual std::string GetDisplayName() const override { return "Sphere Collider"; }
 
 	public:
-		float m_radius;
+		float m_Radius;
 	private:
-		glm::vec3 m_BaseRadius;
+		float m_BaseRadius;
 	};
 }

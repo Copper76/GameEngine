@@ -14,10 +14,10 @@ namespace Fengshui
 		const glm::vec3 ab = posB - posA;
 		glm::vec3 norm = glm::normalize(ab);
 
-		ptOnA = posA + norm * sphereA->m_radius;
-		ptOnB = posB - norm * sphereB->m_radius;
+		ptOnA = posA + norm * sphereA->m_Radius;
+		ptOnB = posB - norm * sphereB->m_Radius;
 
-		const float radiusAB = sphereA->m_radius + sphereB->m_radius;
+		const float radiusAB = sphereA->m_Radius + sphereB->m_Radius;
 		const float lengthSquare = glm::length2(ab);
 		if (lengthSquare <= (radiusAB * radiusAB)) {
 			return true;
@@ -51,7 +51,7 @@ namespace Fengshui
 
 				glm::vec3 ab = transB.Position - transA.Position;
 				//distance betwen positions minus the radius of both spheres
-				float r = glm::length(ab) - (sphereA->m_radius + sphereB->m_radius);
+				float r = glm::length(ab) - (sphereA->m_Radius + sphereB->m_Radius);
 				contact.separationDistance = r;
 				return true;
 			}
@@ -127,13 +127,13 @@ namespace Fengshui
 		//too close, check collision now
 		if (glm::length2(rayDir) < 0.001f * 0.001f) {
 			glm::vec3 ab = posB - posA;
-			float radius = shapeA->m_radius + shapeB->m_radius + 0.001f;
+			float radius = shapeA->m_Radius + shapeB->m_Radius + 0.001f;
 			if (glm::length2(ab) > radius * radius) {
 				return false;
 			}
 		}
 		//not going to collide ever
-		else if (!RaySphere(posA, rayDir, posB, shapeA->m_radius + shapeB->m_radius, t0, t1)) {
+		else if (!RaySphere(posA, rayDir, posB, shapeA->m_Radius + shapeB->m_Radius, t0, t1)) {
 			return false;
 		}
 
@@ -158,8 +158,8 @@ namespace Fengshui
 		glm::vec3 newPosB = posB + velB * toi;
 		glm::vec3 ab = glm::normalize(newPosB - newPosA);
 
-		ptOnA = newPosA + ab * shapeA->m_radius;
-		ptOnB = newPosB - ab * shapeB->m_radius;
+		ptOnA = newPosA + ab * shapeA->m_Radius;
+		ptOnB = newPosB - ab * shapeB->m_Radius;
 		return true;
 	}
 
@@ -200,20 +200,20 @@ namespace Fengshui
 			glm::vec3 velB = bodyB.LinearVelocity;
 
 			if (SphereSphereDynamic(sphereA, sphereB, posA, posB, velA, velB, dt_sec, contact.ptOnA_WorldSpace, contact.ptOnB_WorldSpace, contact.timeOfImpact)) {
-				Update(contact.timeOfImpact, colliderA, bodyA, transA, globalTransA);
-				Update(contact.timeOfImpact, colliderB, bodyB, transB, globalTransB);
+				Update(contact.timeOfImpact, colliderA, bodyA, transA, globalTransA.Rotation);
+				Update(contact.timeOfImpact, colliderB, bodyB, transB, globalTransB.Rotation);
 
 				contact.ptOnA_LocalSpace = WorldSpaceToBodySpace(contact.ptOnA_WorldSpace, colliderA, transA);
 				contact.ptOnB_LocalSpace = WorldSpaceToBodySpace(contact.ptOnA_WorldSpace, colliderB, transB);
 
 				contact.normal = glm::normalize(globalTransA.Position - globalTransB.Position);
 
-				Update(-contact.timeOfImpact, colliderA, bodyA, transA, globalTransA);
-				Update(-contact.timeOfImpact, colliderB, bodyB, transB, globalTransB);
+				Update(-contact.timeOfImpact, colliderA, bodyA, transA, globalTransA.Rotation);
+				Update(-contact.timeOfImpact, colliderB, bodyB, transB, globalTransB.Rotation);
 
 				glm::vec3 ab = globalTransB.Position - globalTransA.Position;
 				//distance betwen positions minus the radius of both spheres
-				float r = glm::length(ab) - (sphereA->m_radius + sphereB->m_radius);
+				float r = glm::length(ab) - (sphereA->m_Radius + sphereB->m_Radius);
 				contact.separationDistance = r;
 				return true;
 			}
@@ -229,8 +229,8 @@ namespace Fengshui
 				if (didIntersect) {
 					contact.timeOfImpact = toi;
 					//move bodies back to where they were
-					Update(-toi, colliderA, bodyA, transA, globalTransA);
-					Update(-toi, colliderB, bodyB, transB, globalTransB);
+					Update(-toi, colliderA, bodyA, transA, globalTransA.Rotation);
+					Update(-toi, colliderB, bodyB, transB, globalTransB.Rotation);
 					return true;
 				}
 
@@ -260,12 +260,12 @@ namespace Fengshui
 
 				dt_sec -= timeToGo;//wouldn't this move the objecs together in one step?, why the iterations then? Right, it is to avoid calculating objects that are spinning fast
 				toi += timeToGo;
-				Update(timeToGo, colliderA, bodyA, transA, globalTransA);
-				Update(timeToGo, colliderB, bodyB, transB, globalTransB);
+				Update(timeToGo, colliderA, bodyA, transA, globalTransA.Rotation);
+				Update(timeToGo, colliderB, bodyB, transB, globalTransB.Rotation);
 			}
 
-			Update(-toi, colliderA, bodyA, transA, globalTransA);
-			Update(-toi, colliderB, bodyB, transB, globalTransB);
+			Update(-toi, colliderA, bodyA, transA, globalTransA.Rotation);
+			Update(-toi, colliderB, bodyB, transB, globalTransB.Rotation);
 			return false;
 		}
 		return false;
