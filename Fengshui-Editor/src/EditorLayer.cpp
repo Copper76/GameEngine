@@ -129,7 +129,7 @@ namespace Fengshui
 		m_Ground->AddComponent<Render>(Render(Texture::Create("E:/GitStuff/GameEngine/Fengshui-Editor/Assets/Textures/Checkerboard.png")));
 
 		m_Ground->AddComponent<Rigidbody>(Rigidbody(0.0f));
-		Collider groundCollider = m_Ground->AddComponent<Collider>(Collider(new PhysicalShapeBox(glm::vec3(0.0f), TransformSystem::GetWorldTransform(m_Ground->GetID()).Scale)));
+		Collider groundCollider = m_Ground->AddComponent<Collider>(Collider(new PhysicalShapeBox()));
 
 		m_BigSquare->SetParent(m_SecondCamera);
 
