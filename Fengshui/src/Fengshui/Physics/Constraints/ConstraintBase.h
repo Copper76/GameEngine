@@ -19,6 +19,10 @@ Constraint
 */
 	class Constraint {
 	public:
+		Constraint()
+		{
+
+		}
 		virtual void PreSolve(const float dt_sec) {}
 		virtual void Solve() {}
 		virtual void PostSolve() {}

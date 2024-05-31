@@ -45,6 +45,8 @@ namespace Fengshui
 			}
 		}
 
+		bool colliderChanged = false;//Used to track if collider needs to be updated
+
 		if (GeneralManager::HasComponent<Transform>(entity))
 		{
 			if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
@@ -67,7 +69,11 @@ namespace Fengshui
 						valueChanged = true;
 						transform.Rotation = glm::quat(glm::radians(eulerAngles));
 					}
-					valueChanged |= ImGui::DragFloat3("Scale", glm::value_ptr(transform.Scale), 0.5f);
+					if (ImGui::DragFloat3("Scale", glm::value_ptr(transform.Scale), 0.5f))
+					{
+						valueChanged = true;
+						colliderChanged = true;
+					}
 
 					if (GeneralManager::HasComponent<CameraComponent>(entity) && valueChanged)
 					{
@@ -160,8 +166,77 @@ namespace Fengshui
 				{
 					auto& collider = GeneralManager::GetComponent<Collider>(entity);
 
-					ImGui::DragFloat3("Offset", glm::value_ptr(collider.Offset));
-					ImGui::DragFloat3("Size", glm::value_ptr(collider.Size));
+					colliderChanged |= ImGui::DragFloat3("Offset", glm::value_ptr(collider.Offset));
+					colliderChanged |= ImGui::DragFloat3("Size", glm::value_ptr(collider.Size));
+
+					glm::vec3 globalScale = collider.Size * TransformSystem::GetWorldTransform(entity).Scale;
+
+					if (ImGui::BeginCombo("Shape##1", collider.Shape->GetDisplayName().c_str()))
+					{
+						if (ImGui::Selectable("Box Collider"))
+						{
+							collider.Shape = new PhysicalShapeBox();
+							collider.Shape->Rebuild(collider.Offset, globalScale);
+						}
+
+						if (ImGui::Selectable("Sphere Collider"))
+						{
+							collider.Shape = new PhysicalShapeSphere();
+							collider.Shape->Rebuild(collider.Offset, globalScale);
+						}
+
+						if (ImGui::Selectable("Convex Collider"))
+						{
+							collider.Shape = new PhysicalShapeConvex(nullptr, 0);
+							collider.Shape->Rebuild(collider.Offset, globalScale);
+						}
+
+						ImGui::EndCombo();
+					}
+
+					switch (collider.Shape->GetType())
+					{
+					case ShapeType::SHAPE_CUBE:
+						break;
+					case ShapeType::SHAPE_SPHERE:
+						ImGui::DragFloat("Radius", &((PhysicalShapeSphere*)collider.Shape)->m_radius, 0.1f, 0.0f, std::numeric_limits<float>::max());
+						break;
+					case ShapeType::SHAPE_CONVEX:
+					{
+						int num = ((PhysicalShapeConvex*)collider.Shape)->GetVertexNum();
+						colliderChanged |= ImGui::DragInt("Num of Vertices", &num, 0.1f, 0, std::numeric_limits<int>::max());
+						std::vector<glm::vec3> vertexCoords = ((PhysicalShapeConvex*)collider.Shape)->GetBaseCoords();
+						if (num > 0)
+						{
+							ImGui::Text("Vertices:");
+							for (int i = (int)vertexCoords.size(); i < num; i++)
+							{
+								vertexCoords.push_back(glm::vec3(0.0f));
+							}
+
+							for (int i = 0; i < num; i++)
+							{
+								ImGui::PushID(i);
+								colliderChanged |= ImGui::DragFloat3("##colliderconvexdragfloat3", glm::value_ptr(vertexCoords[i]), 0.1f);
+								ImGui::PopID();
+							}
+						}
+						if (colliderChanged)
+						{
+							collider.Shape->Build(vertexCoords.data(), (int)vertexCoords.size(), collider.Offset, globalScale);
+							colliderChanged = false;
+						}
+						break;
+					}
+					default:
+						FS_ENGINE_ASSERT(false, "Unsupported collider type");
+						break;
+					}
+
+					if (colliderChanged)
+					{
+						collider.Shape->Rebuild(collider.Offset, globalScale);
+					}
 				}
 				if (toRemove)
 				{
@@ -185,7 +260,7 @@ namespace Fengshui
 
 					ImGui::ColorEdit4("Colour", glm::value_ptr(render.Colour));
 
-					if (ImGui::BeginCombo("Shape", render.Shape->GetDisplayName().c_str()))
+					if (ImGui::BeginCombo("Shape##2", render.Shape->GetDisplayName().c_str()))
 					{
 						if (ImGui::Selectable("Cube"))
 						{
@@ -222,7 +297,7 @@ namespace Fengshui
 						if (num > 0)
 						{
 							ImGui::Text("Vertices:");
-							for (int i = vertexCoords.size(); i < num; i++)
+							for (int i = (int)vertexCoords.size(); i < num; i++)
 							{
 								vertexCoords.push_back(glm::vec3(0.0f));
 							}
@@ -230,10 +305,9 @@ namespace Fengshui
 							for (int i = 0; i < num; i++)
 							{
 								ImGui::PushID(i);
-								changed |= ImGui::DragFloat3("##dragfloat3", glm::value_ptr(vertexCoords[i]), 0.1f);
+								changed |= ImGui::DragFloat3("##renderconvexdragfloat3", glm::value_ptr(vertexCoords[i]), 0.1f);
 								ImGui::PopID();
 							}
-
 						}
 						if (changed)
 						{

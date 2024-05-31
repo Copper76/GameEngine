@@ -17,6 +17,6 @@ namespace Fengshui
 
 		virtual ShapeType GetType() const = 0;
 
-		virtual std::string GetDisplayName() const { return "Shape"; }
+		virtual std::string GetDisplayName() const = 0;
 	};
 }

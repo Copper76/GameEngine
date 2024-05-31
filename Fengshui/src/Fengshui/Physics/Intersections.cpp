@@ -30,19 +30,11 @@ namespace Fengshui
 	Intersect Static
 	====================================================
 	*/
-	bool Intersect(const CollisionPair pair, contact_t& contact) {
-		const Rigidbody bodyA = GeneralManager::GetComponent<Rigidbody>(contact.bodyA);
-		const Rigidbody bodyB = GeneralManager::GetComponent<Rigidbody>(contact.bodyB);
-
+	bool Intersect(const CollisionPair pair, const Rigidbody bodyA, const Rigidbody bodyB, const Transform transA, const Transform transB, const Collider colliderA, const Collider colliderB, contact_t& contact) 
+	{
 		contact.bodyA = pair.a;
 		contact.bodyB = pair.b;
 		contact.timeOfImpact = 0.0f;
-
-		const Transform transA = GeneralManager::GetComponent<Transform>(contact.bodyA);
-		const Transform transB = GeneralManager::GetComponent<Transform>(contact.bodyB);
-
-		const Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
-		const Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
 
 		if (colliderA.Shape->GetType() == ShapeType::SHAPE_SPHERE && colliderB.Shape->GetType() == ShapeType::SHAPE_SPHERE) {
 			const PhysicalShapeSphere* sphereA = (const PhysicalShapeSphere*)colliderA.Shape;
@@ -191,6 +183,9 @@ namespace Fengshui
 		Transform& transA = GeneralManager::GetComponent<Transform>(contact.bodyA);
 		Transform& transB = GeneralManager::GetComponent<Transform>(contact.bodyB);
 
+		const Transform& globalTransA = TransformSystem::GetWorldTransform(contact.bodyA);
+		const Transform& globalTransB = TransformSystem::GetWorldTransform(contact.bodyB);
+
 		const Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
 		const Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
 
@@ -198,25 +193,25 @@ namespace Fengshui
 			const PhysicalShapeSphere* sphereA = (const PhysicalShapeSphere*)colliderA.Shape;
 			const PhysicalShapeSphere* sphereB = (const PhysicalShapeSphere*)colliderB.Shape;
 
-			glm::vec3 posA = transA.Position;
-			glm::vec3 posB = transB.Position;
+			glm::vec3 posA = globalTransA.Position;
+			glm::vec3 posB = globalTransB.Position;
 
 			glm::vec3 velA = bodyA.LinearVelocity;
 			glm::vec3 velB = bodyB.LinearVelocity;
 
 			if (SphereSphereDynamic(sphereA, sphereB, posA, posB, velA, velB, dt_sec, contact.ptOnA_WorldSpace, contact.ptOnB_WorldSpace, contact.timeOfImpact)) {
-				Update(contact.timeOfImpact, colliderA, bodyA, transA);
-				Update(contact.timeOfImpact, colliderB, bodyB, transB);
+				Update(contact.timeOfImpact, colliderA, bodyA, transA, globalTransA);
+				Update(contact.timeOfImpact, colliderB, bodyB, transB, globalTransB);
 
 				contact.ptOnA_LocalSpace = WorldSpaceToBodySpace(contact.ptOnA_WorldSpace, colliderA, transA);
 				contact.ptOnB_LocalSpace = WorldSpaceToBodySpace(contact.ptOnA_WorldSpace, colliderB, transB);
 
-				contact.normal = glm::normalize(transA.Position - transB.Position);
+				contact.normal = glm::normalize(globalTransA.Position - globalTransB.Position);
 
-				Update(-contact.timeOfImpact, colliderA, bodyA, transA);
-				Update(-contact.timeOfImpact, colliderB, bodyB, transB);
+				Update(-contact.timeOfImpact, colliderA, bodyA, transA, globalTransA);
+				Update(-contact.timeOfImpact, colliderB, bodyB, transB, globalTransB);
 
-				glm::vec3 ab = transB.Position - transA.Position;
+				glm::vec3 ab = globalTransB.Position - globalTransA.Position;
 				//distance betwen positions minus the radius of both spheres
 				float r = glm::length(ab) - (sphereA->m_radius + sphereB->m_radius);
 				contact.separationDistance = r;
@@ -230,12 +225,12 @@ namespace Fengshui
 
 			//Advance the positions of the bodies until they touch or there is no time left
 			while (dt_sec > 0.0f) {
-				bool didIntersect = Intersect(pair, contact);
+				bool didIntersect = Intersect(pair,bodyA, bodyB, globalTransA, globalTransB, colliderA, colliderB, contact);
 				if (didIntersect) {
 					contact.timeOfImpact = toi;
 					//move bodies back to where they were
-					Update(-toi, colliderA, bodyA, transA);
-					Update(-toi, colliderB, bodyB, transB);
+					Update(-toi, colliderA, bodyA, transA, globalTransA);
+					Update(-toi, colliderB, bodyB, transB, globalTransB);
 					return true;
 				}
 
@@ -265,12 +260,12 @@ namespace Fengshui
 
 				dt_sec -= timeToGo;//wouldn't this move the objecs together in one step?, why the iterations then? Right, it is to avoid calculating objects that are spinning fast
 				toi += timeToGo;
-				Update(timeToGo, colliderA, bodyA, transA);
-				Update(timeToGo, colliderB, bodyB, transB);
+				Update(timeToGo, colliderA, bodyA, transA, globalTransA);
+				Update(timeToGo, colliderB, bodyB, transB, globalTransB);
 			}
 
-			Update(-toi, colliderA, bodyA, transA);
-			Update(-toi, colliderB, bodyB, transB);
+			Update(-toi, colliderA, bodyA, transA, globalTransA);
+			Update(-toi, colliderB, bodyB, transB, globalTransB);
 			return false;
 		}
 		return false;

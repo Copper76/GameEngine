@@ -11,6 +11,7 @@
 namespace Fengshui
 {
 	struct Transform;
+	struct Collider;
 	/*
 	====================================================
 	Shape
@@ -21,10 +22,13 @@ namespace Fengshui
 	public:
 		virtual glm::vec3 Support(const glm::vec3& dir, const Transform transform, const float bias) const = 0;
 
-		virtual glm::mat3 InertiaTensor(const Transform transform) const = 0;
+		virtual void Build(const glm::vec3* pts, const int num, const glm::vec3 offset, const glm::vec3 scale) {};
+
+		virtual void Rebuild(const glm::vec3 offset, const glm::vec3 scale) {};
+
+		virtual glm::mat3 InertiaTensor() const = 0;
 
 		virtual Bounds GetBounds(const Transform transform) const = 0;
-		virtual Bounds GetBounds(const glm::vec3 scale) const = 0;
 
 		virtual glm::vec3 GetCenterOfMass() const { return m_CenterOfMass; }
 

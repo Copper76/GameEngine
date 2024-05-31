@@ -80,6 +80,11 @@ namespace Fengshui
         return glm::scale(glm::translate(glm::mat4(1.0f), transform.Position) * glm::mat4_cast(transform.Rotation), transform.Scale);
     }
 
+    glm::mat4 TransformSystem::GetTransformMatrix(Transform transform)
+    {
+        return glm::scale(glm::translate(glm::mat4(1.0f), transform.Position) * glm::mat4_cast(transform.Rotation), transform.Scale);
+    }
+
     glm::mat4 TransformSystem::GetTransformMatrix2D(EntityID entity)
     {
         const Transform2D transform = GeneralManager::GetComponent<Transform2D>(entity);

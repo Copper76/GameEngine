@@ -18,6 +18,7 @@ namespace Fengshui
 
 		m_VertexNum = (int)m_VertexCoords.size();
 	}
+
 	void RenderShapeConvex::Rebuild(const std::vector<glm::vec3> pts, bool removeUnused)
 	{
 		m_VertexCoords = pts;

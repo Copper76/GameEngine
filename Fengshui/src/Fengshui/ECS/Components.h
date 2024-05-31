@@ -125,13 +125,18 @@ namespace Fengshui
 
 		Collider()
 		{
-			Shape = new PhysicalShapeBox(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
+			Shape = new PhysicalShapeBox();
 		}
 
 		Collider(PhysicalShape* shape) : Shape(shape)
 		{
 
 		}
+		Collider(PhysicalShape* shape, glm::vec3 offset, glm::vec3 size) : Shape(shape), Offset(offset), Size(size)
+		{
+			shape->Rebuild(offset, size);
+		}
+
 	};
 
 	struct Render2D

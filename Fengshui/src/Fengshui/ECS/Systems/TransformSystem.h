@@ -14,9 +14,10 @@ namespace Fengshui
 		glm::mat4 GetLocalTransformMatrix2D(EntityID entity);
 		glm::mat4 GetWorldTransformMatrix2D(EntityID entity);
 
-		Transform GetWorldTransform(EntityID entity);
+		static Transform GetWorldTransform(EntityID entity);//This is used so commonly I should make it static
 	private:
 		glm::mat4 GetTransformMatrix(EntityID entity);
+		glm::mat4 GetTransformMatrix(const Transform transform);
 		glm::mat4 GetTransformMatrix2D(EntityID entity);
 	};
 }
