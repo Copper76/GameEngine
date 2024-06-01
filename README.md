@@ -19,9 +19,9 @@ This project is a practice project to make a game engine using Entity-Component 
 - [X] Integrated the 3D Physics Engine that was previously made in [Physics Engine](https://github.com/Copper76/Physics-Engine), the engine doesn't play nicely with hierarchy yet.
 - [X] expand the 3d renderer to allow rendering with custom shapes, it now uses the same technique as physical shapes to build convex shape from a set of points
 - [X] Improve the panels. The panels now allow add and removal of components at runtime, as well as the ability to modify most value based data, with the exception of hierarchy.
+- [X] Added functionality to render a sphere, ready to use it in raytracing
 
 ## TODO
-- [ ] Add functionality to render a circle
 - [ ] Look into raytracing and integrate it into the engine(stretch goal)
 
 ## Knonw Issues
