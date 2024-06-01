@@ -52,25 +52,35 @@ namespace Fengshui
 
     Transform TransformSystem::GetWorldTransform(EntityID entity)
     {
-        Transform transform = GeneralManager::GetComponent<Transform>(entity);
+        glm::mat4 transformMatrix = GetWorldTransformMatrix(entity);
+        Transform transform;
+        transform.Position = transformMatrix[3];
+        transform.Scale = glm::vec3(glm::length(transformMatrix[0]), glm::length(transformMatrix[1]), glm::length(transformMatrix[2]));
+        glm::mat3 rotationMatrix = glm::mat3(transformMatrix);
+        rotationMatrix[0] /= transform.Scale.x;
+        rotationMatrix[1] /= transform.Scale.y;
+        rotationMatrix[2] /= transform.Scale.z;
+        transform.Rotation = glm::quat(rotationMatrix);
+        return transform;
+        //Transform transform = GeneralManager::GetComponent<Transform>(entity);
 
-        EntityID curr = entity;
+        //EntityID curr = entity;
 
-        Transform trans = Transform();
+        //Transform trans = Transform();
 
-        while (curr != 0)
-        {
-            if (GeneralManager::HasComponent<Transform>(curr))
-            {
-                trans.Position += transform.Position;
-                trans.Rotation *= transform.Rotation;
-                trans.Scale *= transform.Scale;
-            }
-            curr = GeneralManager::GetComponent<Hierarchy>(curr).Parent;
-            transform = GeneralManager::GetComponent<Transform>(curr);
-        }
+        //while (curr != 0)
+        //{
+        //    if (GeneralManager::HasComponent<Transform>(curr))
+        //    {
+        //        trans.Position += transform.Position;
+        //        trans.Rotation *= transform.Rotation;
+        //        trans.Scale *= transform.Scale;
+        //    }
+        //    curr = GeneralManager::GetComponent<Hierarchy>(curr).Parent;
+        //    transform = GeneralManager::GetComponent<Transform>(curr);
+        //}
 
-        return trans;
+        //return trans;
     }
 
     glm::mat4 TransformSystem::GetTransformMatrix(EntityID entity)

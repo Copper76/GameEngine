@@ -346,48 +346,117 @@ namespace Fengshui
 		//		s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
 		//		s_Data.TextureSlotIndex++;
 		//	}
-		//
 
-		//for (Triangle tri : tris)
-		//{
-		//	s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.a], 1.0f };
-		//	s_Data.ShapeVertexBufferPtr->Colour = colour;
-		//	//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
-		//	s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
-		//	s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
-		//	//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
-		//	s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
-		//	s_Data.ShapeVertexBufferPtr++;
+		const int numnum = (divisions + 1) * (divisions + 1);
+		glm::vec3* v = new glm::vec3[numnum];
+		for (int y = 0; y < divisions + 1; y++) {
+			for (int x = 0; x < divisions + 1; x++) {
+				float xf = (((float)x / (float)divisions) - 0.5f) * 2.0f;
+				float yf = (((float)y / (float)divisions) - 0.5f) * 2.0f;
+				v[y * (divisions + 1) + x] = glm::vec3(xf, yf, 1.0f);
+			}
+		}
 
-		//	s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.b], 1.0f };
-		//	s_Data.ShapeVertexBufferPtr->Colour = colour;
-		//	//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
-		//	s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
-		//	s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
-		//	//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
-		//	s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
-		//	s_Data.ShapeVertexBufferPtr++;
+		const int numFaces = divisions * divisions;
 
-		//	s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.c], 1.0f };
-		//	s_Data.ShapeVertexBufferPtr->Colour = colour;
-		//	//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
-		//	s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
-		//	s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
-		//	//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
-		//	s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
-		//	s_Data.ShapeVertexBufferPtr++;
-		//}
+		int faceIdx = 0;
+		int* faceIdxs = new int[3 * 2 * numFaces + 1];
+		for (int y = 0; y < divisions; y++) {
+			for (int x = 0; x < divisions; x++) {
+				int y0 = y;
+				int y1 = y + 1;
+				int x0 = x;
+				int x1 = x + 1;
 
-		//uint32_t indexCount = static_cast<uint32_t>(tris.size()) * 3;
-		//uint32_t vertexBase = s_Data.ShapeVertexCount;
-		//uint32_t indexBase = s_Data.ShapeIndexCount;
+				faceIdxs[faceIdx * 6 + 1] = y0 * (divisions + 1) + x0;
+				faceIdxs[faceIdx * 6 + 0] = y1 * (divisions + 1) + x0;
+				faceIdxs[faceIdx * 6 + 2] = y1 * (divisions + 1) + x1;
 
-		//for (uint32_t offset = 0; offset < indexCount; offset++)
-		//{
-		//	s_Data.ShapeIndexBufferPtr[indexBase + offset] = vertexBase + offset;
-		//}
+				faceIdxs[faceIdx * 6 + 4] = y0 * (divisions + 1) + x0;
+				faceIdxs[faceIdx * 6 + 3] = y1 * (divisions + 1) + x1;
+				faceIdxs[faceIdx * 6 + 5] = y0 * (divisions + 1) + x1;
 
-		//s_Data.ShapeVertexCount += indexCount;
-		//s_Data.ShapeIndexCount += indexCount;
+				faceIdx++;
+			}
+		}
+
+		glm::mat3 matOrients[6];
+		for (int i = 0; i < 6; i++) {
+			matOrients[i] = glm::mat3();
+		}
+		// px
+		matOrients[0][0] = glm::vec3(0.0f, 0.0f, 1.0f);
+		matOrients[0][1] = glm::vec3(1.0f, 0.0f, 0.0f);
+		matOrients[0][2] = glm::vec3(0.0f, 1.0f, 0.0f);
+		// nx
+		matOrients[1][0] = glm::vec3(0.0f, 0.0f, -1.0f);
+		matOrients[1][1] = glm::vec3(-1.0f, 0.0f, 0.0f);
+		matOrients[1][2] = glm::vec3(0.0f, 1.0f, 0.0f);
+
+		// py
+		matOrients[2][0] = glm::vec3(1.0f, 0.0f, 0.0f);
+		matOrients[2][1] = glm::vec3(0.0f, 0.0f, 1.0f);
+		matOrients[2][2] = glm::vec3(0.0f, -1.0f, 0.0f);
+		// ny
+		matOrients[3][0] = glm::vec3(1.0f, 0.0f, 0.0f);
+		matOrients[3][1] = glm::vec3(0.0f, 0.0f, -1.0f);
+		matOrients[3][2] = glm::vec3(0.0f, 1.0f, 0.0f);
+
+		// pz
+		matOrients[4][0] = glm::vec3(1.0f, 0.0f, 0.0f);
+		matOrients[4][1] = glm::vec3(0.0f, 1.0f, 0.0f);
+		matOrients[4][2] = glm::vec3(0.0f, 0.0f, 1.0f);
+		// nz
+		matOrients[5][0] = glm::vec3(-1.0f, 0.0f, 0.0f);
+		matOrients[5][1] = glm::vec3(0.0f, 1.0f, 0.0f);
+		matOrients[5][2] = glm::vec3(0.0f, 0.0f, -1.0f);
+
+		const int numIdxs = 3 * 2 * 6 * numFaces;
+		const int numVerts = 4 * 6 * numFaces;
+		int* cubeIdxs = new int[numIdxs];
+		glm::vec3* cubeVerts = new glm::vec3[numVerts];
+
+		for (int side = 0; side < 6; side++) {
+			const glm::mat3& mat = matOrients[side];
+
+			for (int vid = 0; vid < numnum; vid++) {
+				const glm::vec3 xyz = mat * v[vid];
+
+				cubeVerts[side * numnum + vid] = glm::normalize(xyz) * radius;
+			}
+
+			for (int idx = 0; idx < 3 * 2 * numFaces; idx++) {
+				const int offset = 3 * 2 * numFaces * side;
+				cubeIdxs[idx + offset] = faceIdxs[idx] + numnum * side;
+			}
+		}
+
+		for (int i = 0;i<numVerts;i++)
+		{
+			s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ cubeVerts[i], 1.0f};
+			s_Data.ShapeVertexBufferPtr->Colour = colour;
+			//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
+			s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
+			s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
+			//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
+			s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
+			s_Data.ShapeVertexBufferPtr++;
+		}
+
+		uint32_t vertexBase = s_Data.ShapeVertexCount;
+		uint32_t indexBase = s_Data.ShapeIndexCount;
+
+		for (uint32_t offset = 0; offset < numIdxs; offset++)
+		{
+			s_Data.ShapeIndexBufferPtr[indexBase + offset] = vertexBase + cubeIdxs[offset];
+		}
+
+		s_Data.ShapeVertexCount += numVerts;
+		s_Data.ShapeIndexCount += numIdxs;
+
+		free(v);
+		free(faceIdxs);
+		free(cubeVerts);
+		free(cubeIdxs);
 	}
 }

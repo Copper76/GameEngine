@@ -132,9 +132,10 @@ namespace Fengshui
 		{
 
 		}
+
 		Collider(PhysicalShape* shape, glm::vec3 offset, glm::vec3 size) : Shape(shape), Offset(offset), Size(size)
 		{
-			shape->Rebuild(offset, size);
+			Shape->Rebuild(Offset, Size);
 		}
 
 	};

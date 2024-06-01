@@ -97,10 +97,10 @@ namespace Fengshui
 	//Update function for the scene
 	void Scene::OnUpdate(float dt)
 	{
-		EntityID cameraComp = m_CameraSystem->GetPrimary();
+		m_PrimaryCamera = m_CameraSystem->GetPrimary();
 		
 		//A default camera control for navigating the scene
-		if (cameraComp != 0)
+		if (m_PrimaryCamera != 0)
 		{
 			if (m_ViewportFocused)
 			{
@@ -159,7 +159,7 @@ namespace Fengshui
 					rotateDelta.z -= m_CameraMoveSpeed * dt;
 				}
 
-				AdjustCamera(cameraComp, moveDelta, glm::quat(glm::radians(rotateDelta)));
+				AdjustCamera(m_PrimaryCamera, moveDelta, glm::quat(glm::radians(rotateDelta)));
 			}
 		}
 	}
@@ -179,22 +179,21 @@ namespace Fengshui
 	//Render function for updating the graphics of the scene
 	void Scene::OnRender()
 	{
-		EntityID cameraComp = m_CameraSystem->GetPrimary();
 
-		if (cameraComp != 0)
+		if (m_PrimaryCamera != 0)
 		{
 			//Clear the screen
 			RenderCommand::Clear();
 
 			//3D Render cycle
-			Renderer::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));
+			Renderer::BeginScene(&GeneralManager::GetComponent<CameraComponent>(m_PrimaryCamera));
 
 			m_RenderSystem->OnRender(m_TransformSystem);
 
 			Renderer::EndScene();
 
 			//2D Render cycle
-			Renderer2D::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));
+			Renderer2D::BeginScene(&GeneralManager::GetComponent<CameraComponent>(m_PrimaryCamera));
 
 			m_RenderSystem2D->OnRender(m_TransformSystem);
 
@@ -239,7 +238,10 @@ namespace Fengshui
 
 	void Scene::UpdateView()
 	{
-		m_CameraSystem->CalculateView(m_CameraSystem->GetPrimary());
+		if (m_PrimaryCamera != 0)
+		{
+			m_CameraSystem->CalculateView(m_PrimaryCamera);
+		}
 	}
 
 	void Scene::UpdateViewMatrix(EntityID entity)

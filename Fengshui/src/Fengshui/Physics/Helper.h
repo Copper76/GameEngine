@@ -99,7 +99,8 @@ namespace Fengshui
 
 	static void Update(const float dt_sec, const Collider collider, Rigidbody& rb, Transform& trans, const glm::quat globalRotation)
 	{
-		trans.Position += trans.Rotation * glm::inverse(globalRotation) * rb.LinearVelocity * dt_sec;
+		glm::quat relativeRotation = trans.Rotation * glm::inverse(globalRotation);
+		trans.Position += relativeRotation * rb.LinearVelocity * dt_sec;
 
 		glm::vec3 positionCM = GetCenterOfMassWorldSpace(collider, trans);
 		glm::vec3 cmToPos = trans.Position - positionCM;
@@ -111,7 +112,7 @@ namespace Fengshui
 		glm::vec3 alpha = glm::inverse(inertiaTensor) * (glm::cross(rb.AngularVelocity, inertiaTensor * rb.AngularVelocity));
 		rb.AngularVelocity += alpha * dt_sec;
 
-		glm::vec3 dAngle = trans.Rotation * glm::inverse(globalRotation) * rb.AngularVelocity * dt_sec;
+		glm::vec3 dAngle = relativeRotation * rb.AngularVelocity * dt_sec;
 		glm::quat dq = glm::quat(dAngle);
 		trans.Rotation = dq * trans.Rotation;
 

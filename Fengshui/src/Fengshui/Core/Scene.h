@@ -72,6 +72,7 @@ namespace Fengshui
 	private:
 		float m_CameraMoveSpeed = 0.1f;
 		bool m_ViewportFocused = false;
+		EntityID m_PrimaryCamera = 0;
 
 	private:
 		//Systems

@@ -35,7 +35,7 @@ namespace Fengshui
 			case ShapeType::SHAPE_SPHERE:
 			{
 				RenderShapeSphere* shape = (RenderShapeSphere*)renderData.Shape;
-				//Renderer::DrawConvex(transform, shape->GetVertexCoords(), shape->GetTris(), renderData.Colour);
+				//Renderer::DrawSphere(transform, shape->GetRadius(), shape->GetDivisions(), renderData.Colour);
 				break;
 			}
 			default:
