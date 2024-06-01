@@ -110,7 +110,7 @@ namespace Fengshui
 		delete[] s_Data.QuadVertexBufferBase;
 	}
 
-	void Renderer2D::BeginScene(CameraComponent* camera)
+	void Renderer2D::BeginScene(const CameraComponent* camera)
 	{
 		s_Data.StandardShader->Bind();
 		s_Data.StandardShader->SetMat4("u_ViewProjectionMatrix", camera->ViewProjectionMatrix);

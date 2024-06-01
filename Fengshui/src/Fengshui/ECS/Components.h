@@ -206,6 +206,11 @@ namespace Fengshui
 
 		}
 
+		Render(RenderShape* shape, Ref<Fengshui::Texture> texture) : Shape(shape), Texture(texture)
+		{
+
+		}
+
 		Render(Ref<Fengshui::Texture> texture) : Texture(texture)
 		{
 			Shape = new RenderShapeCube();

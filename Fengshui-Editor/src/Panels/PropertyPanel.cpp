@@ -263,6 +263,8 @@ namespace Fengshui
 
 					ImGui::ColorEdit4("Colour", glm::value_ptr(render.Colour));
 
+					ImGui::DragFloat("Tiling Factor", &render.TilingFactor, 0.1f, -1.0f, std::numeric_limits<float>::max());
+
 					if (ImGui::BeginCombo("Shape##2", render.Shape->GetDisplayName().c_str()))
 					{
 						if (ImGui::Selectable("Cube"))
@@ -289,7 +291,7 @@ namespace Fengshui
 						break;
 					case ShapeType::SHAPE_SPHERE:
 						ImGui::DragFloat("Radius", &((RenderShapeSphere*)render.Shape)->GetRadius(), 0.1f, 0.0f, std::numeric_limits<float>::max());
-						ImGui::DragInt("Divisions", &((RenderShapeSphere*)render.Shape)->GetDivisions(), 0.1f, 1, 64);
+						ImGui::DragInt("Divisions", &((RenderShapeSphere*)render.Shape)->GetDivisions(), 0.1f, 1, 32);
 						break;
 					case ShapeType::SHAPE_CONVEX:
 					{

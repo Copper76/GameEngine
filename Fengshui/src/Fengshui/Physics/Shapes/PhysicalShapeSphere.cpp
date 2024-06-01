@@ -44,7 +44,7 @@ ShapeSphere::Support
 
 	void PhysicalShapeSphere::Rebuild(const glm::vec3 offset, const glm::vec3 scale)
 	{
-		m_Radius = m_BaseRadius * scale.x;
+		m_Radius = m_BaseRadius;
 	}
 
 	/*

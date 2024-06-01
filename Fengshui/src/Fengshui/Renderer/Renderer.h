@@ -21,7 +21,7 @@ namespace Fengshui
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
-		static void BeginScene(CameraComponent* camera);
+		static void BeginScene(const CameraComponent* camera);
 		static void EndScene();
 
 		static void Flush();
@@ -32,8 +32,8 @@ namespace Fengshui
 		static void DrawConvex(const glm::vec3& position, const glm::vec3& size, const glm::vec3 rotation, const std::vector<glm::vec3>& vertexCoords, const std::vector<Triangle>& tris, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
 		static void DrawConvex(const glm::mat4 transform, const std::vector<glm::vec3>& vertexCoords, const std::vector<Triangle>& tris, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
 
-		static void DrawSphere(const glm::vec3& position, const glm::vec3& size, const glm::vec3 rotation, const float radius, const int divisions, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
-		static void DrawSphere(const glm::mat4 transform, const float radius, const int divisions, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
+		static void DrawSphere(const glm::vec3& position, const glm::vec3& size, const glm::vec3 rotation, const float radius, const int divisions, const float tilingFactor = 1.0f, const Ref<Texture>& texture = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
+		static void DrawSphere(const glm::mat4 transform, const float radius, const int divisions, const float tilingFactor = 1.0f, const Ref<Texture>& texture = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
 
 	private:
 		static void PrepareNextBatch();

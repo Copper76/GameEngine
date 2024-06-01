@@ -97,6 +97,7 @@ namespace Fengshui
 	//Update function for the scene
 	void Scene::OnUpdate(float dt)
 	{
+		//update the primary camera only on update thread
 		m_PrimaryCamera = m_CameraSystem->GetPrimary();
 		
 		//A default camera control for navigating the scene
@@ -185,15 +186,17 @@ namespace Fengshui
 			//Clear the screen
 			RenderCommand::Clear();
 
+			const CameraComponent* cameraComp = &GeneralManager::GetComponent<CameraComponent>(m_PrimaryCamera);
+
 			//3D Render cycle
-			Renderer::BeginScene(&GeneralManager::GetComponent<CameraComponent>(m_PrimaryCamera));
+			Renderer::BeginScene(cameraComp);
 
 			m_RenderSystem->OnRender(m_TransformSystem);
 
 			Renderer::EndScene();
 
 			//2D Render cycle
-			Renderer2D::BeginScene(&GeneralManager::GetComponent<CameraComponent>(m_PrimaryCamera));
+			Renderer2D::BeginScene(cameraComp);
 
 			m_RenderSystem2D->OnRender(m_TransformSystem);
 

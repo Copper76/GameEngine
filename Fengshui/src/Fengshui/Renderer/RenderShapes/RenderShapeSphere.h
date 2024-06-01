@@ -6,7 +6,7 @@ namespace Fengshui
 	class RenderShapeSphere : public RenderShape
 	{
 	public:
-		explicit RenderShapeSphere(float radius = 1.0f, int divisions = 32);
+		explicit RenderShapeSphere(float radius = 1.0f, int divisions = 16);
 
 		virtual ShapeType GetType() const override { return ShapeType::SHAPE_SPHERE; }
 

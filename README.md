@@ -26,7 +26,7 @@ This project is a practice project to make a game engine using Entity-Component 
 
 ## Knonw Issues
 - The physics system breaks when the object is rotated or scaled by a parent
-- The sphere collider can only scale uniformly
+- The sphere collider can only scale uniformly, and sphere collider is problematic in general
 
 ## Deprecated Objectives
 - [ ] Integrate SFML into the ECS
