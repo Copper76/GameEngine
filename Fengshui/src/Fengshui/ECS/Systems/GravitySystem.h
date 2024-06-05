@@ -8,7 +8,7 @@ namespace Fengshui
 	class GravitySystem : public System
 	{
 	public:
-		void OnUpdate(float dt);
+		void OnUpdate(const float dt);
 	};
 
 }

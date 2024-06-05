@@ -35,6 +35,7 @@ namespace Fengshui
 		scene->m_GravitySystem = GeneralManager::RegisterSystem<GravitySystem>();
 		scene->m_PhysicsSystem = GeneralManager::RegisterSystem<PhysicsSystem>();
 		scene->m_TransformSystem = GeneralManager::RegisterSystem<TransformSystem>();
+		scene->m_LightSystem = GeneralManager::RegisterSystem<LightSystem>();
 
 		Signature signature;
 		signature.set(GeneralManager::GetComponentType<Render>());
@@ -74,6 +75,10 @@ namespace Fengshui
 		signature.set(GeneralManager::GetComponentType<Hierarchy>());
 		GeneralManager::SetSystemSignature<TransformSystem>(signature);
 
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<GlobalLight>());
+		GeneralManager::SetSystemSignature<LightSystem>(signature);
+
 		//Physics System
 		scene->m_Manifolds = std::make_shared<ManifoldCollector>();
 
@@ -88,6 +93,8 @@ namespace Fengshui
 			true});
 
 		scene->m_SceneManager->AddComponent<Transform>(Transform(glm::vec3(0.0f, 0.0f, 10.0f)));
+
+		scene->m_SceneManager->AddComponent<GlobalLight>();
 
 		scene->UpdateViewMatrix(scene->m_CameraSystem->GetPrimary());
 
@@ -180,7 +187,6 @@ namespace Fengshui
 	//Render function for updating the graphics of the scene
 	void Scene::OnRender()
 	{
-
 		if (m_PrimaryCamera != 0)
 		{
 			//Clear the screen
@@ -188,17 +194,19 @@ namespace Fengshui
 
 			const CameraComponent* cameraComp = &GeneralManager::GetComponent<CameraComponent>(m_PrimaryCamera);
 
+			m_LightSystem->OnUpdate(m_RenderSystem);
+
 			//3D Render cycle
 			Renderer::BeginScene(cameraComp);
 
-			m_RenderSystem->OnRender(m_TransformSystem);
+			m_RenderSystem->OnRender();
 
 			Renderer::EndScene();
 
 			//2D Render cycle
 			Renderer2D::BeginScene(cameraComp);
 
-			m_RenderSystem2D->OnRender(m_TransformSystem);
+			m_RenderSystem2D->OnRender();
 
 			Renderer2D::EndScene();
 		}

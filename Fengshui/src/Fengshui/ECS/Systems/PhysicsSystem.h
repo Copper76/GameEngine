@@ -9,6 +9,6 @@ namespace Fengshui
 	class PhysicsSystem : public System
 	{
 	public:
-		void OnUpdate(float dt, Ref<ManifoldCollector> manifolds, std::vector<Ref<Constraint>> constraints);
+		void OnUpdate(const float dt, Ref<ManifoldCollector> manifolds, std::vector<Ref<Constraint>> constraints);
 	};
 }

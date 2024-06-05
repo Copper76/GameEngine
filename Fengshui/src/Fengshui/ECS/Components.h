@@ -194,6 +194,7 @@ namespace Fengshui
 		glm::vec2* TexCoords = nullptr;
 		glm::vec4 Colour = { 1.0f, 1.0f, 1.0f, 1.0f };
 		float TilingFactor = 1.0f;
+		glm::vec3* Normal = nullptr;
 		RenderShape* Shape = nullptr;
 
 		Render()
@@ -309,6 +310,27 @@ namespace Fengshui
 		{
 			ViewProjectionMatrix = ProjectionMatrix * ViewMatrix;
 			IsOrtho = false;
+		}
+	};
+
+	struct GlobalLight
+	{
+		glm::vec3 Direction = glm::vec3(1.0f);
+		glm::vec3 Colour = glm::vec3(1.0f);
+
+		GlobalLight()
+		{
+
+		}
+
+		GlobalLight(glm::vec3 direction) : Direction(direction)
+		{
+
+		}
+
+		GlobalLight(glm::vec3 direction, glm::vec3 colour) : Direction(direction), Colour(colour)
+		{
+
 		}
 	};
 }

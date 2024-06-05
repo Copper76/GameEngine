@@ -143,6 +143,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Fengshui\ECS\Systems\LightSystem.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeSphere.h" />
     <ClInclude Include="src\Fengshui\Maths\Triangulation\TriMethod.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeConvex.h" />
@@ -233,6 +234,7 @@
     <ClInclude Include="src\fspch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Fengshui\ECS\Systems\LightSystem.cpp" />
     <ClCompile Include="src\Fengshui\Renderer\RenderShapes\RenderShapeSphere.cpp" />
     <ClCompile Include="src\Fengshui\Maths\Geometry.cpp" />
     <ClCompile Include="src\Fengshui\Maths\Triangulation\BowyerWatson.cpp" />

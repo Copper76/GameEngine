@@ -290,8 +290,16 @@ namespace Fengshui
 					case ShapeType::SHAPE_CUBE:
 						break;
 					case ShapeType::SHAPE_SPHERE:
-						ImGui::DragFloat("Radius", &((RenderShapeSphere*)render.Shape)->GetRadius(), 0.1f, 0.0f, std::numeric_limits<float>::max());
-						ImGui::DragInt("Divisions", &((RenderShapeSphere*)render.Shape)->GetDivisions(), 0.1f, 1, 32);
+					{
+						bool changed = false;
+						changed |= ImGui::DragFloat("Radius", &((RenderShapeSphere*)render.Shape)->GetRadius(), 0.1f, 0.0f, std::numeric_limits<float>::max());
+						changed |= ImGui::DragInt("Divisions", &((RenderShapeSphere*)render.Shape)->GetDivisions(), 0.1f, 1, 32);
+
+						if (changed)
+						{
+							((RenderShapeSphere*)render.Shape)->Rebuild();
+						}
+					}
 						break;
 					case ShapeType::SHAPE_CONVEX:
 					{
@@ -393,6 +401,31 @@ namespace Fengshui
 					{
 						GeneralManager::GetActiveScene()->UpdateView();
 					}
+				}
+
+				if (toRemove)
+				{
+					GeneralManager::RemoveComponent<CameraComponent>(entity);
+					--imGuiID;
+				}
+			}
+		}
+
+		if (GeneralManager::HasComponent<GlobalLight>(entity))
+		{
+			if (ImGui::CollapsingHeader("Global Light", ImGuiTreeNodeFlags_DefaultOpen))
+			{
+				bool toRemove = false;
+				if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
+				{
+					toRemove = true;
+				}
+				{
+					bool valueChanged = false;
+					auto& globalLight = GeneralManager::GetComponent<GlobalLight>(entity);
+
+					ImGui::DragFloat3("Direction", glm::value_ptr(globalLight.Direction), 0.1f);
+					ImGui::DragFloat3("Light Colour", glm::value_ptr(globalLight.Colour), 0.1f, 0.0f, 1.0f);
 				}
 
 				if (toRemove)

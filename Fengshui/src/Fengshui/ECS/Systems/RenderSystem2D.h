@@ -7,6 +7,6 @@ namespace Fengshui
 	class RenderSystem2D : public System
 	{
 	public:
-		void OnRender(Ref<TransformSystem> transformSystem);
+		void OnRender();
 	};
 }

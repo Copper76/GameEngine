@@ -3,17 +3,18 @@
 
 #include "Fengshui/Renderer/Renderer.h"
 #include "Fengshui/ECS/GeneralManager.h"
+#include "Fengshui/ECS/Systems/TransformSystem.h"
 
 namespace Fengshui
 {
-	void RenderSystem::OnRender(Ref<TransformSystem> transformSystem)
+	void RenderSystem::OnRender()
 	{
 		glm::vec2 coords[] = { {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f}};
 		for (auto const& entity : m_Entities)
 		{
 			auto renderData = GeneralManager::GetComponent<Render>(entity);
 
-			glm::mat4 transform = transformSystem->GetWorldTransformMatrix(entity);
+			glm::mat4 transform = TransformSystem::GetWorldTransformMatrix(entity);
 
 			glm::vec2* texCoords = renderData.TexCoords;
 
@@ -35,7 +36,7 @@ namespace Fengshui
 			case ShapeType::SHAPE_SPHERE:
 			{
 				RenderShapeSphere* shape = (RenderShapeSphere*)renderData.Shape;
-				Renderer::DrawSphere(transform, shape->GetRadius(), shape->GetDivisions(), renderData.TilingFactor, renderData.Texture, renderData.Colour);
+				Renderer::DrawSphere(transform, shape->GetVertexCoords(), shape->GetDivisions(), renderData.TilingFactor, renderData.Texture, renderData.Colour, renderData.Normal);
 				break;
 			}
 			default:

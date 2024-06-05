@@ -419,4 +419,102 @@ namespace Fengshui
 
 		s_Data.ShapeVertexCount += 6 * numVertsOneFace;
 	}
+
+	void Renderer::DrawSphere(const glm::vec3& position, const glm::vec3& size, const glm::vec3 rotation, const std::vector<glm::vec3>& vertexCoords, const int divisions, const float tilingFactor, const Ref<Texture>& texture, const glm::vec4& colour, const glm::vec3* normals)
+	{
+		glm::mat4 transform;
+		transform = glm::scale(glm::rotate(glm::rotate(glm::rotate(glm::translate(glm::mat4(1.0f), position), glm::radians(rotation.x), glm::vec3{ 1.0f, 0.0f, 0.0f }),
+			glm::radians(rotation.y), glm::vec3{ 0.0f, 1.0f, 0.0f }),
+			glm::radians(rotation.z), glm::vec3{ 0.0f, 0.0f, 1.0f }), size);
+		DrawSphere(transform, vertexCoords, divisions, tilingFactor, texture, colour, normals);
+	}
+
+	void Renderer::DrawSphere(const glm::mat4 transform, const std::vector<glm::vec3>& vertexCoords, const int divisions, const float tilingFactor, const Ref<Texture>& texture, const glm::vec4& colour, const glm::vec3* normals)
+	{
+		if (s_Data.ShapeIndexCount >= RendererConfig::MaxIndices)
+		{
+			Flush();
+			PrepareNextBatch();
+		}
+
+		float textureIndex = 0.0f;
+
+		if (texture)
+		{
+			for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+			{
+				if (*s_Data.TextureSlots[i] == *texture)
+				{
+					textureIndex = (float)i;
+					break;
+				}
+			}
+			if (textureIndex == 0.0f)
+			{
+				if (s_Data.TextureSlotIndex >= RendererConfig::MaxTextureSlots)
+				{
+					Flush();
+					PrepareNextBatch();
+				}
+				textureIndex = (float)s_Data.TextureSlotIndex;
+				s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+				s_Data.TextureSlotIndex++;
+			}
+		}
+
+		const int numVertsOneFace = (divisions + 1) * (divisions + 1);
+
+		uint32_t indexBase = s_Data.ShapeIndexCount;
+		uint32_t vertexBase = s_Data.ShapeVertexCount;
+
+		int offset = 0;
+		for (int i = 0; i < 6; i++)
+		{
+			for (int y = 0; y < divisions; y++) {
+				for (int x = 0; x < divisions; x++) {
+					int y0 = y;
+					int y1 = y + 1;
+					int x0 = x;
+					int x1 = x + 1;
+
+					s_Data.ShapeIndexBufferPtr[indexBase + offset + 0] = vertexBase + i * numVertsOneFace + y0 * (divisions + 1) + x0;
+					s_Data.ShapeIndexBufferPtr[indexBase + offset + 1] = vertexBase + i * numVertsOneFace + y1 * (divisions + 1) + x0;
+					s_Data.ShapeIndexBufferPtr[indexBase + offset + 2] = vertexBase + i * numVertsOneFace + y1 * (divisions + 1) + x1;
+
+					s_Data.ShapeIndexBufferPtr[indexBase + offset + 3] = vertexBase + i * numVertsOneFace + y0 * (divisions + 1) + x0;
+					s_Data.ShapeIndexBufferPtr[indexBase + offset + 4] = vertexBase + i * numVertsOneFace + y1 * (divisions + 1) + x1;
+					s_Data.ShapeIndexBufferPtr[indexBase + offset + 5] = vertexBase + i * numVertsOneFace + y0 * (divisions + 1) + x1;
+
+					offset += 6;
+				}
+			}
+		}
+
+		s_Data.ShapeIndexCount += 6 * 6 * divisions * divisions;
+
+		for (int side = 0; side < 6; side++) {
+
+			for (int y = 0; y < divisions + 1; y++) {
+				for (int x = 0; x < divisions + 1; x++) {
+					float xf = ((float)x / (float)divisions);
+					float yf = ((float)y / (float)divisions);
+
+					s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{  vertexCoords[side * numVertsOneFace + y * (divisions + 1) + x], 1.0f };
+					glm::vec4 adjustedColour = colour;
+					if (normals != nullptr)
+					{
+						adjustedColour = colour * glm::vec4(normals[side * numVertsOneFace + y * (divisions + 1) + x], 1.0f);
+						adjustedColour.a = colour.a;
+					}
+					s_Data.ShapeVertexBufferPtr->Colour = adjustedColour;
+					s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2(xf, yf);
+					s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
+					s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
+					s_Data.ShapeVertexBufferPtr++;
+				}
+			}
+		}
+
+		s_Data.ShapeVertexCount += 6 * numVertsOneFace;
+	}
 }

@@ -84,5 +84,6 @@ namespace Fengshui
 		Ref<GravitySystem> m_GravitySystem;
 		Ref<PhysicsSystem> m_PhysicsSystem;
 		Ref<TransformSystem> m_TransformSystem;
+		Ref<LightSystem> m_LightSystem;
 	};
 }

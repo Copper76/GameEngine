@@ -35,6 +35,9 @@ namespace Fengshui
 		static void DrawSphere(const glm::vec3& position, const glm::vec3& size, const glm::vec3 rotation, const float radius, const int divisions, const float tilingFactor = 1.0f, const Ref<Texture>& texture = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
 		static void DrawSphere(const glm::mat4 transform, const float radius, const int divisions, const float tilingFactor = 1.0f, const Ref<Texture>& texture = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f });
 
+		static void DrawSphere(const glm::vec3& position, const glm::vec3& size, const glm::vec3 rotation, const std::vector<glm::vec3>& vertexCoords, const int divisions, const float tilingFactor = 1.0f, const Ref<Texture>& texture = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f }, const glm::vec3* normals = nullptr);
+		static void DrawSphere(const glm::mat4 transform, const std::vector<glm::vec3>& vertexCoords, const int divisions, const float tilingFactor = 1.0f, const Ref<Texture>& texture = nullptr, const glm::vec4& colour = { 1.0f, 1.0f, 1.0f, 1.0f }, const glm::vec3* normals = nullptr);
+
 	private:
 		static void PrepareNextBatch();
 	};
