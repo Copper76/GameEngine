@@ -15,5 +15,17 @@ namespace Fengshui
 
 		//Create the hull
 		Geometry::BuildConvexHull(m_VertexCoords, m_Tris);
+
+		m_VertexNum = (int)m_VertexCoords.size();
+	}
+
+	void RenderShapeConvex::Rebuild(const std::vector<glm::vec3> pts, bool removeUnused)
+	{
+		m_VertexCoords = pts;
+
+		//Create the hull
+		Geometry::BuildConvexHull(m_VertexCoords, m_Tris, removeUnused);
+
+		m_VertexNum = (int)m_VertexCoords.size();
 	}
 }

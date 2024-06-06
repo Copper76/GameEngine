@@ -15,6 +15,6 @@ namespace Fengshui
 		virtual void SetClearDepth(const float depth) override;
 		virtual void Clear() override;
 
-		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount) override;
+		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount, bool isWireFrame) override;
 	};
 }

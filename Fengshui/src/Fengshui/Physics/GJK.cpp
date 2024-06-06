@@ -201,22 +201,13 @@ namespace Fengshui
 	point_t Support(const Collider colliderA, const Transform transA, const Collider colliderB, const Transform transB, glm::vec3 inDir, const float bias) {
 		glm::vec3 dir = glm::normalize(inDir);
 
-		Transform& transform = Transform();
-		transform.Position = transA.Position + colliderA.Offset;
-		transform.Rotation = transA.Rotation;
-		transform.Scale = transA.Scale * colliderA.Size;
-
 		point_t point;
 
-		point.ptA = colliderA.Shape->Support(dir, transform, bias);
+		point.ptA = colliderA.Shape->Support(dir, transA, bias);
 
 		dir *= -1.0f;
 
-		transform.Position = transB.Position + colliderB.Offset;
-		transform.Rotation = transB.Rotation;
-		transform.Scale = transB.Scale * colliderA.Size;
-
-		point.ptB = colliderB.Shape->Support(dir, transform, bias);
+		point.ptB = colliderB.Shape->Support(dir, transB, bias);
 
 		point.xyz = point.ptA - point.ptB;//A-B huh
 		return point;

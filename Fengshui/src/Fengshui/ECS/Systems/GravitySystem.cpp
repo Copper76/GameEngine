@@ -5,10 +5,10 @@
 
 namespace Fengshui
 {
-	void GravitySystem::OnUpdate(float dt)
+	void GravitySystem::OnUpdate(const float dt)
 	{
-		for (EntityID entity : m_Entities) {
-
+		for (EntityID entity : m_Entities)
+		{
 			Rigidbody& rb = GeneralManager::GetComponent<Rigidbody>(entity);
 			float mass = 1.0f / rb.InvMass;
 			const glm::vec3 impulseGravity = rb.Gravity * mass * dt;

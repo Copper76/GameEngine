@@ -84,7 +84,7 @@ namespace Fengshui
 				dt = 33000.0f;
 			}
 
-			dt = dt * 0.001f * 0.001f;
+			dt = dt * 0.001f * 0.001f * 0.01f;//something wrong with time scalinG
 
 			//Update each layer
 			for (Layer* layer : m_LayerStack)

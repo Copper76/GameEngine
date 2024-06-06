@@ -23,10 +23,10 @@ namespace Fengshui
 	void ConstraintConstantVelocity::PreSolve(const float dt_sec)
 	{
 		const Collider colliderA = GeneralManager::GetComponent<Collider>(m_BodyA);
-		const Transform transA = GeneralManager::GetComponent<Transform>(m_BodyA);
+		const Transform transA = TransformSystem::GetWorldTransform(m_BodyA);
 
 		const Collider colliderB = GeneralManager::GetComponent<Collider>(m_BodyB);
-		const Transform transB = GeneralManager::GetComponent<Transform>(m_BodyB);
+		const Transform transB = TransformSystem::GetWorldTransform(m_BodyB);
 
 		const glm::vec3 worldAnchorA = BodySpaceToWorldSpace(m_anchorA, colliderA, transA);
 		const glm::vec3 worldAnchorB = BodySpaceToWorldSpace(m_anchorB, colliderB, transB);
@@ -178,10 +178,10 @@ namespace Fengshui
 	void ConstraintConstantVelocityLimited::PreSolve(const float dt_sec)
 	{
 		const Collider colliderA = GeneralManager::GetComponent<Collider>(m_BodyA);
-		const Transform transA = GeneralManager::GetComponent<Transform>(m_BodyA);
+		const Transform transA = TransformSystem::GetWorldTransform(m_BodyA);
 
 		const Collider colliderB = GeneralManager::GetComponent<Collider>(m_BodyB);
-		const Transform transB = GeneralManager::GetComponent<Transform>(m_BodyB);
+		const Transform transB = TransformSystem::GetWorldTransform(m_BodyB);
 
 		const glm::vec3 worldAnchorA = BodySpaceToWorldSpace(m_anchorA, colliderA, transA);
 		const glm::vec3 worldAnchorB = BodySpaceToWorldSpace(m_anchorB, colliderB, transB);

@@ -91,7 +91,7 @@ namespace Fengshui
 		m_SecondCamera->AddComponent<Transform>();
 
 		////stacking box
-		//for (int y = 0; y < 50; y++) {
+		//for (int y = 0; y < 5; y++) {
 		//	Ref<Entity> box = MakeRef<Entity>("Box");
 		//	float offset = ((y & 1) == 0) ? 0.0f : 0.15f;//offset even-numbered boxes
 		//	float delta = 0.04f;
@@ -116,21 +116,25 @@ namespace Fengshui
 		glm::vec3(0,0.5,0), };
 		RenderShapeConvex* convexShape = new RenderShapeConvex(pts, sizeof(pts) / sizeof(glm::vec3));
 
-		m_BigSquare->AddComponent<Render>(Render(convexShape));
+		Ref<Texture> checkerboard = Texture::Create("E:/GitStuff/GameEngine/Fengshui-Editor/Assets/Textures/Checkerboard.png");
+
+		//m_BigSquare->AddComponent<Render>(Render(convexShape));
+		//m_BigSquare->AddComponent<Render>();
+		m_BigSquare->AddComponent<Render>(Render(new RenderShapeSphere(), checkerboard));
 
 		m_BigSquare->AddComponent<Rigidbody>();
-		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>(Collider(new PhysicalShapeConvex(convexShape)));
+		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>();
 
 		m_Ground = MakeRef<Entity>("Ground");
 
-		Transform groundTrans = m_Ground->AddComponent<Transform>(Transform(glm::vec3(0.0f, -2.0f, 0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 1.0f)));
+		Transform groundTrans = m_Ground->AddComponent<Transform>(Transform(glm::vec3(0.0f, -2.0f, 0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
 
-		m_Ground->AddComponent<Render>(Render(Texture::Create("E:/GitStuff/GameEngine/Fengshui-Editor/Assets/Textures/Checkerboard.png")));
+		m_Ground->AddComponent<Render>(Render(checkerboard));
 
 		m_Ground->AddComponent<Rigidbody>(Rigidbody(0.0f));
-		Collider groundCollider = m_Ground->AddComponent<Collider>();
+		Collider groundCollider = m_Ground->AddComponent<Collider>(Collider(new PhysicalShapeBox(glm::vec3(0.0f), TransformSystem::GetWorldTransform(m_Ground->GetID()).Scale)));
 
-		m_BigSquare->SetParent(m_SecondCamera);
+		//m_BigSquare->SetParent(m_SecondCamera);
 
 		//Ref<ConstraintDistance> joint = MakeRef<ConstraintDistance>();
 

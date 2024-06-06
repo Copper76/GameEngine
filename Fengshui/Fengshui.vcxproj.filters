@@ -288,6 +288,8 @@
     <ClInclude Include="src\Fengshui\Maths\Triangulation\FurthestPoint.h" />
     <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeConvex.h" />
     <ClInclude Include="src\Fengshui\Maths\Triangulation\TriMethod.h" />
+    <ClInclude Include="src\Fengshui\Renderer\RenderShapes\RenderShapeSphere.h" />
+    <ClInclude Include="src\Fengshui\ECS\Systems\LightSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp">
@@ -452,5 +454,7 @@
     <ClCompile Include="src\Fengshui\Maths\Geometry.cpp" />
     <ClCompile Include="src\Fengshui\Maths\Triangulation\BowyerWatson.cpp" />
     <ClCompile Include="src\Fengshui\Maths\Triangulation\TriMethod.cpp" />
+    <ClCompile Include="src\Fengshui\Renderer\RenderShapes\RenderShapeSphere.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Systems\LightSystem.cpp" />
   </ItemGroup>
 </Project>

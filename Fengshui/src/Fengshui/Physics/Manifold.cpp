@@ -106,10 +106,10 @@ namespace Fengshui
 			contact_t& contact = m_contacts[i];
 
 			const Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
-			const Transform transA = GeneralManager::GetComponent<Transform>(contact.bodyA);
+			const Transform transA = TransformSystem::GetWorldTransform(contact.bodyA);
 
 			const Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
-			const Transform transB = GeneralManager::GetComponent<Transform>(contact.bodyB);
+			const Transform transB = TransformSystem::GetWorldTransform(contact.bodyB);
 
 			const glm::vec3 a = BodySpaceToWorldSpace(contact.ptOnA_LocalSpace, colliderA, transA);
 			const glm::vec3 b = BodySpaceToWorldSpace(contact.ptOnB_LocalSpace, colliderB, transB);
@@ -132,19 +132,8 @@ namespace Fengshui
 			for (int j = i; j < MAX_CONTACTS - 1; j++) {
 				m_constraints[j] = m_constraints[j + 1];
 				m_contacts[j] = m_contacts[j + 1];
-				/*
-				if (j >= m_numContacts) {
-					m_constraints[j].m_cachedLambda.Zero();//zero out lambdas of unused constraints? why?
-				}
-				*/
 			}
 
-
-			//alternative that only moves the last element
-			/*
-			m_constraints[i] = m_constraints[m_numContacts - 1];
-			m_contacts[i] = m_contacts[m_numContacts - 1];
-			*/
 			m_numContacts--;
 			i--;
 		}
@@ -178,16 +167,16 @@ namespace Fengshui
 		for (int i = 0; i < m_numContacts; i++)
 		{
 			const Collider oldColliderA = GeneralManager::GetComponent<Collider>(m_contacts[i].bodyA);
-			const Transform oldTransA = GeneralManager::GetComponent<Transform>(m_contacts[i].bodyA);
+			const Transform oldTransA = TransformSystem::GetWorldTransform(m_contacts[i].bodyA);
 
 			const Collider oldColliderB = GeneralManager::GetComponent<Collider>(m_contacts[i].bodyB);
-			const Transform oldTransB = GeneralManager::GetComponent<Transform>(m_contacts[i].bodyB);
+			const Transform oldTransB = TransformSystem::GetWorldTransform(m_contacts[i].bodyB);
 
 			const Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
-			const Transform transA = GeneralManager::GetComponent<Transform>(contact.bodyA);
+			const Transform transA = TransformSystem::GetWorldTransform(contact.bodyA);
 
 			const Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
-			const Transform transB = GeneralManager::GetComponent<Transform>(contact.bodyB);
+			const Transform transB = TransformSystem::GetWorldTransform(contact.bodyB);
 
 			const glm::vec3 oldA = BodySpaceToWorldSpace(m_contacts[i].ptOnA_LocalSpace, oldColliderA, oldTransA);
 			const glm::vec3 oldB = BodySpaceToWorldSpace(m_contacts[i].ptOnB_LocalSpace, oldColliderB, oldTransB);
@@ -232,11 +221,6 @@ namespace Fengshui
 				return;//don't need to add the new point
 			}
 		}
-
-		/*
-		if (newSlot >= MAX_CONTACTS) {//try implement a new method to find the most penetrating contact and remove the one that is furthest away
-		}
-		*/
 
 		m_contacts[newSlot] = contact;
 

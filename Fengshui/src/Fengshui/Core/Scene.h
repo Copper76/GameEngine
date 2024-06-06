@@ -70,8 +70,10 @@ namespace Fengshui
 		Ref<ManifoldCollector> m_Manifolds;
 
 	private:
+		//Camera related variables
 		float m_CameraMoveSpeed = 0.1f;
 		bool m_ViewportFocused = false;
+		EntityID m_PrimaryCamera = 0;
 
 	private:
 		//Systems
@@ -82,5 +84,6 @@ namespace Fengshui
 		Ref<GravitySystem> m_GravitySystem;
 		Ref<PhysicsSystem> m_PhysicsSystem;
 		Ref<TransformSystem> m_TransformSystem;
+		Ref<LightSystem> m_LightSystem;
 	};
 }

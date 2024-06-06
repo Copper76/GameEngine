@@ -3,17 +3,18 @@
 
 #include "Fengshui/Renderer/Renderer2D.h"
 #include "Fengshui/ECS/GeneralManager.h"
+#include "Fengshui/ECS/Systems/TransformSystem.h"
 
 namespace Fengshui
 {
-	void RenderSystem2D::OnRender(Ref<TransformSystem> transformSystem)
+	void RenderSystem2D::OnRender()
 	{
 		glm::vec2 coords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f} };
 		for (auto const& entity : m_Entities)
 		{
 			auto renderData = GeneralManager::GetComponent<Render2D>(entity);
 
-			glm::mat4 transform = transformSystem->GetWorldTransformMatrix2D(entity);
+			glm::mat4 transform = TransformSystem::GetWorldTransformMatrix2D(entity);
 
 			glm::vec2* texCoords = renderData.TexCoords;
 			if (texCoords == nullptr)

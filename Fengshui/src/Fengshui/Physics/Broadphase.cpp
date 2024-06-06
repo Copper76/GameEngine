@@ -34,14 +34,10 @@ namespace Fengshui
 		int i = 0;
 
 		for (EntityID entity : entities) {
-			const Transform transform = GeneralManager::GetComponent<Transform>(entity);
+			const Transform transform = TransformSystem::GetWorldTransform(entity);
 			const Rigidbody rb = GeneralManager::GetComponent<Rigidbody>(entity);
 			const Collider collider = GeneralManager::GetComponent<Collider>(entity);
-			Transform boundsTrans = Transform();
-			boundsTrans.Position = transform.Position + collider.Offset;
-			boundsTrans.Rotation = transform.Rotation;
-			boundsTrans.Scale = transform.Scale * collider.Size;
-			Bounds bounds = collider.Shape->GetBounds(boundsTrans);
+			Bounds bounds = collider.Shape->GetBounds(transform);
 
 			//expand bounds by velocity and a little extra
 			bounds.Expand(bounds.mins + rb.LinearVelocity * dt_sec);
@@ -51,7 +47,6 @@ namespace Fengshui
 			bounds.Expand(bounds.mins + glm::vec3(-1, -1, -1) * epsilon);
 			bounds.Expand(bounds.maxs + glm::vec3(1, 1, 1) * epsilon);
 
-			//Sorting needs changing, I am not using an array here
 			sortedArray[i * 2 + 0].id = entity;
 			sortedArray[i * 2 + 0].value = glm::dot(axis, bounds.mins);
 			sortedArray[i * 2 + 0].ismin = true;

@@ -21,11 +21,14 @@ namespace Fengshui
 		Transform& transA = GeneralManager::GetComponent<Transform>(contact.bodyA);
 		Transform& transB = GeneralManager::GetComponent<Transform>(contact.bodyB);
 
+		const Transform& globalTransA = TransformSystem::GetWorldTransform(contact.bodyA);
+		const Transform& globalTransB = TransformSystem::GetWorldTransform(contact.bodyB);
+
 		const Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
 		const Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
 
-		const glm::vec3 ptOnA = BodySpaceToWorldSpace(contact.ptOnA_LocalSpace, colliderA, transA);
-		const glm::vec3 ptOnB = BodySpaceToWorldSpace(contact.ptOnB_LocalSpace, colliderB, transB);
+		const glm::vec3 ptOnA = BodySpaceToWorldSpace(contact.ptOnA_LocalSpace, colliderA, globalTransA);
+		const glm::vec3 ptOnB = BodySpaceToWorldSpace(contact.ptOnB_LocalSpace, colliderB, globalTransB);
 
 		//primitive elasticity calculation
 		const float elasticityA = bodyA.Elasticity;
@@ -35,14 +38,14 @@ namespace Fengshui
 		const float invMassA = bodyA.InvMass;
 		const float invMassB = bodyB.InvMass;
 
-		const glm::mat3 invWorldInertiaA = GetInverseInertiaTensorWorldSpace(colliderA, bodyA, transA);
-		const glm::mat3 invWorldInertiaB = GetInverseInertiaTensorWorldSpace(colliderB, bodyB, transB);
+		const glm::mat3 invWorldInertiaA = GetInverseInertiaTensorWorldSpace(colliderA, bodyA, globalTransA);
+		const glm::mat3 invWorldInertiaB = GetInverseInertiaTensorWorldSpace(colliderB, bodyB, globalTransB);
 
 		//calculate the impulse after collision
 		const glm::vec3 n = contact.normal;
 
-		const glm::vec3 ra = ptOnA - GetCenterOfMassWorldSpace(colliderA, transA);
-		const glm::vec3 rb = ptOnB - GetCenterOfMassWorldSpace(colliderB, transB);
+		const glm::vec3 ra = ptOnA - GetCenterOfMassWorldSpace(colliderA, globalTransA);
+		const glm::vec3 rb = ptOnB - GetCenterOfMassWorldSpace(colliderB, globalTransB);
 
 		const glm::vec3 angularJA = glm::cross(invWorldInertiaA * glm::cross(ra,n), ra);
 		const glm::vec3 angularJB = glm::cross(invWorldInertiaB * glm::cross(rb,n), rb);
@@ -55,8 +58,8 @@ namespace Fengshui
 		const float ImpulseJ = (1.0f + elasticity) * glm::dot(vab, n) / (invMassA + invMassB + angularFactor);
 		const glm::vec3 vectorImpulseJ = n * ImpulseJ;
 
-		ApplyImpulse(ptOnA, vectorImpulseJ * -1.0f, colliderA, bodyA, transA);
-		ApplyImpulse(ptOnB, vectorImpulseJ * 1.0f, colliderB, bodyB, transB);
+		ApplyImpulse(ptOnA, vectorImpulseJ * -1.0f, colliderA, bodyA, globalTransA);
+		ApplyImpulse(ptOnB, vectorImpulseJ * 1.0f, colliderB, bodyB, globalTransB);
 
 		//calculate impulse caused by friction
 		const float frictionA = bodyA.Friction;
@@ -75,8 +78,8 @@ namespace Fengshui
 		const float reducedMass = 1.0f / (bodyA.InvMass + bodyB.InvMass + invInertia);
 		const glm::vec3 impulseFriction = velTang * reducedMass * friction;
 
-		ApplyImpulse(ptOnA, impulseFriction * -1.0f, colliderA, bodyA, transA);
-		ApplyImpulse(ptOnB, impulseFriction * 1.0f, colliderB, bodyB, transB);
+		ApplyImpulse(ptOnA, impulseFriction * -1.0f, colliderA, bodyA, globalTransA);
+		ApplyImpulse(ptOnB, impulseFriction * 1.0f, colliderB, bodyB, globalTransB);
 
 		if (0.0f == contact.timeOfImpact) {
 			//move just outside the collision

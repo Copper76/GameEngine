@@ -35,6 +35,7 @@ namespace Fengshui
 		scene->m_GravitySystem = GeneralManager::RegisterSystem<GravitySystem>();
 		scene->m_PhysicsSystem = GeneralManager::RegisterSystem<PhysicsSystem>();
 		scene->m_TransformSystem = GeneralManager::RegisterSystem<TransformSystem>();
+		scene->m_LightSystem = GeneralManager::RegisterSystem<LightSystem>();
 
 		Signature signature;
 		signature.set(GeneralManager::GetComponentType<Render>());
@@ -74,6 +75,10 @@ namespace Fengshui
 		signature.set(GeneralManager::GetComponentType<Hierarchy>());
 		GeneralManager::SetSystemSignature<TransformSystem>(signature);
 
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<GlobalLight>());
+		GeneralManager::SetSystemSignature<LightSystem>(signature);
+
 		//Physics System
 		scene->m_Manifolds = std::make_shared<ManifoldCollector>();
 
@@ -89,6 +94,8 @@ namespace Fengshui
 
 		scene->m_SceneManager->AddComponent<Transform>(Transform(glm::vec3(0.0f, 0.0f, 10.0f)));
 
+		scene->m_SceneManager->AddComponent<GlobalLight>();
+
 		scene->UpdateViewMatrix(scene->m_CameraSystem->GetPrimary());
 
 		return scene;
@@ -97,10 +104,11 @@ namespace Fengshui
 	//Update function for the scene
 	void Scene::OnUpdate(float dt)
 	{
-		EntityID cameraComp = m_CameraSystem->GetPrimary();
+		//update the primary camera only on update thread
+		m_PrimaryCamera = m_CameraSystem->GetPrimary();
 		
 		//A default camera control for navigating the scene
-		if (cameraComp != 0)
+		if (m_PrimaryCamera != 0)
 		{
 			if (m_ViewportFocused)
 			{
@@ -159,7 +167,7 @@ namespace Fengshui
 					rotateDelta.z -= m_CameraMoveSpeed * dt;
 				}
 
-				AdjustCamera(cameraComp, moveDelta, glm::quat(glm::radians(rotateDelta)));
+				AdjustCamera(m_PrimaryCamera, moveDelta, glm::quat(glm::radians(rotateDelta)));
 			}
 		}
 	}
@@ -179,24 +187,26 @@ namespace Fengshui
 	//Render function for updating the graphics of the scene
 	void Scene::OnRender()
 	{
-		EntityID cameraComp = m_CameraSystem->GetPrimary();
-
-		if (cameraComp != 0)
+		if (m_PrimaryCamera != 0)
 		{
 			//Clear the screen
 			RenderCommand::Clear();
 
-			//3D Render cycle
-			Renderer::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));
+			const CameraComponent* cameraComp = &GeneralManager::GetComponent<CameraComponent>(m_PrimaryCamera);
 
-			m_RenderSystem->OnRender(m_TransformSystem);
+			m_LightSystem->OnUpdate(m_RenderSystem);
+
+			//3D Render cycle
+			Renderer::BeginScene(cameraComp);
+
+			m_RenderSystem->OnRender();
 
 			Renderer::EndScene();
 
 			//2D Render cycle
-			Renderer2D::BeginScene(&GeneralManager::GetComponent<CameraComponent>(cameraComp));
+			Renderer2D::BeginScene(cameraComp);
 
-			m_RenderSystem2D->OnRender(m_TransformSystem);
+			m_RenderSystem2D->OnRender();
 
 			Renderer2D::EndScene();
 		}
@@ -239,7 +249,10 @@ namespace Fengshui
 
 	void Scene::UpdateView()
 	{
-		m_CameraSystem->CalculateView(m_CameraSystem->GetPrimary());
+		if (m_PrimaryCamera != 0)
+		{
+			m_CameraSystem->CalculateView(m_PrimaryCamera);
+		}
 	}
 
 	void Scene::UpdateViewMatrix(EntityID entity)

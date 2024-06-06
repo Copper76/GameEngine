@@ -6,12 +6,10 @@ namespace Fengshui
 	class RenderShapeCube  : public RenderShape
 	{
 	public:
-		explicit RenderShapeCube(const glm::vec3* pts, const int num) {
-			Build(pts, num);
-		}
+		explicit RenderShapeCube() = default;
 
-		virtual void Build(const glm::vec3* pts, const int num) override;
+		virtual ShapeType GetType() const override { return ShapeType::SHAPE_CUBE; }
 
-		virtual RenderShapeType GetType() const override { return RenderShapeType::SHAPE_CUBE; }
+		virtual std::string GetDisplayName() const override { return "Cube"; }
 	};
 }

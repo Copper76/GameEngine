@@ -14,20 +14,62 @@ namespace Fengshui
 	void PhysicalShapeBox::Build(const glm::vec3* pts, const int num) {
 		for (int i = 0; i < num; i++) {
 			m_bounds.Expand(pts[i]);
+			m_BaseCoords[i] = pts[i];
 		}
 
-		m_points.clear();
-		m_points.push_back(glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.mins.z));
-		m_points.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.mins.z));
-		m_points.push_back(glm::vec3(m_bounds.mins.x, m_bounds.maxs.y, m_bounds.mins.z));
-		m_points.push_back(glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.maxs.z));
+		m_VertexCoords.clear();
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.mins.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.mins.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.maxs.y, m_bounds.mins.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.maxs.z));
 
-		m_points.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.maxs.z));
-		m_points.push_back(glm::vec3(m_bounds.mins.x, m_bounds.maxs.y, m_bounds.maxs.z));
-		m_points.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.maxs.z));
-		m_points.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.mins.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.maxs.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.maxs.y, m_bounds.maxs.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.maxs.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.mins.z));
 
-		m_centerOfMass = (m_bounds.maxs + m_bounds.mins) * 0.5f;
+		m_CenterOfMass = (m_bounds.maxs + m_bounds.mins) * 0.5f;
+	}
+
+	void PhysicalShapeBox::Build(const glm::vec3* pts, const int num, const glm::vec3 offset, const glm::vec3 scale)
+	{
+		for (int i = 0; i < num; i++) {
+			m_bounds.Expand((pts[i] * scale) + offset);
+			m_BaseCoords[i] = pts[i];
+		}
+
+		m_VertexCoords.clear();
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.mins.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.mins.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.maxs.y, m_bounds.mins.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.maxs.z));
+
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.maxs.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.maxs.y, m_bounds.maxs.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.maxs.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.mins.z));
+
+		m_CenterOfMass = (m_bounds.maxs + m_bounds.mins) * 0.5f;
+	}
+
+	void PhysicalShapeBox::Rebuild(const glm::vec3 offset, const glm::vec3 scale)
+	{
+		for (glm::vec3 pt : m_BaseCoords) {
+			m_bounds.Expand((pt * scale) + offset);
+		}
+
+		m_VertexCoords.clear();
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.mins.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.mins.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.maxs.y, m_bounds.mins.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.maxs.z));
+
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.maxs.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.mins.x, m_bounds.maxs.y, m_bounds.maxs.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.maxs.z));
+		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.mins.z));
+
+		m_CenterOfMass = (m_bounds.maxs + m_bounds.mins) * 0.5f;
 	}
 
 	/*
@@ -36,10 +78,10 @@ namespace Fengshui
 	====================================================
 	*/
 	glm::vec3 PhysicalShapeBox::Support(const glm::vec3& dir, const Transform transform, const float bias) const {
-		glm::vec3 maxPt = (transform.Rotation * m_points[0]) * transform.Scale + transform.Position;
+		glm::vec3 maxPt = (transform.Rotation * m_VertexCoords[0]) + transform.Position;
 		float maxDist = glm::dot(dir, maxPt);
-		for (int i = 1; i < m_points.size(); i++) {
-			const glm::vec3 pt = (transform.Rotation * m_points[i]) * transform.Scale + transform.Position;
+		for (int i = 1; i < m_VertexCoords.size(); i++) {
+			const glm::vec3 pt = (transform.Rotation * m_VertexCoords[i]) + transform.Position;
 			const float dist = glm::dot(dir,pt);
 			if (dist > maxDist) {
 				maxDist = dist;
@@ -57,10 +99,9 @@ namespace Fengshui
 	ShapeBox::InertiaTensor
 	====================================================
 	*/
-	glm::mat3 PhysicalShapeBox::InertiaTensor(const Transform transform) const {
+	glm::mat3 PhysicalShapeBox::InertiaTensor() const {
 		//inertiaTensor around origin
 		glm::mat3 tensor = glm::mat3(0.0f);
-		Bounds bounds = GetBounds(transform.Scale);
 		const float dx = m_bounds.maxs.x - m_bounds.mins.x;
 		const float dy = m_bounds.maxs.y - m_bounds.mins.y;
 		const float dz = m_bounds.maxs.z - m_bounds.mins.z;
@@ -104,28 +145,7 @@ namespace Fengshui
 
 		Bounds bounds;
 		for (int i = 0; i < 8; i++) {
-			bounds.Expand((transform.Rotation * corners[i]) * transform.Scale + transform.Position);
-		}
-
-		return bounds;
-	}
-
-	Bounds PhysicalShapeBox::GetBounds(const glm::vec3 scale) const {
-		glm::vec3 corners[8];
-
-		corners[0] = glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.mins.z);
-		corners[1] = glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.mins.z);
-		corners[2] = glm::vec3(m_bounds.mins.x, m_bounds.maxs.y, m_bounds.mins.z);
-		corners[3] = glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.maxs.z);
-
-		corners[4] = glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.maxs.z);
-		corners[5] = glm::vec3(m_bounds.mins.x, m_bounds.maxs.y, m_bounds.maxs.z);
-		corners[6] = glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.maxs.z);
-		corners[7] = glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.mins.z);
-
-		Bounds bounds;
-		for (int i = 0; i < 8; i++) {
-			bounds.Expand(corners[i] * scale);
+			bounds.Expand((transform.Rotation * corners[i]) + transform.Position);
 		}
 
 		return bounds;
@@ -138,9 +158,8 @@ namespace Fengshui
 	*/
 	float PhysicalShapeBox::FastestLinearSpeed(const  glm::vec3& angularVelocity, const  glm::vec3& dir) const {
 		float maxSpeed = 0.0f;
-		for (int i = 0; i < m_points.size(); i++) {
-			glm::vec3 r = m_points[i] - m_centerOfMass;
-			//glm::vec3 linearVelocity = angularVelocity.Cross(r);//perpendicular component of the angular speed
+		for (int i = 0; i < m_VertexCoords.size(); i++) {
+			glm::vec3 r = m_VertexCoords[i] - m_CenterOfMass;
 			glm::vec3 linearVelocity = glm::cross(angularVelocity, r);//perpendicular component of the angular speed
 			float speed = glm::dot(dir, linearVelocity);//component of the perpendicular speed in direction of dir
 			if (speed > maxSpeed) {

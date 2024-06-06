@@ -30,6 +30,7 @@ namespace Fengshui
 			RegisterComponent<Collider>();
 			RegisterComponent<Transform>();
 			RegisterComponent<Transform2D>();
+			RegisterComponent<GlobalLight>();
 		}
 
 		static void SetActiveScene(Ref<Scene> scene)

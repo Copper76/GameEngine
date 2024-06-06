@@ -125,13 +125,19 @@ namespace Fengshui
 
 		Collider()
 		{
-			Shape = new PhysicalShapeBox(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
+			Shape = new PhysicalShapeBox();
 		}
 
 		Collider(PhysicalShape* shape) : Shape(shape)
 		{
 
 		}
+
+		Collider(PhysicalShape* shape, glm::vec3 offset, glm::vec3 size) : Shape(shape), Offset(offset), Size(size)
+		{
+			Shape->Rebuild(Offset, Size);
+		}
+
 	};
 
 	struct Render2D
@@ -188,11 +194,12 @@ namespace Fengshui
 		glm::vec2* TexCoords = nullptr;
 		glm::vec4 Colour = { 1.0f, 1.0f, 1.0f, 1.0f };
 		float TilingFactor = 1.0f;
+		glm::vec3* Normal = nullptr;
 		RenderShape* Shape = nullptr;
 
 		Render()
 		{
-			Shape = new RenderShapeCube(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
+			Shape = new RenderShapeCube();
 		}
 
 		Render(RenderShape* shape) : Shape(shape)
@@ -200,9 +207,14 @@ namespace Fengshui
 
 		}
 
+		Render(RenderShape* shape, Ref<Fengshui::Texture> texture) : Shape(shape), Texture(texture)
+		{
+
+		}
+
 		Render(Ref<Fengshui::Texture> texture) : Texture(texture)
 		{
-			Shape = new RenderShapeCube(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
+			Shape = new RenderShapeCube();
 		}
 
 		Render(Ref<Fengshui::Texture> texture, glm::vec2* coords) : Texture(texture)
@@ -213,12 +225,12 @@ namespace Fengshui
 				TexCoords[i] = coords[i];
 			}
 
-			Shape = new RenderShapeCube(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
+			Shape = new RenderShapeCube();
 		}
 
 		Render(glm::vec4 colour) : Colour(colour)
 		{
-			Shape = new RenderShapeCube(g_boxUnit, sizeof(g_boxUnit) / sizeof(glm::vec3));
+			Shape = new RenderShapeCube();
 		}
 
 		Render(Ref<Fengshui::Texture> texture, glm::vec2* coords, glm::vec4 colour, float tilingFactor, RenderShape* shape)
@@ -298,6 +310,27 @@ namespace Fengshui
 		{
 			ViewProjectionMatrix = ProjectionMatrix * ViewMatrix;
 			IsOrtho = false;
+		}
+	};
+
+	struct GlobalLight
+	{
+		glm::vec3 Direction = glm::vec3(1.0f);
+		glm::vec3 Colour = glm::vec3(1.0f);
+
+		GlobalLight()
+		{
+
+		}
+
+		GlobalLight(glm::vec3 direction) : Direction(direction)
+		{
+
+		}
+
+		GlobalLight(glm::vec3 direction, glm::vec3 colour) : Direction(direction), Colour(colour)
+		{
+
 		}
 	};
 }

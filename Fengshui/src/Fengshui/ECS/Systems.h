@@ -7,3 +7,4 @@
 #include "Fengshui/ECS/Systems/GravitySystem.h"
 #include "Fengshui/ECS/Systems/PhysicsSystem.h"
 #include "Fengshui/ECS/Systems/TransformSystem.h"
+#include "Fengshui/ECS/Systems/LightSystem.h"

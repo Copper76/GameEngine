@@ -47,7 +47,10 @@ namespace Fengshui
 	*/
 	class ManifoldCollector {
 	public:
-		ManifoldCollector() {}
+		ManifoldCollector()
+		{
+
+		}
 
 		void AddContact(const contact_t& contact);
 

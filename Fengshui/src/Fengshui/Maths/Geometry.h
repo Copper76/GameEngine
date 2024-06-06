@@ -6,15 +6,21 @@
 
 namespace Fengshui
 {
+	enum class ShapeType {
+		SHAPE_SPHERE,
+		SHAPE_CUBE,
+		SHAPE_CONVEX,
+	};
+
 	class Geometry
 	{
 	public:
-		static void BuildConvexHull(std::vector<glm::vec3>& verts, std::vector<Triangle>& hullTris) {
+		static void BuildConvexHull(std::vector<glm::vec3>& verts, std::vector<Triangle>& hullTris, bool removeUnused = true) {
 			if (verts.size() < 4) {
 				return;
 			}
 
-			s_TriMethod->BuildConvexHull(verts, hullTris);
+			s_TriMethod->BuildConvexHull(verts, hullTris, removeUnused);
 		}
 
 		static glm::mat3 CalculateInertiaTensorTetrahedron(const std::vector<glm::vec3>& pts, const std::vector<Triangle>& tris, const glm::vec3& cm)
