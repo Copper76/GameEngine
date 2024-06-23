@@ -21,7 +21,7 @@ namespace Fengshui
 
 		inline const float GetRadius() const { return m_Radius; }
 		inline const int GetDivisions() const { return m_Divisions; }
-		inline const std::vector<glm::vec3> GetVertexCoords() const { return m_VertexCoords; }
+		inline const std::vector<glm::vec3> GetVertexCoords() const override { return m_VertexCoords; }
 		inline const int GetVertexNum() const { return (int)m_VertexCoords.size(); }
 
 		inline float& GetRadius() { return m_Radius; }

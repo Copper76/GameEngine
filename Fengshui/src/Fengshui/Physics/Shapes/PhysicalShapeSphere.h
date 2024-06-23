@@ -27,13 +27,13 @@ ShapeSphere
 			m_BaseRadius = radius;
 		}
 
-		glm::vec3 Support(const glm::vec3& dir, const Transform transform, const float bias) const override;
+		glm::vec3 Support(const glm::vec3& dir, const Transform& transform, const float bias) const override;
 
 		glm::mat3 InertiaTensor() const override;
 
 		virtual void Rebuild(const glm::vec3 offset, const glm::vec3 scale) override;
 
-		Bounds GetBounds(const Transform transform) const override;
+		Bounds GetBounds(const Transform& transform) const override;
 
 		ShapeType GetType() const override { return ShapeType::SHAPE_SPHERE; }
 

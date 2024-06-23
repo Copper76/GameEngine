@@ -21,7 +21,7 @@ namespace Fengshui
 
 		inline void SetVertexNum(int vertexNum) { m_VertexNum = vertexNum; }
 
-		inline const std::vector<glm::vec3> GetVertexCoords() const { return m_VertexCoords; }
+		inline const std::vector<glm::vec3> GetVertexCoords() const override { return m_VertexCoords; }
 		inline const std::vector<Triangle> GetTris() const { return m_Tris; }
 		inline const int GetVertexNum() const { return m_VertexNum; }
 

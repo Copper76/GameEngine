@@ -6,10 +6,15 @@ namespace Fengshui
 	class RenderShapeCube  : public RenderShape
 	{
 	public:
-		explicit RenderShapeCube() = default;
+		RenderShapeCube();
 
 		virtual ShapeType GetType() const override { return ShapeType::SHAPE_CUBE; }
 
 		virtual std::string GetDisplayName() const override { return "Cube"; }
+
+		inline const std::vector<glm::vec3> GetVertexCoords() const override { return m_VertexCoords; }
+
+	private:
+		std::vector<glm::vec3> m_VertexCoords;
 	};
 }

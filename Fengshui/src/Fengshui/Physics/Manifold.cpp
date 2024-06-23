@@ -105,11 +105,11 @@ namespace Fengshui
 		for (int i = 0; i < m_numContacts; i++) {
 			contact_t& contact = m_contacts[i];
 
-			const Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
-			const Transform transA = TransformSystem::GetWorldTransform(contact.bodyA);
+			const Collider& colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
+			const Transform& transA = TransformSystem::GetWorldTransform(contact.bodyA);
 
-			const Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
-			const Transform transB = TransformSystem::GetWorldTransform(contact.bodyB);
+			const Collider& colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
+			const Transform& transB = TransformSystem::GetWorldTransform(contact.bodyB);
 
 			const glm::vec3 a = BodySpaceToWorldSpace(contact.ptOnA_LocalSpace, colliderA, transA);
 			const glm::vec3 b = BodySpaceToWorldSpace(contact.ptOnB_LocalSpace, colliderB, transB);
@@ -166,17 +166,17 @@ namespace Fengshui
 
 		for (int i = 0; i < m_numContacts; i++)
 		{
-			const Collider oldColliderA = GeneralManager::GetComponent<Collider>(m_contacts[i].bodyA);
-			const Transform oldTransA = TransformSystem::GetWorldTransform(m_contacts[i].bodyA);
+			const Collider& oldColliderA = GeneralManager::GetComponent<Collider>(m_contacts[i].bodyA);
+			const Transform& oldTransA = TransformSystem::GetWorldTransform(m_contacts[i].bodyA);
 
-			const Collider oldColliderB = GeneralManager::GetComponent<Collider>(m_contacts[i].bodyB);
-			const Transform oldTransB = TransformSystem::GetWorldTransform(m_contacts[i].bodyB);
+			const Collider& oldColliderB = GeneralManager::GetComponent<Collider>(m_contacts[i].bodyB);
+			const Transform& oldTransB = TransformSystem::GetWorldTransform(m_contacts[i].bodyB);
 
-			const Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
-			const Transform transA = TransformSystem::GetWorldTransform(contact.bodyA);
+			const Collider& colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
+			const Transform& transA = TransformSystem::GetWorldTransform(contact.bodyA);
 
-			const Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
-			const Transform transB = TransformSystem::GetWorldTransform(contact.bodyB);
+			const Collider& colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
+			const Transform& transB = TransformSystem::GetWorldTransform(contact.bodyB);
 
 			const glm::vec3 oldA = BodySpaceToWorldSpace(m_contacts[i].ptOnA_LocalSpace, oldColliderA, oldTransA);
 			const glm::vec3 oldB = BodySpaceToWorldSpace(m_contacts[i].ptOnB_LocalSpace, oldColliderB, oldTransB);

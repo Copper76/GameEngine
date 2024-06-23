@@ -21,16 +21,19 @@ namespace Fengshui
 			switch (renderData.Shape->GetType())
 			{
 			case ShapeType::SHAPE_CUBE:
+				{
 				if (texCoords == nullptr)
 				{
 					texCoords = coords;
 				}
-				Renderer::DrawCube(transform, renderData.TilingFactor, renderData.Texture, texCoords, renderData.Colour);
+				RenderShapeCube* shape = (RenderShapeCube*)renderData.Shape;
+				Renderer::DrawCube(transform, shape->GetVertexCoords(), renderData.TilingFactor, renderData.Texture, texCoords, renderData.Colour, renderData.Normal);
 				break;
+				}
 			case ShapeType::SHAPE_CONVEX:
 				{
 				RenderShapeConvex* shape = (RenderShapeConvex*)renderData.Shape;
-				Renderer::DrawConvex(transform, shape->GetVertexCoords(), shape->GetTris(), renderData.Colour);
+				Renderer::DrawConvex(transform, shape->GetVertexCoords(), shape->GetTris(), renderData.Colour, renderData.Normal);
 				}
 				break;
 			case ShapeType::SHAPE_SPHERE:

@@ -30,7 +30,7 @@ namespace Fengshui
 	Intersect Static
 	====================================================
 	*/
-	bool Intersect(const CollisionPair pair, const Rigidbody bodyA, const Rigidbody bodyB, const Transform transA, const Transform transB, const Collider colliderA, const Collider colliderB, contact_t& contact) 
+	bool Intersect(const CollisionPair pair, const Rigidbody& bodyA, const Rigidbody& bodyB, const Transform& transA, const Transform& transB, const Collider& colliderA, const Collider& colliderB, contact_t& contact) 
 	{
 		contact.bodyA = pair.a;
 		contact.bodyB = pair.b;
@@ -186,8 +186,8 @@ namespace Fengshui
 		const Transform& globalTransA = TransformSystem::GetWorldTransform(contact.bodyA);
 		const Transform& globalTransB = TransformSystem::GetWorldTransform(contact.bodyB);
 
-		const Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
-		const Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
+		const Collider& colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
+		const Collider& colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
 
 		if (colliderA.Shape->GetType() == ShapeType::SHAPE_SPHERE && colliderB.Shape->GetType() == ShapeType::SHAPE_SPHERE) {
 			const PhysicalShapeSphere* sphereA = (const PhysicalShapeSphere*)colliderA.Shape;

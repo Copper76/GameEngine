@@ -24,8 +24,8 @@ namespace Fengshui
 		const Transform& globalTransA = TransformSystem::GetWorldTransform(contact.bodyA);
 		const Transform& globalTransB = TransformSystem::GetWorldTransform(contact.bodyB);
 
-		const Collider colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
-		const Collider colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
+		const Collider& colliderA = GeneralManager::GetComponent<Collider>(contact.bodyA);
+		const Collider& colliderB = GeneralManager::GetComponent<Collider>(contact.bodyB);
 
 		const glm::vec3 ptOnA = BodySpaceToWorldSpace(contact.ptOnA_LocalSpace, colliderA, globalTransA);
 		const glm::vec3 ptOnB = BodySpaceToWorldSpace(contact.ptOnB_LocalSpace, colliderB, globalTransB);

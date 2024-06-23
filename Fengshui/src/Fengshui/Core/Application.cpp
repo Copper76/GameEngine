@@ -67,15 +67,15 @@ namespace Fengshui
 	//Fixed update used to handle most physical updates such as collision, position and rotation changes due to velocity
 	void Application::FixedUpdateFunction()
 	{
+		float dt = 0.0f;
 		while (m_Running && !m_Minimised)
 		{
-			float dt = m_Time.GetDeltaTimeMicro();
+			dt += m_Time.GetDeltaTimeMicro();
 
 			//Sleep this thread until a minimum value so there is no weird behaviour introduced by short delta time
 			if (dt < 16000.0f)
 			{
-				std::this_thread::sleep_for(std::chrono::microseconds(16000 - (int)dt));
-				dt = 16000;
+				continue;
 			}
 
 			//Avoid the time step being too big, which could cause objects to teleport through solid objects, though this is still an issue to be addressed in physics
@@ -84,7 +84,7 @@ namespace Fengshui
 				dt = 33000.0f;
 			}
 
-			dt = dt * 0.001f * 0.001f * 0.01f;//something wrong with time scalinG
+			dt = dt * 0.001f * 0.001f * 0.005f;//something wrong with time scaling
 
 			//Update each layer
 			for (Layer* layer : m_LayerStack)
@@ -94,6 +94,8 @@ namespace Fengshui
 					layer->OnFixedUpdate(dt);
 				}
 			}
+
+			dt = 0;
 		}
 	}
 

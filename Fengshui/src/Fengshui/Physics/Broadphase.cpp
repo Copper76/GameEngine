@@ -34,9 +34,9 @@ namespace Fengshui
 		int i = 0;
 
 		for (EntityID entity : entities) {
-			const Transform transform = TransformSystem::GetWorldTransform(entity);
-			const Rigidbody rb = GeneralManager::GetComponent<Rigidbody>(entity);
-			const Collider collider = GeneralManager::GetComponent<Collider>(entity);
+			const Transform& transform = TransformSystem::GetWorldTransform(entity);
+			const Rigidbody& rb = GeneralManager::GetComponent<Rigidbody>(entity);
+			const Collider& collider = GeneralManager::GetComponent<Collider>(entity);
 			Bounds bounds = collider.Shape->GetBounds(transform);
 
 			//expand bounds by velocity and a little extra
