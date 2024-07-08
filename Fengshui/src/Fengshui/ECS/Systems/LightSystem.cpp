@@ -7,56 +7,67 @@ namespace Fengshui
 {
 	void LightSystem::OnUpdate(Ref<RenderSystem> renderSystem)
 	{
-		for (EntityID entity : renderSystem->GetRenderedObjects())
+		if (m_Entities.empty())
 		{
-			auto& renderData = GeneralManager::GetComponent<Render>(entity);
-
-			if (m_Entities.empty())
+			if (m_NoLightLastFrame)
 			{
-				renderData.Normal = nullptr;
 				return;
 			}
-
-			int numVertex = 0;
-			std::vector<glm::vec3> vertices;
-
-			switch (renderData.Shape->GetType())
+			else
 			{
-			case ShapeType::SHAPE_CUBE:
-				numVertex = 8;
-				break;
-			case ShapeType::SHAPE_CONVEX:
-				numVertex = ((RenderShapeConvex*)renderData.Shape)->GetVertexNum();
-				vertices = ((RenderShapeConvex*)renderData.Shape)->GetVertexCoords();
-				break;
-			case ShapeType::SHAPE_SPHERE:
-				numVertex = ((RenderShapeSphere*)renderData.Shape)->GetVertexNum();
-				vertices = ((RenderShapeSphere*)renderData.Shape)->GetVertexCoords();
-				break;
-			default:
-				FS_ASSERT(false, "Unsupported shape type");
+				for (EntityID entity : renderSystem->GetRenderedObjects())
+				{
+					auto& renderData = GeneralManager::GetComponent<Render>(entity);
+					renderData.Normal = nullptr;
+				}
+				m_NoLightLastFrame = true;
 			}
-
-			renderData.Normal = new glm::vec3[numVertex];
-			for (int i = 0; i < numVertex; i++)
+		}
+		else
+		{
+			for (EntityID entity : renderSystem->GetRenderedObjects())
 			{
-				renderData.Normal[i] = glm::vec3(1.0f);
-			}
+				const Transform& transformData = TransformSystem::GetWorldTransform(entity);
+				auto& renderData = GeneralManager::GetComponent<Render>(entity);
 
-			for (EntityID lightID : m_Entities)
-			{
-				auto& light = GeneralManager::GetComponent<GlobalLight>(lightID);
-				light.Direction = glm::normalize(light.Direction);
+				int numVertex = 0;
+				std::vector<glm::vec3> vertices;
+
 				switch (renderData.Shape->GetType())
 				{
+				case ShapeType::SHAPE_CUBE:
+					numVertex = 24;
+					vertices = renderData.Shape->GetVertexCoords();
+					break;
+				case ShapeType::SHAPE_CONVEX:
+					numVertex = ((RenderShapeConvex*)renderData.Shape)->GetVertexNum();
+					vertices = renderData.Shape->GetVertexCoords();
+					break;
 				case ShapeType::SHAPE_SPHERE:
+					numVertex = ((RenderShapeSphere*)renderData.Shape)->GetVertexNum();
+					vertices = renderData.Shape->GetVertexCoords();
+					break;
+				default:
+					FS_ASSERT(false, "Unsupported shape type");
+				}
+
+				renderData.Normal = new glm::vec3[numVertex];
+				for (int i = 0; i < numVertex; i++)
+				{
+					renderData.Normal[i] = glm::vec3(1.0f);
+				}
+
+				for (EntityID lightID : m_Entities)
+				{
+					auto& light = GeneralManager::GetComponent<GlobalLight>(lightID);
+					light.Direction = glm::normalize(light.Direction);
 					for (int i = 0; i < numVertex; i++)
 					{
-						renderData.Normal[i] *= std::clamp(glm::dot(glm::normalize(vertices[i]), -light.Direction), 0.0f, 1.0f) * light.Colour;
+						renderData.Normal[i] *= std::clamp(glm::dot(glm::normalize(transformData.Rotation * vertices[i]), -light.Direction), 0.0f, 1.0f) * light.Colour;
 					}
-					break;
 				}
 			}
+			m_NoLightLastFrame = false;
 		}
 	}
 }

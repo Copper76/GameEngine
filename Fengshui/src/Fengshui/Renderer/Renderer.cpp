@@ -164,8 +164,8 @@ namespace Fengshui
 	{
 		glm::mat4 transform;
 		transform = glm::scale(glm::rotate(glm::rotate(glm::rotate(glm::translate(glm::mat4(1.0f), position), glm::radians(rotation.x), glm::vec3{ 1.0f, 0.0f, 0.0f }),
-				glm::radians(rotation.y), glm::vec3{ 0.0f, 1.0f, 0.0f }),
-				glm::radians(rotation.z), glm::vec3{ 0.0f, 0.0f, 1.0f }), size);
+			glm::radians(rotation.y), glm::vec3{ 0.0f, 1.0f, 0.0f }),
+			glm::radians(rotation.z), glm::vec3{ 0.0f, 0.0f, 1.0f }), size);
 		DrawCube(transform, tilingFactor, texture, texCoords, colour);
 	}
 
@@ -233,16 +233,121 @@ namespace Fengshui
 		s_Data.ShapeIndexCount += 36;
 	}
 
-	void Renderer::DrawConvex(const glm::vec3& position, const glm::vec3& size, const glm::vec3 rotation, const std::vector<glm::vec3>& vertexCoords, const  std::vector<Triangle>& tris, const glm::vec4& colour)
+	void Renderer::DrawCube(const glm::vec3& position, const glm::vec3& size, const glm::vec3 rotation, const std::vector<glm::vec3>& vertexCoords, const float tilingFactor, const Ref<Texture>& texture, const glm::vec2* texCoords, const glm::vec4& colour, const glm::vec3* normals)
+	{
+		glm::mat4 transform;
+		transform = glm::scale(glm::rotate(glm::rotate(glm::rotate(glm::translate(glm::mat4(1.0f), position), glm::radians(rotation.x), glm::vec3{ 1.0f, 0.0f, 0.0f }),
+				glm::radians(rotation.y), glm::vec3{ 0.0f, 1.0f, 0.0f }),
+				glm::radians(rotation.z), glm::vec3{ 0.0f, 0.0f, 1.0f }), size);
+		DrawCube(transform, vertexCoords, tilingFactor, texture, texCoords, colour, normals);
+	}
+
+	void Renderer::DrawCube(const glm::mat4 transform, const std::vector<glm::vec3>& vertexCoords, const float tilingFactor, const Ref<Texture>& texture, const glm::vec2* texCoords, const glm::vec4& colour, const glm::vec3* normals)
+	{
+
+		if (s_Data.ShapeIndexCount >= RendererConfig::MaxIndices)
+		{
+			Flush();
+			PrepareNextBatch();
+		}
+
+		float textureIndex = 0.0f;
+
+		if (texture)
+		{
+			for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+			{
+				if (*s_Data.TextureSlots[i] == *texture)
+				{
+					textureIndex = (float)i;
+					break;
+				}
+			}
+			if (textureIndex == 0.0f)
+			{
+				if (s_Data.TextureSlotIndex >= RendererConfig::MaxTextureSlots)
+				{
+					Flush();
+					PrepareNextBatch();
+				}
+				textureIndex = (float)s_Data.TextureSlotIndex;
+				s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+				s_Data.TextureSlotIndex++;
+			}
+		}
+
+		uint32_t indexBase = s_Data.ShapeIndexCount;
+		uint32_t vertexBase = s_Data.ShapeVertexCount;
+		if (normals != nullptr)
+		{
+			glm::vec4 adjustedColour;
+			for (uint32_t face = 0; face < 6; face++)
+			{
+
+				s_Data.ShapeIndexBufferPtr[indexBase + 0] = vertexBase + 0;
+				s_Data.ShapeIndexBufferPtr[indexBase + 1] = vertexBase + 1;
+				s_Data.ShapeIndexBufferPtr[indexBase + 2] = vertexBase + 2;
+
+				s_Data.ShapeIndexBufferPtr[indexBase + 3] = vertexBase + 2;
+				s_Data.ShapeIndexBufferPtr[indexBase + 4] = vertexBase + 3;
+				s_Data.ShapeIndexBufferPtr[indexBase + 5] = vertexBase + 0;
+
+				for (uint32_t i = 0; i < 4; i++)
+				{
+					s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[face * 4 + i], 1.0f };
+					adjustedColour = colour * glm::vec4(normals[face * 4 + i], 1.0f);
+					adjustedColour.a = colour.a;
+					s_Data.ShapeVertexBufferPtr->Colour = adjustedColour;
+					s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
+					s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
+					s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
+					s_Data.ShapeVertexBufferPtr++;
+				}
+				vertexBase += 4;
+				indexBase += 6;
+			}
+		}
+		else
+		{
+			for (uint32_t face = 0; face < 6; face++)
+			{
+
+				s_Data.ShapeIndexBufferPtr[indexBase + 0] = vertexBase + 0;
+				s_Data.ShapeIndexBufferPtr[indexBase + 1] = vertexBase + 1;
+				s_Data.ShapeIndexBufferPtr[indexBase + 2] = vertexBase + 2;
+
+				s_Data.ShapeIndexBufferPtr[indexBase + 3] = vertexBase + 2;
+				s_Data.ShapeIndexBufferPtr[indexBase + 4] = vertexBase + 3;
+				s_Data.ShapeIndexBufferPtr[indexBase + 5] = vertexBase + 0;
+
+				for (uint32_t i = 0; i < 4; i++)
+				{
+					s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[face * 4 + i], 1.0f };
+					s_Data.ShapeVertexBufferPtr->Colour = colour;
+					s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
+					s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
+					s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
+					s_Data.ShapeVertexBufferPtr++;
+				}
+				vertexBase += 4;
+				indexBase += 6;
+			}
+		}
+
+		s_Data.ShapeVertexCount += 24;
+		s_Data.ShapeIndexCount += 36;
+	}
+
+	void Renderer::DrawConvex(const glm::vec3& position, const glm::vec3& size, const glm::vec3 rotation, const std::vector<glm::vec3>& vertexCoords, const  std::vector<Triangle>& tris, const glm::vec4& colour, const glm::vec3* normals)
 	{
 		glm::mat4 transform;
 		transform = glm::scale(glm::rotate(glm::rotate(glm::rotate(glm::translate(glm::mat4(1.0f), position), glm::radians(rotation.x), glm::vec3{ 1.0f, 0.0f, 0.0f }),
 			glm::radians(rotation.y), glm::vec3{ 0.0f, 1.0f, 0.0f }),
 			glm::radians(rotation.z), glm::vec3{ 0.0f, 0.0f, 1.0f }), size);
-		DrawConvex(transform, vertexCoords, tris, colour);
+		DrawConvex(transform, vertexCoords, tris, colour, normals);
 	}
 
-	void Renderer::DrawConvex(const glm::mat4 transform, const std::vector<glm::vec3>& vertexCoords, const std::vector<Triangle>& tris, const glm::vec4& colour)
+	void Renderer::DrawConvex(const glm::mat4 transform, const std::vector<glm::vec3>& vertexCoords, const std::vector<Triangle>& tris, const glm::vec4& colour, const glm::vec3* normals)
 	{
 		if (s_Data.ShapeIndexCount >= RendererConfig::MaxIndices)
 		{
@@ -275,34 +380,79 @@ namespace Fengshui
 		//	}
 		//
 
-		for (Triangle tri : tris)
+		if (normals != nullptr)
 		{
-			s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.a], 1.0f };
-			s_Data.ShapeVertexBufferPtr->Colour = colour;
-			//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
-			s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
-			s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
-			//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
-			s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
-			s_Data.ShapeVertexBufferPtr++;
+			glm::vec4 adjustedColour;
+			for (Triangle tri : tris)
+			{
+				s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.a], 1.0f };
+				//s_Data.ShapeVertexBufferPtr->Colour = colour;
+				adjustedColour = colour * glm::vec4(normals[tri.a], 1.0f);
+				adjustedColour.a = colour.a;
+				s_Data.ShapeVertexBufferPtr->Colour = adjustedColour;
+				//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
+				s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
+				s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
+				//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
+				s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
+				s_Data.ShapeVertexBufferPtr++;
 
-			s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.b], 1.0f };
-			s_Data.ShapeVertexBufferPtr->Colour = colour;
-			//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
-			s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
-			s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
-			//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
-			s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
-			s_Data.ShapeVertexBufferPtr++;
+				s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.b], 1.0f };
+				//s_Data.ShapeVertexBufferPtr->Colour = colour;
+				adjustedColour = colour * glm::vec4(normals[tri.b], 1.0f);
+				adjustedColour.a = colour.a;
+				s_Data.ShapeVertexBufferPtr->Colour = adjustedColour;
+				//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
+				s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
+				s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
+				//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
+				s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
+				s_Data.ShapeVertexBufferPtr++;
 
-			s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.c], 1.0f };
-			s_Data.ShapeVertexBufferPtr->Colour = colour;
-			//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
-			s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
-			s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
-			//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
-			s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
-			s_Data.ShapeVertexBufferPtr++;
+				s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.c], 1.0f };
+				//s_Data.ShapeVertexBufferPtr->Colour = colour;
+				adjustedColour = colour * glm::vec4(normals[tri.c], 1.0f);
+				adjustedColour.a = colour.a;
+				s_Data.ShapeVertexBufferPtr->Colour = adjustedColour;
+				//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
+				s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
+				s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
+				//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
+				s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
+				s_Data.ShapeVertexBufferPtr++;
+			}
+		}
+		else
+		{
+			for (Triangle tri : tris)
+			{
+				s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.a], 1.0f };
+				s_Data.ShapeVertexBufferPtr->Colour = colour;
+				//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
+				s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
+				s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
+				//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
+				s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
+				s_Data.ShapeVertexBufferPtr++;
+
+				s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.b], 1.0f };
+				s_Data.ShapeVertexBufferPtr->Colour = colour;
+				//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
+				s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
+				s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
+				//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
+				s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
+				s_Data.ShapeVertexBufferPtr++;
+
+				s_Data.ShapeVertexBufferPtr->Position = transform * glm::vec4{ vertexCoords[tri.c], 1.0f };
+				s_Data.ShapeVertexBufferPtr->Colour = colour;
+				//s_Data.ShapeVertexBufferPtr->TexCoord = texCoords[i];
+				s_Data.ShapeVertexBufferPtr->TexCoord = glm::vec2{ 0.0f };
+				s_Data.ShapeVertexBufferPtr->TextureIndex = textureIndex;
+				//s_Data.ShapeVertexBufferPtr->TilingFactor = tilingFactor;
+				s_Data.ShapeVertexBufferPtr->TilingFactor = 1.0f;
+				s_Data.ShapeVertexBufferPtr++;
+			}
 		}
 
 		uint32_t indexCount = static_cast<uint32_t>(tris.size()) * 3;

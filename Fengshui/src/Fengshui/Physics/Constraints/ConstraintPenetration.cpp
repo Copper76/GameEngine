@@ -14,13 +14,13 @@ namespace Fengshui
 	*/
 	void ConstraintPenetration::PreSolve(const float dt_sec) 
 	{
-		const Collider colliderA = GeneralManager::GetComponent<Collider>(m_BodyA);
-		const Rigidbody bodyA = GeneralManager::GetComponent<Rigidbody>(m_BodyA);
-		const Transform transA = TransformSystem::GetWorldTransform(m_BodyA);
+		const Collider& colliderA = GeneralManager::GetComponent<Collider>(m_BodyA);
+		const Rigidbody& bodyA = GeneralManager::GetComponent<Rigidbody>(m_BodyA);
+		const Transform& transA = TransformSystem::GetWorldTransform(m_BodyA);
 
-		const Collider colliderB = GeneralManager::GetComponent<Collider>(m_BodyB);
-		const Rigidbody bodyB = GeneralManager::GetComponent<Rigidbody>(m_BodyB);
-		const Transform transB = TransformSystem::GetWorldTransform(m_BodyB);
+		const Collider& colliderB = GeneralManager::GetComponent<Collider>(m_BodyB);
+		const Rigidbody& bodyB = GeneralManager::GetComponent<Rigidbody>(m_BodyB);
+		const Transform& transB = TransformSystem::GetWorldTransform(m_BodyB);
 
 		const glm::vec3 worldAnchorA = BodySpaceToWorldSpace(m_anchorA, colliderA, transA);
 		const glm::vec3 worldAnchorB = BodySpaceToWorldSpace(m_anchorB, colliderB, transB);
@@ -141,8 +141,8 @@ namespace Fengshui
 			m_cachedLambda[0] = lambdaLimit;//cap the lambda to be non-negative
 		}
 		if (m_friction > 0.0f) {
-			const Rigidbody bodyA = GeneralManager::GetComponent<Rigidbody>(m_BodyA);
-			const Rigidbody bodyB = GeneralManager::GetComponent<Rigidbody>(m_BodyB);
+			const Rigidbody& bodyA = GeneralManager::GetComponent<Rigidbody>(m_BodyA);
+			const Rigidbody& bodyB = GeneralManager::GetComponent<Rigidbody>(m_BodyB);
 
 			const float umg = m_friction * 10.0f / (bodyA.InvMass + bodyB.InvMass);//why times by 10
 			const float normalForce = fabsf(lambdaN[0] * m_friction);

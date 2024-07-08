@@ -29,11 +29,11 @@ namespace Fengshui
 
 		virtual void Rebuild(const glm::vec3 offset, const glm::vec3 scale) override;
 
-		glm::vec3 Support(const glm::vec3& dir, const Transform transform, const float bias) const override;
+		glm::vec3 Support(const glm::vec3& dir, const Transform& transform, const float bias) const override;
 
 		glm::mat3 InertiaTensor() const override;
 
-		Bounds GetBounds(const Transform transform) const override;
+		Bounds GetBounds(const Transform& transform) const override;
 
 		float FastestLinearSpeed(const glm::vec3& angularVelocity, const glm::vec3& dir) const override;
 

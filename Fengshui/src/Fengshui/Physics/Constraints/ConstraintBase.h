@@ -55,13 +55,13 @@ Constraint
 		MatMN invMassMatrix(12, 12);
 		invMassMatrix.Zero();
 
-		const Collider colliderA = GeneralManager::GetComponent<Collider>(m_BodyA);
-		const Rigidbody bodyA = GeneralManager::GetComponent<Rigidbody>(m_BodyA);
-		const Transform transA = GeneralManager::GetComponent<Transform>(m_BodyA);
+		const Collider& colliderA = GeneralManager::GetComponent<Collider>(m_BodyA);
+		const Rigidbody& bodyA = GeneralManager::GetComponent<Rigidbody>(m_BodyA);
+		const Transform& transA = GeneralManager::GetComponent<Transform>(m_BodyA);
 
-		const Collider colliderB = GeneralManager::GetComponent<Collider>(m_BodyB);
-		const Rigidbody bodyB = GeneralManager::GetComponent<Rigidbody>(m_BodyB);
-		const Transform transB = GeneralManager::GetComponent<Transform>(m_BodyB);
+		const Collider& colliderB = GeneralManager::GetComponent<Collider>(m_BodyB);
+		const Rigidbody& bodyB = GeneralManager::GetComponent<Rigidbody>(m_BodyB);
+		const Transform& transB = GeneralManager::GetComponent<Transform>(m_BodyB);
 
 		invMassMatrix.rows[0][0] = bodyA.InvMass;
 		invMassMatrix.rows[1][1] = bodyA.InvMass;
@@ -96,8 +96,8 @@ Constraint
 	inline VecN Constraint::GetVelocities() const {
 		VecN q_dt(12);
 
-		const Rigidbody bodyA = GeneralManager::GetComponent<Rigidbody>(m_BodyA);
-		const Rigidbody bodyB = GeneralManager::GetComponent<Rigidbody>(m_BodyB);
+		const Rigidbody& bodyA = GeneralManager::GetComponent<Rigidbody>(m_BodyA);
+		const Rigidbody& bodyB = GeneralManager::GetComponent<Rigidbody>(m_BodyB);
 
 		q_dt[0] = bodyA.LinearVelocity.x;
 		q_dt[1] = bodyA.LinearVelocity.y;
@@ -129,11 +129,11 @@ Constraint
 		Rigidbody& bodyA = GeneralManager::GetComponent<Rigidbody>(m_BodyA);
 		Rigidbody& bodyB = GeneralManager::GetComponent<Rigidbody>(m_BodyB);
 
-		const Collider colliderA = GeneralManager::GetComponent<Collider>(m_BodyA);
-		const Transform transA = GeneralManager::GetComponent<Transform>(m_BodyA);
+		const Collider& colliderA = GeneralManager::GetComponent<Collider>(m_BodyA);
+		const Transform& transA = TransformSystem::GetWorldTransform(m_BodyA);
 
-		const Collider colliderB = GeneralManager::GetComponent<Collider>(m_BodyB);
-		const Transform transB = GeneralManager::GetComponent<Transform>(m_BodyB);
+		const Collider& colliderB = GeneralManager::GetComponent<Collider>(m_BodyB);
+		const Transform& transB = TransformSystem::GetWorldTransform(m_BodyB);
 
 		//changed here to reduce amount of memory used
 		tempForce[0] = impulses[0];

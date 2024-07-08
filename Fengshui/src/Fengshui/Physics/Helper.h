@@ -20,43 +20,42 @@ namespace Fengshui
 		}
 	};
 
-	static glm::vec3 GetCenterOfMassWorldSpace(const Collider collider, const Transform trans)
+	static glm::vec3 GetCenterOfMassWorldSpace(const Collider& collider, const Transform& trans)
 	{
 		const glm::vec3 centerOfMass = collider.Shape->GetCenterOfMass();
 		return (trans.Rotation * centerOfMass) + trans.Position;
 	}
 
-	static glm::vec3 GetCenterOfMassModelSpace(const Collider collider) 
+	static glm::vec3 GetCenterOfMassModelSpace(const Collider& collider)
 	{
 		const glm::vec3 centerOfMass = collider.Shape->GetCenterOfMass();
 		return centerOfMass;
 	}
 
-	static glm::vec3 WorldSpaceToBodySpace(const glm::vec3& worldPt, const Collider collider, const Transform trans) 
+	static glm::vec3 WorldSpaceToBodySpace(const glm::vec3& worldPt, const Collider& collider, const Transform& trans)
 	{
 		glm::quat inverseOrient = glm::inverse(trans.Rotation);
 		return inverseOrient * (worldPt - GetCenterOfMassWorldSpace(collider, trans));
 	}
 
-	static glm::vec3 BodySpaceToWorldSpace(const glm::vec3& bodyPt, const Collider collider, const Transform trans)
+	static glm::vec3 BodySpaceToWorldSpace(const glm::vec3& bodyPt, const Collider& collider, const Transform& trans)
 	{
 		return GetCenterOfMassWorldSpace(collider, trans) + (trans.Rotation * bodyPt);
 	}
 
-	static glm::mat3 GetInverseInertiaTensorBodySpace(const Collider collider, const Rigidbody rb)
+	static glm::mat3 GetInverseInertiaTensorBodySpace(const Collider& collider, const Rigidbody& rb)
 	{
 		glm::mat3 inertiaTensor = collider.Shape->InertiaTensor();
 		return glm::inverse(inertiaTensor) * rb.InvMass;
 	}
 
 	//used with global vectors
-	static glm::mat3 GetInverseInertiaTensorWorldSpace(const Collider collider, const Rigidbody rb, const Transform trans)
+	static glm::mat3 GetInverseInertiaTensorWorldSpace(const Collider& collider, const Rigidbody& rb, const Transform& trans)
 	{
 		glm::mat3 inertiaTensor = collider.Shape->InertiaTensor();
 		glm::mat3 invInertiaTensor = glm::inverse(inertiaTensor) * rb.InvMass;
 		glm::mat3 orient = glm::mat3_cast(trans.Rotation);
-		//the transposed orient converts a global vector to local space for calculation before translating it back into global space with orient
-		invInertiaTensor = orient * invInertiaTensor * glm::transpose(orient);
+		invInertiaTensor = orient * invInertiaTensor;
 		return invInertiaTensor;
 	}
 
@@ -70,7 +69,7 @@ namespace Fengshui
 		rb.LinearVelocity += impulse * rb.InvMass;
 	}
 
-	static void ApplyImpulseAngular(const glm::vec3& impulse, const Collider collider, Rigidbody& rb, const Transform trans)
+	static void ApplyImpulseAngular(const glm::vec3& impulse, const Collider& collider, Rigidbody& rb, const Transform& trans)
 	{
 		if (rb.InvMass == 0.0f) { return; }
 
@@ -85,7 +84,7 @@ namespace Fengshui
 		}
 	}
 
-	static void ApplyImpulse(const glm::vec3& impulsePoint, const glm::vec3& impulse, const Collider collider, Rigidbody& rb, const Transform& trans) 
+	static void ApplyImpulse(const glm::vec3& impulsePoint, const glm::vec3& impulse, const Collider& collider, Rigidbody& rb, const Transform& trans)
 	{
 		if (rb.InvMass == 0.0f) { return; }
 
@@ -97,10 +96,11 @@ namespace Fengshui
 		ApplyImpulseAngular(dL, collider, rb, trans);
 	}
 
-	static void Update(const float dt_sec, const Collider collider, Rigidbody& rb, Transform& trans, const glm::quat globalRotation)
+	static void Update(const float dt_sec, const Collider& collider, Rigidbody& rb, Transform& trans, const glm::quat globalRotation)
 	{
 		glm::quat relativeRotation = trans.Rotation * glm::inverse(globalRotation);
-		trans.Position += relativeRotation * rb.LinearVelocity * dt_sec;
+		//trans.Position += relativeRotation * (rb.LinearVelocity * dt_sec);
+		trans.Position += (rb.LinearVelocity * dt_sec);
 
 		glm::vec3 positionCM = GetCenterOfMassWorldSpace(collider, trans);
 		glm::vec3 cmToPos = trans.Position - positionCM;
@@ -108,20 +108,21 @@ namespace Fengshui
 		//Need to update the rotation torque as it needs to be always perpendicular to center of mass
 		//alpha is carried over acceleration from last iteration
 		glm::mat3 orientation = glm::mat3_cast(globalRotation);
-		glm::mat3 inertiaTensor = orientation * collider.Shape->InertiaTensor() * glm::transpose(orientation);
+		glm::mat3 inertiaTensor = orientation * collider.Shape->InertiaTensor();
 		glm::vec3 alpha = glm::inverse(inertiaTensor) * (glm::cross(rb.AngularVelocity, inertiaTensor * rb.AngularVelocity));
 		rb.AngularVelocity += alpha * dt_sec;
 
-		glm::vec3 dAngle = relativeRotation * rb.AngularVelocity * dt_sec;
+		//glm::vec3 dAngle = relativeRotation * rb.AngularVelocity * dt_sec;
+		glm::vec3 dAngle = rb.AngularVelocity * dt_sec;
 		glm::quat dq = glm::quat(dAngle);
-		trans.Rotation = dq * trans.Rotation;
+		trans.Rotation = glm::normalize(dq * trans.Rotation);
 
 		trans.Position = positionCM + (dq * cmToPos);
 	}
 
 	static void Update(const float dt_sec, EntityID entity)
 	{
-		const Collider collider = GeneralManager::GetComponent<Collider>(entity);
+		const Collider& collider = GeneralManager::GetComponent<Collider>(entity);
 		Rigidbody& rb = GeneralManager::GetComponent<Rigidbody>(entity);
 		Transform& trans = GeneralManager::GetComponent<Transform>(entity);
 

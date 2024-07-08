@@ -77,7 +77,7 @@ namespace Fengshui
 	ShapeBox::Support
 	====================================================
 	*/
-	glm::vec3 PhysicalShapeBox::Support(const glm::vec3& dir, const Transform transform, const float bias) const {
+	glm::vec3 PhysicalShapeBox::Support(const glm::vec3& dir, const Transform& transform, const float bias) const {
 		glm::vec3 maxPt = (transform.Rotation * m_VertexCoords[0]) + transform.Position;
 		float maxDist = glm::dot(dir, maxPt);
 		for (int i = 1; i < m_VertexCoords.size(); i++) {
@@ -130,7 +130,7 @@ namespace Fengshui
 	ShapeBox::GetBounds
 	====================================================
 	*/
-	Bounds PhysicalShapeBox::GetBounds(const Transform transform) const {
+	Bounds PhysicalShapeBox::GetBounds(const Transform& transform) const {
 		glm::vec3 corners[8];
 
 		corners[0] = glm::vec3(m_bounds.mins.x, m_bounds.mins.y, m_bounds.mins.z);

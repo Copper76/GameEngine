@@ -120,7 +120,7 @@ namespace Fengshui
 
 		//m_BigSquare->AddComponent<Render>(Render(convexShape));
 		//m_BigSquare->AddComponent<Render>();
-		m_BigSquare->AddComponent<Render>(Render(new RenderShapeSphere(), checkerboard));
+		m_BigSquare->AddComponent<Render>(Render(new RenderShapeCube(), checkerboard));
 
 		m_BigSquare->AddComponent<Rigidbody>();
 		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>();

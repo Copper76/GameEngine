@@ -8,10 +8,10 @@
 namespace Fengshui
 {
 	struct point_t;
-	float EPA_Expand(const Collider colliderA, const Transform transA, const Collider colliderB, const Transform transB, const float bias, const point_t simplexPoints[4], glm::vec3& ptOnA, glm::vec3& ptOnB);
+	float EPA_Expand(const Collider& colliderA, const Transform& transA, const Collider& colliderB, const Transform& transB, const float bias, const point_t simplexPoints[4], glm::vec3& ptOnA, glm::vec3& ptOnB);
 
 
-	Vec2 SignedVolume1D(const glm::vec3& s1, const glm::vec3& s2) {
+	glm::vec2 SignedVolume1D(const glm::vec3& s1, const glm::vec3& s2) {
 		glm::vec3 ab = s2 - s1;
 		glm::vec3 ap = glm::vec3(0.0f) - s1;
 		glm::vec3 p0 = s1 + ab * glm::dot(ab, ap) / glm::length2(ab); // project origin onto the line. Huh?
@@ -34,17 +34,17 @@ namespace Fengshui
 		const float C2 = b - p;
 
 		if ((p > a && p < b) || (p<a && p>b)) {
-			Vec2 lambdas;
+			glm::vec2 lambdas;
 			lambdas[0] = C2 / mu_max;
 			lambdas[1] = C1 / mu_max;
 			return lambdas;
 		}
 
 		if ((a <= b && p <= a) || (a >= b && p >= a)) {
-			return Vec2(1.0f, 0.0f);
+			return glm::vec2(1.0f, 0.0f);
 		}
 
-		return Vec2(0.0f, 1.0f);
+		return glm::vec2(0.0f, 1.0f);
 	}
 
 	int CompareSigns(float a, float b) {
@@ -70,11 +70,11 @@ namespace Fengshui
 			int j = (i + 1) % 3;
 			int k = (i + 2) % 3;
 
-			Vec2 a = Vec2(s1[j], s1[k]);
-			Vec2 b = Vec2(s2[j], s2[k]);
-			Vec2 c = Vec2(s3[j], s3[k]);
-			Vec2 ab = b - a;
-			Vec2 ac = c - a;
+			glm::vec2 a = glm::vec2(s1[j], s1[k]);
+			glm::vec2 b = glm::vec2(s2[j], s2[k]);
+			glm::vec2 c = glm::vec2(s3[j], s3[k]);
+			glm::vec2 ab = b - a;
+			glm::vec2 ac = c - a;
 
 			float area = ab.x * ac.y - ab.y * ac.x;
 			if (area * area > area_max * area_max) {
@@ -85,22 +85,22 @@ namespace Fengshui
 
 		int x = (idx + 1) % 3;
 		int y = (idx + 2) % 3;
-		Vec2 s[3];
-		s[0] = Vec2(s1[x], s1[y]);
-		s[1] = Vec2(s2[x], s2[y]);
-		s[2] = Vec2(s3[x], s3[y]);
-		Vec2 p = Vec2(p0[x], p0[y]);
+		glm::vec2 s[3];
+		s[0] = glm::vec2(s1[x], s1[y]);
+		s[1] = glm::vec2(s2[x], s2[y]);
+		s[2] = glm::vec2(s3[x], s3[y]);
+		glm::vec2 p = glm::vec2(p0[x], p0[y]);
 
 		glm::vec3 areas;
 		for (int i = 0; i < 3; i++) {
 			int j = (i + 1) % 3;
 			int k = (i + 2) % 3;
 
-			Vec2 a = p;
-			Vec2 b = s[j];
-			Vec2 c = s[k];
-			Vec2 ab = b - a;
-			Vec2 ac = c - a;
+			glm::vec2 a = p;
+			glm::vec2 b = s[j];
+			glm::vec2 c = s[k];
+			glm::vec2 ab = b - a;
+			glm::vec2 ac = c - a;
 
 			areas[i] = ab.x * ac.y - ab.y * ac.x;
 		}
@@ -120,7 +120,7 @@ namespace Fengshui
 			edgesPts[1] = s2;
 			edgesPts[2] = s3;
 
-			Vec2 lambdaEdge = SignedVolume1D(edgesPts[j], edgesPts[k]);
+			glm::vec2 lambdaEdge = SignedVolume1D(edgesPts[j], edgesPts[k]);
 			glm::vec3 pt = edgesPts[j] * lambdaEdge[0] + edgesPts[k] * lambdaEdge[1];
 			if (glm::length2(pt) < dist) {
 				dist = glm::length2(pt);
@@ -198,7 +198,7 @@ namespace Fengshui
 		}
 	};
 
-	point_t Support(const Collider colliderA, const Transform transA, const Collider colliderB, const Transform transB, glm::vec3 inDir, const float bias) {
+	point_t Support(const Collider& colliderA, const Transform& transA, const Collider& colliderB, const Transform& transB, glm::vec3 inDir, const float bias) {
 		glm::vec3 dir = glm::normalize(inDir);
 
 		point_t point;
@@ -221,7 +221,7 @@ namespace Fengshui
 		switch (num) {
 		default:
 		case 2: {
-			Vec2 lambdas = SignedVolume1D(pts[0].xyz, pts[1].xyz);
+			glm::vec2 lambdas = SignedVolume1D(pts[0].xyz, pts[1].xyz);
 			glm::vec3 v(0.0f);
 			for (int i = 0; i < 2; i++) {
 				v += pts[i].xyz * lambdas[i];
@@ -313,7 +313,7 @@ namespace Fengshui
 	GJK_DoesIntersect
 	================================
 	*/
-	bool GJK_DoesIntersect(const Collider colliderA, const Transform transA, const Collider colliderB, const Transform transB) {
+	bool GJK_DoesIntersect(const Collider& colliderA, const Transform& transA, const Collider& colliderB, const Transform& transB) {
 		const glm::vec3 origin(0.0f);
 
 		int numPts = 1;
@@ -368,7 +368,7 @@ namespace Fengshui
 	GJK_ClosestPoints
 	================================
 	*/
-	void GJK_ClosestPoints(const Collider colliderA, const Transform transA, const Collider colliderB, const Transform transB, glm::vec3& ptOnA, glm::vec3& ptOnB) {
+	void GJK_ClosestPoints(const Collider& colliderA, const Transform& transA, const Collider& colliderB, const Transform& transB, glm::vec3& ptOnA, glm::vec3& ptOnB) {
 		const glm::vec3 origin(0.0f);
 
 		float closestDist = 1e10f;
@@ -416,7 +416,7 @@ namespace Fengshui
 	GJK_DoesIntersect
 	================================
 	*/
-	bool GJK_DoesIntersect(const Collider colliderA, const Transform transA, const Collider colliderB, const Transform transB, const float bias, glm::vec3& ptOnA, glm::vec3& ptOnB) {
+	bool GJK_DoesIntersect(const Collider& colliderA, const Transform& transA, const Collider& colliderB, const Transform& transB, const float bias, glm::vec3& ptOnA, glm::vec3& ptOnB) {
 		const glm::vec3 origin(0.0f);
 
 		int numPts = 1;
@@ -524,11 +524,11 @@ namespace Fengshui
 			int j = (i + 1) % 3;
 			int k = (i + 2) % 3;
 
-			Vec2 a = Vec2(s1[j], s1[k]);
-			Vec2 b = Vec2(s2[j], s2[k]);
-			Vec2 c = Vec2(s3[j], s3[k]);
-			Vec2 ab = b - a;
-			Vec2 ac = c - a;
+			glm::vec2 a = glm::vec2(s1[j], s1[k]);
+			glm::vec2 b = glm::vec2(s2[j], s2[k]);
+			glm::vec2 c = glm::vec2(s3[j], s3[k]);
+			glm::vec2 ab = b - a;
+			glm::vec2 ac = c - a;
 
 			float area = ab.x * ac.y - ab.y * ac.x;
 			if (area * area > area_max * area_max) {
@@ -540,22 +540,22 @@ namespace Fengshui
 		int x = (idx + 1) % 3;
 		int y = (idx + 2) % 3;
 
-		Vec2 s[3];
-		s[0] = Vec2(s1[x], s1[y]);
-		s[1] = Vec2(s2[x], s2[y]);
-		s[2] = Vec2(s3[x], s3[y]);
-		Vec2 p = Vec2(p0[x], p0[y]);
+		glm::vec2 s[3];
+		s[0] = glm::vec2(s1[x], s1[y]);
+		s[1] = glm::vec2(s2[x], s2[y]);
+		s[2] = glm::vec2(s3[x], s3[y]);
+		glm::vec2 p = glm::vec2(p0[x], p0[y]);
 
 		glm::vec3 areas;
 		for (int i = 0; i < 3; i++) {
 			int j = (i + 1) % 3;
 			int k = (i + 2) % 3;
 
-			Vec2 a = p;
-			Vec2 b = s[j];
-			Vec2 c = s[k];
-			Vec2 ab = b - a;
-			Vec2 ac = c - a;
+			glm::vec2 a = p;
+			glm::vec2 b = s[j];
+			glm::vec2 c = s[k];
+			glm::vec2 ab = b - a;
+			glm::vec2 ac = c - a;
 
 			areas[i] = ab.x * ac.y - ab.y * ac.x;
 		}
@@ -700,7 +700,7 @@ namespace Fengshui
 		}
 	}
 
-	float EPA_Expand(const Collider colliderA, const Transform transA, const Collider colliderB, const Transform transB, const float bias, const point_t simplexPoints[4], glm::vec3& ptOnA, glm::vec3& ptOnB) {
+	float EPA_Expand(const Collider& colliderA, const Transform& transA, const Collider& colliderB, const Transform& transB, const float bias, const point_t simplexPoints[4], glm::vec3& ptOnA, glm::vec3& ptOnB) {
 		std::vector<point_t> points;
 		std::vector<Triangle> triangles;
 		std::vector<Edge> danglingEdges;

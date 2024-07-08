@@ -24,7 +24,7 @@ ShapeSphere
 ShapeSphere::Support
 ====================================================
 */
-	glm::vec3 PhysicalShapeSphere::Support(const glm::vec3& dir, const Transform transform, const float bias) const {
+	glm::vec3 PhysicalShapeSphere::Support(const glm::vec3& dir, const Transform& transform, const float bias) const {
 		return (transform.Position + transform.Rotation * dir * (m_Radius + bias));
 	}
 
@@ -52,7 +52,7 @@ ShapeSphere::Support
 	ShapeSphere::GetBounds
 	====================================================
 	*/
-	Bounds PhysicalShapeSphere::GetBounds(const Transform transform) const {
+	Bounds PhysicalShapeSphere::GetBounds(const Transform& transform) const {
 		Bounds tmp;
 		//tmp.mins = (transform.Rotation * (-m_Radius)) + transform.Position;
 		//tmp.maxs = (transform.Rotation * m_Radius) + transform.Position;
