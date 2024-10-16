@@ -26,6 +26,7 @@ This project is a practice project to make a game engine using Entity-Component 
 - [X] Added functionality to render a sphere, ready to use it in raytracing
 
 ## TODO
+- [ ] Implement a simple audio module which adds audio listener and audio player component using OpenAL
 - [ ] Look into raytracing and integrate it into the engine(stretch goal)
 
 ## Knonw Issues
