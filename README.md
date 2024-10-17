@@ -4,8 +4,12 @@ This project is a practice project to make a game engine using Entity-Component 
 
 ## Features
 - 2D Renderer, supporting custom textures and shaders.
+- 3D renderer, supporting directional lighting and custom shapes as well as built-in porimitives
+- Batch rendering for both 2D and 3D
+- Perspective and Orgthographic camera
+- Editor where component data can be adjusted
 - Event system which would reflectively call functions according to their dynamic type
-- Entity-Component System for rendering, transform, position and camera.
+- Entity-Component System for rendering, transform, position and camera
 
 ## Functions implemented
 - [X] Create a simple snake game using pure SFML to learn the basics of input handling and rendering. It was a simple practice with no connection with the rest of the engine. It is implemented in the [Snake Branch](https://github.com/Copper76/GameEngine/tree/Snake).
@@ -22,6 +26,7 @@ This project is a practice project to make a game engine using Entity-Component 
 - [X] Added functionality to render a sphere, ready to use it in raytracing
 
 ## TODO
+- [ ] Implement a simple audio module which adds audio listener and audio player component using OpenAL
 - [ ] Look into raytracing and integrate it into the engine(stretch goal)
 
 ## Knonw Issues
