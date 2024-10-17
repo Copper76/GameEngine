@@ -76,7 +76,8 @@ namespace Fengshui
 		GeneralManager::SetSystemSignature<TransformSystem>(signature);
 
 		signature.reset();
-		signature.set(GeneralManager::GetComponentType<GlobalLight>());
+		signature.set(GeneralManager::GetComponentType<Light>());
+		signature.set(GeneralManager::GetComponentType<Transform>());
 		GeneralManager::SetSystemSignature<LightSystem>(signature);
 
 		//Physics System
@@ -94,7 +95,7 @@ namespace Fengshui
 
 		scene->m_SceneManager->AddComponent<Transform>(Transform(glm::vec3(0.0f, 0.0f, 10.0f)));
 
-		scene->m_SceneManager->AddComponent<GlobalLight>();
+		//scene->m_SceneManager->AddComponent<Light>();
 
 		scene->UpdateViewMatrix(scene->m_CameraSystem->GetPrimary());
 

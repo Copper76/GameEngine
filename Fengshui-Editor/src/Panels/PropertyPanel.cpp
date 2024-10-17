@@ -411,9 +411,9 @@ namespace Fengshui
 			}
 		}
 
-		if (GeneralManager::HasComponent<GlobalLight>(entity))
+		if (GeneralManager::HasComponent<Light>(entity))
 		{
-			if (ImGui::CollapsingHeader("Global Light", ImGuiTreeNodeFlags_DefaultOpen))
+			if (ImGui::CollapsingHeader("Light", ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				bool toRemove = false;
 				if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
@@ -421,11 +421,43 @@ namespace Fengshui
 					toRemove = true;
 				}
 				{
-					bool valueChanged = false;
-					auto& globalLight = GeneralManager::GetComponent<GlobalLight>(entity);
+					auto& light = GeneralManager::GetComponent<Light>(entity);
 
-					ImGui::DragFloat3("Direction", glm::value_ptr(globalLight.Direction), 0.1f);
-					ImGui::DragFloat3("Light Colour", glm::value_ptr(globalLight.Colour), 0.1f, 0.0f, 1.0f);
+					char* lightTypeName;
+					switch (light.Type)
+					{
+					case LightType::GlobalLight:
+						lightTypeName = "Global Light";
+						break;
+					case LightType::PointLight:
+						lightTypeName = "Point Light";
+						break;
+					default:
+						lightTypeName = "Unknown Light Source";
+						FS_ASSERT(false, "Unknown light type");
+					}
+
+					if (ImGui::BeginCombo("Type##2", lightTypeName))
+					{
+						if (ImGui::Selectable("Global Light"))
+						{
+							light.Type = LightType::GlobalLight;
+						}
+
+						if (ImGui::Selectable("Point Light"))
+						{
+							light.Type = LightType::PointLight;
+						}
+
+						ImGui::EndCombo();
+					}
+					if (light.Type == LightType::GlobalLight)
+					{
+						ImGui::DragFloat3("Direction", glm::value_ptr(light.Direction), 0.1f, -1.0f, 1.0f);
+						light.Direction = glm::normalize(light.Direction);
+					}
+
+					ImGui::DragFloat3("Light Colour", glm::value_ptr(light.Colour), 0.1f, 0.0f, 1.0f);
 				}
 
 				if (toRemove)

@@ -158,6 +158,7 @@ namespace Fengshui
 		Ref<Entity> m_SecondCamera;
 		std::vector<Ref<Entity>> m_StackingBoxes;
 		std::vector<Ref<Entity>> m_BackgroundSquares;
+		Ref<Entity> m_2DSquare;
 
 		Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;
 

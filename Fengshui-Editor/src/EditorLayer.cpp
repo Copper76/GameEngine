@@ -89,6 +89,7 @@ namespace Fengshui
 		m_SecondCamera = MakeRef<Entity>("Second Camera");
 		m_SecondCamera->AddComponent<CameraComponent>();
 		m_SecondCamera->AddComponent<Transform>();
+		//m_SecondCamera->AddComponent<Light>(Light(LightType::PointLight));
 
 		////stacking box
 		//for (int y = 0; y < 5; y++) {
@@ -103,6 +104,12 @@ namespace Fengshui
 		//	box->AddComponent<Render>();
 		//	m_StackingBoxes.push_back(box);
 		//}
+
+		m_2DSquare = MakeRef<Entity>("2D Square");
+
+		m_2DSquare->AddComponent<Transform2D>();
+		m_2DSquare->AddComponent<Render2D>();
+
 
 		m_BigSquare = MakeRef<Entity>("Big Square");
 
