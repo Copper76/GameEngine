@@ -5,5 +5,5 @@
 
 namespace Fengshui
 {
-	RendererAPI* RenderCommand::s_RendererAPI = new OpenGLRenderer;
+	Scope<RendererAPI> RenderCommand::s_RendererAPI = MakeScope<OpenGLRenderer>();
 }

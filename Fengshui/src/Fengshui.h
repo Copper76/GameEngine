@@ -41,3 +41,8 @@
 #include "Fengshui/Renderer/RenderShapes/RenderShapes.h"
 #include "Fengshui/Physics/Shapes.h"
 
+//Audio
+#include "Fengshui/Audio/AudioOutputDevice.h"
+#include "Fengshui/Audio/AudioInputDevice.h"
+#include "Fengshui/Audio/AudioCommand.h"
+

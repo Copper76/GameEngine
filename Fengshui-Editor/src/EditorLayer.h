@@ -65,6 +65,43 @@ namespace Fengshui
 					// which we can't undo at the moment without finer window depth/z control.
 					if (ImGui::MenuItem("Exit", NULL)) Application::GetInstance().Close();
 
+					if (ImGui::BeginMenu("Output Device"))
+					{
+						std::string currentDevice = AudioCommand::GetCurrentOutputDeviceName();
+						if (ImGui::MenuItem("Default"))
+						{
+							AudioCommand::SetOutputDeviceDefault();
+						}
+
+						for (const char* device : AudioCommand::GetAvailableOutputDevices())
+						{
+							if (ImGui::MenuItem(device, NULL, currentDevice == device))
+							{
+								AudioCommand::SetOutputDevice(device);
+							}
+						}
+						ImGui::EndMenu();
+					}
+
+					if (ImGui::BeginMenu("Input Device"))
+					{
+						std::string currentDevice = AudioCommand::GetCurrentInputDeviceName();
+
+						if (ImGui::MenuItem("Default"))
+						{
+							AudioCommand::SetInputDeviceDefault();
+						}
+
+						for (const char* device : AudioCommand::GetAvailableInputDevices())
+						{
+							if (ImGui::MenuItem(device, NULL, currentDevice == device))
+							{
+								AudioCommand::SetInputDevice(device);
+							}
+						}
+						ImGui::EndMenu();
+					}
+
 					ImGui::EndMenu();
 				}
 

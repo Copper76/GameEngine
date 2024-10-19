@@ -18,11 +18,13 @@ IncludeDir["GLAD"] = "Fengshui/External/GLAD/include"
 IncludeDir["IMGUI"] = "Fengshui/External/IMGUI"
 IncludeDir["GLM"] = "Fengshui/External/GLM"
 IncludeDir["STB"] = "Fengshui/External/stb_image"
+IncludeDir["OPENAL"] = "Fengshui/External/Openal-Soft/include"
 
 group "Dependencies"
 	include "Fengshui/External/GLFW"
 	include "Fengshui/External/GLAD"
 	include "Fengshui/External/IMGUI"
+	include "Fengshui/External/Openal-Soft"
 group ""
 
 project "Fengshui"
@@ -56,20 +58,24 @@ project "Fengshui"
 		"%{IncludeDir.IMGUI}/backends",
 		"%{IncludeDir.GLM}",
 		"%{IncludeDir.STB}",
+		"%{IncludeDir.OPENAL}",
+		"Fengshui/External/Openal-Soft/src",
+		"Fengshui/External/OpenAL-Soft/src/common",
 	}
-
+	
 	links
 	{
 		"GLFW",
 		"GLAD",
 		"IMGUI",
-		"opengl32",
+		"OpenAL-Soft",
 	}
 
 	defines
 	{
 		"GLFW_INCLUDE_NONE",
 		"_CRT_SECURE_NO_WARNINGS",
+		"AL_LIBTYPE_STATIC",
 	}
 
 	filter "system:windows"
@@ -128,7 +134,7 @@ project "Sandbox"
 		"Fengshui/External/spdlog/include",
 		"Fengshui/src",
 		"%{IncludeDir.GLM}",
-		"Fengshui/External/IMGUI",
+		"%{IncludeDir.IMGUI}",
 	}
 
 	links
@@ -180,12 +186,12 @@ project "Fengshui-Editor"
 		"Fengshui/External/spdlog/include",
 		"Fengshui/src",
 		"%{IncludeDir.GLM}",
-		"Fengshui/External/IMGUI",
+		"%{IncludeDir.IMGUI}",
 	}
 
 	links
 	{
-		"Fengshui"
+		"Fengshui",
 	}
 
 	filter "system:windows"

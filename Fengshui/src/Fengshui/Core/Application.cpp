@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "Fengshui/Logging/Log.h"
 #include "Fengshui/Renderer/Renderer.h"
+#include "Fengshui/Renderer/Renderer2D.h"
+#include "Fengshui/Audio/AudioCommand.h"
 
 #include <glfw/glfw3.h>
 
@@ -19,7 +21,11 @@ namespace Fengshui
 
 		m_Window->SetEventCallback(FS_BIND_EVENT_FN(Application::OnEvent));
 
+		RenderCommand::Init();
 		Renderer::Init();
+		Renderer2D::Init();
+
+		AudioCommand::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -28,7 +34,10 @@ namespace Fengshui
 	//A default destructor
 	Application::~Application()
 	{
+		Renderer::Shutdown();
+		Renderer2D::Shutdown();
 
+		AudioCommand::Shutdown();
 	}
 
 	//The main body of application which will be executed throughout the life cycle of the application

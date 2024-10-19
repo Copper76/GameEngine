@@ -168,7 +168,6 @@ namespace Fengshui
 			}
 		}
 		
-		
 		GeneralManager::SetActiveScene(m_ActiveScene);
 		m_EditorReady = true;
 	}
