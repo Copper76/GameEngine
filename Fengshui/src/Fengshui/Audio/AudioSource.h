@@ -5,6 +5,8 @@ namespace Fengshui
 	struct AudioSetting
 	{
 		bool IsLoop = false;
+		bool PlayOnStart = true;
+		bool Is3D = false;
 	};
 
 	class AudioSource
@@ -13,8 +15,7 @@ namespace Fengshui
 		virtual void Bind() = 0;
 		virtual void UnBind() = 0;
 
-		virtual void SetSetting(AudioSetting setting) = 0;
-		virtual AudioSetting& GetSetting() = 0;
+		virtual void SetSettings(AudioSetting settings) = 0;
 
 		virtual void Play(bool restart = true) = 0;
 		virtual void Stop() = 0;

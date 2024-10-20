@@ -18,9 +18,7 @@ namespace Fengshui
 
 		virtual void UnBind() override;
 
-		virtual void SetSetting(AudioSetting setting) override;
-
-		virtual AudioSetting& GetSetting() override;
+		virtual void SetSettings(AudioSetting settings) override;
 
 		virtual void Play(bool restart) override;
 
@@ -41,8 +39,6 @@ namespace Fengshui
 		uint32_t m_AudioSourceID = 0;
 
 		Ref<OpenALAudioBuffer> m_Buffer;
-
-		AudioSetting m_AudioSetting;
 	};
 
 }

@@ -79,16 +79,9 @@ namespace Fengshui
 		}
 	}
 
-	void OpenALAudioSource::SetSetting(AudioSetting setting)
+	void OpenALAudioSource::SetSettings(AudioSetting settings)
 	{
-		m_AudioSetting = setting;
-
-		alSourcei(m_AudioSourceID, AL_LOOPING, m_AudioSetting.IsLoop);
-	}
-
-	AudioSetting& OpenALAudioSource::GetSetting()
-	{
-		return m_AudioSetting;
+		alSourcei(m_AudioSourceID, AL_LOOPING, settings.IsLoop);
 	}
 
 	void OpenALAudioSource::Play(bool restart)

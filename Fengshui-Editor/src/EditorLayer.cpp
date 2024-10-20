@@ -129,6 +129,8 @@ namespace Fengshui
 		//m_BigSquare->AddComponent<Render>();
 		m_BigSquare->AddComponent<Render>(Render(new RenderShapeCube(), checkerboard));
 
+		m_AudioSource = m_BigSquare->AddComponent<AudioSourceComponent>(AudioSourceComponent(AudioCommand::CreateAudioSource("Assets/AudioClip/airport.wav")));
+
 		m_BigSquare->AddComponent<Rigidbody>();
 		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>();
 
@@ -155,9 +157,6 @@ namespace Fengshui
 		//m_Scene->AddConstraint(joint);
 
 		m_OtherScene = Scene::Init();
-
-		m_AudioSource = AudioCommand::CreateAudioSource("Assets/AudioClip/airport.wav");
-		m_AudioSource2 = AudioCommand::CreateAudioSource("Assets/AudioClip/bell.wav");
 		/*m_AudioSource2->SetSetting(AudioSetting{ true });*/
 		
 		Ref<Entity> square;
@@ -173,6 +172,7 @@ namespace Fengshui
 		}
 		
 		GeneralManager::SetActiveScene(m_ActiveScene);
+
 		m_EditorReady = true;
 	}
 

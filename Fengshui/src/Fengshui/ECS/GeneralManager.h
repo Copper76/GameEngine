@@ -31,6 +31,8 @@ namespace Fengshui
 			RegisterComponent<Transform>();
 			RegisterComponent<Transform2D>();
 			RegisterComponent<Light>();
+			RegisterComponent<AudioSourceComponent>();
+			RegisterComponent<ScriptComponent>();
 		}
 
 		static void SetActiveScene(Ref<Scene> scene)

@@ -14,6 +14,13 @@ namespace Fengshui
 
 	}
 
+	void Scene::Setup()
+	{
+		Awake();
+		PostAwake();
+		Start();
+	}
+
 	//Function for initialising a scene
 	Ref<Scene> Scene::Init()
 	{
@@ -36,6 +43,8 @@ namespace Fengshui
 		scene->m_PhysicsSystem = GeneralManager::RegisterSystem<PhysicsSystem>();
 		scene->m_TransformSystem = GeneralManager::RegisterSystem<TransformSystem>();
 		scene->m_LightSystem = GeneralManager::RegisterSystem<LightSystem>();
+		scene->m_AudioPlayerSystem = GeneralManager::RegisterSystem<AudioPlayerSystem>();
+		scene->m_GameScriptSystem = GeneralManager::RegisterSystem<GameScriptSystem>();
 
 		Signature signature;
 		signature.set(GeneralManager::GetComponentType<Render>());
@@ -79,6 +88,14 @@ namespace Fengshui
 		signature.set(GeneralManager::GetComponentType<Light>());
 		signature.set(GeneralManager::GetComponentType<Transform>());
 		GeneralManager::SetSystemSignature<LightSystem>(signature);
+
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<AudioSourceComponent>());
+		GeneralManager::SetSystemSignature<AudioPlayerSystem>(signature);
+
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<ScriptComponent>());
+		GeneralManager::SetSystemSignature<GameScriptSystem>(signature);
 
 		//Physics System
 		scene->m_Manifolds = std::make_shared<ManifoldCollector>();
@@ -171,6 +188,8 @@ namespace Fengshui
 				AdjustCamera(m_PrimaryCamera, moveDelta, glm::quat(glm::radians(rotateDelta)));
 			}
 		}
+
+		m_AudioPlayerSystem->OnUpdate(dt);
 	}
 
 	//Fixed update function for updating the gravity and physics of the scene
@@ -219,6 +238,26 @@ namespace Fengshui
 		EventDispatcher eventDispatcher(e);
 		eventDispatcher.Dispatch<MouseScrolledEvent>(FS_BIND_EVENT_FN(Scene::OnMouseScrolled));
 		eventDispatcher.Dispatch<WindowResizeEvent>(FS_BIND_EVENT_FN(Scene::OnWindowResize));
+	}
+
+	void Scene::Awake()
+	{
+		m_GameScriptSystem->Awake();
+	}
+
+	void Scene::PostAwake()
+	{
+		m_AudioPlayerSystem->PlayOnStart();
+	}
+
+	void Scene::Start()
+	{
+		m_GameScriptSystem->Start();
+	}
+
+	void Scene::End()
+	{
+		m_AudioPlayerSystem->StopAll();
 	}
 
 	//Wrapper functions for the camera system
