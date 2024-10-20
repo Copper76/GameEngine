@@ -156,8 +156,9 @@ namespace Fengshui
 
 		m_OtherScene = Scene::Init();
 
-		m_AudioSource = AudioCommand::CreateAudioSource("Assets/AudioClip/bell.wav");
+		m_AudioSource = AudioCommand::CreateAudioSource("Assets/AudioClip/airport.wav");
 		m_AudioSource2 = AudioCommand::CreateAudioSource("Assets/AudioClip/bell.wav");
+		/*m_AudioSource2->SetSetting(AudioSetting{ true });*/
 		
 		Ref<Entity> square;
 		for (float i = -5.0f; i < 5.0f; i += 1.0f)

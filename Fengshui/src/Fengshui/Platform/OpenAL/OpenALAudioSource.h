@@ -22,7 +22,13 @@ namespace Fengshui
 
 		virtual AudioSetting& GetSetting() override;
 
-		virtual void Play() override;
+		virtual void Play(bool restart) override;
+
+		virtual void Stop() override;
+
+		virtual void Pause() override;
+
+		virtual void Unpause() override;
 
 	public:
 		void SetBuffer(Ref<OpenALAudioBuffer> buffer);

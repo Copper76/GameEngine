@@ -143,14 +143,24 @@ namespace Fengshui
 				GeneralManager::SetActiveScene(m_ActiveScene);
 			}
 
-			if (ImGui::Button("Play Bell"))
+			if (ImGui::Button("Play Airport"))
 			{
-				m_AudioSource->Play();
+				m_AudioSource->Play(false);
 			}
 
-			if (ImGui::Button("Play Bell 2"))
+			if (ImGui::Button("Pause"))
 			{
-				m_AudioSource2->Play();
+				m_AudioSource->Pause();
+			}
+
+			if (ImGui::Button("UnPause"))
+			{
+				m_AudioSource->Unpause();
+			}
+
+			if (ImGui::Button("Stop"))
+			{
+				m_AudioSource->Stop();
 			}
 			ImGui::End();
 

@@ -82,6 +82,8 @@ namespace Fengshui
 	void OpenALAudioSource::SetSetting(AudioSetting setting)
 	{
 		m_AudioSetting = setting;
+
+		alSourcei(m_AudioSourceID, AL_LOOPING, m_AudioSetting.IsLoop);
 	}
 
 	AudioSetting& OpenALAudioSource::GetSetting()
@@ -89,8 +91,36 @@ namespace Fengshui
 		return m_AudioSetting;
 	}
 
-	void OpenALAudioSource::Play()
+	void OpenALAudioSource::Play(bool restart)
 	{
+		if (!restart)
+		{
+			ALint state;
+			alGetSourcei(m_AudioSourceID, AL_SOURCE_STATE, &state);
+			if (state == AL_PLAYING) return;
+		}
+
 		alSourcePlay(m_AudioSourceID);
+	}
+
+	void OpenALAudioSource::Stop()
+	{
+		alSourceStop(m_AudioSourceID);
+	}
+
+	void OpenALAudioSource::Pause()
+	{
+		alSourcePause(m_AudioSourceID);
+	}
+
+	void OpenALAudioSource::Unpause()
+	{
+		ALint state;
+		alGetSourcei(m_AudioSourceID, AL_SOURCE_STATE, &state);
+
+		if (state == AL_PAUSED)
+		{
+			alSourcePlay(m_AudioSourceID);
+		}
 	}
 }

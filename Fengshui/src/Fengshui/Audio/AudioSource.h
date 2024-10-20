@@ -4,7 +4,7 @@ namespace Fengshui
 {
 	struct AudioSetting
 	{
-
+		bool IsLoop = false;
 	};
 
 	class AudioSource
@@ -16,6 +16,9 @@ namespace Fengshui
 		virtual void SetSetting(AudioSetting setting) = 0;
 		virtual AudioSetting& GetSetting() = 0;
 
-		virtual void Play() = 0;
+		virtual void Play(bool restart = true) = 0;
+		virtual void Stop() = 0;
+		virtual void Pause() = 0;
+		virtual void Unpause() = 0;
 	};
 }

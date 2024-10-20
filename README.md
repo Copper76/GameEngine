@@ -28,10 +28,10 @@ This project is a practice project to make a game engine using Entity-Component 
 - [X] Add support of playing wav files through an audio source.
 - [X] Add support for flac, ogg and mp3 files.
 - [X] Add support for having multiple buffer for an audio file so it can play larger files seamlessly.
+- [X] Add support to pause, stop audio as well as looping.
 
 ## TODO
 - [ ] Implement the audio module which adds audio listener and audio player component to the existing ECS system.
-- [ ] Add support to pause, stop audio as well as looping.
 - [ ] Add ability to modify audios including pitch shift.
 - [ ] Look into raytracing and integrate it into the engine(stretch goal).
 
