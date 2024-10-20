@@ -147,6 +147,11 @@ namespace Fengshui
 			{
 				m_AudioSource->Play();
 			}
+
+			if (ImGui::Button("Play Bell 2"))
+			{
+				m_AudioSource2->Play();
+			}
 			ImGui::End();
 
 			m_SceneHierarchyPanel->OnImGuiRender();
@@ -211,5 +216,6 @@ namespace Fengshui
 		glm::vec2 m_ViewportSize;
 
 		Ref<AudioSource> m_AudioSource;
+		Ref<AudioSource> m_AudioSource2;
 	};
 }

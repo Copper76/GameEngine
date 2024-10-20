@@ -27,10 +27,10 @@ This project is a practice project to make a game engine using Entity-Component 
 - [X] Implement an audio system which can allow user to use all available audio input and output devices.
 - [X] Add support of playing wav files through an audio source.
 - [X] Add support for flac, ogg and mp3 files.
+- [X] Add support for having multiple buffer for an audio file so it can play larger files seamlessly.
 
 ## TODO
 - [ ] Implement the audio module which adds audio listener and audio player component to the existing ECS system.
-- [ ] Batch the audio system similar to how rendering is done.
 - [ ] Add support to pause, stop audio as well as looping.
 - [ ] Add ability to modify audios including pitch shift.
 - [ ] Look into raytracing and integrate it into the engine(stretch goal).
@@ -40,6 +40,7 @@ This project is a practice project to make a game engine using Entity-Component 
 - The sphere collider can only scale uniformly, and sphere collider is problematic in general
 
 ## Deprecated Objectives
+- [ ] Batch the audio system similar to how rendering is done. (batching doesn't seem to work as nicely as opengl due to the natural of audio)
 - [ ] Integrate SFML into the ECS
 - [X] Develop several components and entities, simple ones to start with such as simple data such as transform. The system now supports a hierarchy component that stores the position of entity in hierarchy, and transform to represent the location and orientation of the component in the world as the basics, with more to come. The ECS system was not a real ECS system so is now deprecated.
 

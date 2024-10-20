@@ -389,9 +389,6 @@
     <ClCompile Include="src\Fengshui\Audio\AudioCommand.cpp">
       <Filter>src\Fengshui\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Audio\AudioLoader.cpp">
-      <Filter>src\Fengshui\Audio</Filter>
-    </ClCompile>
     <ClCompile Include="src\Fengshui\Core\Application.cpp">
       <Filter>src\Fengshui\Core</Filter>
     </ClCompile>
@@ -599,5 +596,6 @@
     <ClCompile Include="src\fspch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\Audio\AudioLoader.cpp" />
   </ItemGroup>
 </Project>

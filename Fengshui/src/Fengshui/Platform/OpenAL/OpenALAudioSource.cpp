@@ -38,13 +38,22 @@ namespace Fengshui
 
 	OpenALAudioSource::~OpenALAudioSource()
 	{
-		/*UnBind();*/ //because I will be calling unbind from component, it might not need to unbind again as it will lose all reference with unbind
+		/*UnBind();*/ //I might need to call unbind from component as I need a reference to this for removing from manager
 	}
 
 	void OpenALAudioSource::Bind()
 	{
 		alGenSources(1, &m_AudioSourceID);
-		alSourcei(m_AudioSourceID, AL_BUFFER, m_Buffer->GetID());
+
+		int bufferNum = m_Buffer->GetBufferNum();
+		if (bufferNum == 1)
+		{
+			alSourcei(m_AudioSourceID, AL_BUFFER, m_Buffer->GetBufferIDs()[0]);
+		}
+		else
+		{
+			alSourceQueueBuffers(m_AudioSourceID, bufferNum, m_Buffer->GetBufferIDs());
+		}
 	}
 
 	void OpenALAudioSource::UnBind()
