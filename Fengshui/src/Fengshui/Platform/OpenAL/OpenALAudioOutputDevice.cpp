@@ -9,6 +9,12 @@ namespace Fengshui
 	{
 		if (m_Device)
 		{
+			if (m_Device->DeviceName == deviceName)
+			{
+				FS_WARN("Device already created");
+				return;
+			}
+
 			Destroy();
 		}
 

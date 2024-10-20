@@ -75,7 +75,7 @@ namespace Fengshui
 
 						for (const char* device : AudioCommand::GetAvailableOutputDevices())
 						{
-							if (ImGui::MenuItem(device, NULL, currentDevice == device))
+							if (ImGui::MenuItem(device, NULL, currentDevice == device) && currentDevice != device)
 							{
 								AudioCommand::SetOutputDevice(device);
 							}
@@ -94,7 +94,7 @@ namespace Fengshui
 
 						for (const char* device : AudioCommand::GetAvailableInputDevices())
 						{
-							if (ImGui::MenuItem(device, NULL, currentDevice == device))
+							if (ImGui::MenuItem(device, NULL, currentDevice == device) && currentDevice != device)
 							{
 								AudioCommand::SetInputDevice(device);
 							}
@@ -141,6 +141,11 @@ namespace Fengshui
 					m_ActiveScene = m_OtherScene;
 				}
 				GeneralManager::SetActiveScene(m_ActiveScene);
+			}
+
+			if (ImGui::Button("Play Bell"))
+			{
+				m_AudioSource->Play();
 			}
 			ImGui::End();
 
@@ -204,5 +209,7 @@ namespace Fengshui
 
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize;
+
+		Ref<AudioSource> m_AudioSource;
 	};
 }

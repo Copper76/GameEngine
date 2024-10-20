@@ -3,5 +3,5 @@
 
 namespace Fengshui
 {
-	Scope<GeneralManager> GeneralManager::m_Instance = std::make_unique<GeneralManager>();
+	Scope<GeneralManager> GeneralManager::m_Instance = MakeScope<GeneralManager>();
 }

@@ -10,6 +10,10 @@ namespace Fengshui
 		virtual const std::string GetDeviceName() = 0;
 
 		virtual void Destroy() = 0;
+
+		virtual void StartCapture() = 0;
+
+		virtual void StopCapture() = 0;
 		//operations pending
 	};
 }

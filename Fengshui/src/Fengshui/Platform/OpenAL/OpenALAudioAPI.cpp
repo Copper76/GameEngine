@@ -2,6 +2,7 @@
 #include "OpenALAudioAPI.h"
 #include "OpenALAudioOutputDevice.h"
 #include "OpenALAudioInputDevice.h"
+#include "OpenALAudioBufferManager.h"
 
 #include <AL/alc.h>
 
@@ -24,7 +25,9 @@ namespace Fengshui
 
 	const std::vector<const char*> OpenALAudioAPI::GetAvailableOutputDevices()
 	{
-		std::vector<const char*> deviceNames;;
+		std::vector<const char*> deviceNames;
+
+		deviceNames.clear();
 
 		const ALCchar* devices = alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER);
 
@@ -45,13 +48,17 @@ namespace Fengshui
 
 	void OpenALAudioAPI::GetAvailableOutputDevices(std::vector<const char*>& allDevices, const char* defaultDevice)
 	{
+		allDevices.clear();
+
 		allDevices = GetAvailableOutputDevices();
 		defaultDevice = GetDefaultOutputDevice();
 	}
 
 	const std::vector<const char*> OpenALAudioAPI::GetAvailableInputDevices()
 	{
-		std::vector<const char*> deviceNames;;
+		std::vector<const char*> deviceNames;
+
+		deviceNames.clear();
 
 		const ALCchar* devices = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
 
@@ -72,6 +79,8 @@ namespace Fengshui
 
 	void OpenALAudioAPI::GetAvailableInputDevices(std::vector<const char*>& allDevices, const char* defaultDevice)
 	{
+		allDevices.clear();
+
 		allDevices = GetAvailableInputDevices();
 		defaultDevice = GetDefaultInputDevice();
 	}
@@ -84,5 +93,13 @@ namespace Fengshui
 	void OpenALAudioAPI::CreateInputDevice(const char* deviceName)
 	{
 		s_AudioInputDevice->Create(deviceName);
+	}
+
+	Ref<AudioSource> OpenALAudioAPI::CreateAudioSource(char* filePath)
+	{
+		Ref<OpenALAudioSource> audioSource = MakeRef<OpenALAudioSource>(filePath);
+		OpenALAudioBufferManager::AddSourceMapping(audioSource->GetBuffer(), audioSource);
+
+		return audioSource;
 	}
 }

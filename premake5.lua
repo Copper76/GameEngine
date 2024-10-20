@@ -19,6 +19,7 @@ IncludeDir["IMGUI"] = "Fengshui/External/IMGUI"
 IncludeDir["GLM"] = "Fengshui/External/GLM"
 IncludeDir["STB"] = "Fengshui/External/stb_image"
 IncludeDir["OPENAL"] = "Fengshui/External/Openal-Soft/include"
+IncludeDir["MINIAUDIO"] = "Fengshui/External/miniaudio"
 
 group "Dependencies"
 	include "Fengshui/External/GLFW"
@@ -61,6 +62,7 @@ project "Fengshui"
 		"%{IncludeDir.OPENAL}",
 		"Fengshui/External/Openal-Soft/src",
 		"Fengshui/External/OpenAL-Soft/src/common",
+		"%{IncludeDir.MINIAUDIO}",
 	}
 	
 	links
@@ -76,6 +78,7 @@ project "Fengshui"
 		"GLFW_INCLUDE_NONE",
 		"_CRT_SECURE_NO_WARNINGS",
 		"AL_LIBTYPE_STATIC",
+		"MINIAUDIO_IMPLEMENTATION",
 	}
 
 	filter "system:windows"

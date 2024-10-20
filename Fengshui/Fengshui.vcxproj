@@ -76,8 +76,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;AL_LIBTYPE_STATIC;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;FS_DEBUG;FS_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\IMGUI;External\IMGUI\backends;External\GLM;External\stb_image;External\Openal-Soft\include;External\Openal-Soft\src;External\OpenAL-Soft\src\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;AL_LIBTYPE_STATIC;MINIAUDIO_IMPLEMENTATION;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;FS_DEBUG;FS_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\IMGUI;External\IMGUI\backends;External\GLM;External\stb_image;External\Openal-Soft\include;External\Openal-Soft\src;External\OpenAL-Soft\src\common;External\miniaudio;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -94,8 +94,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;AL_LIBTYPE_STATIC;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;FS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\IMGUI;External\IMGUI\backends;External\GLM;External\stb_image;External\Openal-Soft\include;External\Openal-Soft\src;External\OpenAL-Soft\src\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;AL_LIBTYPE_STATIC;MINIAUDIO_IMPLEMENTATION;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;FS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\IMGUI;External\IMGUI\backends;External\GLM;External\stb_image;External\Openal-Soft\include;External\Openal-Soft\src;External\OpenAL-Soft\src\common;External\miniaudio;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -116,8 +116,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>fspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;AL_LIBTYPE_STATIC;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;FS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\IMGUI;External\IMGUI\backends;External\GLM;External\stb_image;External\Openal-Soft\include;External\Openal-Soft\src;External\OpenAL-Soft\src\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;AL_LIBTYPE_STATIC;MINIAUDIO_IMPLEMENTATION;FS_BUILD_DLL;FS_PLATFORM_WINDOWS;FS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;External\spdlog\include;External\GLFW\include;External\GLAD\include;External\IMGUI;External\IMGUI\backends;External\GLM;External\stb_image;External\Openal-Soft\include;External\Openal-Soft\src;External\OpenAL-Soft\src\common;External\miniaudio;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -137,9 +137,12 @@
     <ClInclude Include="External\stb_image\stb_image.h" />
     <ClInclude Include="src\Fengshui.h" />
     <ClInclude Include="src\Fengshui\Audio\AudioAPI.h" />
+    <ClInclude Include="src\Fengshui\Audio\AudioBuffer.h" />
     <ClInclude Include="src\Fengshui\Audio\AudioCommand.h" />
     <ClInclude Include="src\Fengshui\Audio\AudioInputDevice.h" />
+    <ClInclude Include="src\Fengshui\Audio\AudioLoader.h" />
     <ClInclude Include="src\Fengshui\Audio\AudioOutputDevice.h" />
+    <ClInclude Include="src\Fengshui\Audio\AudioSource.h" />
     <ClInclude Include="src\Fengshui\Core\Application.h" />
     <ClInclude Include="src\Fengshui\Core\Core.h" />
     <ClInclude Include="src\Fengshui\Core\EntryPoint.h" />
@@ -203,8 +206,11 @@
     <ClInclude Include="src\Fengshui\Physics\Shapes\PhysicalShapeConvex.h" />
     <ClInclude Include="src\Fengshui\Physics\Shapes\PhysicalShapeSphere.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioAPI.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioBuffer.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioBufferManager.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioInputDevice.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioOutputDevice.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioSource.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLFramebuffer.h" />
@@ -235,8 +241,7 @@
     <ClCompile Include="External\stb_image\stb_image.cpp" />
     <ClCompile Include="src\Fengshui\Audio\AudioAPI.cpp" />
     <ClCompile Include="src\Fengshui\Audio\AudioCommand.cpp" />
-    <ClCompile Include="src\Fengshui\Audio\AudioInputDevice.cpp" />
-    <ClCompile Include="src\Fengshui\Audio\AudioOutputDevice.cpp" />
+    <ClCompile Include="src\Fengshui\Audio\AudioLoader.cpp" />
     <ClCompile Include="src\Fengshui\Core\Application.cpp" />
     <ClCompile Include="src\Fengshui\Core\Scene.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Entity.cpp" />
@@ -278,8 +283,11 @@
     <ClCompile Include="src\Fengshui\Physics\Shapes\PhysicalShapeConvex.cpp" />
     <ClCompile Include="src\Fengshui\Physics\Shapes\PhysicalShapeSphere.cpp" />
     <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioAPI.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioBuffer.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioBufferManager.cpp" />
     <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioInputDevice.cpp" />
     <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioOutputDevice.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioSource.cpp" />
     <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLFramebuffer.cpp" />

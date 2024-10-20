@@ -13,6 +13,10 @@ namespace Fengshui
 		virtual const std::string GetDeviceName() override;
 
 		virtual void Destroy() override;
+
+		virtual void StartCapture() override;
+
+		virtual void StopCapture() override;
 	private:
 		ALCdevice* m_Device;
 	};

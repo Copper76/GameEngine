@@ -81,13 +81,22 @@
     <ClInclude Include="src\Fengshui\Audio\AudioAPI.h">
       <Filter>src\Fengshui\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\Audio\AudioBuffer.h">
+      <Filter>src\Fengshui\Audio</Filter>
+    </ClInclude>
     <ClInclude Include="src\Fengshui\Audio\AudioCommand.h">
       <Filter>src\Fengshui\Audio</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\Audio\AudioInputDevice.h">
       <Filter>src\Fengshui\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\Audio\AudioLoader.h">
+      <Filter>src\Fengshui\Audio</Filter>
+    </ClInclude>
     <ClInclude Include="src\Fengshui\Audio\AudioOutputDevice.h">
+      <Filter>src\Fengshui\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Audio\AudioSource.h">
       <Filter>src\Fengshui\Audio</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\Core\Application.h">
@@ -279,10 +288,19 @@
     <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioAPI.h">
       <Filter>src\Fengshui\Platform\OpenAL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioBuffer.h">
+      <Filter>src\Fengshui\Platform\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioBufferManager.h">
+      <Filter>src\Fengshui\Platform\OpenAL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioInputDevice.h">
       <Filter>src\Fengshui\Platform\OpenAL</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioOutputDevice.h">
+      <Filter>src\Fengshui\Platform\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioSource.h">
       <Filter>src\Fengshui\Platform\OpenAL</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.h">
@@ -371,10 +389,7 @@
     <ClCompile Include="src\Fengshui\Audio\AudioCommand.cpp">
       <Filter>src\Fengshui\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Audio\AudioInputDevice.cpp">
-      <Filter>src\Fengshui\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Fengshui\Audio\AudioOutputDevice.cpp">
+    <ClCompile Include="src\Fengshui\Audio\AudioLoader.cpp">
       <Filter>src\Fengshui\Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Core\Application.cpp">
@@ -500,10 +515,19 @@
     <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioAPI.cpp">
       <Filter>src\Fengshui\Platform\OpenAL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioBuffer.cpp">
+      <Filter>src\Fengshui\Platform\OpenAL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioBufferManager.cpp">
+      <Filter>src\Fengshui\Platform\OpenAL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioInputDevice.cpp">
       <Filter>src\Fengshui\Platform\OpenAL</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioOutputDevice.cpp">
+      <Filter>src\Fengshui\Platform\OpenAL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioSource.cpp">
       <Filter>src\Fengshui\Platform\OpenAL</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Platform\OpenGL\OpenGLBuffer.cpp">

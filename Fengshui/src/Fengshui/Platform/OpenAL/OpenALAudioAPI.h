@@ -10,7 +10,7 @@ namespace Fengshui
 
 		virtual void Shutdown() override;
 
-		//Queries
+		//queries
 		virtual const std::vector<const char*> GetAvailableOutputDevices() override;
 
 		virtual const char* GetDefaultOutputDevice() override;
@@ -23,9 +23,12 @@ namespace Fengshui
 
 		virtual void GetAvailableInputDevices(std::vector<const char*>& allDevices, const char* defaultDevice) override;
 
-		//Instance handling
+		//device instance handling
 		virtual void CreateOutputDevice(const char* deviceName) override;
 
 		virtual void CreateInputDevice(const char* deviceName) override;
+
+		//audio source handling
+		virtual Ref<AudioSource> CreateAudioSource(char* filePath) override;
 	};
 }

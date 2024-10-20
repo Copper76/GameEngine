@@ -9,6 +9,12 @@ namespace Fengshui
 	{
 		if (m_Device)
 		{
+			if (m_Device->DeviceName == deviceName)
+			{
+				FS_WARN("Device already created");
+				return;
+			}
+
 			Destroy();
 		}
 
@@ -18,7 +24,7 @@ namespace Fengshui
 
 		if (startCapture)
 		{
-			alcCaptureStart(m_Device);
+			StartCapture();
 		}
 	}
 
@@ -37,5 +43,18 @@ namespace Fengshui
 
 			m_Device = nullptr;
 		}
+	}
+
+	void OpenALAudioInputDevice::StartCapture()
+	{
+		FS_ASSERT(m_Device->DeviceName != "", "No valid device exists");
+
+		alcCaptureStart(m_Device);
+	}
+	void OpenALAudioInputDevice::StopCapture()
+	{
+		FS_ASSERT(m_Device->DeviceName != "", "No valid device exists");
+
+		alcCaptureStop(m_Device);
 	}
 }

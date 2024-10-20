@@ -2,6 +2,7 @@
 
 #include "AudioOutputDevice.h"
 #include "AudioInputDevice.h"
+#include "AudioSource.h"
 
 namespace Fengshui
 {
@@ -20,7 +21,7 @@ namespace Fengshui
 
 		virtual void Shutdown() = 0;
 
-		//Queries
+		//queries
 		virtual const std::vector<const char*> GetAvailableOutputDevices() = 0;
 
 		virtual const char* GetDefaultOutputDevice() = 0;
@@ -33,7 +34,7 @@ namespace Fengshui
 
 		virtual void GetAvailableInputDevices(std::vector<const char*>& allDevices, const char* defaultDevice) = 0;
 
-		//Instance handling
+		//device instance handling
 		virtual void CreateInputDevice(const char* deviceName = nullptr) = 0;
 
 		virtual void CreateOutputDevice(const char* deviceName = nullptr) = 0;
@@ -45,6 +46,9 @@ namespace Fengshui
 		inline Ref<AudioInputDevice> GetInputDevice() { return s_AudioInputDevice; }
 
 		inline const std::string GetInputDeviceName() { return s_AudioInputDevice->GetDeviceName(); }
+
+		//audio source handling
+		virtual Ref<AudioSource> CreateAudioSource(char* filePath) = 0;
 
 		inline static API GetAPI() { return s_API; }
 

@@ -45,4 +45,5 @@
 #include "Fengshui/Audio/AudioOutputDevice.h"
 #include "Fengshui/Audio/AudioInputDevice.h"
 #include "Fengshui/Audio/AudioCommand.h"
+#include "Fengshui/Audio/AudioSource.h"
 

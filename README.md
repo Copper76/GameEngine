@@ -23,11 +23,17 @@ This project is a practice project to make a game engine using Entity-Component 
 - [X] Integrated the 3D Physics Engine that was previously made in [Physics Engine](https://github.com/Copper76/Physics-Engine), the engine doesn't play nicely with hierarchy yet.
 - [X] expand the 3d renderer to allow rendering with custom shapes, it now uses the same technique as physical shapes to build convex shape from a set of points
 - [X] Improve the panels. The panels now allow add and removal of components at runtime, as well as the ability to modify most value based data, with the exception of hierarchy.
-- [X] Added functionality to render a sphere, ready to use it in raytracing
+- [X] Added functionality to render a sphere, ready to use it in raytracing.
+- [X] Implement an audio system which can allow user to use all available audio input and output devices.
+- [X] Add support of playing wav files through an audio source.
+- [X] Add support for flac, ogg and mp3 files.
 
 ## TODO
-- [ ] Implement a simple audio module which adds audio listener and audio player component using OpenAL
-- [ ] Look into raytracing and integrate it into the engine(stretch goal)
+- [ ] Implement the audio module which adds audio listener and audio player component to the existing ECS system.
+- [ ] Batch the audio system similar to how rendering is done.
+- [ ] Add support to pause, stop audio as well as looping.
+- [ ] Add ability to modify audios including pitch shift.
+- [ ] Look into raytracing and integrate it into the engine(stretch goal).
 
 ## Knonw Issues
 - The physics system breaks when the object is rotated or scaled by a parent
@@ -45,6 +51,8 @@ This project is a practice project to make a game engine using Entity-Component 
 - [imgui](https://github.com/ocornut/imgui.git)
 - [glm](https://github.com/g-truc/glm.git)
 - [stb](https://github.com/nothings/stb)
+- [OpenAL-Soft](https://github.com/kcat/openal-soft)
+- [MiniAudio](https://github.com/mackron/miniaudio)
 
 ## Credit
 Major thank you to Cherno for the series on [Hazel Engine](https://github.com/TheCherno/Hazel)
