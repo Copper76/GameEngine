@@ -38,6 +38,6 @@ namespace Fengshui
 			s_RendererAPI->DrawIndexed(vertexArray, indexCount, isWireFrame);
 		}
 	private:
-		static RendererAPI* s_RendererAPI;
+		static Scope<RendererAPI> s_RendererAPI;
 	};
 }

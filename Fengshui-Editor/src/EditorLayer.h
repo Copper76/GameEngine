@@ -65,6 +65,43 @@ namespace Fengshui
 					// which we can't undo at the moment without finer window depth/z control.
 					if (ImGui::MenuItem("Exit", NULL)) Application::GetInstance().Close();
 
+					if (ImGui::BeginMenu("Output Device"))
+					{
+						std::string currentDevice = AudioCommand::GetCurrentOutputDeviceName();
+						if (ImGui::MenuItem("Default"))
+						{
+							AudioCommand::SetOutputDeviceDefault();
+						}
+
+						for (const char* device : AudioCommand::GetAvailableOutputDevices())
+						{
+							if (ImGui::MenuItem(device, NULL, currentDevice == device) && currentDevice != device)
+							{
+								AudioCommand::SetOutputDevice(device);
+							}
+						}
+						ImGui::EndMenu();
+					}
+
+					if (ImGui::BeginMenu("Input Device"))
+					{
+						std::string currentDevice = AudioCommand::GetCurrentInputDeviceName();
+
+						if (ImGui::MenuItem("Default"))
+						{
+							AudioCommand::SetInputDeviceDefault();
+						}
+
+						for (const char* device : AudioCommand::GetAvailableInputDevices())
+						{
+							if (ImGui::MenuItem(device, NULL, currentDevice == device) && currentDevice != device)
+							{
+								AudioCommand::SetInputDevice(device);
+							}
+						}
+						ImGui::EndMenu();
+					}
+
 					ImGui::EndMenu();
 				}
 
@@ -104,6 +141,11 @@ namespace Fengshui
 					m_ActiveScene = m_OtherScene;
 				}
 				GeneralManager::SetActiveScene(m_ActiveScene);
+			}
+
+			if (ImGui::Button("Play Bell"))
+			{
+				m_AudioSource->Play();
 			}
 			ImGui::End();
 
@@ -158,6 +200,7 @@ namespace Fengshui
 		Ref<Entity> m_SecondCamera;
 		std::vector<Ref<Entity>> m_StackingBoxes;
 		std::vector<Ref<Entity>> m_BackgroundSquares;
+		Ref<Entity> m_2DSquare;
 
 		Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;
 
@@ -166,5 +209,7 @@ namespace Fengshui
 
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize;
+
+		Ref<AudioSource> m_AudioSource;
 	};
 }

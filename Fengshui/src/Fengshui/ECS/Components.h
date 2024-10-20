@@ -20,6 +20,11 @@ namespace Fengshui
 		Custom, Quad
 	};
 
+	enum class LightType
+	{
+		GlobalLight, PointLight
+	};
+
 	struct Tag
 	{
 		std::string Name = "GameEntity";
@@ -313,22 +318,28 @@ namespace Fengshui
 		}
 	};
 
-	struct GlobalLight
+	struct Light
 	{
 		glm::vec3 Direction = glm::vec3(1.0f);
 		glm::vec3 Colour = glm::vec3(1.0f);
+		LightType Type = LightType::GlobalLight;
 
-		GlobalLight()
+		Light()
 		{
 
 		}
 
-		GlobalLight(glm::vec3 direction) : Direction(direction)
+		Light(LightType type) : Type(type)
 		{
 
 		}
 
-		GlobalLight(glm::vec3 direction, glm::vec3 colour) : Direction(direction), Colour(colour)
+		Light(glm::vec3 direction) : Direction(direction)
+		{
+
+		}
+
+		Light(glm::vec3 direction, glm::vec3 colour) : Direction(direction), Colour(colour)
 		{
 
 		}

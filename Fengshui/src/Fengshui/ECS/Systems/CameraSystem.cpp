@@ -106,7 +106,7 @@ namespace Fengshui
 	{
 		auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(entity);
 
-		glm::mat4 camTransform = transformSystem->GetWorldTransformMatrix(entity);
+		glm::mat4 camTransform = TransformSystem::GetWorldTransformMatrix(entity);
 
 		cameraComp.ViewMatrix = glm::inverse(camTransform);
 

@@ -51,9 +51,6 @@ namespace Fengshui
 
 	void Renderer::Init()
 	{
-		RenderCommand::Init();
-		Renderer2D::Init();
-
 		s_Data.ShapeVertexArray = VertexArray::Create();
 
 		s_Data.ShapeVertexBuffer = VertexBuffer::Create(s_Data.MaxVertices * sizeof(ShapeVertex));
@@ -115,7 +112,7 @@ namespace Fengshui
 
 	void Renderer::Shutdown()
 	{
-		Renderer2D::Shutdown();
+
 	}
 
 	void Renderer::OnWindowResize(uint32_t width, uint32_t height)

@@ -59,11 +59,26 @@ namespace Fengshui
 
 				for (EntityID lightID : m_Entities)
 				{
-					auto& light = GeneralManager::GetComponent<GlobalLight>(lightID);
-					light.Direction = glm::normalize(light.Direction);
-					for (int i = 0; i < numVertex; i++)
+					const Transform& lightTransform = TransformSystem::GetWorldTransform(lightID);
+					auto& light = GeneralManager::GetComponent<Light>(lightID);
+					switch (light.Type)
 					{
-						renderData.Normal[i] *= std::clamp(glm::dot(glm::normalize(transformData.Rotation * vertices[i]), -light.Direction), 0.0f, 1.0f) * light.Colour;
+					case LightType::GlobalLight:
+						for (int i = 0; i < numVertex; i++)
+						{
+							renderData.Normal[i] *= std::max(glm::dot(glm::normalize((transformData.Rotation * vertices[i]) * transformData.Scale), -light.Direction), 0.0f) * light.Colour;
+						}
+						break;
+					case LightType::PointLight:
+						{
+						glm::vec3 lightPos = (lightTransform.Rotation * lightTransform.Position) * lightTransform.Scale;
+						for (int i = 0; i < numVertex; i++)
+						{
+							glm::vec3 lightDirection = glm::normalize(lightPos - ((transformData.Rotation * (transformData.Position + vertices[i])) * transformData.Scale));
+							renderData.Normal[i] *= std::max(glm::dot(glm::normalize((transformData.Rotation * vertices[i]) * transformData.Scale), lightDirection), 0.0f) * light.Colour;
+						}
+						}
+						break;
 					}
 				}
 			}
