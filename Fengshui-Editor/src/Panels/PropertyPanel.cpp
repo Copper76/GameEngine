@@ -467,5 +467,46 @@ namespace Fengshui
 				}
 			}
 		}
+
+		if (GeneralManager::HasComponent<AudioSourceComponent>(entity))
+		{
+			if (ImGui::CollapsingHeader("Aduio Source", ImGuiTreeNodeFlags_DefaultOpen))
+			{
+				bool toRemove = false;
+				if (ImGui::Button(("Remove##" + std::to_string(imGuiID++)).c_str()))
+				{
+					toRemove = true;
+				}
+				{
+					auto& audioSource= GeneralManager::GetComponent<AudioSourceComponent>(entity);
+
+					bool valueChanged = false;
+					AudioSetting& settings = audioSource.Settings;
+
+					ImGui::LabelText("File Name", audioSource.Source->GetBuffer()->GetFileName().c_str());
+
+					if (ImGui::Checkbox("Is Loop", &settings.IsLoop))
+					{
+						valueChanged = true;
+					}
+
+					if (ImGui::Checkbox("Play On Start", &settings.PlayOnStart))
+					{
+						valueChanged = true;
+					}
+
+					if (valueChanged)
+					{
+						audioSource.SetSettings(settings);
+					}
+				}
+
+				if (toRemove)
+				{
+					GeneralManager::RemoveComponent<CameraComponent>(entity);
+					--imGuiID;
+				}
+			}
+		}
 	}
 }

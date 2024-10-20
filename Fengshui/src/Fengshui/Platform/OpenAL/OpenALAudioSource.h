@@ -31,9 +31,12 @@ namespace Fengshui
 	public:
 		void SetBuffer(Ref<OpenALAudioBuffer> buffer);
 
-		inline Ref<OpenALAudioBuffer> GetBuffer() { return m_Buffer; }
+		virtual inline Ref<AudioBuffer> GetBuffer() override { return m_Buffer; }
 
-		inline const Ref<OpenALAudioBuffer> GetBuffer() const { return m_Buffer; }
+		virtual inline const Ref<AudioBuffer> GetBuffer() const override { return m_Buffer; }
+
+		inline Ref<OpenALAudioBuffer> GetOpenALBuffer() { return m_Buffer; }
+		inline const Ref<OpenALAudioBuffer> GetOpenALBuffer() const { return m_Buffer; }
 
 	private:
 		uint32_t m_AudioSourceID = 0;

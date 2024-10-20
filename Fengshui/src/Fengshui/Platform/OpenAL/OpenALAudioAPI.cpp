@@ -98,7 +98,7 @@ namespace Fengshui
 	Ref<AudioSource> OpenALAudioAPI::CreateAudioSource(char* filePath)
 	{
 		Ref<OpenALAudioSource> audioSource = MakeRef<OpenALAudioSource>(filePath);
-		OpenALAudioBufferManager::AddSourceMapping(audioSource->GetBuffer(), audioSource);
+		OpenALAudioBufferManager::AddSourceMapping(audioSource->GetOpenALBuffer(), audioSource);
 
 		return audioSource;
 	}

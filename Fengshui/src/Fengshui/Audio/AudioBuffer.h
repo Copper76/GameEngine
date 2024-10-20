@@ -10,5 +10,7 @@ namespace Fengshui
 		virtual void Bind(const char* filePath) = 0;
 
 		virtual void UnBind() = 0;
+
+		virtual std::string GetFileName() = 0;
 	};
 }

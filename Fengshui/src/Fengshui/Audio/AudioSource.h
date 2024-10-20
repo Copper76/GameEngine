@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Fengshui/Audio/AudioBuffer.h"
+
 namespace Fengshui
 {
 	struct AudioSetting
@@ -21,5 +23,9 @@ namespace Fengshui
 		virtual void Stop() = 0;
 		virtual void Pause() = 0;
 		virtual void Unpause() = 0;
+
+		virtual inline Ref<AudioBuffer> GetBuffer() = 0;
+
+		virtual const inline Ref<AudioBuffer> GetBuffer() const = 0;
 	};
 }

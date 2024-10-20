@@ -129,7 +129,7 @@ namespace Fengshui
 		//m_BigSquare->AddComponent<Render>();
 		m_BigSquare->AddComponent<Render>(Render(new RenderShapeCube(), checkerboard));
 
-		m_AudioSource = m_BigSquare->AddComponent<AudioSourceComponent>(AudioSourceComponent(AudioCommand::CreateAudioSource("Assets/AudioClip/airport.wav")));
+		m_AudioSource = m_BigSquare->AddComponent<AudioSourceComponent>(AudioSourceComponent(AudioCommand::CreateAudioSource("Assets/AudioClip/bell.wav")));
 
 		m_BigSquare->AddComponent<Rigidbody>();
 		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>();

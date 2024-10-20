@@ -30,6 +30,7 @@ This project is a practice project to make a game engine using Entity-Component 
 - [X] Add support for having multiple buffer for an audio file so it can play larger files seamlessly.
 - [X] Add support to pause, stop audio as well as looping.
 - [X] Implement the audio player component to the existing ECS system.
+- [X] Added editor function to modify some properties.
 
 ## TODO
 - [ ] adds audio listener

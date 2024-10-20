@@ -51,10 +51,17 @@ namespace Fengshui
             alBufferData(m_BufferIDs[i], format,
                 audioData + offset / bytesPerSample, size, m_AudioData.SampleRate);
         }
+
+        m_FileName = filePath;
     }
 
     void OpenALAudioBuffer::UnBind()
     {
         alDeleteBuffers(m_BufferNum, m_BufferIDs);
+    }
+
+    std::string OpenALAudioBuffer::GetFileName()
+    {
+        return m_FileName;
     }
 }
