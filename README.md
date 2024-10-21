@@ -32,9 +32,10 @@ This project is a practice project to make a game engine using Entity-Component 
 - [X] Implement the audio player component to the existing ECS system.
 - [X] Added editor function to modify some properties.
 - [X] adds audio listener
+- [X] Add ability to modify audios through pitch shift.
 
 ## TODO
-- [ ] Add ability to modify audios including pitch shift.
+- [ ] Look into more ways of modifying audio.
 - [ ] Look into raytracing and integrate it into the engine(stretch goal).
 
 ## Knonw Issues
