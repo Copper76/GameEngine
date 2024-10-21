@@ -6,7 +6,17 @@ namespace Fengshui
 {
 	void AudioPlayerSystem::OnUpdate(const float dt)
 	{
-		//will be used to implement logic such as refreshing buffer
+		for (EntityID entity : m_Entities)
+		{
+			UpodateAudioSourceLocation(entity);
+		}
+	}
+
+	void AudioPlayerSystem::UpodateAudioSourceLocation(EntityID entity)
+	{
+		auto& audioSource = GeneralManager::GetComponent<AudioSourceComponent>(entity);
+		auto& transformComp = GeneralManager::GetComponent<Transform>(entity);
+		audioSource.Source->UpdateLocation(transformComp.Position);
 	}
 
 	void AudioPlayerSystem::PlayOnStart()

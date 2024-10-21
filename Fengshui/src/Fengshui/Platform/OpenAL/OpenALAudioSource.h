@@ -18,6 +18,8 @@ namespace Fengshui
 
 		virtual void UnBind() override;
 
+		virtual void UpdateLocation(glm::vec3 position) override;
+
 		virtual void SetSettings(AudioSetting settings) override;
 
 		virtual void Play(bool restart) override;

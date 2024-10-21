@@ -82,6 +82,11 @@ namespace Fengshui
 			return s_AudioAPI->CreateAudioSource(filePath);
 		}
 
+		inline static Ref<AudioListener> CreateAudioListener()
+		{
+			return s_AudioAPI->CreateAudioListener();
+		}
+
 	private:
 		static Scope<AudioAPI> s_AudioAPI;
 	};

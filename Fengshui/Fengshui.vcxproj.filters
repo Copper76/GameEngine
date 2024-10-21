@@ -381,6 +381,9 @@
     <ClInclude Include="src\Fengshui\ECS\Systems\AudioPlayerSystem.h" />
     <ClInclude Include="src\Fengshui\ECS\GameScript.h" />
     <ClInclude Include="src\Fengshui\ECS\Systems\GameScriptSystem.h" />
+    <ClInclude Include="src\Fengshui\Audio\AudioListener.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioListener.h" />
+    <ClInclude Include="src\Fengshui\ECS\Systems\AudioListenSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp">
@@ -602,5 +605,7 @@
     <ClCompile Include="src\Fengshui\Audio\AudioLoader.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\AudioPlayerSystem.cpp" />
     <ClCompile Include="src\Fengshui\ECS\Systems\GameScriptSystem.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioListener.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Systems\AudioListenSystem.cpp" />
   </ItemGroup>
 </Project>

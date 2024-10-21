@@ -10,6 +10,8 @@ namespace Fengshui
 	public:
 		void OnUpdate(const float dt);
 
+		void UpodateAudioSourceLocation(EntityID entity);
+
 		void PlayOnStart();
 
 		void StopAll();

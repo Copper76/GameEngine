@@ -148,24 +148,27 @@ namespace Fengshui
 				GeneralManager::SetActiveScene(m_ActiveScene);
 			}
 
-			if (ImGui::Button("Play Airport"))
+			if (ImGui::CollapsingHeader("Audio Test"))
 			{
-				m_AudioSource.Play(false);
-			}
+				if (ImGui::Button("Play Bell"))
+				{
+					m_AudioSource.Play(false);
+				}
 
-			if (ImGui::Button("Pause"))
-			{
-				m_AudioSource.Pause();
-			}
+				if (ImGui::Button("Pause"))
+				{
+					m_AudioSource.Pause();
+				}
 
-			if (ImGui::Button("UnPause"))
-			{
-				m_AudioSource.Unpause();
-			}
+				if (ImGui::Button("UnPause"))
+				{
+					m_AudioSource.Unpause();
+				}
 
-			if (ImGui::Button("Stop"))
-			{
-				m_AudioSource.Stop();
+				if (ImGui::Button("Stop"))
+				{
+					m_AudioSource.Stop();
+				}
 			}
 			ImGui::End();
 

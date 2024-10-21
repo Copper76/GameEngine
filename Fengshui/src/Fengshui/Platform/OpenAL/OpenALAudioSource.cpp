@@ -63,6 +63,11 @@ namespace Fengshui
 		OpenALAudioBufferManager::RemoveSourceMapping(shared_from_this(), m_Buffer);
 	}
 
+	void OpenALAudioSource::UpdateLocation(glm::vec3 position)
+	{
+		alSource3f(m_AudioSourceID, AL_POSITION, position.x, position.y, position.z);
+	}
+
 	void OpenALAudioSource::SetBuffer(Ref<OpenALAudioBuffer> buffer)
 	{
 		if (buffer)
@@ -82,6 +87,12 @@ namespace Fengshui
 	void OpenALAudioSource::SetSettings(AudioSetting settings)
 	{
 		alSourcei(m_AudioSourceID, AL_LOOPING, settings.IsLoop);
+
+		alSourcef(m_AudioSourceID, AL_GAIN, settings.Volume);
+
+		alSourcef(m_AudioSourceID, AL_REFERENCE_DISTANCE, settings.MinAttunmentDistance);
+		alSourcef(m_AudioSourceID, AL_ROLLOFF_FACTOR,  settings.AttunmentRate);
+		alSourcef(m_AudioSourceID, AL_PITCH,  settings.Pitch);
 	}
 
 	void OpenALAudioSource::Play(bool restart)

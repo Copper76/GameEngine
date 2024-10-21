@@ -21,13 +21,21 @@ namespace Fengshui
 
         ALenum format;
         if (m_AudioData.Channels == 1 && m_AudioData.BitsPerSample == 8)
+        {
             format = AL_FORMAT_MONO8;
+        }
         else if (m_AudioData.Channels == 1 && m_AudioData.BitsPerSample == 16)
+        {
             format = AL_FORMAT_MONO16;
+        }
         else if (m_AudioData.Channels == 2 && m_AudioData.BitsPerSample == 8)
+        {
             format = AL_FORMAT_STEREO8;
+        }
         else if (m_AudioData.Channels == 2 && m_AudioData.BitsPerSample == 16)
+        {
             format = AL_FORMAT_STEREO16;
+        }
         else
         {
             FS_ERROR("channels: {}, bits per sample: {}", m_AudioData.Channels, m_AudioData.BitsPerSample);

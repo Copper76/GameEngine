@@ -10,6 +10,7 @@
 
 #include "Fengshui/Physics/Constraints.h"
 #include "Fengshui/Physics/Manifold.h"
+#include "Fengshui/Audio/AudioListener.h"
 
 namespace Fengshui
 {
@@ -95,6 +96,7 @@ namespace Fengshui
 		Ref<TransformSystem> m_TransformSystem;
 		Ref<LightSystem> m_LightSystem;
 		Ref<AudioPlayerSystem> m_AudioPlayerSystem;
+		Ref<AudioListenSystem> m_AudioListenSystem;
 		Ref<GameScriptSystem> m_GameScriptSystem;
 	};
 }

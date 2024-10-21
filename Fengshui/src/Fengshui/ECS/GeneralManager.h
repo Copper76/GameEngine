@@ -32,6 +32,7 @@ namespace Fengshui
 			RegisterComponent<Transform2D>();
 			RegisterComponent<Light>();
 			RegisterComponent<AudioSourceComponent>();
+			RegisterComponent<AudioListenerComponent>();
 			RegisterComponent<ScriptComponent>();
 		}
 

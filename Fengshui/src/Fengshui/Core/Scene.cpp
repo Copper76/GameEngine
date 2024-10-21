@@ -5,6 +5,7 @@
 #include "Fengshui/Renderer/Renderer2D.h"
 #include "Fengshui/ECS/GeneralManager.h"
 
+#include "Fengshui/Audio/AudioCommand.h"
 
 namespace Fengshui
 {
@@ -44,6 +45,7 @@ namespace Fengshui
 		scene->m_TransformSystem = GeneralManager::RegisterSystem<TransformSystem>();
 		scene->m_LightSystem = GeneralManager::RegisterSystem<LightSystem>();
 		scene->m_AudioPlayerSystem = GeneralManager::RegisterSystem<AudioPlayerSystem>();
+		scene->m_AudioListenSystem = GeneralManager::RegisterSystem<AudioListenSystem>();
 		scene->m_GameScriptSystem = GeneralManager::RegisterSystem<GameScriptSystem>();
 
 		Signature signature;
@@ -90,8 +92,14 @@ namespace Fengshui
 		GeneralManager::SetSystemSignature<LightSystem>(signature);
 
 		signature.reset();
+		signature.set(GeneralManager::GetComponentType<Transform>());
 		signature.set(GeneralManager::GetComponentType<AudioSourceComponent>());
 		GeneralManager::SetSystemSignature<AudioPlayerSystem>(signature);
+
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<Transform>());
+		signature.set(GeneralManager::GetComponentType<AudioListenerComponent>());
+		GeneralManager::SetSystemSignature<AudioListenSystem>(signature);
 
 		signature.reset();
 		signature.set(GeneralManager::GetComponentType<ScriptComponent>());
@@ -111,6 +119,10 @@ namespace Fengshui
 			true});
 
 		scene->m_SceneManager->AddComponent<Transform>(Transform(glm::vec3(0.0f, 0.0f, 10.0f)));
+
+		scene->m_SceneManager->AddComponent<AudioListenerComponent>(AudioListenerComponent(AudioCommand::CreateAudioListener(), true));
+
+		scene->m_AudioListenSystem->UpdateAudioListenerTransform();
 
 		//scene->m_SceneManager->AddComponent<Light>();
 
@@ -190,6 +202,7 @@ namespace Fengshui
 		}
 
 		m_AudioPlayerSystem->OnUpdate(dt);
+		m_AudioListenSystem->OnUpdate(dt);
 	}
 
 	//Fixed update function for updating the gravity and physics of the scene
