@@ -14,9 +14,15 @@ namespace Fengshui
 
 		virtual void UnBind() override;
 
-		inline const uint32_t GetID() const { return m_AudioID; }
+		virtual std::string GetFileName() override;
+
+		inline const uint32_t* GetBufferIDs() const { return m_BufferIDs; }
+		inline const int GetBufferNum() const { return m_BufferNum; }
 	private:
-		uint32_t m_AudioID;
+		uint32_t* m_BufferIDs;
+		int m_BufferNum;
 		AudioData m_AudioData;
+
+		std::string m_FileName;
 	};
 }

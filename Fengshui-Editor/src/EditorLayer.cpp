@@ -129,8 +129,10 @@ namespace Fengshui
 		//m_BigSquare->AddComponent<Render>();
 		m_BigSquare->AddComponent<Render>(Render(new RenderShapeCube(), checkerboard));
 
-		m_BigSquare->AddComponent<Rigidbody>();
-		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>();
+		m_AudioSource = m_BigSquare->AddComponent<AudioSourceComponent>(AudioSourceComponent(AudioCommand::CreateAudioSource("Assets/AudioClip/bell.wav")));
+
+		/*m_BigSquare->AddComponent<Rigidbody>();
+		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>();*/
 
 		m_Ground = MakeRef<Entity>("Ground");
 
@@ -138,8 +140,8 @@ namespace Fengshui
 
 		m_Ground->AddComponent<Render>(Render(checkerboard));
 
-		m_Ground->AddComponent<Rigidbody>(Rigidbody(0.0f));
-		Collider groundCollider = m_Ground->AddComponent<Collider>(Collider(new PhysicalShapeBox(glm::vec3(0.0f), TransformSystem::GetWorldTransform(m_Ground->GetID()).Scale)));
+		/*m_Ground->AddComponent<Rigidbody>(Rigidbody(0.0f));
+		Collider groundCollider = m_Ground->AddComponent<Collider>(Collider(new PhysicalShapeBox(glm::vec3(0.0f), TransformSystem::GetWorldTransform(m_Ground->GetID()).Scale)));*/
 
 		//m_BigSquare->SetParent(m_SecondCamera);
 
@@ -155,8 +157,7 @@ namespace Fengshui
 		//m_Scene->AddConstraint(joint);
 
 		m_OtherScene = Scene::Init();
-
-		m_AudioSource = AudioCommand::CreateAudioSource("Assets/AudioClip/bell.wav");
+		/*m_AudioSource2->SetSetting(AudioSetting{ true });*/
 		
 		Ref<Entity> square;
 		for (float i = -5.0f; i < 5.0f; i += 1.0f)
@@ -171,6 +172,7 @@ namespace Fengshui
 		}
 		
 		GeneralManager::SetActiveScene(m_ActiveScene);
+
 		m_EditorReady = true;
 	}
 

@@ -134,6 +134,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Fengshui\ECS\Systems\AudioListenSystem.h" />
+    <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioListener.h" />
+    <ClInclude Include="src\Fengshui\Audio\AudioListener.h" />
+    <ClInclude Include="src\Fengshui\ECS\Systems\GameScriptSystem.h" />
+    <ClInclude Include="src\Fengshui\ECS\GameScript.h" />
+    <ClInclude Include="src\Fengshui\ECS\Systems\AudioPlayerSystem.h" />
     <ClInclude Include="External\stb_image\stb_image.h" />
     <ClInclude Include="src\Fengshui.h" />
     <ClInclude Include="src\Fengshui\Audio\AudioAPI.h" />
@@ -238,6 +244,10 @@
     <ClInclude Include="src\fspch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Fengshui\ECS\Systems\AudioListenSystem.cpp" />
+    <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioListener.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Systems\GameScriptSystem.cpp" />
+    <ClCompile Include="src\Fengshui\ECS\Systems\AudioPlayerSystem.cpp" />
     <ClCompile Include="External\stb_image\stb_image.cpp" />
     <ClCompile Include="src\Fengshui\Audio\AudioAPI.cpp" />
     <ClCompile Include="src\Fengshui\Audio\AudioCommand.cpp" />

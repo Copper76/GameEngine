@@ -30,5 +30,7 @@ namespace Fengshui
 
 		//audio source handling
 		virtual Ref<AudioSource> CreateAudioSource(char* filePath) override;
+
+		virtual Ref<AudioListener> CreateAudioListener() override;
 	};
 }

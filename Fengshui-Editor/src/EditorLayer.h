@@ -110,8 +110,13 @@ namespace Fengshui
 					m_IsPlaying = !m_IsPlaying; //run this first to avoid unwanted updates
 					if (!m_IsPlaying)
 					{
+						m_ActiveScene->End();
 						Reset();
 						m_Paused = false;
+					}
+					else
+					{
+						m_ActiveScene->Setup();
 					}
 				}
 
@@ -143,9 +148,27 @@ namespace Fengshui
 				GeneralManager::SetActiveScene(m_ActiveScene);
 			}
 
-			if (ImGui::Button("Play Bell"))
+			if (ImGui::CollapsingHeader("Audio Test"))
 			{
-				m_AudioSource->Play();
+				if (ImGui::Button("Play Bell"))
+				{
+					m_AudioSource.Play(false);
+				}
+
+				if (ImGui::Button("Pause"))
+				{
+					m_AudioSource.Pause();
+				}
+
+				if (ImGui::Button("UnPause"))
+				{
+					m_AudioSource.Unpause();
+				}
+
+				if (ImGui::Button("Stop"))
+				{
+					m_AudioSource.Stop();
+				}
 			}
 			ImGui::End();
 
@@ -210,6 +233,6 @@ namespace Fengshui
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize;
 
-		Ref<AudioSource> m_AudioSource;
+		AudioSourceComponent m_AudioSource;
 	};
 }

@@ -7,8 +7,12 @@
 
 #include "Fengshui/Physics/Shapes.h"
 
+#include "Fengshui/Audio/AudioSource.h"
+#include "Fengshui/Audio/AudioListener.h"
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
+
 
 #include <set>
 
@@ -343,5 +347,89 @@ namespace Fengshui
 		{
 
 		}
+	};
+
+	struct AudioSourceComponent
+	{
+		Ref<AudioSource> Source;
+
+		AudioSetting Settings;
+
+		AudioSourceComponent()
+		{
+
+		}
+
+		AudioSourceComponent(Ref<AudioSource> audioSource) : Source(audioSource)
+		{
+
+		}
+
+		AudioSourceComponent(Ref<AudioSource> audioSource, AudioSetting settings) : Source(audioSource), Settings(settings)
+		{
+			Source->SetSettings(settings);
+		}
+
+		void SetSettings(AudioSetting settings)
+		{
+			Settings = settings;
+			Source->SetSettings(settings);
+		}
+
+		void Play(bool restart)
+		{
+			Source->Play(restart);
+		}
+
+		void Stop()
+		{
+			Source->Stop();
+		}
+
+		void Pause()
+		{
+			Source->Pause();
+		}
+
+		void Unpause()
+		{
+			Source->Unpause();
+		}
+	};
+
+	struct AudioListenerComponent
+	{
+		bool IsListener;
+
+		Ref<AudioListener> Listener;
+
+		AudioListenerComponent()
+		{
+			IsListener = false;
+		}
+
+		AudioListenerComponent(Ref<AudioListener> listener) : Listener(listener)
+		{
+			IsListener = false;
+		}
+
+		AudioListenerComponent(Ref<AudioListener> listener, bool isListener) : Listener(listener), IsListener(isListener)
+		{
+
+		}
+	};
+
+	struct ScriptComponent
+	{
+		ScriptComponent()
+		{
+			
+		}
+
+		virtual void Awake() {}
+		virtual void Start() {}
+
+		virtual void Update(const float dt) {}
+		virtual void FixedUpdate(const float dt) {}
 	};
 }

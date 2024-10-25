@@ -10,6 +10,7 @@
 
 #include "Fengshui/Physics/Constraints.h"
 #include "Fengshui/Physics/Manifold.h"
+#include "Fengshui/Audio/AudioListener.h"
 
 namespace Fengshui
 {
@@ -22,6 +23,10 @@ namespace Fengshui
 		Scene() {};
 
 		~Scene();
+
+		void Setup();
+
+		void End();
 
 		void OnUpdate(float dt);
 		void OnFixedUpdate(float dt);
@@ -52,6 +57,11 @@ namespace Fengshui
 		inline void AddEntity(Ref<Entity> entity) { m_Entities[entity->GetID()] = entity; }
 		inline void RemoveEntity(Ref<Entity> entity) { m_Entities.erase(entity->GetID()); }
 		inline void RemoveEntity(EntityID entity) { m_Entities.erase(entity); }
+
+	private:
+		void Awake();
+		void PostAwake();
+		void Start();
 
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
@@ -85,5 +95,8 @@ namespace Fengshui
 		Ref<PhysicsSystem> m_PhysicsSystem;
 		Ref<TransformSystem> m_TransformSystem;
 		Ref<LightSystem> m_LightSystem;
+		Ref<AudioPlayerSystem> m_AudioPlayerSystem;
+		Ref<AudioListenSystem> m_AudioListenSystem;
+		Ref<GameScriptSystem> m_GameScriptSystem;
 	};
 }

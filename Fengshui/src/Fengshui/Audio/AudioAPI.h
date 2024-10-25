@@ -3,6 +3,7 @@
 #include "AudioOutputDevice.h"
 #include "AudioInputDevice.h"
 #include "AudioSource.h"
+#include "AudioListener.h"
 
 namespace Fengshui
 {
@@ -49,6 +50,8 @@ namespace Fengshui
 
 		//audio source handling
 		virtual Ref<AudioSource> CreateAudioSource(char* filePath) = 0;
+
+		virtual Ref<AudioListener> CreateAudioListener() = 0;
 
 		inline static API GetAPI() { return s_API; }
 

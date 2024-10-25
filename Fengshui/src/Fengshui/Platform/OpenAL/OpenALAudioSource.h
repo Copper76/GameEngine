@@ -18,25 +18,32 @@ namespace Fengshui
 
 		virtual void UnBind() override;
 
-		virtual void SetSetting(AudioSetting setting) override;
+		virtual void UpdateLocation(glm::vec3 position) override;
 
-		virtual AudioSetting& GetSetting() override;
+		virtual void SetSettings(AudioSetting settings) override;
 
-		virtual void Play() override;
+		virtual void Play(bool restart) override;
+
+		virtual void Stop() override;
+
+		virtual void Pause() override;
+
+		virtual void Unpause() override;
 
 	public:
 		void SetBuffer(Ref<OpenALAudioBuffer> buffer);
 
-		inline Ref<OpenALAudioBuffer> GetBuffer() { return m_Buffer; }
+		virtual inline Ref<AudioBuffer> GetBuffer() override { return m_Buffer; }
 
-		inline const Ref<OpenALAudioBuffer> GetBuffer() const { return m_Buffer; }
+		virtual inline const Ref<AudioBuffer> GetBuffer() const override { return m_Buffer; }
+
+		inline Ref<OpenALAudioBuffer> GetOpenALBuffer() { return m_Buffer; }
+		inline const Ref<OpenALAudioBuffer> GetOpenALBuffer() const { return m_Buffer; }
 
 	private:
 		uint32_t m_AudioSourceID = 0;
 
 		Ref<OpenALAudioBuffer> m_Buffer;
-
-		AudioSetting m_AudioSetting;
 	};
 
 }

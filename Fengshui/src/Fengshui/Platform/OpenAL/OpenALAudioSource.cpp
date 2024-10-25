@@ -38,13 +38,22 @@ namespace Fengshui
 
 	OpenALAudioSource::~OpenALAudioSource()
 	{
-		/*UnBind();*/ //because I will be calling unbind from component, it might not need to unbind again as it will lose all reference with unbind
+		/*UnBind();*/ //I might need to call unbind from component as I need a reference to this for removing from manager
 	}
 
 	void OpenALAudioSource::Bind()
 	{
 		alGenSources(1, &m_AudioSourceID);
-		alSourcei(m_AudioSourceID, AL_BUFFER, m_Buffer->GetID());
+
+		int bufferNum = m_Buffer->GetBufferNum();
+		if (bufferNum == 1)
+		{
+			alSourcei(m_AudioSourceID, AL_BUFFER, m_Buffer->GetBufferIDs()[0]);
+		}
+		else
+		{
+			alSourceQueueBuffers(m_AudioSourceID, bufferNum, m_Buffer->GetBufferIDs());
+		}
 	}
 
 	void OpenALAudioSource::UnBind()
@@ -52,6 +61,11 @@ namespace Fengshui
 		alDeleteSources(1, &m_AudioSourceID);
 
 		OpenALAudioBufferManager::RemoveSourceMapping(shared_from_this(), m_Buffer);
+	}
+
+	void OpenALAudioSource::UpdateLocation(glm::vec3 position)
+	{
+		alSource3f(m_AudioSourceID, AL_POSITION, position.x, position.y, position.z);
 	}
 
 	void OpenALAudioSource::SetBuffer(Ref<OpenALAudioBuffer> buffer)
@@ -70,18 +84,47 @@ namespace Fengshui
 		}
 	}
 
-	void OpenALAudioSource::SetSetting(AudioSetting setting)
+	void OpenALAudioSource::SetSettings(AudioSetting settings)
 	{
-		m_AudioSetting = setting;
+		alSourcei(m_AudioSourceID, AL_LOOPING, settings.IsLoop);
+
+		alSourcef(m_AudioSourceID, AL_GAIN, settings.Volume);
+
+		alSourcef(m_AudioSourceID, AL_REFERENCE_DISTANCE, settings.MinAttunmentDistance);
+		alSourcef(m_AudioSourceID, AL_ROLLOFF_FACTOR,  settings.AttunmentRate);
+		alSourcef(m_AudioSourceID, AL_PITCH,  settings.Pitch);
 	}
 
-	AudioSetting& OpenALAudioSource::GetSetting()
+	void OpenALAudioSource::Play(bool restart)
 	{
-		return m_AudioSetting;
-	}
+		if (!restart)
+		{
+			ALint state;
+			alGetSourcei(m_AudioSourceID, AL_SOURCE_STATE, &state);
+			if (state == AL_PLAYING) return;
+		}
 
-	void OpenALAudioSource::Play()
-	{
 		alSourcePlay(m_AudioSourceID);
+	}
+
+	void OpenALAudioSource::Stop()
+	{
+		alSourceStop(m_AudioSourceID);
+	}
+
+	void OpenALAudioSource::Pause()
+	{
+		alSourcePause(m_AudioSourceID);
+	}
+
+	void OpenALAudioSource::Unpause()
+	{
+		ALint state;
+		alGetSourcei(m_AudioSourceID, AL_SOURCE_STATE, &state);
+
+		if (state == AL_PAUSED)
+		{
+			alSourcePlay(m_AudioSourceID);
+		}
 	}
 }

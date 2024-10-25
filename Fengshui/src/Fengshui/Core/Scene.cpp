@@ -5,6 +5,7 @@
 #include "Fengshui/Renderer/Renderer2D.h"
 #include "Fengshui/ECS/GeneralManager.h"
 
+#include "Fengshui/Audio/AudioCommand.h"
 
 namespace Fengshui
 {
@@ -12,6 +13,13 @@ namespace Fengshui
 	Scene::~Scene()
 	{
 
+	}
+
+	void Scene::Setup()
+	{
+		Awake();
+		PostAwake();
+		Start();
 	}
 
 	//Function for initialising a scene
@@ -36,6 +44,9 @@ namespace Fengshui
 		scene->m_PhysicsSystem = GeneralManager::RegisterSystem<PhysicsSystem>();
 		scene->m_TransformSystem = GeneralManager::RegisterSystem<TransformSystem>();
 		scene->m_LightSystem = GeneralManager::RegisterSystem<LightSystem>();
+		scene->m_AudioPlayerSystem = GeneralManager::RegisterSystem<AudioPlayerSystem>();
+		scene->m_AudioListenSystem = GeneralManager::RegisterSystem<AudioListenSystem>();
+		scene->m_GameScriptSystem = GeneralManager::RegisterSystem<GameScriptSystem>();
 
 		Signature signature;
 		signature.set(GeneralManager::GetComponentType<Render>());
@@ -80,6 +91,20 @@ namespace Fengshui
 		signature.set(GeneralManager::GetComponentType<Transform>());
 		GeneralManager::SetSystemSignature<LightSystem>(signature);
 
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<Transform>());
+		signature.set(GeneralManager::GetComponentType<AudioSourceComponent>());
+		GeneralManager::SetSystemSignature<AudioPlayerSystem>(signature);
+
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<Transform>());
+		signature.set(GeneralManager::GetComponentType<AudioListenerComponent>());
+		GeneralManager::SetSystemSignature<AudioListenSystem>(signature);
+
+		signature.reset();
+		signature.set(GeneralManager::GetComponentType<ScriptComponent>());
+		GeneralManager::SetSystemSignature<GameScriptSystem>(signature);
+
 		//Physics System
 		scene->m_Manifolds = std::make_shared<ManifoldCollector>();
 
@@ -94,6 +119,10 @@ namespace Fengshui
 			true});
 
 		scene->m_SceneManager->AddComponent<Transform>(Transform(glm::vec3(0.0f, 0.0f, 10.0f)));
+
+		scene->m_SceneManager->AddComponent<AudioListenerComponent>(AudioListenerComponent(AudioCommand::CreateAudioListener(), true));
+
+		scene->m_AudioListenSystem->UpdateAudioListenerTransform();
 
 		//scene->m_SceneManager->AddComponent<Light>();
 
@@ -171,6 +200,9 @@ namespace Fengshui
 				AdjustCamera(m_PrimaryCamera, moveDelta, glm::quat(glm::radians(rotateDelta)));
 			}
 		}
+
+		m_AudioPlayerSystem->OnUpdate(dt);
+		m_AudioListenSystem->OnUpdate(dt);
 	}
 
 	//Fixed update function for updating the gravity and physics of the scene
@@ -219,6 +251,26 @@ namespace Fengshui
 		EventDispatcher eventDispatcher(e);
 		eventDispatcher.Dispatch<MouseScrolledEvent>(FS_BIND_EVENT_FN(Scene::OnMouseScrolled));
 		eventDispatcher.Dispatch<WindowResizeEvent>(FS_BIND_EVENT_FN(Scene::OnWindowResize));
+	}
+
+	void Scene::Awake()
+	{
+		m_GameScriptSystem->Awake();
+	}
+
+	void Scene::PostAwake()
+	{
+		m_AudioPlayerSystem->PlayOnStart();
+	}
+
+	void Scene::Start()
+	{
+		m_GameScriptSystem->Start();
+	}
+
+	void Scene::End()
+	{
+		m_AudioPlayerSystem->StopAll();
 	}
 
 	//Wrapper functions for the camera system
