@@ -14,6 +14,11 @@ namespace Fengshui
 		{
 			auto renderData = GeneralManager::GetComponent<Render>(entity);
 
+			//if (!renderData.IsActive)
+			//{
+			//	continue;
+			//}
+
 			glm::mat4 transform = TransformSystem::GetWorldTransformMatrix(entity);
 
 			glm::vec2* texCoords = renderData.TexCoords;

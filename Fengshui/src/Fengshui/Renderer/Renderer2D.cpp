@@ -80,8 +80,6 @@ namespace Fengshui
 		s_Data.QuadIndexBuffer = IndexBuffer::Create(s_Data.MaxIndices, s_Data.QuadIndicesPtr);
 		s_Data.QuadVertexArray->SetIndexBuffer(s_Data.QuadIndexBuffer);
 
-		//delete[] quadIndices;
-
 		int32_t samplers[s_Data.MaxTextureSlots];
 		for (uint32_t i = 0; i < s_Data.MaxTextureSlots; i++)
 		{

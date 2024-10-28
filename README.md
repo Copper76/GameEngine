@@ -56,6 +56,7 @@ This project is a practice project to make a game engine using Entity-Component 
 ## Knonw Issues
 - The physics system breaks when the object is rotated or scaled by a parent
 - The sphere collider can only scale uniformly, and sphere collider is problematic in general
+- Rendering breaks when 2D is used with spheres
 
 ## Deprecated Objectives
 - [ ] Batch the audio system similar to how rendering is done. (batching doesn't seem to work as nicely as opengl due to the natural of audio)

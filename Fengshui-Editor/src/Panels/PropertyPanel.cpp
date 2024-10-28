@@ -60,6 +60,8 @@ namespace Fengshui
 					bool valueChanged = false;
 					auto& transform = GeneralManager::GetComponent<Transform>(entity);
 
+					ImGui::Checkbox("Is Active", &transform.IsActive);
+
 					valueChanged |= ImGui::DragFloat3("Position", glm::value_ptr(transform.Position), 0.5f);
 
 					glm::vec3 eulerAngles = glm::degrees(glm::eulerAngles(transform.Rotation));
@@ -101,6 +103,8 @@ namespace Fengshui
 					{
 						auto& transform2D = GeneralManager::GetComponent<Transform2D>(entity);
 
+						ImGui::Checkbox("Is Active", &transform2D.IsActive);
+
 						ImGui::DragFloat3("Position", glm::value_ptr(transform2D.Position), 0.5f);
 						ImGui::DragFloat("Rotation", &transform2D.Rotation, 0.1f);
 						ImGui::DragFloat2("Scale", glm::value_ptr(transform2D.Scale), 0.5f);
@@ -125,6 +129,8 @@ namespace Fengshui
 				}
 				{
 					auto& rigidbody = GeneralManager::GetComponent<Rigidbody>(entity);
+
+					ImGui::Checkbox("Is Active", &rigidbody.IsActive);
 
 					ImGui::DragFloat3("Velocity", glm::value_ptr(rigidbody.LinearVelocity));
 					//ImGui::DragFloat4("Angular Velocity", glm::value_ptr(rigidbody.AngularVelocity));
@@ -165,6 +171,8 @@ namespace Fengshui
 				}
 				{
 					auto& collider = GeneralManager::GetComponent<Collider>(entity);
+
+					ImGui::Checkbox("Is Active", &collider.IsActive);
 
 					if (collider.Shape->GetType() != ShapeType::SHAPE_SPHERE)
 					{
@@ -261,6 +269,8 @@ namespace Fengshui
 				{
 					auto& render = GeneralManager::GetComponent<Render>(entity);
 
+					ImGui::Checkbox("Is Active", &render.IsActive);
+
 					ImGui::ColorEdit4("Colour", glm::value_ptr(render.Colour));
 
 					ImGui::DragFloat("Tiling Factor", &render.TilingFactor, 0.1f, -1.0f, std::numeric_limits<float>::max());
@@ -351,6 +361,8 @@ namespace Fengshui
 				{
 					auto& render2D = GeneralManager::GetComponent<Render2D>(entity);
 
+					ImGui::Checkbox("Is Active", &render2D.IsActive);
+
 					ImGui::ColorEdit4("Colour", glm::value_ptr(render2D.Colour));
 				}
 				if (toRemove)
@@ -373,6 +385,8 @@ namespace Fengshui
 				{
 					bool valueChanged = false;
 					auto& camera = GeneralManager::GetComponent<CameraComponent>(entity);
+
+					ImGui::Checkbox("Is Active", &camera.IsActive);
 
 					ImGui::Checkbox("Primary", &camera.Primary);
 
@@ -422,6 +436,8 @@ namespace Fengshui
 				}
 				{
 					auto& light = GeneralManager::GetComponent<Light>(entity);
+
+					ImGui::Checkbox("Is Active", &light.IsActive);
 
 					char* lightTypeName;
 					switch (light.Type)
@@ -479,6 +495,8 @@ namespace Fengshui
 				}
 				{
 					auto& audioSource= GeneralManager::GetComponent<AudioSourceComponent>(entity);
+
+					ImGui::Checkbox("Is Active", &audioSource.IsActive);
 
 					bool valueChanged = false;
 					AudioSetting& settings = audioSource.Settings;
