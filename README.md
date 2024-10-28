@@ -12,18 +12,23 @@ This project is a practice project to make a game engine using Entity-Component 
 - Entity-Component System for rendering, transform, position and camera
 
 ## Functions implemented
+### Exploration and basics
 - [X] Create a simple snake game using pure SFML to learn the basics of input handling and rendering. It was a simple practice with no connection with the rest of the engine. It is implemented in the [Snake Branch](https://github.com/Copper76/GameEngine/tree/Snake).
 - [X] Remade the snake game with Fengshui using the Fengshui editor interface in [NewSnake Branch](https://github.com/Copper76/GameEngine/tree/NewSnake), all the game code are implemented in the editor layer which only calls functions from the Fengshui engine.
 - [X] Get Logging working with spdlog
-- [X] Integrate GLFW into the ECS. The GLFW now works under render component, which stores all the information required for rendering.
 - [X] Create a entity component system structure, a simple ECS is created in the ECS folder.
+### Rendering
+- [X] Integrate GLFW into the ECS. The GLFW now works under render component, which stores all the information required for rendering.
 - [X] Continue with the Cherno series on Hazel to further develop the renderer. The 2D renderer now supports batch rendering, subtexture 
-- [X] Added a preliminary editor, which can display entities in the scene in hierarchy, as well as modifying components
 - [X] Added perspective camera and 3d rendering to support the 3d physics system.
-- [X] Integrated the 3D Physics Engine that was previously made in [Physics Engine](https://github.com/Copper76/Physics-Engine), the engine doesn't play nicely with hierarchy yet.
 - [X] expand the 3d renderer to allow rendering with custom shapes, it now uses the same technique as physical shapes to build convex shape from a set of points
-- [X] Improve the panels. The panels now allow add and removal of components at runtime, as well as the ability to modify most value based data, with the exception of hierarchy.
 - [X] Added functionality to render a sphere, ready to use it in raytracing.
+### UI
+- [X] Added a preliminary editor, which can display entities in the scene in hierarchy, as well as modifying components
+- [X] Improve the panels. The panels now allow add and removal of components at runtime, as well as the ability to modify most value based data, with the exception of hierarchy.
+### Physics
+- [X] Integrated the 3D Physics Engine that was previously made in [Physics Engine](https://github.com/Copper76/Physics-Engine), the engine doesn't play nicely with hierarchy yet.
+### Audio
 - [X] Implement an audio system which can allow user to use all available audio input and output devices.
 - [X] Add support of playing wav files through an audio source.
 - [X] Add support for flac, ogg and mp3 files.
@@ -35,7 +40,17 @@ This project is a practice project to make a game engine using Entity-Component 
 - [X] Add ability to modify audios through pitch shift.
 
 ## TODO
+### Rendering
+- [ ] Text Rendering
+- [ ] game UI rendering
+- [ ] 2D animation
+### Packaging
+- [ ] Allow packaging into web game
+- [ ] Able to open other webpages
+- [ ] Link to GPT
+### Audio
 - [ ] Look into more ways of modifying audio.
+### Raytracing
 - [ ] Look into raytracing and integrate it into the engine(stretch goal).
 
 ## Knonw Issues
