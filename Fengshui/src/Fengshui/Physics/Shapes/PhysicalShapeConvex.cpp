@@ -38,7 +38,7 @@ namespace Fengshui
 
 		//Expand the bounds
 		m_bounds.Clear();
-		m_bounds.Expand(m_VertexCoords.data(), (int)m_VertexCoords.size());
+		m_bounds.Expand(&Vec3(m_VertexCoords.data()), (int)m_VertexCoords.size());
 		m_CenterOfMass = Geometry::CalculateCenterOfMassTetrahedron(m_VertexCoords, hullTris);
 		m_inertiaTensor = Geometry::CalculateInertiaTensorTetrahedron(m_VertexCoords, hullTris, m_CenterOfMass);
 
@@ -60,7 +60,7 @@ namespace Fengshui
 
 		//Expand the bounds
 		m_bounds.Clear();
-		m_bounds.Expand(m_VertexCoords.data(), (int)m_VertexCoords.size());
+		m_bounds.Expand(&Vec3(m_VertexCoords.data()), (int)m_VertexCoords.size());
 		m_CenterOfMass = Geometry::CalculateCenterOfMassTetrahedron(m_VertexCoords, hullTris);
 		m_inertiaTensor = Geometry::CalculateInertiaTensorTetrahedron(m_VertexCoords, hullTris, m_CenterOfMass);
 
@@ -81,7 +81,7 @@ namespace Fengshui
 
 		//Expand the bounds
 		m_bounds.Clear();
-		m_bounds.Expand(m_VertexCoords.data(), (int)m_VertexCoords.size());
+		m_bounds.Expand(&Vec3(m_VertexCoords.data()), (int)m_VertexCoords.size());
 		m_CenterOfMass = Geometry::CalculateCenterOfMassTetrahedron(m_VertexCoords, hullTris);
 		m_inertiaTensor = Geometry::CalculateInertiaTensorTetrahedron(m_VertexCoords, hullTris, m_CenterOfMass);
 	}

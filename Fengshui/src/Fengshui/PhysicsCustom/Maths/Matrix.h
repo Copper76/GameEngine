@@ -445,7 +445,7 @@ inline void Mat4::LookAt( Vec3 pos, Vec3 lookAt, Vec3 up ) {
 	rows[ 3 ] = Vec4( 0, 0, 0, 1 );
 }
 
-inline void Mat4::PerspectiveOpenGL( float fovy, float aspect_ratio, float m_near, float m_far ) {
+inline void Mat4::PerspectiveOpenGL( float fovy, float aspect_ratio, float near, float far ) {
 	const float pi = acosf( -1.0f );
 	const float fovy_radians = fovy * pi / 180.0f;
 	const float f = 1.0f / tanf( fovy_radians * 0.5f );
@@ -454,16 +454,11 @@ inline void Mat4::PerspectiveOpenGL( float fovy, float aspect_ratio, float m_nea
 
 	rows[ 0 ] = Vec4( xscale, 0, 0, 0 );
 	rows[ 1 ] = Vec4( 0, yscale, 0, 0 );
-	rows[ 2 ] = Vec4( 0, 0, (m_far + m_near ) / (m_near - m_far ), ( 2.0f * m_far * m_near ) / (m_near - m_far ) );
+	rows[ 2 ] = Vec4( 0, 0, ( far + near ) / ( near - far ), ( 2.0f * far * near ) / ( near - far ) );
 	rows[ 3 ] = Vec4( 0, 0, -1, 0 );
 }
 
-inline void Mat4::PerspectiveVulkan( float fovy, float aspect_ratio, float m_near, float m_far ) {
-	// Vulkan changed its NDC.  It switch from a left handed coordinate system to a right handed one.
-	// +x points to the right, +z points into the screen, +y points down (it used to point up, in opengl).
-	// It also changed the range from [-1,1] to [0,1] for the z.
-	// Clip space remains [-1,1] for x and y.
-	// Check section 23 of the specification.
+inline void Mat4::PerspectiveVulkan( float fovy, float aspect_ratio, float near, float far ) {
 	Mat4 matVulkan;
 	matVulkan.rows[ 0 ] = Vec4( 1, 0, 0, 0 );
 	matVulkan.rows[ 1 ] = Vec4( 0, -1, 0, 0 );
@@ -471,7 +466,7 @@ inline void Mat4::PerspectiveVulkan( float fovy, float aspect_ratio, float m_nea
 	matVulkan.rows[ 3 ] = Vec4( 0, 0, 0, 1 );
 
 	Mat4 matOpenGL;
-	matOpenGL.PerspectiveOpenGL( fovy, aspect_ratio, m_near, m_far );
+	matOpenGL.PerspectiveOpenGL( fovy, aspect_ratio, near, far );
 
 	*this = matVulkan * matOpenGL;
 }

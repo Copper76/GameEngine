@@ -2,8 +2,6 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-#include "Fengshui/Maths/Bounds.h"
-
 namespace Fengshui
 {
 	struct Edge {

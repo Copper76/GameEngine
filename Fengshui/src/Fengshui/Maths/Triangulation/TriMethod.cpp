@@ -1,5 +1,6 @@
 #include "fspch.h"
 #include "TriMethod.h"
+#include "Fengshui/PhysicsCustom/Maths/Bounds.h"
 
 namespace Fengshui
 {
@@ -88,7 +89,7 @@ namespace Fengshui
 		const int numSamples = 100;//huh? it's sample rate right...
 
 		Bounds bounds;
-		bounds.Expand(pts.data(), (int)pts.size());
+		bounds.Expand(&Vec3(pts.data()), (int)pts.size());
 
 		glm::vec3 cm(0.0f);
 		const float dx = bounds.WidthX() / (float)numSamples;
@@ -119,7 +120,7 @@ namespace Fengshui
 		const int numSamples = 100;
 
 		Bounds bounds;
-		bounds.Expand(pts.data(), (int)pts.size());
+		bounds.Expand(&Vec3(pts.data()), (int)pts.size());
 
 		glm::mat3 tensor = glm::mat3(0.0f);
 

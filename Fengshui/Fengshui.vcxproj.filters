@@ -198,19 +198,7 @@
     <ClInclude Include="src\Fengshui\Logging\Log.h">
       <Filter>src\Fengshui\Logging</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\Maths\Bounds.h">
-      <Filter>src\Fengshui\Maths</Filter>
-    </ClInclude>
     <ClInclude Include="src\Fengshui\Maths\Geometry.h">
-      <Filter>src\Fengshui\Maths</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Fengshui\Maths\LCP.h">
-      <Filter>src\Fengshui\Maths</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Fengshui\Maths\Matrix.h">
-      <Filter>src\Fengshui\Maths</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Fengshui\Maths\Quat.h">
       <Filter>src\Fengshui\Maths</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\Maths\Triangulation\BowyerWatson.h">
@@ -221,9 +209,6 @@
     </ClInclude>
     <ClInclude Include="src\Fengshui\Maths\Triangulation\TriMethod.h">
       <Filter>src\Fengshui\Maths\Triangulation</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Fengshui\Maths\Vector.h">
-      <Filter>src\Fengshui\Maths</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\Physics\Broadphase.h">
       <Filter>src\Fengshui\Physics</Filter>
@@ -446,13 +431,7 @@
     <ClCompile Include="src\Fengshui\Logging\Log.cpp">
       <Filter>src\Fengshui\Logging</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Maths\Bounds.cpp">
-      <Filter>src\Fengshui\Maths</Filter>
-    </ClCompile>
     <ClCompile Include="src\Fengshui\Maths\Geometry.cpp">
-      <Filter>src\Fengshui\Maths</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Fengshui\Maths\LCP.cpp">
       <Filter>src\Fengshui\Maths</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Maths\Triangulation\BowyerWatson.cpp">

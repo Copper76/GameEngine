@@ -1,5 +1,6 @@
 #include "fspch.h"
 #include "BowyerWatson.h"
+#include "Fengshui/PhysicsCustom/Maths/Bounds.h"
 
 namespace Fengshui
 {
@@ -13,7 +14,7 @@ namespace Fengshui
 
 		int vertSize = (int)verts.size();
 
-		bound.Expand(verts.data(), vertSize);
+		bound.Expand(&Vec3(verts.data()), vertSize);
 		float vertScale = 10.0f;
 
 		float dx = bound.WidthX() * vertScale;

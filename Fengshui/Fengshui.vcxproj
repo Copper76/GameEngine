@@ -182,15 +182,10 @@
     <ClInclude Include="src\Fengshui\Layers\Layer.h" />
     <ClInclude Include="src\Fengshui\Layers\LayerStack.h" />
     <ClInclude Include="src\Fengshui\Logging\Log.h" />
-    <ClInclude Include="src\Fengshui\Maths\Bounds.h" />
     <ClInclude Include="src\Fengshui\Maths\Geometry.h" />
-    <ClInclude Include="src\Fengshui\Maths\LCP.h" />
-    <ClInclude Include="src\Fengshui\Maths\Matrix.h" />
-    <ClInclude Include="src\Fengshui\Maths\Quat.h" />
     <ClInclude Include="src\Fengshui\Maths\Triangulation\BowyerWatson.h" />
     <ClInclude Include="src\Fengshui\Maths\Triangulation\FurthestPoint.h" />
     <ClInclude Include="src\Fengshui\Maths\Triangulation\TriMethod.h" />
-    <ClInclude Include="src\Fengshui\Maths\Vector.h" />
     <ClInclude Include="src\Fengshui\Physics\Broadphase.h" />
     <ClInclude Include="src\Fengshui\Physics\Constraints.h" />
     <ClInclude Include="src\Fengshui\Physics\Constraints\ConstraintBase.h" />
@@ -269,9 +264,7 @@
     <ClCompile Include="src\Fengshui\Layers\Layer.cpp" />
     <ClCompile Include="src\Fengshui\Layers\LayerStack.cpp" />
     <ClCompile Include="src\Fengshui\Logging\Log.cpp" />
-    <ClCompile Include="src\Fengshui\Maths\Bounds.cpp" />
     <ClCompile Include="src\Fengshui\Maths\Geometry.cpp" />
-    <ClCompile Include="src\Fengshui\Maths\LCP.cpp" />
     <ClCompile Include="src\Fengshui\Maths\Triangulation\BowyerWatson.cpp" />
     <ClCompile Include="src\Fengshui\Maths\Triangulation\FurthestPoint.cpp" />
     <ClCompile Include="src\Fengshui\Maths\Triangulation\TriMethod.cpp" />

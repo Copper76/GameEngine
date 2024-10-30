@@ -4,8 +4,7 @@
 #pragma once
 #include "Fengshui/Renderer//RenderShapes/RenderShapes.h"
 
-#include "Fengshui/Maths/Vector.h"
-#include "Fengshui/Maths/Matrix.h"
+#include "Fengshui/PhysicsCustom/Maths/Bounds.h"
 #include <vector>
 
 namespace Fengshui
