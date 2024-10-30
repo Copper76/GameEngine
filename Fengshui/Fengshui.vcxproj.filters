@@ -90,6 +90,9 @@
     <ClInclude Include="src\Fengshui\Audio\AudioInputDevice.h">
       <Filter>src\Fengshui\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\Audio\AudioListener.h">
+      <Filter>src\Fengshui\Audio</Filter>
+    </ClInclude>
     <ClInclude Include="src\Fengshui\Audio\AudioLoader.h">
       <Filter>src\Fengshui\Audio</Filter>
     </ClInclude>
@@ -141,6 +144,9 @@
     <ClInclude Include="src\Fengshui\ECS\EntityManager.h">
       <Filter>src\Fengshui\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\GameScript.h">
+      <Filter>src\Fengshui\ECS</Filter>
+    </ClInclude>
     <ClInclude Include="src\Fengshui\ECS\GeneralManager.h">
       <Filter>src\Fengshui\ECS</Filter>
     </ClInclude>
@@ -150,7 +156,16 @@
     <ClInclude Include="src\Fengshui\ECS\Systems.h">
       <Filter>src\Fengshui\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\Systems\AudioListenSystem.h">
+      <Filter>src\Fengshui\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\Systems\AudioPlayerSystem.h">
+      <Filter>src\Fengshui\ECS\Systems</Filter>
+    </ClInclude>
     <ClInclude Include="src\Fengshui\ECS\Systems\CameraSystem.h">
+      <Filter>src\Fengshui\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fengshui\ECS\Systems\GameScriptSystem.h">
       <Filter>src\Fengshui\ECS\Systems</Filter>
     </ClInclude>
     <ClInclude Include="src\Fengshui\ECS\Systems\GravitySystem.h">
@@ -297,6 +312,9 @@
     <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioInputDevice.h">
       <Filter>src\Fengshui\Platform\OpenAL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioListener.h">
+      <Filter>src\Fengshui\Platform\OpenAL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioOutputDevice.h">
       <Filter>src\Fengshui\Platform\OpenAL</Filter>
     </ClInclude>
@@ -378,12 +396,6 @@
     <ClInclude Include="src\fspch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fengshui\ECS\Systems\AudioPlayerSystem.h" />
-    <ClInclude Include="src\Fengshui\ECS\GameScript.h" />
-    <ClInclude Include="src\Fengshui\ECS\Systems\GameScriptSystem.h" />
-    <ClInclude Include="src\Fengshui\Audio\AudioListener.h" />
-    <ClInclude Include="src\Fengshui\Platform\OpenAL\OpenALAudioListener.h" />
-    <ClInclude Include="src\Fengshui\ECS\Systems\AudioListenSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\stb_image\stb_image.cpp">
@@ -393,6 +405,9 @@
       <Filter>src\Fengshui\Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Audio\AudioCommand.cpp">
+      <Filter>src\Fengshui\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\Audio\AudioLoader.cpp">
       <Filter>src\Fengshui\Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\Core\Application.cpp">
@@ -407,7 +422,16 @@
     <ClCompile Include="src\Fengshui\ECS\GeneralManager.cpp">
       <Filter>src\Fengshui\ECS</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Systems\AudioListenSystem.cpp">
+      <Filter>src\Fengshui\ECS\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Systems\AudioPlayerSystem.cpp">
+      <Filter>src\Fengshui\ECS\Systems</Filter>
+    </ClCompile>
     <ClCompile Include="src\Fengshui\ECS\Systems\CameraSystem.cpp">
+      <Filter>src\Fengshui\ECS\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fengshui\ECS\Systems\GameScriptSystem.cpp">
       <Filter>src\Fengshui\ECS\Systems</Filter>
     </ClCompile>
     <ClCompile Include="src\Fengshui\ECS\Systems\GravitySystem.cpp">
@@ -527,6 +551,9 @@
     <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioInputDevice.cpp">
       <Filter>src\Fengshui\Platform\OpenAL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioListener.cpp">
+      <Filter>src\Fengshui\Platform\OpenAL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioOutputDevice.cpp">
       <Filter>src\Fengshui\Platform\OpenAL</Filter>
     </ClCompile>
@@ -602,10 +629,5 @@
     <ClCompile Include="src\fspch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fengshui\Audio\AudioLoader.cpp" />
-    <ClCompile Include="src\Fengshui\ECS\Systems\AudioPlayerSystem.cpp" />
-    <ClCompile Include="src\Fengshui\ECS\Systems\GameScriptSystem.cpp" />
-    <ClCompile Include="src\Fengshui\Platform\OpenAL\OpenALAudioListener.cpp" />
-    <ClCompile Include="src\Fengshui\ECS\Systems\AudioListenSystem.cpp" />
   </ItemGroup>
 </Project>
