@@ -5,6 +5,7 @@
 #include <math.h>
 #include <assert.h>
 #include <stdio.h>
+#include <glm/glm.hpp>
 
 /*
  ================================
@@ -38,6 +39,7 @@ public:
 	float Dot( const Vec2 & rhs ) const { return x * rhs.x + y * rhs.y; }
 	
 	const float * ToPtr() const { return &x; }
+	glm::vec2 TOGLM() { return glm::vec2{ x,y }; }
 	
 public:
 	float x;
@@ -195,8 +197,6 @@ public:
 	Vec3( const Vec3 & rhs );
 	Vec3( float X, float Y, float Z );
 	Vec3( const float * xyz );
-	Vec3(const glm::vec3* xyz);
-	Vec3(const glm::vec3 xyz);
 	Vec3 & operator = ( const Vec3 & rhs );
 	Vec3 & operator = ( const float * rhs );
     
@@ -225,7 +225,7 @@ public:
 	void GetOrtho( Vec3 & u, Vec3 & v ) const;
 	
 	const float * ToPtr() const { return &x; }
-	const glm::vec3 ToGLM() const { return glm::vec3(x, y, z); }
+	glm::vec3 TOGLM() { return glm::vec3{ x,y,z }; }
 
 public:
 	float x;
@@ -261,18 +261,6 @@ inline Vec3::Vec3( const float * xyz ) :
 x( xyz[ 0 ] ),
 y( xyz[ 1 ] ),
 z( xyz[ 2 ] ) {
-}
-
-inline Vec3::Vec3(const glm::vec3* xyz) :
-	x(xyz->x),
-	y(xyz->y),
-	z(xyz->z) {
-}
-
-inline Vec3::Vec3(const glm::vec3 xyz) :
-	x(xyz.x),
-	y(xyz.y),
-	z(xyz.z) {
 }
 
 inline Vec3 & Vec3::operator = ( const Vec3 & rhs ) {
@@ -481,6 +469,7 @@ public:
 	
     const float *   ToPtr() const   { return &x; }
 	float *         ToPtr()         { return &x; }
+	glm::vec4 TOGLM() { return glm::vec4{ x,y,z,w }; }
 	
 public:
 	float x;
@@ -706,12 +695,12 @@ public:
 	
 public:
 	int		N;
-	float *	data;
+	float*	data;
 };
 
-inline VecN::VecN( int _N ) {
-	N = _N;
-	data = new float[ _N ];
+inline VecN::VecN( int n ) {
+	N = n;
+	data = new float[ n ];
 }
 
 inline VecN::VecN( const VecN & rhs ) {

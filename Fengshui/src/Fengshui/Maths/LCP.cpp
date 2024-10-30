@@ -1,6 +1,8 @@
 //
 //	LCP.cpp
 //
+#include "fspch.h"
+
 #include "LCP.h"
 
 /*
@@ -8,7 +10,7 @@
 LCP_GaussSeidel
 ====================================================
 */
-VecN LCP_GaussSeidel( const MatN & A, const VecN & b ) {
+VecN LCP_GaussSeidel( const MatN& A, const VecN& b ) {
 	const int N = b.N;
 	VecN x( N );
 	x.Zero();
