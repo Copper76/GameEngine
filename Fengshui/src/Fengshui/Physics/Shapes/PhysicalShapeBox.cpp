@@ -13,7 +13,7 @@ namespace Fengshui
 {
 	void PhysicalShapeBox::Build(const glm::vec3* pts, const int num) {
 		for (int i = 0; i < num; i++) {
-			m_bounds.Expand(Vec3(pts[i]));
+			m_bounds.Expand(pts[i]);
 			m_BaseCoords[i] = pts[i];
 		}
 
@@ -28,7 +28,7 @@ namespace Fengshui
 		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.maxs.z));
 		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.mins.z));
 
-		m_CenterOfMass = (m_bounds.maxs + m_bounds.mins).ToGLM() * 0.5f;
+		m_CenterOfMass = (m_bounds.maxs + m_bounds.mins) * 0.5f;
 	}
 
 	void PhysicalShapeBox::Build(const glm::vec3* pts, const int num, const glm::vec3 offset, const glm::vec3 scale)
@@ -49,7 +49,7 @@ namespace Fengshui
 		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.maxs.z));
 		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.mins.z));
 
-		m_CenterOfMass = (m_bounds.maxs + m_bounds.mins).ToGLM() * 0.5f;
+		m_CenterOfMass = (m_bounds.maxs + m_bounds.mins) * 0.5f;
 	}
 
 	void PhysicalShapeBox::Rebuild(const glm::vec3 offset, const glm::vec3 scale)
@@ -69,7 +69,7 @@ namespace Fengshui
 		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.mins.y, m_bounds.maxs.z));
 		m_VertexCoords.push_back(glm::vec3(m_bounds.maxs.x, m_bounds.maxs.y, m_bounds.mins.z));
 
-		m_CenterOfMass = (m_bounds.maxs + m_bounds.mins).ToGLM() * 0.5f;
+		m_CenterOfMass = (m_bounds.maxs + m_bounds.mins) * 0.5f;
 	}
 
 	/*
