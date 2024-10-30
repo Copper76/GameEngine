@@ -21,7 +21,7 @@ namespace Fengshui
 				auto& transformComp = GeneralManager::GetComponent<Transform>(entity);
 				Ref<AudioListener> audioListener = GeneralManager::GetActiveScene()->GetSceneManager()->GetComponent<AudioListenerComponent>().Listener;
 				audioListener->UpdateLocation(transformComp.Position);
-				glm::mat3 rotationMatrix = glm::mat3_cast(transformComp.Rotation);;
+				glm::mat3 rotationMatrix = glm::mat3_cast(glm::normalize(transformComp.Rotation));
 				glm::vec3 forward = -rotationMatrix[2];
 				glm::vec3 up = rotationMatrix[1];
 				audioListener->UpdateOrientation(forward, up);

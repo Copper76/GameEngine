@@ -131,8 +131,8 @@ namespace Fengshui
 
 		m_AudioSource = m_BigSquare->AddComponent<AudioSourceComponent>(AudioSourceComponent(AudioCommand::CreateAudioSource("Assets/AudioClip/bell.wav")));
 
-		/*m_BigSquare->AddComponent<Rigidbody>();
-		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>();*/
+		m_BigSquare->AddComponent<Rigidbody>();
+		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>();
 
 		m_Ground = MakeRef<Entity>("Ground");
 
@@ -140,8 +140,8 @@ namespace Fengshui
 
 		m_Ground->AddComponent<Render>(Render(checkerboard));
 
-		/*m_Ground->AddComponent<Rigidbody>(Rigidbody(0.0f));
-		Collider groundCollider = m_Ground->AddComponent<Collider>(Collider(new PhysicalShapeBox(glm::vec3(0.0f), TransformSystem::GetWorldTransform(m_Ground->GetID()).Scale)));*/
+		m_Ground->AddComponent<Rigidbody>(Rigidbody(0.0f));
+		Collider groundCollider = m_Ground->AddComponent<Collider>(Collider(new PhysicalShapeBox(glm::vec3(0.0f), TransformSystem::GetWorldTransform(m_Ground->GetID()).Scale)));
 
 		//m_BigSquare->SetParent(m_SecondCamera);
 
@@ -172,6 +172,18 @@ namespace Fengshui
 		}
 		
 		GeneralManager::SetActiveScene(m_ActiveScene);
+
+		glm::quat quat = glm::angleAxis(1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+		quat = glm::normalize(quat);
+		glm::mat3 tensor = glm::mat3_cast(quat);
+
+		//glm::mat3 tensor = glm::transpose(glm::mat3(1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f));
+		glm::vec3 vec = tensor[1];
+		//glm::vec3 vec2 = tensor * vec;
+		//vec2 = glm::cross(vec, vec2);
+		//vec = glm::inverse(tensor) * vec2;
+		//FS_INFO("Identity Quat: ({}, {}, {}, {})", quat.w, quat.x, quat.y, quat.z);
+		FS_INFO("Identity Vec: ({}, {}, {})", vec.x, vec.y, vec.z);
 
 		m_EditorReady = true;
 	}

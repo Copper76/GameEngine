@@ -212,6 +212,6 @@ namespace Fengshui
 		}
 
 		inertiaTensor *= 1.0f / totalVolume;
-		return inertiaTensor;
+		return glm::transpose(inertiaTensor);
 	}
 }
