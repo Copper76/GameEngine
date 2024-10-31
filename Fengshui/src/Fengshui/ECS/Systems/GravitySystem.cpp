@@ -10,6 +10,8 @@ namespace Fengshui
 		for (EntityID entity : m_Entities)
 		{
 			Rigidbody& rb = GeneralManager::GetComponent<Rigidbody>(entity);
+			if (rb.InvMass == 0.0f) continue;
+
 			float mass = 1.0f / rb.InvMass;
 			const glm::vec3 impulseGravity = rb.Gravity * mass * dt;
 			ApplyImpulseLinear(impulseGravity, rb);

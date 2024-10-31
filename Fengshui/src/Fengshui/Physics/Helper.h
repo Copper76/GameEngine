@@ -61,7 +61,7 @@ namespace Fengshui
 
 	static void ApplyImpulseLinear(const glm::vec3& impulse, Rigidbody& rb)
 	{
-		if (rb.InvMass == 0.0f) { return; }
+		if (rb.InvMass == 0.0f) return;
 
 		//p=mv
 		//dp = m*dv

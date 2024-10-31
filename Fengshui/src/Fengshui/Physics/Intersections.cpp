@@ -36,14 +36,16 @@ namespace Fengshui
 		contact.bodyB = pair.b;
 		contact.timeOfImpact = 0.0f;
 
-		if (colliderA.Shape->GetType() == ShapeType::SHAPE_SPHERE && colliderB.Shape->GetType() == ShapeType::SHAPE_SPHERE) {
+		if (colliderA.Shape->GetType() == ShapeType::SHAPE_SPHERE && colliderB.Shape->GetType() == ShapeType::SHAPE_SPHERE)
+		{
 			const PhysicalShapeSphere* sphereA = (const PhysicalShapeSphere*)colliderA.Shape;
 			const PhysicalShapeSphere* sphereB = (const PhysicalShapeSphere*)colliderB.Shape;
 
 			glm::vec3 posA = transA.Position;
 			glm::vec3 posB = transB.Position;
 
-			if (SphereSphereStatic(sphereA, sphereB, posA, posB, contact.ptOnA_WorldSpace, contact.ptOnB_WorldSpace)) {
+			if (SphereSphereStatic(sphereA, sphereB, posA, posB, contact.ptOnA_WorldSpace, contact.ptOnB_WorldSpace))
+			{
 				contact.normal = glm::normalize(posA - posB);
 
 				contact.ptOnA_LocalSpace = WorldSpaceToBodySpace(contact.ptOnA_WorldSpace, colliderA, transA);
@@ -56,7 +58,8 @@ namespace Fengshui
 				return true;
 			}
 		}
-		else {
+		else
+		{
 			glm::vec3 ptOnA;
 			glm::vec3 ptOnB;
 			const float bias = 0.001f;
@@ -167,6 +170,9 @@ namespace Fengshui
 
 	//dynamic
 	bool Intersect(const CollisionPair pair, const float dt, contact_t& contact) {
+		contact.bodyA = pair.a;
+		contact.bodyB = pair.b;
+
 		Rigidbody& bodyA = GeneralManager::GetComponent<Rigidbody>(contact.bodyA);
 		Rigidbody& bodyB = GeneralManager::GetComponent<Rigidbody>(contact.bodyB);
 
@@ -176,9 +182,6 @@ namespace Fengshui
 		}
 
 		float dt_sec = dt;
-
-		contact.bodyA = pair.a;
-		contact.bodyB = pair.b;
 
 		Transform& transA = GeneralManager::GetComponent<Transform>(contact.bodyA);
 		Transform& transB = GeneralManager::GetComponent<Transform>(contact.bodyB);
@@ -218,15 +221,18 @@ namespace Fengshui
 				return true;
 			}
 		}
-		else {
+		else 
+		{
 			float toi = 0.0f;
 
 			int numIters = 0;
 
 			//Advance the positions of the bodies until they touch or there is no time left
-			while (dt_sec > 0.0f) {
+			while (dt_sec > 0.0f) 
+			{
 				bool didIntersect = Intersect(pair,bodyA, bodyB, globalTransA, globalTransB, colliderA, colliderB, contact);
-				if (didIntersect) {
+				if (didIntersect) 
+				{
 					contact.timeOfImpact = toi;
 					//move bodies back to where they were
 					Update(-toi, colliderA, bodyA, transA, globalTransA.Rotation);
@@ -234,7 +240,9 @@ namespace Fengshui
 					return true;
 				}
 
-				if (++numIters > 10) {
+				++numIters;
+				if (numIters > 10) 
+				{
 					break;
 				}
 
@@ -248,12 +256,14 @@ namespace Fengshui
 				float angularSpeedB = colliderB.Shape->FastestLinearSpeed(bodyB.AngularVelocity, ab * -1.0f);
 				orthoSpeed += angularSpeedA + angularSpeedB;
 				//not going towards each other so no collision
-				if (orthoSpeed <= 0.0f) {
+				if (orthoSpeed <= 0.0f)
+				{
 					break;
 				}
 
 				float timeToGo = contact.separationDistance / orthoSpeed;
-				if (timeToGo > dt_sec) {
+				if (timeToGo > dt_sec) 
+				{
 					break;
 				}
 
