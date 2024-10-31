@@ -35,9 +35,9 @@ namespace Fengshui
 		const glm::vec3 ra = worldAnchorA - GetCenterOfMassWorldSpace(colliderA, transA);
 		const glm::vec3 rb = worldAnchorB - GetCenterOfMassWorldSpace(colliderB, transB);
 
-		const glm::quat q1 = transA.Rotation;
-		const glm::quat q2 = transB.Rotation;
-		const glm::quat q0_inv = glm::inverse(m_q0);
+		const glm::quat q1 = glm::normalize(transA.Rotation);
+		const glm::quat q2 = glm::normalize(transB.Rotation);
+		const glm::quat q0_inv = glm::inverse(glm::normalize(m_q0));
 		const glm::quat q1_inv = glm::inverse(q1);
 
 		glm::vec3 u;//u and v directions need to be found, defined in the local space of body A
@@ -45,12 +45,12 @@ namespace Fengshui
 		glm::vec3 cv = m_axisA;
 		GetOrtho(cv, u, v);
 
-		glm::mat4 P;
-		P[0] = glm::vec4(0.0f);
-		P[1] = glm::vec4(0, 1, 0, 0);
-		P[2] = glm::vec4(0, 0, 1, 0);
-		P[3] = glm::vec4(0, 0, 0, 1);
-		glm::mat4 P_T = glm::transpose(P);
+		glm::mat4 P_T;
+		P_T[0] = glm::vec4(0.0f);
+		P_T[1] = glm::vec4(0, 1, 0, 0);
+		P_T[2] = glm::vec4(0, 0, 1, 0);
+		P_T[3] = glm::vec4(0, 0, 0, 1);
+		glm::mat4 P = glm::transpose(P_T);
 
 		const glm::mat4 MatA = P * Left(q1_inv) * Right(q2 * q0_inv) * P_T * -0.5f;
 		const glm::mat4 MatB = P * Left(q1_inv) * Right(q2 * q0_inv) * P_T * 0.5f;
@@ -190,9 +190,9 @@ namespace Fengshui
 		const glm::vec3 ra = worldAnchorA - GetCenterOfMassWorldSpace(colliderA, transA);
 		const glm::vec3 rb = worldAnchorB - GetCenterOfMassWorldSpace(colliderB, transB);
 
-		const glm::quat q1 = transA.Rotation;
-		const glm::quat q2 = transB.Rotation;
-		const glm::quat q0_inv = glm::inverse(m_q0);
+		const glm::quat q1 = glm::normalize(transA.Rotation);
+		const glm::quat q2 = glm::normalize(transB.Rotation);
+		const glm::quat q0_inv = glm::inverse(glm::normalize(m_q0));
 		const glm::quat q1_inv = glm::inverse(q1);
 
 		glm::vec3 u;//u and v directions need to be found, defined in the local space of body A
@@ -200,12 +200,12 @@ namespace Fengshui
 		glm::vec3 cv = m_axisA;
 		GetOrtho(cv, u, v);
 
-		glm::mat4 P;
-		P[0] = glm::vec4(0.0f);
-		P[1] = glm::vec4(0, 1, 0, 0);
-		P[2] = glm::vec4(0, 0, 1, 0);
-		P[3] = glm::vec4(0, 0, 0, 1);
-		glm::mat4 P_T = glm::transpose(P);
+		glm::mat4 P_T;
+		P_T[0] = glm::vec4(0.0f);
+		P_T[1] = glm::vec4(0, 1, 0, 0);
+		P_T[2] = glm::vec4(0, 0, 1, 0);
+		P_T[3] = glm::vec4(0, 0, 0, 1);
+		glm::mat4 P = glm::transpose(P_T);
 
 		const glm::mat4 MatA = P * Left(q1_inv) * Right(q2 * q0_inv) * P_T * -0.5f;
 		const glm::mat4 MatB = P * Left(q1_inv) * Right(q2 * q0_inv) * P_T * 0.5f;

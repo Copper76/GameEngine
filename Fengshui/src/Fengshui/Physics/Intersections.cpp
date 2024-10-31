@@ -234,8 +234,7 @@ namespace Fengshui
 					return true;
 				}
 
-				++numIters;
-				if (numIters > 10) {
+				if (++numIters > 10) {
 					break;
 				}
 

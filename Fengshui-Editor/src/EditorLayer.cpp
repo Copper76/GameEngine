@@ -136,7 +136,7 @@ namespace Fengshui
 
 		m_Ground = MakeRef<Entity>("Ground");
 
-		Transform groundTrans = m_Ground->AddComponent<Transform>(Transform(glm::vec3(0.0f, -2.0f, 0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
+		Transform groundTrans = m_Ground->AddComponent<Transform>(Transform(glm::vec3(1.0f, -2.0f, 0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
 
 		m_Ground->AddComponent<Render>(Render(checkerboard));
 
@@ -175,7 +175,7 @@ namespace Fengshui
 
 		glm::quat quat = glm::angleAxis(1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 		quat = glm::normalize(quat);
-		glm::mat3 tensor = glm::mat3_cast(quat);
+		glm::mat3 tensor = glm::inverse(glm::mat3_cast(quat));
 
 		//glm::mat3 tensor = glm::transpose(glm::mat3(1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f));
 		glm::vec3 vec = tensor[1];

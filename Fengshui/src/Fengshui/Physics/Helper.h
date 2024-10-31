@@ -112,10 +112,10 @@ namespace Fengshui
 
 		//glm::vec3 dAngle = relativeRotation * rb.AngularVelocity * dt_sec;
 		glm::vec3 dAngle = rb.AngularVelocity * dt_sec;
-		const float dAngleMagnitude = dAngle.length();
+		const float dAngleMagnitude = glm::length(dAngle);
 		if (dAngleMagnitude > 0.0f)
 		{
-			glm::quat dq = glm::normalize(glm::angleAxis(dAngleMagnitude, dAngle));
+			glm::quat dq = glm::normalize(glm::angleAxis(dAngleMagnitude, dAngle / dAngleMagnitude));
 			trans.Rotation = glm::normalize(dq * trans.Rotation);
 
 			glm::vec3 positionCM = GetCenterOfMassWorldSpace(collider, trans);
@@ -133,7 +133,7 @@ namespace Fengshui
 		Rigidbody& rb = GeneralManager::GetComponent<Rigidbody>(entity);
 		Transform& trans = GeneralManager::GetComponent<Transform>(entity);
 
-		const glm::quat globalRotation = TransformSystem::GetWorldTransform(entity).Rotation;
+		const glm::quat globalRotation = glm::normalize(TransformSystem::GetWorldTransform(entity).Rotation);
 
 		Update(dt_sec, collider, rb, trans, globalRotation);
 	}
@@ -154,7 +154,7 @@ namespace Fengshui
 					continue;
 				}
 
-				minor[xx][yy] = matrix[x][y];
+				minor[yy][xx] = matrix[y][x];
 				xx++;
 			}
 

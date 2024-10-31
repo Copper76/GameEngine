@@ -173,7 +173,7 @@ Constraint
 		L[2] = glm::vec4(q.y, q.z, q.w, -q.x);
 		L[3] = glm::vec4(q.z, -q.y, q.x, q.w);
 
-		return glm::transpose(L);
+		return L;
 	}
 
 	/*
@@ -188,6 +188,6 @@ Constraint
 		R[2] = glm::vec4(q.y, -q.z, q.w, q.x);
 		R[3] = glm::vec4(q.z, q.y, -q.x, q.w);
 
-		return glm::transpose(R);
+		return R;
 	}
 }

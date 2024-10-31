@@ -57,13 +57,13 @@ namespace Fengshui
 		//
 		//solve constraints for each constraint
 		//
-		//Get componentsfor each
+		//Get components for each
 		for (int i = 0; i < constraints.size(); i++) {
 			constraints[i]->PreSolve(dt);
 		}
 		manifolds->PreSolve(dt);
 
-		const int numIter = 5;
+		const int numIter = 30;
 		for (int j = 0; j < numIter; j++) {
 			for (int i = 0; i < constraints.size(); i++) {
 				constraints[i]->Solve();

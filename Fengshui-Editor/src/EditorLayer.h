@@ -110,9 +110,9 @@ namespace Fengshui
 					m_IsPlaying = !m_IsPlaying; //run this first to avoid unwanted updates
 					if (!m_IsPlaying)
 					{
+						m_Paused = false;
 						m_ActiveScene->End();
 						Reset();
-						m_Paused = false;
 					}
 					else
 					{

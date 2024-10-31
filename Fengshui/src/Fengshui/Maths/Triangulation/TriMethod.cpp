@@ -81,7 +81,7 @@ namespace Fengshui
 		inertiaTensor[0] = glm::vec3(a, -cprime, -bprime);
 		inertiaTensor[1] = glm::vec3(-cprime, b, -aprime);
 		inertiaTensor[2] = glm::vec3(-bprime, -aprime, c);
-		return inertiaTensor;
+		return glm::transpose(inertiaTensor);
 	}
 
 	glm::vec3 CalculateCenterOfMass(const std::vector<glm::vec3>& pts, const std::vector<Triangle>& tris) {
@@ -157,7 +157,7 @@ namespace Fengshui
 		}
 
 		tensor *= 1.0f / (float)sampleCount;
-		return tensor;
+		return glm::transpose(tensor);
 	}
 
 	glm::vec3 TriMethod::CalculateCenterOfMassTetrahedron(const std::vector<glm::vec3>& pts, const std::vector<Triangle>& tris) {
