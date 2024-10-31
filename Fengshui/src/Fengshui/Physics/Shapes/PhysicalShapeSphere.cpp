@@ -56,8 +56,8 @@ ShapeSphere::Support
 		Bounds tmp;
 		//tmp.mins = (transform.Rotation * (-m_Radius)) + transform.Position;
 		//tmp.maxs = (transform.Rotation * m_Radius) + transform.Position;
-		tmp.mins = (transform.Rotation * glm::vec3(-m_Radius)) + transform.Position;
-		tmp.maxs = (transform.Rotation * glm::vec3(m_Radius)) + transform.Position;
+		tmp.mins = glm::vec3(-m_Radius) + transform.Position;
+		tmp.maxs = glm::vec3(m_Radius) + transform.Position;
 		return tmp;
 	}
 }

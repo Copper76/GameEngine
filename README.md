@@ -54,7 +54,7 @@ This project is a practice project to make a game engine using Entity-Component 
 - [ ] Look into raytracing and integrate it into the engine(stretch goal).
 
 ## Knonw Issues
-- The physics system breaks when the object is rotated or scaled by a parent
+- The physics system cannot work well with scales, and sphere collider is problematic
 - The sphere collider can only scale uniformly, and sphere collider is problematic in general
 - Rendering breaks when 2D is used with spheres
 
