@@ -5,6 +5,8 @@
 
 namespace Fengshui
 {
+	class Application;
+
 	class Layer
 	{
 	public:
@@ -18,7 +20,8 @@ namespace Fengshui
 		virtual void OnRender() {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event) {}
-		void SetActive(bool isActive);
+		inline void SetActive(bool isActive) { m_IsActive = isActive; }
+		inline void SetApplication(Application* application) { m_Application = application; }
 
 		inline const std::string& GetName() const { return m_DebugName; }
 		inline bool IsActive() { return m_IsActive; }
@@ -26,6 +29,7 @@ namespace Fengshui
 	protected:
 		std::string m_DebugName;
 		bool m_IsActive;
+		Application* m_Application;
 	};
 
 }

@@ -13,51 +13,38 @@ namespace Fengshui
 	//Update function called for editor, you can also treat this as game update
 	void EditorLayer::OnUpdate(float dt)
 	{
-		if (m_IsPlaying && !m_Paused)
+		if (m_ActiveScene == m_Scene)
 		{
-
-			if (m_ActiveScene == m_Scene)
+			Render& renderComp = m_BigSquare->GetComponent<Render>();
+			renderComp.Colour = m_SquareColour;
+			renderComp.TilingFactor = m_TilingFactor;
+			Transform& trans = m_BigSquare->GetComponent<Transform>();
+			//glm::quat& rotateDelta = glm::normalize(glm::quat(glm::radians(glm::vec3(dt * 0.01f, dt * 0.01f, 0.0f))));
+			//trans.Rotation *= rotateDelta;
+		}
+		else
+		{
+			for (Ref<Entity> square : m_BackgroundSquares)
 			{
-				Render& renderComp = m_BigSquare->GetComponent<Render>();
-				renderComp.Colour = m_SquareColour;
-				renderComp.TilingFactor = m_TilingFactor;
-				Transform& trans = m_BigSquare->GetComponent<Transform>();
-				//glm::quat& rotateDelta = glm::normalize(glm::quat(glm::radians(glm::vec3(dt * 0.01f, dt * 0.01f, 0.0f))));
-				//trans.Rotation *= rotateDelta;
-			}
-			else
-			{
-				for (Ref<Entity> square : m_BackgroundSquares)
-				{
-					Transform2D& squareTrans = square->GetComponent<Transform2D>();
-					squareTrans.Rotation = std::fmod(squareTrans.Rotation + dt, 360.0f);
-				}
+				Transform2D& squareTrans = square->GetComponent<Transform2D>();
+				squareTrans.Rotation = std::fmod(squareTrans.Rotation + dt, 360.0f);
 			}
 		}
-		if (m_EditorReady)
-		{
-			m_ActiveScene->OnUpdate(dt);
-		}
+		m_ActiveScene->OnUpdate(dt);
 	}
 
 	//Fixed update code for the editor, it just simply call the scene update for now
 	void EditorLayer::OnFixedUpdate(float dt)
 	{
-		if (m_IsPlaying && !m_Paused && m_EditorReady)
-		{
-			m_ActiveScene->OnFixedUpdate(dt);
-		}
+		m_ActiveScene->OnFixedUpdate(dt);
 	}
 
 	//Render code for editor, if the application is a game, no framebuffer will be required
 	void EditorLayer::OnRender()
 	{
-		if (m_EditorReady)
-		{
-			m_Framebuffer->Bind();
-			m_ActiveScene->OnRender();
-			m_Framebuffer->Unbind();
-		}
+		m_Framebuffer->Bind();
+		m_ActiveScene->OnRender();
+		m_Framebuffer->Unbind();
 	}
 
 	//Code run when the layer is attached to the layer stack
@@ -77,8 +64,6 @@ namespace Fengshui
 	//Code to reset the scene
 	void EditorLayer::Reset()
 	{
-		m_EditorReady = false;
-
 		GeneralManager::Reset();
 		m_Scene = Scene::Init();
 
@@ -173,6 +158,8 @@ namespace Fengshui
 		
 		GeneralManager::SetActiveScene(m_ActiveScene);
 
+		m_ActiveScene->Finalise();
+
 		glm::quat quat = glm::angleAxis(1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 		quat = glm::normalize(quat);
 		glm::mat3 tensor = glm::inverse(glm::mat3_cast(quat));
@@ -184,8 +171,6 @@ namespace Fengshui
 		//vec = glm::inverse(tensor) * vec2;
 		//FS_INFO("Identity Quat: ({}, {}, {}, {})", quat.w, quat.x, quat.y, quat.z);
 		FS_INFO("Identity Vec: ({}, {}, {})", vec.x, vec.y, vec.z);
-
-		m_EditorReady = true;
 	}
 
 	void EditorLayer::OnDetach()

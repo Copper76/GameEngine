@@ -26,6 +26,8 @@ namespace Fengshui
 
 		void Setup();
 
+		void Finalise();
+
 		void End();
 
 		void OnUpdate(float dt);

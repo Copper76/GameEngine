@@ -53,7 +53,6 @@ namespace Fengshui
 		//sort the times of impact from first to last
 		if (numContacts > 1) {
 			qsort(contacts, numContacts, sizeof(contact_t), CompareContacts);
-			FS_INFO("Contacting")
 		}
 
 		//
@@ -88,7 +87,6 @@ namespace Fengshui
 				Update(dt_sec, entity);//Get components here
 			}
 			ResolveContact(contact);//Get components here
-			FS_INFO("Resolving contact")
 			accumulatedTime += dt_sec;
 		}
 

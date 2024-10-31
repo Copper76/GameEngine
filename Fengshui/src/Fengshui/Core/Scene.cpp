@@ -131,6 +131,11 @@ namespace Fengshui
 		return scene;
 	}
 
+	void Scene::Finalise()
+	{
+		m_PrimaryCamera = m_CameraSystem->GetPrimary();
+	}
+
 	//Update function for the scene
 	void Scene::OnUpdate(float dt)
 	{

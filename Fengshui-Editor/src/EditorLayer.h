@@ -107,22 +107,22 @@ namespace Fengshui
 
 				if (ImGui::Button("Play/Stop"))
 				{
-					m_IsPlaying = !m_IsPlaying; //run this first to avoid unwanted updates
-					if (!m_IsPlaying)
+					if (m_Application->IsPlaying())
 					{
-						m_Paused = false;
+						m_Application->EndGame();
 						m_ActiveScene->End();
 						Reset();
 					}
 					else
 					{
 						m_ActiveScene->Setup();
+						m_Application->StartGame();
 					}
 				}
 
 				if (ImGui::Button("Pause/UnPause"))
 				{
-					m_Paused = !m_Paused;
+					m_Application->TogglePause();
 				}
 
 				ImGui::EndMenuBar();
@@ -202,12 +202,6 @@ namespace Fengshui
 
 	private:
 		void Reset();
-
-	private:
-		//Editor associated variables
-		std::atomic<bool> m_Paused = false;
-		std::atomic<bool> m_IsPlaying = false;
-		std::atomic<bool> m_EditorReady = false;//Check whether the editor has finished setting up
 
 	private:
 		Ref<Scene> m_ActiveScene;
