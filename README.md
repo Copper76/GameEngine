@@ -54,9 +54,10 @@ This project is a practice project to make a game engine using Entity-Component 
 ### Raytracing
 - [ ] Look into raytracing and integrate it into the engine(stretch goal).
 
-## Knonw Issues
+## Known Issues
 - Rendering breaks when 2D is used with spheres
 - Physics doesn't work well with hierarchy, I believe due to how transform is calculated
+- Physics doesn't calculate elasticity correctly
 
 ## Deprecated Objectives
 - [ ] Batch the audio system similar to how rendering is done. (batching doesn't seem to work as nicely as opengl due to the natural of audio)
