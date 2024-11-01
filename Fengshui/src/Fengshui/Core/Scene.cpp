@@ -133,79 +133,12 @@ namespace Fengshui
 
 	void Scene::Finalise()
 	{
-		m_PrimaryCamera = m_CameraSystem->GetPrimary();
+		
 	}
 
 	//Update function for the scene
 	void Scene::OnUpdate(float dt)
 	{
-		//update the primary camera only on update thread
-		m_PrimaryCamera = m_CameraSystem->GetPrimary();
-		
-		//A default camera control for navigating the scene
-		if (m_PrimaryCamera != 0)
-		{
-			if (m_ViewportFocused)
-			{
-				glm::vec3 moveDelta = glm::vec3(0.0f);
-				glm::vec3 rotateDelta = glm::vec3(0.0f);
-
-				//Input handling
-				if (Input::IsKeyPressed(FS_KEY_A))
-				{
-					moveDelta.x -= m_CameraMoveSpeed * dt;
-				}
-				if (Input::IsKeyPressed(FS_KEY_D))
-				{
-					moveDelta.x += m_CameraMoveSpeed * dt;
-				}
-				if (Input::IsKeyPressed(FS_KEY_SPACE))
-				{
-					moveDelta.y += m_CameraMoveSpeed * dt;
-				}
-				if (Input::IsKeyPressed(FS_KEY_LEFT_CONTROL))
-				{
-					moveDelta.y -= m_CameraMoveSpeed * dt;
-				}
-				if (Input::IsKeyPressed(FS_KEY_W))
-				{
-					moveDelta.z -= m_CameraMoveSpeed * dt;
-				}
-				if (Input::IsKeyPressed(FS_KEY_S))
-				{
-					moveDelta.z += m_CameraMoveSpeed * dt;
-				}
-
-				if (Input::IsKeyPressed(FS_KEY_I))
-				{
-					rotateDelta.x += m_CameraMoveSpeed * dt;
-				}
-				if (Input::IsKeyPressed(FS_KEY_K))
-				{
-					rotateDelta.x -= m_CameraMoveSpeed * dt;
-				}
-				if (Input::IsKeyPressed(FS_KEY_J))
-				{
-					rotateDelta.y += m_CameraMoveSpeed * dt;
-				}
-				if (Input::IsKeyPressed(FS_KEY_L))
-				{
-					rotateDelta.y -= m_CameraMoveSpeed * dt;
-				}
-
-				if (Input::IsKeyPressed(FS_KEY_Q))
-				{
-					rotateDelta.z += m_CameraMoveSpeed * dt;
-				}
-				if (Input::IsKeyPressed(FS_KEY_E))
-				{
-					rotateDelta.z -= m_CameraMoveSpeed * dt;
-				}
-
-				AdjustCamera(m_PrimaryCamera, moveDelta, glm::quat(glm::radians(rotateDelta)));
-			}
-		}
-
 		m_AudioPlayerSystem->OnUpdate(dt);
 		m_AudioListenSystem->OnUpdate(dt);
 	}
@@ -225,8 +158,14 @@ namespace Fengshui
 	//Render function for updating the graphics of the scene
 	void Scene::OnRender()
 	{
+		//update the primary camera only on render thread as render needs camera
+		m_PrimaryCamera = m_CameraSystem->GetPrimary();
+
 		if (m_PrimaryCamera != 0)
 		{
+			//used to adjust the camera object that is currently being used, remove for shipping game
+			AdjustCamera();
+
 			//Clear the screen
 			RenderCommand::Clear();
 
@@ -300,9 +239,67 @@ namespace Fengshui
 		m_CameraSystem->SetZoomLevel(m_SceneManager->GetID(), zoomLevel);
 	}
 
-	void Scene::AdjustCamera(EntityID entity, glm::vec3 moveDelta, glm::quat rotateDelta)
+	void Scene::AdjustCamera()
 	{
-		m_CameraSystem->AdjustCamera(entity, moveDelta, rotateDelta, m_TransformSystem);
+		if (m_ViewportFocused)
+		{
+			glm::vec3 moveDelta = glm::vec3(0.0f);
+			glm::vec3 rotateDelta = glm::vec3(0.0f);
+
+			//Input handling
+			if (Input::IsKeyPressed(FS_KEY_A))
+			{
+				moveDelta.x -= m_CameraMoveSpeed;
+			}
+			if (Input::IsKeyPressed(FS_KEY_D))
+			{
+				moveDelta.x += m_CameraMoveSpeed;
+			}
+			if (Input::IsKeyPressed(FS_KEY_SPACE))
+			{
+				moveDelta.y += m_CameraMoveSpeed;
+			}
+			if (Input::IsKeyPressed(FS_KEY_LEFT_CONTROL))
+			{
+				moveDelta.y -= m_CameraMoveSpeed ;
+			}
+			if (Input::IsKeyPressed(FS_KEY_W))
+			{
+				moveDelta.z -= m_CameraMoveSpeed;
+			}
+			if (Input::IsKeyPressed(FS_KEY_S))
+			{
+				moveDelta.z += m_CameraMoveSpeed;
+			}
+
+			if (Input::IsKeyPressed(FS_KEY_I))
+			{
+				rotateDelta.x += m_CameraMoveSpeed;
+			}
+			if (Input::IsKeyPressed(FS_KEY_K))
+			{
+				rotateDelta.x -= m_CameraMoveSpeed;
+			}
+			if (Input::IsKeyPressed(FS_KEY_J))
+			{
+				rotateDelta.y += m_CameraMoveSpeed;
+			}
+			if (Input::IsKeyPressed(FS_KEY_L))
+			{
+				rotateDelta.y -= m_CameraMoveSpeed;
+			}
+
+			if (Input::IsKeyPressed(FS_KEY_Q))
+			{
+				rotateDelta.z += m_CameraMoveSpeed;
+			}
+			if (Input::IsKeyPressed(FS_KEY_E))
+			{
+				rotateDelta.z -= m_CameraMoveSpeed;
+			}
+
+			m_CameraSystem->AdjustCamera(m_PrimaryCamera, moveDelta, glm::quat(glm::radians(rotateDelta)));
+		}
 	}
 
 	void Scene::UpdateView()
@@ -315,7 +312,7 @@ namespace Fengshui
 
 	void Scene::UpdateViewMatrix(EntityID entity)
 	{
-		m_CameraSystem->RecalculateViewMatrix(entity, m_TransformSystem);
+		m_CameraSystem->RecalculateViewMatrix(entity);
 	}
 
 	void Scene::SetPrimaryCamera(Ref<Entity> entity)

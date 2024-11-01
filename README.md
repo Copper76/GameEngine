@@ -28,6 +28,7 @@ This project is a practice project to make a game engine using Entity-Component 
 - [X] Improve the panels. The panels now allow add and removal of components at runtime, as well as the ability to modify most value based data, with the exception of hierarchy.
 ### Physics
 - [X] Integrated the 3D Physics Engine that was previously made in [Physics Engine](https://github.com/Copper76/Physics-Engine), the engine doesn't play nicely with hierarchy yet.
+- [X] Added offset and scale for colliders relative to the object scale. Sphere can only be scaled uniformly in physics to avoid complication
 ### Audio
 - [X] Implement an audio system which can allow user to use all available audio input and output devices.
 - [X] Add support of playing wav files through an audio source.
@@ -54,8 +55,6 @@ This project is a practice project to make a game engine using Entity-Component 
 - [ ] Look into raytracing and integrate it into the engine(stretch goal).
 
 ## Knonw Issues
-- The physics system cannot work well with scales, and sphere collider is problematic
-- The sphere collider can only scale uniformly, and sphere collider is problematic in general
 - Rendering breaks when 2D is used with spheres
 
 ## Deprecated Objectives

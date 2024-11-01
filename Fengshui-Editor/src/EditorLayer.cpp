@@ -112,12 +112,12 @@ namespace Fengshui
 
 		//m_BigSquare->AddComponent<Render>(Render(convexShape));
 		//m_BigSquare->AddComponent<Render>();
-		m_BigSquare->AddComponent<Render>(Render(new RenderShapeCube(), checkerboard));
+		m_BigSquare->AddComponent<Render>(Render(new RenderShapeSphere(), checkerboard));
 
 		m_AudioSource = m_BigSquare->AddComponent<AudioSourceComponent>(AudioSourceComponent(AudioCommand::CreateAudioSource("Assets/AudioClip/bell.wav")));
 
 		m_BigSquare->AddComponent<Rigidbody>();
-		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>();
+		Collider bigSquareCollider = m_BigSquare->AddComponent<Collider>(Collider(new PhysicalShapeSphere()));
 
 		m_Ground = MakeRef<Entity>("Ground");
 

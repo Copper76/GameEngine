@@ -174,10 +174,15 @@ namespace Fengshui
 
 					ImGui::Checkbox("Is Active", &collider.IsActive);
 
+					colliderChanged |= ImGui::DragFloat3("Offset", glm::value_ptr(collider.Offset));
+
 					if (collider.Shape->GetType() != ShapeType::SHAPE_SPHERE)
 					{
-						colliderChanged |= ImGui::DragFloat3("Offset", glm::value_ptr(collider.Offset));
 						colliderChanged |= ImGui::DragFloat3("Size", glm::value_ptr(collider.Size));
+					}
+					else
+					{
+						colliderChanged |= ImGui::DragFloat("Size", glm::value_ptr(collider.Size));
 					}
 
 					glm::vec3 globalScale = collider.Size * TransformSystem::GetWorldTransform(entity).Scale;

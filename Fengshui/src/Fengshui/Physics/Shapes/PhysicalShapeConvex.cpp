@@ -92,10 +92,10 @@ namespace Fengshui
 	====================================================
 	*/
 	glm::vec3 PhysicalShapeConvex::Support(const glm::vec3& dir, const Transform& transform, const float bias) const {
-		glm::vec3 maxPt = (transform.Rotation * (m_VertexCoords[0] * transform.Scale)) + transform.Position;
+		glm::vec3 maxPt = (transform.Rotation * m_VertexCoords[0]) + transform.Position;
 		float maxDist = glm::dot(dir, maxPt);
 		for (int i = 1; i < m_VertexCoords.size(); i++) {
-			const glm::vec3 pt = (transform.Rotation * (m_VertexCoords[i] * transform.Scale)) + transform.Position;
+			const glm::vec3 pt = (transform.Rotation * m_VertexCoords[i]) + transform.Position;
 			const float dist = glm::dot(dir, pt);
 
 			if (dist > maxDist) {
@@ -135,7 +135,7 @@ namespace Fengshui
 
 		Bounds bounds;
 		for (int i = 0; i < 8; i++) {
-			bounds.Expand((transform.Rotation * (corners[i] * transform.Scale)) + transform.Position);
+			bounds.Expand((transform.Rotation * corners[i]) + transform.Position);
 		}
 
 		return bounds;
