@@ -618,9 +618,9 @@ namespace Fengshui
 		for (int i = 0; i < 6; i++)
 		{
 			for (int y = 0; y < divisions; y++) {
+				int y0 = y;
+				int y1 = y + 1;
 				for (int x = 0; x < divisions; x++) {
-					int y0 = y;
-					int y1 = y + 1;
 					int x0 = x;
 					int x1 = x + 1;
 
@@ -635,6 +635,7 @@ namespace Fengshui
 					offset += 6;
 				}
 			}
+
 		}
 
 		s_Data.ShapeIndexCount += 6 * 6 * divisions * divisions;

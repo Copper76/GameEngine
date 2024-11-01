@@ -33,7 +33,8 @@ namespace Fengshui
 
 		//narrow phase, where general contact and collision are calculated
 		int numContacts = 0;
-		contact_t* contacts = new contact_t[sizeof(contact_t) * collisionPairs.size()];
+		const int maxContacts = (int)m_Entities.size() * (int)m_Entities.size();
+		contact_t* contacts = (contact_t*)alloca(sizeof(contact_t) * maxContacts);;
 		for (int i = 0; i < collisionPairs.size(); i++) {
 			const CollisionPair& pair = collisionPairs[i];
 
@@ -57,13 +58,13 @@ namespace Fengshui
 		//
 		//solve constraints for each constraint
 		//
-		//Get componentsfor each
+		//Get components for each
 		for (int i = 0; i < constraints.size(); i++) {
 			constraints[i]->PreSolve(dt);
 		}
 		manifolds->PreSolve(dt);
 
-		const int numIter = 5;
+		const int numIter = 30;
 		for (int j = 0; j < numIter; j++) {
 			for (int i = 0; i < constraints.size(); i++) {
 				constraints[i]->Solve();
@@ -88,8 +89,6 @@ namespace Fengshui
 			ResolveContact(contact);//Get components here
 			accumulatedTime += dt_sec;
 		}
-
-		delete[] contacts;
 
 		//Update the position for the rest of the frame's time
 		const float timeRemaining = dt - accumulatedTime;

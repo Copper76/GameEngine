@@ -122,7 +122,7 @@ namespace Fengshui
 		patTensor[2] = glm::vec3(R.z * R.x, R.z * R.y, R2 - R.z * R.z);
 		tensor += patTensor;
 
-		return tensor;
+		return glm::transpose(tensor);
 	}
 
 	/*

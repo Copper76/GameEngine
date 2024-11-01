@@ -229,10 +229,10 @@ namespace Fengshui
 		m_constraints[newSlot].m_anchorA = contact.ptOnA_LocalSpace;
 		m_constraints[newSlot].m_anchorB = contact.ptOnB_LocalSpace;
 
-		const Transform transA = GeneralManager::GetComponent<Transform>(m_BodyA);
+		const Transform transA = TransformSystem::GetWorldTransform(m_BodyA);
 
 		//get the normal for constraint
-		m_constraints[newSlot].m_normal = glm::normalize(glm::inverse(transA.Rotation) * (contact.normal * -1.0f));
+		m_constraints[newSlot].m_normal = glm::normalize(glm::inverse(glm::normalize(transA.Rotation)) * (contact.normal * -1.0f));
 
 		m_constraints[newSlot].m_cachedLambda.Zero();//replaced constraint so no cached lambda here
 

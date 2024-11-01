@@ -25,7 +25,7 @@ ShapeSphere::Support
 ====================================================
 */
 	glm::vec3 PhysicalShapeSphere::Support(const glm::vec3& dir, const Transform& transform, const float bias) const {
-		return (transform.Position + transform.Rotation * dir * (m_Radius + bias));
+		return (transform.Position + dir * (m_Radius + bias));
 	}
 
 	/*
@@ -44,7 +44,8 @@ ShapeSphere::Support
 
 	void PhysicalShapeSphere::Rebuild(const glm::vec3 offset, const glm::vec3 scale)
 	{
-		m_Radius = m_BaseRadius;
+		m_Radius = m_BaseRadius * scale.x;
+		m_CenterOfMass = offset;
 	}
 
 	/*
@@ -56,8 +57,8 @@ ShapeSphere::Support
 		Bounds tmp;
 		//tmp.mins = (transform.Rotation * (-m_Radius)) + transform.Position;
 		//tmp.maxs = (transform.Rotation * m_Radius) + transform.Position;
-		tmp.mins = (transform.Rotation * glm::vec3(-m_Radius)) + transform.Position;
-		tmp.maxs = (transform.Rotation * glm::vec3(m_Radius)) + transform.Position;
+		tmp.mins = glm::vec3(-m_Radius) + transform.Position;
+		tmp.maxs = glm::vec3(m_Radius) + transform.Position;
 		return tmp;
 	}
 }

@@ -38,6 +38,20 @@ namespace Fengshui
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* overlay);
 
+		inline void StartGame() { m_IsPlaying = true; }
+
+		inline void EndGame() 
+		{ 
+			m_IsPlaying = false; 
+			m_Paused = false;
+		}
+
+		inline bool IsPlaying() { return m_IsPlaying; }
+
+		inline void PauseGame(bool paused) { m_Paused = paused; }
+		inline void TogglePause() { m_Paused = !m_Paused; }
+		inline bool IsPaused() { return m_Paused; }
+
 		ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
 
 		inline static Application& GetInstance() { return *s_Instance; }
@@ -53,6 +67,8 @@ namespace Fengshui
 		void RenderFunction();
 
 	private:
+		std::atomic<bool> m_Paused = false;
+		std::atomic<bool> m_IsPlaying = false;
 		std::atomic<bool> m_Running = true;
 		bool m_Minimised = false;
 

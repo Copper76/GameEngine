@@ -60,7 +60,11 @@ namespace Fengshui
 	{
 		while (m_Running && !m_Minimised)
 		{
+			float time = (float)glfwGetTime();
+			m_Time.UpdateTime(time);
 			float dt = m_Time.GetDeltaTime();
+
+			if (!m_IsPlaying || m_Paused) continue; //Build in pause and play in engine instead of editor
 
 			//Update each layer
 			for (Layer* layer : m_LayerStack)
@@ -79,7 +83,11 @@ namespace Fengshui
 		float dt = 0.0f;
 		while (m_Running && !m_Minimised)
 		{
+			float time = (float)glfwGetTime();
+			m_Time.UpdateTime(time);
 			dt += m_Time.GetDeltaTimeMicro();
+
+			if (!m_IsPlaying || m_Paused) continue;
 
 			//Sleep this thread until a minimum value so there is no weird behaviour introduced by short delta time
 			if (dt < 16000.0f)
@@ -93,14 +101,14 @@ namespace Fengshui
 				dt = 33000.0f;
 			}
 
-			dt = dt * 0.001f * 0.001f * 0.005f;//something wrong with time scaling
+			float dt_sec = dt * 0.001f * 0.001f;
 
 			//Update each layer
 			for (Layer* layer : m_LayerStack)
 			{
 				if (layer->IsActive())
 				{
-					layer->OnFixedUpdate(dt);
+					layer->OnFixedUpdate(dt_sec);
 				}
 			}
 
@@ -185,6 +193,7 @@ namespace Fengshui
 	void Application::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
+		layer->SetApplication(this);
 		layer->OnAttach();
 	}
 
@@ -192,6 +201,7 @@ namespace Fengshui
 	void Application::PushOverlay(Layer* overlay)
 	{
 		m_LayerStack.PushOverlay(overlay);
+		overlay->SetApplication(this);
 		overlay->OnAttach();
 	}
 }

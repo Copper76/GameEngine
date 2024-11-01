@@ -29,7 +29,12 @@ namespace Fengshui
 		GlobalLight, PointLight
 	};
 
-	struct Tag
+	struct Component
+	{
+		bool IsActive = true;
+	};
+
+	struct Tag : Component
 	{
 		std::string Name = "GameEntity";
 
@@ -41,7 +46,7 @@ namespace Fengshui
 		}
 	};
 
-	struct Transform
+	struct Transform : Component
 	{
 		glm::vec3 Position = glm::vec3(0.0f);
 		glm::quat Rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
@@ -71,7 +76,7 @@ namespace Fengshui
 		}
 	};
 
-	struct Transform2D
+	struct Transform2D : Component
 	{
 		glm::vec3 Position = glm::vec3(0.0f);
 		float Rotation = 0.0f;
@@ -105,7 +110,7 @@ namespace Fengshui
 		}
 	};
 
-	struct Rigidbody
+	struct Rigidbody : Component
 	{
 		glm::vec3 LinearVelocity = glm::vec3(0.0f);
 		glm::vec3 AngularVelocity = glm::vec3(0.0f);
@@ -126,7 +131,7 @@ namespace Fengshui
 		}
 	};
 
-	struct Collider
+	struct Collider : Component
 	{
 		glm::vec3 Offset = glm::vec3(0.0f);
 		glm::vec3 Size = glm::vec3(1.0f);
@@ -149,7 +154,7 @@ namespace Fengshui
 
 	};
 
-	struct Render2D
+	struct Render2D : Component
 	{
 		Ref<Texture2D> Texture = nullptr;
 		glm::vec2* TexCoords = nullptr;
@@ -197,7 +202,7 @@ namespace Fengshui
 		}
 	};
 
-	struct Render
+	struct Render : Component
 	{
 		Ref<Texture> Texture = nullptr;
 		glm::vec2* TexCoords = nullptr;
@@ -253,7 +258,7 @@ namespace Fengshui
 		}
 	};
 
-	struct Hierarchy
+	struct Hierarchy : Component
 	{
 		uint32_t Parent = 0;
 		std::set<uint32_t> Children;
@@ -268,7 +273,7 @@ namespace Fengshui
 		}
 	};
 
-	struct CameraComponent
+	struct CameraComponent : Component
 	{
 		//Settings
 		bool Primary;
@@ -322,7 +327,7 @@ namespace Fengshui
 		}
 	};
 
-	struct Light
+	struct Light : Component
 	{
 		glm::vec3 Direction = glm::vec3(1.0f);
 		glm::vec3 Colour = glm::vec3(1.0f);
@@ -349,7 +354,7 @@ namespace Fengshui
 		}
 	};
 
-	struct AudioSourceComponent
+	struct AudioSourceComponent : Component
 	{
 		Ref<AudioSource> Source;
 
@@ -397,7 +402,7 @@ namespace Fengshui
 		}
 	};
 
-	struct AudioListenerComponent
+	struct AudioListenerComponent : Component
 	{
 		bool IsListener;
 
@@ -419,7 +424,7 @@ namespace Fengshui
 		}
 	};
 
-	struct ScriptComponent
+	struct ScriptComponent : Component
 	{
 		ScriptComponent()
 		{

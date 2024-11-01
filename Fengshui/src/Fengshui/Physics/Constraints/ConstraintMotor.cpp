@@ -27,9 +27,9 @@ namespace Fengshui
 		const glm::vec3 ra = worldAnchorA - GetCenterOfMassWorldSpace(colliderA, transA);
 		const glm::vec3 rb = worldAnchorB - GetCenterOfMassWorldSpace(colliderB, transB);
 
-		const glm::quat q1 = transA.Rotation;
-		const glm::quat q2 = transB.Rotation;
-		const glm::quat q0_inv = glm::inverse(m_q0);
+		const glm::quat q1 = glm::normalize(transA.Rotation);
+		const glm::quat q2 = glm::normalize(transB.Rotation);
+		const glm::quat q0_inv = glm::inverse(glm::normalize(m_q0));
 		const glm::quat q1_inv = glm::inverse(q1);
 
 		const glm::vec3 motorAxis = transA.Rotation * m_motorAxis;
@@ -41,12 +41,12 @@ namespace Fengshui
 		glm::vec3 v = motorV;
 		glm::vec3 w = motorAxis;
 
-		glm::mat4 P;
-		P[0] = glm::vec4(0.0f);
-		P[1] = glm::vec4(0, 1, 0, 0);
-		P[2] = glm::vec4(0, 0, 1, 0);
-		P[3] = glm::vec4(0, 0, 0, 1);
-		glm::mat4 P_T = glm::transpose(P);
+		glm::mat4 P_T;
+		P_T[0] = glm::vec4(0.0f);
+		P_T[1] = glm::vec4(0, 1, 0, 0);
+		P_T[2] = glm::vec4(0, 0, 1, 0);
+		P_T[3] = glm::vec4(0, 0, 0, 1);
+		glm::mat4 P = glm::transpose(P_T);
 
 		const glm::mat4 MatA = P * Left(q1_inv) * Right(q2 * q0_inv) * P_T * -0.5f;
 		const glm::mat4 MatB = P * Left(q1_inv) * Right(q2 * q0_inv) * P_T * 0.5f;
@@ -151,8 +151,8 @@ namespace Fengshui
 		float C = glm::dot(r, r);
 		const float Beta = 0.05f;//manually chosen beta factor so we don't add a lot of energy but still corrects the constraint
 
-		const glm::quat qr = glm::inverse(transA.Rotation) * transB.Rotation;
-		const glm::quat qrA = qr * q0_inv;//relative orientation in body A space
+		const glm::quat qr = glm::normalize(glm::inverse(transA.Rotation) * transB.Rotation);
+		const glm::quat qrA = glm::normalize(qr * q0_inv);//relative orientation in body A space
 
 		const glm::vec3 axisA = transA.Rotation * glm::vec3(qrA.x, qrA.y, qrA.z);
 

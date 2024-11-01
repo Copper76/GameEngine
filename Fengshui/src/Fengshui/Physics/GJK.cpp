@@ -140,6 +140,8 @@ namespace Fengshui
 		M[2] = glm::vec4(s1.z, s2.z, s3.z, s4.z);
 		M[3] = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
+		M = glm::transpose(M);
+
 		glm::vec4 C4;
 		C4[0] = Cofactor(M, 3, 0);
 		C4[1] = Cofactor(M, 3, 1);

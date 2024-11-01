@@ -26,6 +26,8 @@ namespace Fengshui
 
 		void Setup();
 
+		void Finalise();
+
 		void End();
 
 		void OnUpdate(float dt);
@@ -43,7 +45,7 @@ namespace Fengshui
 		void ResizeBounds(float width, float height);
 		void SetZoomLevel(float zoomLevel);
 
-		void AdjustCamera(EntityID entity, glm::vec3 moveDelta, glm::quat rotateDelta);
+		void AdjustCamera();
 
 		void UpdateView();
 		void UpdateViewMatrix(EntityID entity);
@@ -81,7 +83,7 @@ namespace Fengshui
 
 	private:
 		//Camera related variables
-		float m_CameraMoveSpeed = 0.1f;
+		float m_CameraMoveSpeed = 0.005f;
 		bool m_ViewportFocused = false;
 		EntityID m_PrimaryCamera = 0;
 

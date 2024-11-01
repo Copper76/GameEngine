@@ -23,7 +23,7 @@ namespace Fengshui
 	static glm::vec3 GetCenterOfMassWorldSpace(const Collider& collider, const Transform& trans)
 	{
 		const glm::vec3 centerOfMass = collider.Shape->GetCenterOfMass();
-		return (trans.Rotation * centerOfMass) + trans.Position;
+		return trans.Position + (trans.Rotation * centerOfMass);
 	}
 
 	static glm::vec3 GetCenterOfMassModelSpace(const Collider& collider)
@@ -34,7 +34,7 @@ namespace Fengshui
 
 	static glm::vec3 WorldSpaceToBodySpace(const glm::vec3& worldPt, const Collider& collider, const Transform& trans)
 	{
-		glm::quat inverseOrient = glm::inverse(trans.Rotation);
+		glm::quat inverseOrient = glm::inverse(glm::normalize(trans.Rotation));
 		return inverseOrient * (worldPt - GetCenterOfMassWorldSpace(collider, trans));
 	}
 
@@ -54,14 +54,14 @@ namespace Fengshui
 	{
 		glm::mat3 inertiaTensor = collider.Shape->InertiaTensor();
 		glm::mat3 invInertiaTensor = glm::inverse(inertiaTensor) * rb.InvMass;
-		glm::mat3 orient = glm::mat3_cast(trans.Rotation);
-		invInertiaTensor = orient * invInertiaTensor;
+		glm::mat3 orient = glm::mat3_cast(glm::normalize(trans.Rotation));
+		invInertiaTensor = orient * invInertiaTensor * glm::transpose(orient);
 		return invInertiaTensor;
 	}
 
 	static void ApplyImpulseLinear(const glm::vec3& impulse, Rigidbody& rb)
 	{
-		if (rb.InvMass == 0.0f) { return; }
+		if (rb.InvMass == 0.0f) return;
 
 		//p=mv
 		//dp = m*dv
@@ -98,26 +98,33 @@ namespace Fengshui
 
 	static void Update(const float dt_sec, const Collider& collider, Rigidbody& rb, Transform& trans, const glm::quat globalRotation)
 	{
-		glm::quat relativeRotation = trans.Rotation * glm::inverse(globalRotation);
+		//FS_INFO("Beofer Location: ({}, {}, {})", trans.Position.x, trans.Position.y, trans.Position.z);
+		glm::quat relativeRotation = glm::normalize(trans.Rotation * glm::inverse(globalRotation));
 		//trans.Position += relativeRotation * (rb.LinearVelocity * dt_sec);
-		trans.Position += (rb.LinearVelocity * dt_sec);
-
-		glm::vec3 positionCM = GetCenterOfMassWorldSpace(collider, trans);
-		glm::vec3 cmToPos = trans.Position - positionCM;
+		trans.Position += rb.LinearVelocity * dt_sec;
 
 		//Need to update the rotation torque as it needs to be always perpendicular to center of mass
 		//alpha is carried over acceleration from last iteration
 		glm::mat3 orientation = glm::mat3_cast(globalRotation);
-		glm::mat3 inertiaTensor = orientation * collider.Shape->InertiaTensor();
+		glm::mat3 inertiaTensor = orientation * collider.Shape->InertiaTensor() * glm::transpose(orientation);
 		glm::vec3 alpha = glm::inverse(inertiaTensor) * (glm::cross(rb.AngularVelocity, inertiaTensor * rb.AngularVelocity));
 		rb.AngularVelocity += alpha * dt_sec;
 
 		//glm::vec3 dAngle = relativeRotation * rb.AngularVelocity * dt_sec;
 		glm::vec3 dAngle = rb.AngularVelocity * dt_sec;
-		glm::quat dq = glm::quat(dAngle);
-		trans.Rotation = glm::normalize(dq * trans.Rotation);
+		const float dAngleMagnitude = glm::length(dAngle);
+		if (dAngleMagnitude > 0.0f)
+		{
+			glm::quat dq = glm::normalize(glm::angleAxis(dAngleMagnitude, dAngle / dAngleMagnitude));
+			trans.Rotation = glm::normalize(dq * trans.Rotation);
 
-		trans.Position = positionCM + (dq * cmToPos);
+			glm::vec3 positionCM = GetCenterOfMassWorldSpace(collider, trans);
+			glm::vec3 cmToPos = trans.Position - positionCM;
+
+			trans.Position = positionCM + (dq * cmToPos);
+		}
+
+		//FS_INFO("Location: ({}, {}, {})", trans.Position.x, trans.Position.y, trans.Position.z);
 	}
 
 	static void Update(const float dt_sec, EntityID entity)
@@ -126,7 +133,7 @@ namespace Fengshui
 		Rigidbody& rb = GeneralManager::GetComponent<Rigidbody>(entity);
 		Transform& trans = GeneralManager::GetComponent<Transform>(entity);
 
-		const glm::quat globalRotation = TransformSystem::GetWorldTransform(entity).Rotation;
+		const glm::quat globalRotation = glm::normalize(TransformSystem::GetWorldTransform(entity).Rotation);
 
 		Update(dt_sec, collider, rb, trans, globalRotation);
 	}
@@ -147,7 +154,7 @@ namespace Fengshui
 					continue;
 				}
 
-				minor[xx][yy] = matrix[x][y];
+				minor[yy][xx] = matrix[y][x];
 				xx++;
 			}
 

@@ -43,7 +43,7 @@ namespace Fengshui
 		return false;
 	}
 
-	void CameraSystem::AdjustCamera(EntityID entity, glm::vec3 moveDelta, glm::quat rotateDelta, Ref<TransformSystem> transformSystem)
+	void CameraSystem::AdjustCamera(EntityID entity, glm::vec3 moveDelta, glm::quat rotateDelta)
 	{
 		auto& transform = GeneralManager::GetComponent<Transform>(entity);
 
@@ -52,7 +52,7 @@ namespace Fengshui
 		transform.Position += transform.Rotation * (moveDelta * (cameraComp.IsOrtho ? cameraComp.ZoomLevel * 0.01f : 0.1f));
 		transform.Rotation *= rotateDelta;
 
-		RecalculateViewMatrix(entity, transformSystem);
+		RecalculateViewMatrix(entity);
 	}
 
 	EntityID CameraSystem::GetPrimary()
@@ -102,7 +102,7 @@ namespace Fengshui
 		CalculateView(cameraComp);
 	}
 
-	void CameraSystem::RecalculateViewMatrix(EntityID entity, Ref<TransformSystem> transformSystem)
+	void CameraSystem::RecalculateViewMatrix(EntityID entity)
 	{
 		auto& cameraComp = GeneralManager::GetComponent<CameraComponent>(entity);
 
